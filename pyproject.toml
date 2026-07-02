@@ -4,6 +4,7 @@ version = "0.0.1"
 description = "Explainable ML platform for early detection of emerging environmental and public health hazards from public data"
 requires-python = ">=3.12"
 dependencies = [
+    "pdfplumber>=0.11",
     "pydantic>=2.0",
 ]
 
