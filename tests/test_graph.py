@@ -81,9 +81,7 @@ class TestEvidencePaths:
 
     def test_undirected_traversal_reaches_crop(self, graph: TemporalGraph) -> None:
         paths = graph.evidence_paths(FLUAZINAM, POTATO)
-        assert any(
-            [e.predicate for e in p] == [EdgeType.CONTAINS, EdgeType.USED_ON] for p in paths
-        )
+        assert any([e.predicate for e in p] == [EdgeType.CONTAINS, EdgeType.USED_ON] for p in paths)
 
     def test_missing_endpoint_yields_no_paths(self, graph: TemporalGraph) -> None:
         assert graph.evidence_paths(FLUAZINAM, "substance:cas:50-00-0") == []
