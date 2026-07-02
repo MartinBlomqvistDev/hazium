@@ -96,6 +96,35 @@ class Substance(Fact):
     pubchem_cid: int | None = None
 
 
+class ProductIngredient(BaseModel):
+    """One active substance in a registered product, as declared."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    name: str
+    cas_number: str | None = None
+    concentration: str | None = Field(default=None, description="As printed, e.g. '500 g/L'")
+
+
+class ProductRegistration(Fact):
+    """A product's registration state in a national register, at snapshot time.
+
+    Registers are live databases without publication history, so ``known_at``
+    is the snapshot date: the fact was publicly knowable at least by then.
+    """
+
+    registration_number: str
+    name: str
+    country: str = Field(description="ISO 3166-1 alpha-2, e.g. 'SE'")
+    main_group: str = Field(description="e.g. 'Växtskyddsmedel'")
+    approved: bool
+    previously_approved: bool
+    usage_ban: bool
+    approval_expires: date | None = None
+    ingredients: tuple[ProductIngredient, ...] = ()
+    usage_areas: tuple[str, ...] = ()
+
+
 class SalesRecord(Fact):
     """Annual sales of an active substance in one country."""
 
