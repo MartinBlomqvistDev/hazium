@@ -60,7 +60,25 @@ The full constitution is in [MANIFESTO.md](MANIFESTO.md). The three that shape t
 
 ## Status
 
-**V0 — knowledge graph construction.** In progress.
+**V0 — knowledge graph construction.** In progress. The fluazinam evidence
+graph is reconstructable and traversable from real ingested data; the
+remaining V0 work adds the dated toxicological evidence the retrodetection
+eval depends on.
+
+| V0 component | State |
+|---|---|
+| Temporal data contracts (`known_at` on every fact) | Done |
+| Evidence-path graph with `as_of` views | Done |
+| KEMI sales adapter (annual report PDFs) | Done |
+| KEMI register adapter (JSON API, products + CAS) | Done |
+| Substance entity resolution (name → CAS) | Done |
+| Register structure graph (`CONTAINS`, `APPROVED_IN`) | Done |
+| EFSA / CLP adapter (`CLASSIFIED_AS`, `DEGRADES_TO`, dated events) | Next |
+
+The gate (*fluazinam reconstructable and traversable*) is met on KEMI
+structure; the fluazinam→TFA degradation edge and hazard classifications
+arrive with the EFSA adapter. See [`DEV_LOG.md`](DEV_LOG.md) for the full
+build record and the reasoning behind each decision.
 
 ---
 
