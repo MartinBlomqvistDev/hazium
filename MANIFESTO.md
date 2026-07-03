@@ -1,6 +1,8 @@
 # HAZIUM
 
-> Building computational models that help humans investigate environmental and public health hazards.
+> Tracing systemic exposure.
+
+*Building computational models that help humans investigate environmental and public health hazards.*
 
 **Manifesto, version 0.2. A living document.** Every significant architectural decision in this repository should be traceable to a principle stated here. If evidence shows a principle is wrong, revise the principle, not just the implementation.
 
