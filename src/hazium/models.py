@@ -111,9 +111,18 @@ class ProductRegistration(Fact):
 
     Registers are live databases without publication history, so ``known_at``
     is the snapshot date: the fact was publicly knowable at least by then.
+
+    A registration number is not unique: biocide product families share one.
+    The register's stable per-named-product key is ``product_name_id``, and
+    ``object_type`` distinguishes actual products (1) from regulatory objects
+    (additional names, dispensations, parallel-trade permits).
     """
 
     registration_number: str
+    product_name_id: int | None = Field(
+        default=None, description="Stable per-named-product key; present for actual products"
+    )
+    object_type: int = Field(description="Register objektTypId; 1 == an actual product")
     name: str
     country: str = Field(description="ISO 3166-1 alpha-2, e.g. 'SE'")
     main_group: str = Field(description="e.g. 'Växtskyddsmedel'")

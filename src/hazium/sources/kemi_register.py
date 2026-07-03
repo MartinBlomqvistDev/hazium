@@ -74,6 +74,8 @@ def fetch_products(known_at: date | None = None) -> list[ProductRegistration]:
 def _parse_product(raw: dict[str, Any], known_at: date) -> ProductRegistration:
     return ProductRegistration(
         registration_number=str(raw["registreringsnummer"]),
+        product_name_id=raw["produktnamnId"],
+        object_type=raw["objektTypId"],
         name=raw["produktNamn"],
         country=COUNTRY,
         main_group=raw["huvudgrupp"] or "",

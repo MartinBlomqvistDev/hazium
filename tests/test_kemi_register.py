@@ -59,6 +59,8 @@ class TestProductParsing:
     def test_shirlan_maps_fully(self) -> None:
         product = _parse_product(SHIRLAN, SNAPSHOT)
         assert product.registration_number == "3957"
+        assert product.product_name_id == 3772
+        assert product.object_type == 1
         assert product.name == "Shirlan"
         assert product.approved is True
         assert product.approval_expires == date(2027, 4, 15)

@@ -56,6 +56,17 @@ class TemporalGraph:
     def node(self, node_id: str) -> Node:
         return self._nodes[node_id]
 
+    def has_node(self, node_id: str) -> bool:
+        return node_id in self._nodes
+
+    def nodes(self) -> list[Node]:
+        """All nodes, order unspecified."""
+        return list(self._nodes.values())
+
+    def edges(self) -> list[Edge]:
+        """All edges, in insertion order."""
+        return list(self._edges)
+
     def edges_of(self, node_id: str) -> list[Edge]:
         """All edges incident to a node, in either direction."""
         return [*self._out.get(node_id, []), *self._in.get(node_id, [])]
