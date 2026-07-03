@@ -50,3 +50,17 @@ def substance_node_id(cas_number: str | None = None, name: str | None = None) ->
         slug = "-".join(name.lower().split())
         return f"substance:name:{slug}"
     raise ValueError("substance requires a CAS number or a name")
+
+
+def product_node_id(country: str, product_name_id: int) -> str:
+    """Canonical node id for a registered product, e.g. 'product:se:3772'.
+
+    Keyed on the register's ``product_name_id``, not the registration number,
+    which is shared across biocide product families.
+    """
+    return f"product:{country.lower()}:{product_name_id}"
+
+
+def country_node_id(country: str) -> str:
+    """Canonical node id for a country, e.g. 'country:SE'."""
+    return f"country:{country.upper()}"
