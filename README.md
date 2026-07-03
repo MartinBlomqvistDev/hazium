@@ -1,6 +1,6 @@
 # Hazium
 
-> Building computational models that help humans investigate environmental and public health hazards.
+> Tracing systemic exposure.
 
 Hazium is an explainable machine learning platform that constructs a temporally-aware knowledge graph of environmental and public health evidence from heterogeneous public data: regulatory decisions, hazard classifications, national sales statistics, residue monitoring and scientific conclusions. Machine learning over that graph produces early-warning signals; every signal is traceable back to source evidence.
 
