@@ -34,6 +34,3 @@ data/**
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# Transient ingestion / handoff notes (kept locally, not in the repo)
-FOR_CLAUDE_CODE_INGESTION_*.md
