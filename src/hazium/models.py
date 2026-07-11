@@ -151,6 +151,19 @@ class HazardClassification(Fact):
     system: str = "CLP"
 
 
+class DegradationLink(Fact):
+    """A substance's declared metabolic degradation to another substance.
+
+    Both ids are resolved canonical node ids, not raw names: the source
+    (e.g. EFSA OpenFoodTox) supplies authoritative CAS-based identity, so
+    resolution happens at ingestion rather than being deferred to the graph
+    builder, matching ``SalesRecord``/``HazardClassification``.
+    """
+
+    parent_substance_id: str
+    metabolite_substance_id: str
+
+
 class RegulatoryEvent(Fact):
     """A regulatory decision or process step concerning a substance."""
 
@@ -161,10 +174,18 @@ class RegulatoryEvent(Fact):
 
 
 class SourceDocument(Fact):
-    """A document evidence can point to: EFSA conclusion, paper, article."""
+    """A document evidence can point to: EFSA conclusion, paper, article.
+
+    ``subject_substance_id`` is optional: it captures the common case of one
+    document assessing one substance (an EFSA conclusion), letting the graph
+    builder emit the ``EVIDENCED_BY`` edge without re-deriving it. Documents
+    with more complex or multiple subjects leave it unset and are linked by
+    edges constructed elsewhere.
+    """
 
     id: str
     title: str
     publisher: str
     url: str | None = None
     published_at: date | None = None
+    subject_substance_id: str | None = None

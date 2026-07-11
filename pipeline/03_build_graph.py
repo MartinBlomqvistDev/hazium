@@ -1,8 +1,11 @@
-"""Build the register structure graph and verify the fluazinam north-star.
+"""Build the graph from everything ingested so far, and verify the fluazinam
+north-star.
 
-Loads the ingested register facts, builds the graph, joins the sales
-substances onto it via the resolver (reporting coverage), runs the fluazinam
-reconstruction as a live check, and serializes nodes and edges to JSONL.
+Loads the register facts, builds the structure graph, joins the sales
+substances onto it via the resolver (reporting coverage), layers in EFSA
+OpenFoodTox structure if it has been ingested (dated evidence, degradation
+edges), runs the fluazinam reconstruction as a live check, and serializes
+nodes and edges to JSONL.
 
 Usage:
     python pipeline/03_build_graph.py
@@ -11,13 +14,21 @@ Usage:
 from __future__ import annotations
 
 import argparse
+from datetime import date
 from pathlib import Path
 
 from pydantic import BaseModel
 
-from hazium.graph.build import build_from_register
+from hazium.graph.build import build_from_register, merge_openfoodtox
 from hazium.graph.store import TemporalGraph
-from hazium.models import EdgeType, ProductRegistration, SalesRecord, Substance
+from hazium.models import (
+    DegradationLink,
+    EdgeType,
+    ProductRegistration,
+    SalesRecord,
+    SourceDocument,
+    Substance,
+)
 from hazium.resolve.names import SubstanceResolver
 
 ROOT = Path(__file__).parent.parent
@@ -77,6 +88,29 @@ def _check_fluazinam(graph: TemporalGraph) -> None:
     direct = [p for p in paths if [e.predicate for e in p] == [EdgeType.APPROVED_IN]]
     print(f"  approved in Sweden: {'yes' if direct else 'no'} ({len(paths)} evidence paths <=2)")
 
+    degrades_to = [
+        graph.node(e.object).label
+        for e in graph.edges_of(FLUAZINAM_ID)
+        if e.predicate == EdgeType.DEGRADES_TO and e.subject == FLUAZINAM_ID
+    ]
+    if degrades_to:
+        print(f"  degrades to: {', '.join(degrades_to)}")
+
+    evidence = [
+        (graph.node(e.object).label, e.known_at)
+        for e in graph.edges_of(FLUAZINAM_ID)
+        if e.predicate == EdgeType.EVIDENCED_BY and e.subject == FLUAZINAM_ID
+    ]
+    for title, known_at in sorted(evidence, key=lambda t: t[1]):
+        print(f"  evidenced by ({known_at}): {title}")
+
+    pre_2023 = graph.as_of(date(2023, 1, 1))
+    if pre_2023.has_node(FLUAZINAM_ID):
+        pre_2023_evidence = [
+            e for e in pre_2023.edges_of(FLUAZINAM_ID) if e.predicate == EdgeType.EVIDENCED_BY
+        ]
+        print(f"  evidence known before 2023-01-01: {len(pre_2023_evidence)} document(s)")
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -92,6 +126,18 @@ def main() -> int:
     if sales_path.exists():
         resolver = SubstanceResolver(substances)
         _report_sales_coverage(resolver, _load(sales_path, SalesRecord))
+
+    oft_substances_path = args.processed_dir / "openfoodtox_substances.jsonl"
+    if oft_substances_path.exists():
+        oft_substances = _load(oft_substances_path, Substance)
+        oft_links = _load(args.processed_dir / "openfoodtox_degradation.jsonl", DegradationLink)
+        oft_documents = _load(args.processed_dir / "openfoodtox_assessments.jsonl", SourceDocument)
+        merge_openfoodtox(graph, oft_substances, oft_links, oft_documents)
+        print(
+            f"merged OpenFoodTox: +{len(oft_substances)} substances, "
+            f"{len(oft_links)} degradation links, {len(oft_documents)} dated assessments"
+        )
+        print(f"graph after merge: {len(graph)} nodes, {graph.edge_count} edges")
 
     _check_fluazinam(graph)
 

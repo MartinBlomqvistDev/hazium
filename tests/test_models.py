@@ -6,7 +6,7 @@ import pytest
 from pydantic import ValidationError
 
 from hazium.models import NodeType, Node
-from hazium.resolve.ids import is_valid_cas, substance_node_id
+from hazium.resolve.ids import is_valid_cas, safe_substance_node_id, substance_node_id
 
 
 def _node() -> Node:
@@ -70,3 +70,19 @@ class TestSubstanceNodeId:
     def test_no_identifier_raises(self) -> None:
         with pytest.raises(ValueError):
             substance_node_id()
+
+
+class TestSafeSubstanceNodeId:
+    def test_valid_cas_behaves_like_strict_version(self) -> None:
+        assert safe_substance_node_id("79622-59-6", "Fluazinam") == "substance:cas:79622-59-6"
+
+    def test_malformed_cas_falls_back_to_name(self) -> None:
+        # real-world register/export noise: encoding artifacts, typos
+        assert safe_substance_node_id("58-89-2", "Lindane") == "substance:name:lindane"
+
+    def test_no_cas_falls_back_to_name(self) -> None:
+        assert safe_substance_node_id(None, "Fluazinam") == "substance:name:fluazinam"
+
+    def test_no_identifier_at_all_still_raises(self) -> None:
+        with pytest.raises(ValueError):
+            safe_substance_node_id(None, None)
