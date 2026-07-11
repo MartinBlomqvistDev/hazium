@@ -28,6 +28,8 @@ public data (KEMI, EU Pesticides DB, ECHA, EFSA, SLV)
 ```
 ├── MANIFESTO.md          project constitution — read this first
 ├── CLAUDE.md             working rules for AI-assisted development
+├── TODO.md               current state and next step — read this to resume work
+├── DEV_LOG.md            historical build record and decision rationale
 ├── src/hazium/
 │   ├── sources/          ingestion adapters (one per agency/registry)
 │   ├── resolve/          entity resolution across vocabularies
@@ -82,7 +84,8 @@ pre-2023 `as_of` view. See [`DEV_LOG.md`](DEV_LOG.md) for the full build
 record and the reasoning behind each decision, including a scoping
 correction: the fluazinam→TFA edge suggested by an early plan turned out not
 to exist in the data, and the verified alternative (a shared-metabolite
-bridge across three other fungicides) is what actually ships.
+bridge across three other fungicides) is what actually ships. See
+[`TODO.md`](TODO.md) for the current next step and open decisions.
 
 ---
 
