@@ -56,14 +56,14 @@ The full constitution is in [MANIFESTO.md](MANIFESTO.md). The three that shape t
 | V1 | Defined ML tasks, tabular baselines, SHAP, time-split retrodetection eval | Published eval table |
 | V2 | Node embeddings on the same tasks | Beats V1 baseline, or the negative result is documented |
 | V3 | GNNs with evidence-path explanations | Entered only if V2 shows signal |
-| V4 | Second domain (PFAS, via the fluazinam→TFA edge) | Two domains share one architecture |
+| V4 | Second domain (PFAS, via a verified shared-metabolite bridge to TFA) | Two domains share one architecture |
 
 ## Status
 
-**V0 — knowledge graph construction.** In progress. The fluazinam evidence
-graph is reconstructable and traversable from real ingested data; the
-remaining V0 work adds the dated toxicological evidence the retrodetection
-eval depends on.
+**V0 — knowledge graph construction.** Near complete. The fluazinam evidence
+graph is reconstructable and traversable from real ingested data, including
+its first genuinely dated evidence (a real EFSA opinion date, not a snapshot
+date). What remains is hazard classification, not structure.
 
 | V0 component | State |
 |---|---|
@@ -73,12 +73,16 @@ eval depends on.
 | KEMI register adapter (JSON API, products + CAS) | Done |
 | Substance entity resolution (name → CAS) | Done |
 | Register structure graph (`CONTAINS`, `APPROVED_IN`) | Done |
-| EFSA / CLP adapter (`CLASSIFIED_AS`, `DEGRADES_TO`, dated events) | Next |
+| EFSA OpenFoodTox adapter (`DEGRADES_TO`, dated `EVIDENCED_BY`) | Done |
+| ECHA CLP hazard classification (`CLASSIFIED_AS`) | Next |
 
-The gate (*fluazinam reconstructable and traversable*) is met on KEMI
-structure; the fluazinam→TFA degradation edge and hazard classifications
-arrive with the EFSA adapter. See [`DEV_LOG.md`](DEV_LOG.md) for the full
-build record and the reasoning behind each decision.
+The gate (*fluazinam reconstructable and traversable*) is met, now with real
+dated evidence: an EFSA conclusion from 2008, correctly surviving a
+pre-2023 `as_of` view. See [`DEV_LOG.md`](DEV_LOG.md) for the full build
+record and the reasoning behind each decision, including a scoping
+correction: the fluazinam→TFA edge suggested by an early plan turned out not
+to exist in the data, and the verified alternative (a shared-metabolite
+bridge across three other fungicides) is what actually ships.
 
 ---
 

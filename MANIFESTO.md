@@ -88,7 +88,7 @@ The knowledge graph is the world model, not a database choice. It is constructed
 
 ## 9. Domain trajectory
 
-The architecture becomes domain-agnostic **by evolution, not by upfront design**. Version zero is built for pesticides without apology. The second domain is PFAS, entered through an edge the first domain already contains: fluazinam degrades to TFA. Only when two domains coexist are the shared abstractions extracted. Premature generality is a known failure mode, and this document forbids it.
+The architecture becomes domain-agnostic **by evolution, not by upfront design**. Version zero is built for pesticides without apology. The second domain is PFAS, entered through a degradation edge the first domain already contains — verified in EFSA's OpenFoodTox data as three fungicides (flufenacet, flutolanil, flurtamone) converging on trifluoroacetic acid, a PFAS compound. Fluazinam's own suspected TFA link, the reason it made national news, is not yet in any ingested dataset and is not asserted until a dated source supports it; the bridge stands on what is verified, not on the specific case that motivated the search for it. Only when two domains coexist are the shared abstractions extracted. Premature generality is a known failure mode, and this document forbids it.
 
 Candidate future domains: endocrine disruptors, pharmaceuticals in waterways, antibiotic resistance, heavy metals, drinking water contaminants, air pollution, hazards not yet recognised today.
 
