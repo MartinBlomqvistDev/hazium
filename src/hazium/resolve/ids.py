@@ -64,3 +64,26 @@ def product_node_id(country: str, product_name_id: int) -> str:
 def country_node_id(country: str) -> str:
     """Canonical node id for a country, e.g. 'country:SE'."""
     return f"country:{country.upper()}"
+
+
+def document_node_id(document_id: str) -> str:
+    """Canonical node id for a source document, e.g. 'document:10.2903/j.efsa.2008.137r'."""
+    return f"document:{document_id}"
+
+
+def safe_substance_node_id(cas_number: str | None, name: str | None) -> str:
+    """Like ``substance_node_id``, but never raises on a malformed CAS.
+
+    Real-world registries occasionally contain CAS values that fail
+    check-digit validation (encoding artifacts, placeholders, typos): a
+    fraction of a percent, but enough that treating it as fatal would abort
+    ingestion of an otherwise-good source. The record's ``cas_number`` field
+    still preserves the source's raw claim; only graph identity falls back
+    to the name here. Any caller deriving a substance's node id from an
+    already-stored ``Substance`` record should use this, not the strict
+    version, since a record accepted at ingestion time must remain buildable.
+    """
+    try:
+        return substance_node_id(cas_number=cas_number, name=name)
+    except ValueError:
+        return substance_node_id(name=name)
