@@ -204,6 +204,29 @@ class TestGraphStructuralFeatures:
         f = graph_structural_features(view, FLUAZINAM)
         assert f["graph_degree"] == 0.0
         assert f["graph_shared_hazard_substance_count"] == 0.0
+        assert f["graph_metabolite_degree"] == 0.0
+
+    def test_metabolite_degree_counts_degrades_to_either_direction(self) -> None:
+        # Mirrors the real graph: FLUAZINAM has no degradation edge at all
+        # (verified 2026-07-11 and again in V2a); a substance that *does*
+        # degrade (here standing in for flufenacet) gets a nonzero degree
+        # whether it is the parent or the metabolite of the edge.
+        parent = "substance:cas:142459-58-3"
+        view = TemporalGraph()
+        for sid in (parent, TFA):
+            view.add_node(_substance_node(sid, date(2008, 1, 1)))
+        view.add_edge(
+            Edge(
+                subject=parent,
+                predicate=EdgeType.DEGRADES_TO,
+                object=TFA,
+                source="efsa:openfoodtox",
+                known_at=date(2008, 3, 3),
+            )
+        )
+        assert graph_structural_features(view, parent)["graph_metabolite_degree"] == 1.0
+        assert graph_structural_features(view, TFA)["graph_metabolite_degree"] == 1.0
+        assert graph_structural_features(view, FLUAZINAM)["graph_metabolite_degree"] == 0.0
 
 
 class TestEuRegulatoryFeatures:

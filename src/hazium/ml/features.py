@@ -120,6 +120,13 @@ def graph_structural_features(view: TemporalGraph, substance_id: str) -> dict[st
 
     ``shared_hazard_substance_count`` walks each hazard the substance holds
     and counts distinct other substances sharing it, all within the view.
+
+    ``graph_metabolite_degree`` counts pre-cutoff ``DEGRADES_TO`` neighbours
+    in either direction (parent or metabolite) — the one genuine
+    substance-substance structure in the graph (see V2_SCOPE.md). Added in
+    V2a as the honest first move the baseline rule demands: if this hand-built
+    degree feature already captures the signal a graph embedding (V2b) would
+    also find, no embedding is needed.
     """
     edges = [
         e
@@ -133,9 +140,15 @@ def graph_structural_features(view: TemporalGraph, substance_id: str) -> dict[st
         for e in view.edges_of(hazard_id):
             if e.predicate == EdgeType.CLASSIFIED_AS and e.subject != substance_id:
                 neighbours.add(e.subject)
+    metabolite_neighbours = {
+        e.object if e.subject == substance_id else e.subject
+        for e in view.edges_of(substance_id)
+        if e.predicate == EdgeType.DEGRADES_TO
+    }
     return {
         "graph_degree": float(len(edges)),
         "graph_shared_hazard_substance_count": float(len(neighbours)),
+        "graph_metabolite_degree": float(len(metabolite_neighbours)),
     }
 
 
