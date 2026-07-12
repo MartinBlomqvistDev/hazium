@@ -12,7 +12,7 @@ import pandas as pd
 
 from hazium.graph.store import TemporalGraph
 from hazium.ml.baseline import TRIVIAL_BASELINES, evaluate_cutoff, score_xgboost
-from hazium.ml.dataset import FEATURE_COLUMNS
+from hazium.ml.dataset import EARLY_WARNING_POSITIVE_KINDS, FEATURE_COLUMNS
 from hazium.models import Node, NodeType, RegulatoryEvent, RegulatoryEventKind
 
 CUTOFF = date(2023, 1, 1)
@@ -98,6 +98,24 @@ class TestEvaluateCutoff:
         result = evaluate_cutoff(self._graph(), [], events, CUTOFF)
         assert result.population == 2
         assert result.positives == 1
+
+    def test_positive_kinds_broadens_the_label(self) -> None:
+        events = [
+            RegulatoryEvent(
+                substance_id="substance:cas:11111-11-1",
+                kind=RegulatoryEventKind.REEVALUATION_STARTED,
+                jurisdiction="SE",
+                event_date=date(2024, 1, 1),
+                source="s",
+                known_at=date(2024, 1, 1),
+            )
+        ]
+        default_result = evaluate_cutoff(self._graph(), [], events, CUTOFF)
+        broadened_result = evaluate_cutoff(
+            self._graph(), [], events, CUTOFF, positive_kinds=EARLY_WARNING_POSITIVE_KINDS
+        )
+        assert default_result.positives == 0
+        assert broadened_result.positives == 1
 
     def test_all_score_arrays_match_population_length(self) -> None:
         result = evaluate_cutoff(self._graph(), [], [], CUTOFF)

@@ -19,7 +19,12 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
-from hazium.graph.build import build_from_register, merge_clp, merge_eu_ppdb, merge_openfoodtox
+from hazium.graph.build import (
+    build_from_register,
+    merge_clp,
+    merge_openfoodtox,
+    merge_regulatory_events,
+)
 from hazium.graph.store import TemporalGraph
 from hazium.models import (
     DegradationLink,
@@ -175,9 +180,19 @@ def main() -> int:
     ppdb_path = args.processed_dir / "eu_ppdb_events.jsonl"
     if ppdb_path.exists():
         events = _load(ppdb_path, RegulatoryEvent)
-        applied, skipped = merge_eu_ppdb(graph, events)
+        applied, skipped = merge_regulatory_events(graph, events)
         print(
             f"merged EU PPDB events: +{applied} applied "
+            f"({skipped} skipped, substance not yet in graph)"
+        )
+        print(f"graph after merge: {len(graph)} nodes, {graph.edge_count} edges")
+
+    kemi_reeval_path = args.processed_dir / "kemi_reevaluations.jsonl"
+    if kemi_reeval_path.exists():
+        events = _load(kemi_reeval_path, RegulatoryEvent)
+        applied, skipped = merge_regulatory_events(graph, events)
+        print(
+            f"merged KEMI reevaluation announcements: +{applied} applied "
             f"({skipped} skipped, substance not yet in graph)"
         )
         print(f"graph after merge: {len(graph)} nodes, {graph.edge_count} edges")

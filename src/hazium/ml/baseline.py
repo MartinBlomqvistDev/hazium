@@ -17,8 +17,8 @@ from sklearn.model_selection import StratifiedKFold
 from xgboost import XGBClassifier
 
 from hazium.graph.store import TemporalGraph
-from hazium.ml.dataset import build_dataset
-from hazium.models import RegulatoryEvent, SalesRecord
+from hazium.ml.dataset import DEFAULT_POSITIVE_KINDS, build_dataset
+from hazium.models import RegulatoryEvent, RegulatoryEventKind, SalesRecord
 
 TRIVIAL_BASELINES = {
     "severe_hazard_count": lambda X: (
@@ -95,8 +95,9 @@ def evaluate_cutoff(
     regevents: list[RegulatoryEvent],
     cutoff: date,
     seed: int = 42,
+    positive_kinds: frozenset[RegulatoryEventKind] = DEFAULT_POSITIVE_KINDS,
 ) -> CutoffResult:
-    X, y, ids = build_dataset(graph, sales, regevents, cutoff)
+    X, y, ids = build_dataset(graph, sales, regevents, cutoff, positive_kinds)
     xgb_scores, out_of_fold = score_xgboost(X, y, seed)
 
     scores = {name: fn(X).to_numpy(dtype=float) for name, fn in TRIVIAL_BASELINES.items()}
@@ -117,5 +118,8 @@ def rolling_origin_eval(
     regevents: list[RegulatoryEvent],
     cutoffs: list[date],
     seed: int = 42,
+    positive_kinds: frozenset[RegulatoryEventKind] = DEFAULT_POSITIVE_KINDS,
 ) -> list[CutoffResult]:
-    return [evaluate_cutoff(graph, sales, regevents, cutoff, seed) for cutoff in cutoffs]
+    return [
+        evaluate_cutoff(graph, sales, regevents, cutoff, seed, positive_kinds) for cutoff in cutoffs
+    ]
