@@ -4,8 +4,9 @@ from datetime import date
 
 import pytest
 
-from hazium.models import Substance
-from hazium.resolve.names import SubstanceResolver, normalize_name
+from hazium.models import SalesRecord, Substance
+from hazium.resolve.ids import substance_node_id
+from hazium.resolve.names import SubstanceResolver, normalize_name, resolve_sales_records
 
 KNOWN = date(2026, 7, 3)
 
@@ -79,3 +80,36 @@ def test_unverified_alias_is_not_invented() -> None:
     # trifloxystrobin has no register candidate here; must not be forced
     resolver = SubstanceResolver([_substance("Fluazinam", "79622-59-6")])
     assert not resolver.resolve("Trifloxystrobin").matched
+
+
+def _sales_record(name: str) -> SalesRecord:
+    return SalesRecord(
+        substance_id=substance_node_id(name=name),
+        country="SE",
+        year=2020,
+        tonnes_active_substance=1.0,
+        source="kemi:sales",
+        known_at=KNOWN,
+    )
+
+
+class TestResolveSalesRecords:
+    def test_matched_record_gets_cas_id(self, resolver: SubstanceResolver) -> None:
+        resolved = resolve_sales_records([_sales_record("Fluazinam")], resolver)
+        assert resolved[0].substance_id == "substance:cas:79622-59-6"
+
+    def test_unmatched_record_keeps_name_based_id(self, resolver: SubstanceResolver) -> None:
+        resolved = resolve_sales_records([_sales_record("Glyfosat")], resolver)
+        assert resolved[0].substance_id == "substance:name:glyfosat"
+
+    def test_other_fields_preserved(self, resolver: SubstanceResolver) -> None:
+        record = _sales_record("Fluazinam")
+        resolved = resolve_sales_records([record], resolver)[0]
+        assert resolved.year == record.year
+        assert resolved.tonnes_active_substance == record.tonnes_active_substance
+        assert resolved.known_at == record.known_at
+
+    def test_preserves_record_order_and_count(self, resolver: SubstanceResolver) -> None:
+        records = [_sales_record("Fluazinam"), _sales_record("Glyfosat")]
+        resolved = resolve_sales_records(records, resolver)
+        assert len(resolved) == 2

@@ -25,7 +25,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from hazium.models import Substance
+from hazium.models import SalesRecord, Substance
 from hazium.resolve.ids import substance_node_id
 
 # Hand-verified spelling variants: sales-report name -> register name.
@@ -124,3 +124,31 @@ class SubstanceResolver:
             cas_number=substance.cas_number,
             method=method,
         )
+
+
+def resolve_sales_records(
+    records: list[SalesRecord], resolver: SubstanceResolver
+) -> list[SalesRecord]:
+    """Remap ``SalesRecord.substance_id`` from its raw name-based id to the
+    resolver's canonical (CAS-priority) id, where resolvable.
+
+    ``SalesRecord.substance_id`` is built directly from the report's
+    substance name at ingestion (``sources/kemi.py``, via
+    ``substance_node_id(name=...)``), with no register cross-reference at
+    that point -- entity resolution is this module's job, not the adapter's.
+    Without this step, sales records never join to the graph's CAS-based
+    substance ids and any feature or join keyed on ``substance_id`` silently
+    sees zero sales for everyone. Records the resolver can't match keep their
+    name-based id (inert -- it will never coincide with a real graph node
+    id) rather than being dropped, matching the "provisional, not discarded"
+    precedent set by ``Resolution`` itself.
+    """
+    resolved = []
+    for record in records:
+        name = record.substance_id.removeprefix("substance:name:").replace("-", " ")
+        resolution = resolver.resolve(name)
+        if resolution.matched:
+            resolved.append(record.model_copy(update={"substance_id": resolution.substance_id}))
+        else:
+            resolved.append(record)
+    return resolved
