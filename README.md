@@ -1,5 +1,7 @@
 # Hazium
 
+[![CI](https://github.com/MartinBlomqvistDev/hazium/actions/workflows/ci.yml/badge.svg)](https://github.com/MartinBlomqvistDev/hazium/actions/workflows/ci.yml)
+
 > Tracing systemic exposure.
 
 Hazium is an explainable machine learning platform that constructs a temporally-aware knowledge graph of environmental and public health evidence from heterogeneous public data: regulatory decisions, hazard classifications, national sales statistics, residue monitoring and scientific conclusions. Machine learning over that graph produces early-warning signals; every signal is traceable back to source evidence.
