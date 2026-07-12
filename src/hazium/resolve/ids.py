@@ -71,6 +71,11 @@ def document_node_id(document_id: str) -> str:
     return f"document:{document_id}"
 
 
+def hazard_node_id(hazard_code: str) -> str:
+    """Canonical node id for a CLP hazard statement, e.g. 'hazard:clp:H361d'."""
+    return f"hazard:clp:{hazard_code}"
+
+
 def safe_substance_node_id(cas_number: str | None, name: str | None) -> str:
     """Like ``substance_node_id``, but never raises on a malformed CAS.
 

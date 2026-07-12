@@ -7,12 +7,22 @@ from pathlib import Path
 
 import pytest
 
-from hazium.graph.build import load_graph, merge_openfoodtox
+from hazium.graph.build import load_graph, merge_clp, merge_openfoodtox
 from hazium.graph.store import TemporalGraph
-from hazium.models import DegradationLink, Edge, EdgeType, Node, NodeType, SourceDocument, Substance
+from hazium.models import (
+    DegradationLink,
+    Edge,
+    EdgeType,
+    HazardClassification,
+    Node,
+    NodeType,
+    SourceDocument,
+    Substance,
+)
 
 REGISTER_SNAPSHOT = date(2026, 7, 3)
 EFSA_PUBLISHED = date(2026, 4, 30)
+CLP_KNOWN_AT = date(2015, 4, 1)
 
 FLUAZINAM_ID = "substance:cas:79622-59-6"
 TFA_ID = "substance:cas:76-05-1"
@@ -139,6 +149,61 @@ class TestMergeOpenFoodTox:
         )
         view = graph.as_of(date(2023, 1, 1))
         assert view.has_node("document:10.2903/j.efsa.2008.137r")
+        # the substance itself must also survive: a document dated before the
+        # register snapshot is evidence the substance was knowable that early
+        assert view.has_node(FLUAZINAM_ID)
+
+    def test_dated_document_pulls_subject_known_at_earlier(self) -> None:
+        # fluazinam's node starts at the register snapshot (2026-07-03); a
+        # real 2008 EFSA conclusion is evidence it was knowable much earlier
+        graph = _register_graph()
+        assert graph.node(FLUAZINAM_ID).known_at == REGISTER_SNAPSHOT
+        merge_openfoodtox(
+            graph,
+            substances=[],
+            degradation_links=[],
+            documents=[
+                SourceDocument(
+                    id="10.2903/j.efsa.2008.137r",
+                    title="Conclusion regarding fluazinam",
+                    publisher="EFSA",
+                    published_at=date(2008, 3, 26),
+                    subject_substance_id=FLUAZINAM_ID,
+                    source="efsa:openfoodtox",
+                    known_at=date(2008, 3, 26),
+                )
+            ],
+        )
+        assert graph.node(FLUAZINAM_ID).known_at == date(2008, 3, 26)
+
+    def test_later_document_does_not_push_known_at_forward(self) -> None:
+        # keep-earliest, not overwrite: a later document must never make an
+        # already-earlier-known substance look newer
+        graph = _register_graph()
+        merge_openfoodtox(
+            graph,
+            substances=[],
+            degradation_links=[],
+            documents=[
+                SourceDocument(
+                    id="doc-old",
+                    title="Old conclusion",
+                    publisher="EFSA",
+                    subject_substance_id=FLUAZINAM_ID,
+                    source="efsa:openfoodtox",
+                    known_at=date(2008, 3, 26),
+                ),
+                SourceDocument(
+                    id="doc-new",
+                    title="Newer conclusion",
+                    publisher="EFSA",
+                    subject_substance_id=FLUAZINAM_ID,
+                    source="efsa:openfoodtox",
+                    known_at=date(2020, 1, 1),
+                ),
+            ],
+        )
+        assert graph.node(FLUAZINAM_ID).known_at == date(2008, 3, 26)
 
     def test_document_without_subject_creates_no_edge(self) -> None:
         graph = _register_graph()
@@ -179,6 +244,134 @@ class TestMergeOpenFoodTox:
                     )
                 ],
             )
+
+
+class TestMergeClp:
+    def test_classification_on_existing_substance_creates_hazard_and_edge(self) -> None:
+        graph = _register_graph()
+        applied, skipped = merge_clp(
+            graph,
+            [
+                HazardClassification(
+                    substance_id=FLUAZINAM_ID,
+                    hazard_code="H361d",
+                    hazard_class="Repr. 2",
+                    atp="ATP06",
+                    celex="32014R0605",
+                    source="echa:clp-annex-vi",
+                    known_at=CLP_KNOWN_AT,
+                )
+            ],
+        )
+        assert applied == 1
+        assert skipped == 0
+        hazard_node = graph.node("hazard:clp:H361d")
+        assert hazard_node.type == NodeType.HAZARD
+        paths = graph.evidence_paths(FLUAZINAM_ID, "hazard:clp:H361d")
+        assert any([e.predicate for e in p] == [EdgeType.CLASSIFIED_AS] for p in paths)
+
+    def test_edge_carries_hazard_class_atp_celex_as_attrs(self) -> None:
+        graph = _register_graph()
+        merge_clp(
+            graph,
+            [
+                HazardClassification(
+                    substance_id=FLUAZINAM_ID,
+                    hazard_code="H361d",
+                    hazard_class="Repr. 2",
+                    atp="ATP06",
+                    celex="32014R0605",
+                    source="echa:clp-annex-vi",
+                    known_at=CLP_KNOWN_AT,
+                )
+            ],
+        )
+        edge = next(
+            e for e in graph.edges_of(FLUAZINAM_ID) if e.predicate == EdgeType.CLASSIFIED_AS
+        )
+        assert edge.attrs == {"hazard_class": "Repr. 2", "atp": "ATP06", "celex": "32014R0605"}
+
+    def test_classification_for_absent_substance_is_skipped_not_raised(self) -> None:
+        graph = _register_graph()
+        applied, skipped = merge_clp(
+            graph,
+            [
+                HazardClassification(
+                    substance_id="substance:cas:76-05-1",  # TFA, not in this graph
+                    hazard_code="H400",
+                    source="echa:clp-annex-vi",
+                    known_at=CLP_KNOWN_AT,
+                )
+            ],
+        )
+        assert applied == 0
+        assert skipped == 1
+        assert not graph.has_node("hazard:clp:H400")
+
+    def test_classification_survives_pre_2023_cutoff(self) -> None:
+        graph = _register_graph()
+        merge_clp(
+            graph,
+            [
+                HazardClassification(
+                    substance_id=FLUAZINAM_ID,
+                    hazard_code="H361d",
+                    source="echa:clp-annex-vi",
+                    known_at=CLP_KNOWN_AT,
+                )
+            ],
+        )
+        view = graph.as_of(date(2023, 1, 1))
+        assert view.has_node("hazard:clp:H361d")
+        # the substance itself must also survive: without this, the edge is
+        # in the view but the north-star ranking has nothing to rank
+        assert view.has_node(FLUAZINAM_ID)
+
+    def test_classification_pulls_substance_known_at_earlier(self) -> None:
+        # fluazinam's node starts at the register snapshot (2026-07-03); the
+        # 2015 CLP classification is evidence it was knowable much earlier
+        graph = _register_graph()
+        assert graph.node(FLUAZINAM_ID).known_at == REGISTER_SNAPSHOT
+        merge_clp(
+            graph,
+            [
+                HazardClassification(
+                    substance_id=FLUAZINAM_ID,
+                    hazard_code="H361d",
+                    source="echa:clp-annex-vi",
+                    known_at=CLP_KNOWN_AT,
+                )
+            ],
+        )
+        assert graph.node(FLUAZINAM_ID).known_at == CLP_KNOWN_AT
+
+    def test_same_hazard_shared_across_substances_creates_one_node(self) -> None:
+        graph = _register_graph()
+        graph.add_node(
+            Node(
+                id=TFA_ID, type=NodeType.SUBSTANCE, label="TFA", source="s", known_at=EFSA_PUBLISHED
+            )
+        )
+        applied, _ = merge_clp(
+            graph,
+            [
+                HazardClassification(
+                    substance_id=FLUAZINAM_ID,
+                    hazard_code="H400",
+                    source="echa:clp-annex-vi",
+                    known_at=CLP_KNOWN_AT,
+                ),
+                HazardClassification(
+                    substance_id=TFA_ID,
+                    hazard_code="H400",
+                    source="echa:clp-annex-vi",
+                    known_at=CLP_KNOWN_AT,
+                ),
+            ],
+        )
+        assert applied == 2
+        hazard_nodes = [n for n in graph.nodes() if n.type == NodeType.HAZARD]
+        assert len(hazard_nodes) == 1
 
 
 class TestLoadGraph:

@@ -19,11 +19,12 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
-from hazium.graph.build import build_from_register, merge_openfoodtox
+from hazium.graph.build import build_from_register, merge_clp, merge_openfoodtox
 from hazium.graph.store import TemporalGraph
 from hazium.models import (
     DegradationLink,
     EdgeType,
+    HazardClassification,
     ProductRegistration,
     SalesRecord,
     SourceDocument,
@@ -96,6 +97,15 @@ def _check_fluazinam(graph: TemporalGraph) -> None:
     if degrades_to:
         print(f"  degrades to: {', '.join(degrades_to)}")
 
+    classified_as = [
+        (graph.node(e.object).label, e.known_at, e.attrs)
+        for e in graph.edges_of(FLUAZINAM_ID)
+        if e.predicate == EdgeType.CLASSIFIED_AS and e.subject == FLUAZINAM_ID
+    ]
+    for code, known_at, attrs in sorted(classified_as, key=lambda t: t[1]):
+        hazard_class = f" ({attrs['hazard_class']})" if "hazard_class" in attrs else ""
+        print(f"  classified as ({known_at}): {code}{hazard_class}")
+
     evidence = [
         (graph.node(e.object).label, e.known_at)
         for e in graph.edges_of(FLUAZINAM_ID)
@@ -109,7 +119,11 @@ def _check_fluazinam(graph: TemporalGraph) -> None:
         pre_2023_evidence = [
             e for e in pre_2023.edges_of(FLUAZINAM_ID) if e.predicate == EdgeType.EVIDENCED_BY
         ]
+        pre_2023_hazards = [
+            e for e in pre_2023.edges_of(FLUAZINAM_ID) if e.predicate == EdgeType.CLASSIFIED_AS
+        ]
         print(f"  evidence known before 2023-01-01: {len(pre_2023_evidence)} document(s)")
+        print(f"  hazard classifications known before 2023-01-01: {len(pre_2023_hazards)}")
 
 
 def main() -> int:
@@ -136,6 +150,16 @@ def main() -> int:
         print(
             f"merged OpenFoodTox: +{len(oft_substances)} substances, "
             f"{len(oft_links)} degradation links, {len(oft_documents)} dated assessments"
+        )
+        print(f"graph after merge: {len(graph)} nodes, {graph.edge_count} edges")
+
+    clp_path = args.processed_dir / "clp_classifications.jsonl"
+    if clp_path.exists():
+        classifications = _load(clp_path, HazardClassification)
+        applied, skipped = merge_clp(graph, classifications)
+        print(
+            f"merged CLP classifications: +{applied} applied "
+            f"({skipped} skipped, substance not yet in graph)"
         )
         print(f"graph after merge: {len(graph)} nodes, {graph.edge_count} edges")
 

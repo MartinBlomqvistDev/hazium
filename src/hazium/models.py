@@ -148,7 +148,14 @@ class HazardClassification(Fact):
 
     substance_id: str
     hazard_code: str = Field(description="e.g. 'H351'")
+    hazard_class: str | None = Field(
+        default=None, description="Paired CLP hazard class and category, e.g. 'Repr. 2'"
+    )
     system: str = "CLP"
+    atp: str | None = Field(
+        default=None, description="Adaptation to Technical Progress that set this, e.g. 'ATP06'"
+    )
+    celex: str | None = Field(default=None, description="CELEX id of the adopting regulation")
 
 
 class DegradationLink(Fact):

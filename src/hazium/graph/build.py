@@ -19,6 +19,9 @@ rests on sources that carry real dates (sales reports, EFSA conclusions).
 scientific evidence and degradation edges. Because both use the same
 CAS-priority node id scheme, EFSA identity naturally lands on the same nodes
 KEMI already created (e.g. fluazinam), rather than creating parallel ones.
+
+``merge_clp`` layers ECHA Annex VI hazard classifications the same way, but
+scoped to substances the graph already knows about (see its docstring).
 """
 
 from __future__ import annotations
@@ -28,9 +31,11 @@ from pathlib import Path
 
 from hazium.graph.store import TemporalGraph
 from hazium.models import (
+    AttrValue,
     DegradationLink,
     Edge,
     EdgeType,
+    HazardClassification,
     Node,
     NodeType,
     ProductRegistration,
@@ -40,6 +45,7 @@ from hazium.models import (
 from hazium.resolve.ids import (
     country_node_id,
     document_node_id,
+    hazard_node_id,
     product_node_id,
     safe_substance_node_id,
     substance_node_id,
@@ -150,6 +156,34 @@ def _substance_node(substance: Substance) -> Node:
     )
 
 
+def _pull_known_at_earlier(graph: TemporalGraph, node_id: str, source: str, known_at: date) -> None:
+    """Let a dated fact about an existing node pull the node's own ``known_at``
+    earlier, via ``add_node``'s keep-earliest semantics.
+
+    A node's ``known_at`` is "the earliest date this entity was publicly
+    knowable to Hazium", not just the date of whichever ingestion snapshot
+    happened to create the node first. Without this, a substance created only
+    from a live register/export snapshot (e.g. fluazinam's node getting its
+    ``known_at`` from OpenFoodTox's 2026 publication date) would never appear
+    in an ``as_of`` view before that snapshot date, even when the graph holds
+    genuinely dated evidence about it from years earlier (an EFSA conclusion,
+    a CLP classification). That would silently defeat the whole point of
+    ingesting dated evidence: the north-star retrodetection question requires
+    the substance itself, not just its edges, to survive the cutoff.
+    """
+    existing = graph.node(node_id)
+    if known_at < existing.known_at:
+        graph.add_node(
+            Node(
+                id=existing.id,
+                type=existing.type,
+                label=existing.label,
+                source=source,
+                known_at=known_at,
+            )
+        )
+
+
 def merge_openfoodtox(
     graph: TemporalGraph,
     substances: list[Substance],
@@ -193,6 +227,9 @@ def merge_openfoodtox(
             # resolved from the same index as `substances`, so the endpoint
             # must exist. A missing node here is a real ingestion bug and
             # should raise (TemporalGraph.add_edge), not be swallowed.
+            _pull_known_at_earlier(
+                graph, document.subject_substance_id, document.source, document.known_at
+            )
             graph.add_edge(
                 Edge(
                     subject=document.subject_substance_id,
@@ -202,6 +239,63 @@ def merge_openfoodtox(
                     known_at=document.known_at,
                 )
             )
+
+
+def merge_clp(graph: TemporalGraph, classifications: list[HazardClassification]) -> tuple[int, int]:
+    """Layer ECHA Annex VI hazard classifications onto an existing graph.
+
+    Scoped to substances already present in the graph: Annex VI covers
+    ~4,400 substances across the whole of EU chemicals regulation, the
+    overwhelming majority outside the pesticide domain V0 targets, so
+    classifications for substances not yet in the graph (from KEMI or
+    OpenFoodTox) are skipped rather than conjuring thousands of unrelated
+    industrial-chemical nodes. Returns ``(applied, skipped)`` for the
+    pipeline to report.
+
+    No dedup on repeat (substance, hazard) pairs across ATPs: each row is a
+    distinct dated fact (a reclassification), matching the "corrections are
+    new facts, never mutations" rule -- multiple ``CLASSIFIED_AS`` edges for
+    the same pair, at different ``known_at``, is the correct representation
+    of a substance being reclassified over time.
+    """
+    applied = skipped = 0
+    for classification in classifications:
+        if not graph.has_node(classification.substance_id):
+            skipped += 1
+            continue
+        _pull_known_at_earlier(
+            graph, classification.substance_id, classification.source, classification.known_at
+        )
+        hazard_id = hazard_node_id(classification.hazard_code)
+        if not graph.has_node(hazard_id):
+            graph.add_node(
+                Node(
+                    id=hazard_id,
+                    type=NodeType.HAZARD,
+                    label=classification.hazard_code,
+                    source=classification.source,
+                    known_at=classification.known_at,
+                )
+            )
+        attrs: dict[str, AttrValue] = {}
+        if classification.hazard_class:
+            attrs["hazard_class"] = classification.hazard_class
+        if classification.atp:
+            attrs["atp"] = classification.atp
+        if classification.celex:
+            attrs["celex"] = classification.celex
+        graph.add_edge(
+            Edge(
+                subject=classification.substance_id,
+                predicate=EdgeType.CLASSIFIED_AS,
+                object=hazard_id,
+                source=classification.source,
+                known_at=classification.known_at,
+                attrs=attrs,
+            )
+        )
+        applied += 1
+    return applied, skipped
 
 
 def load_graph(nodes_path: Path, edges_path: Path) -> TemporalGraph:
