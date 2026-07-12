@@ -107,6 +107,39 @@ class TestMergeOpenFoodTox:
         paths = graph.evidence_paths(FLUAZINAM_ID, TFA_ID)
         assert any([e.predicate for e in p] == [EdgeType.DEGRADES_TO] for p in paths)
 
+    def test_degradation_link_pulls_both_endpoints_known_at_earlier(self) -> None:
+        # Both nodes start at the register snapshot (2026-07-03); a
+        # back-dated degradation link (V2a: dated to the parent's earliest
+        # EFSA assessment, not the export snapshot) is evidence both
+        # substances were knowable much earlier -- mirrors how a dated
+        # document already pulls its subject's known_at earlier.
+        graph = _register_graph()
+        graph.add_node(
+            Node(
+                id=TFA_ID,
+                type=NodeType.SUBSTANCE,
+                label="TFA",
+                source="kemi:bkmreg",
+                known_at=REGISTER_SNAPSHOT,
+            )
+        )
+        earlier = date(2008, 3, 3)
+        merge_openfoodtox(
+            graph,
+            substances=[],
+            degradation_links=[
+                DegradationLink(
+                    parent_substance_id=FLUAZINAM_ID,
+                    metabolite_substance_id=TFA_ID,
+                    source="efsa:openfoodtox",
+                    known_at=earlier,
+                )
+            ],
+            documents=[],
+        )
+        assert graph.node(FLUAZINAM_ID).known_at == earlier
+        assert graph.node(TFA_ID).known_at == earlier
+
     def test_dated_document_creates_evidence_edge(self) -> None:
         graph = _register_graph()
         merge_openfoodtox(

@@ -201,11 +201,22 @@ def merge_openfoodtox(
     has both endpoints available; ``DegradationLink`` and ``SourceDocument``
     already carry resolved substance ids (the adapter's job, not this
     builder's), matching how ``SalesRecord``/``HazardClassification`` work.
+
+    Degradation links now carry a real per-link ``known_at`` (the parent
+    substance's earliest dated EFSA assessment, not the export snapshot date
+    -- see ``sources/openfoodtox.py``), so both endpoints get
+    ``_pull_known_at_earlier`` the same way ``merge_clp`` and
+    ``merge_regulatory_events`` already do: a metabolite relationship dated
+    2008 is proof both substances were knowable in 2008, and without this the
+    substance nodes themselves would still miss an early ``as_of`` view even
+    though their edge now correctly wouldn't.
     """
     for substance in substances:
         graph.add_node(_substance_node(substance))
 
     for link in degradation_links:
+        _pull_known_at_earlier(graph, link.parent_substance_id, link.source, link.known_at)
+        _pull_known_at_earlier(graph, link.metabolite_substance_id, link.source, link.known_at)
         graph.add_edge(
             Edge(
                 subject=link.parent_substance_id,
