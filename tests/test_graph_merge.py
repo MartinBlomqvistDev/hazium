@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from hazium.graph.build import load_graph, merge_clp, merge_openfoodtox
+from hazium.graph.build import load_graph, merge_clp, merge_eu_ppdb, merge_openfoodtox
 from hazium.graph.store import TemporalGraph
 from hazium.models import (
     DegradationLink,
@@ -16,6 +16,8 @@ from hazium.models import (
     HazardClassification,
     Node,
     NodeType,
+    RegulatoryEvent,
+    RegulatoryEventKind,
     SourceDocument,
     Substance,
 )
@@ -372,6 +374,67 @@ class TestMergeClp:
         assert applied == 2
         hazard_nodes = [n for n in graph.nodes() if n.type == NodeType.HAZARD]
         assert len(hazard_nodes) == 1
+
+
+class TestMergeEuPpdb:
+    def _event(self, kind, event_date, substance_id=FLUAZINAM_ID):
+        return RegulatoryEvent(
+            substance_id=substance_id,
+            kind=kind,
+            jurisdiction="EU",
+            event_date=event_date,
+            source="eu:ppdb",
+            known_at=event_date,
+        )
+
+    def test_event_creates_node_and_subject_of_edge(self) -> None:
+        graph = _register_graph()
+        applied, skipped = merge_eu_ppdb(
+            graph, [self._event(RegulatoryEventKind.NON_RENEWAL, date(2023, 8, 31))]
+        )
+        assert (applied, skipped) == (1, 0)
+        events = [e for e in graph.edges_of(FLUAZINAM_ID) if e.predicate == EdgeType.SUBJECT_OF]
+        assert len(events) == 1
+        node = graph.node(events[0].object)
+        assert node.type == NodeType.REGULATORY_EVENT
+        assert node.attrs["kind"] == "non_renewal"
+
+    def test_event_for_absent_substance_is_skipped(self) -> None:
+        graph = _register_graph()
+        applied, skipped = merge_eu_ppdb(
+            graph,
+            [self._event(RegulatoryEventKind.NON_RENEWAL, date(2023, 8, 31), TFA_ID)],
+        )
+        assert (applied, skipped) == (0, 1)
+
+    def test_approval_pulls_substance_known_at_earlier(self) -> None:
+        # a 2009 approval is proof the substance was knowable in 2009
+        graph = _register_graph()
+        assert graph.node(FLUAZINAM_ID).known_at == REGISTER_SNAPSHOT
+        merge_eu_ppdb(graph, [self._event(RegulatoryEventKind.APPROVAL, date(2009, 3, 1))])
+        assert graph.node(FLUAZINAM_ID).known_at == date(2009, 3, 1)
+
+    def test_non_renewal_survives_its_cutoff_but_not_an_earlier_one(self) -> None:
+        graph = _register_graph()
+        merge_eu_ppdb(graph, [self._event(RegulatoryEventKind.NON_RENEWAL, date(2024, 6, 1))])
+        event_node = next(
+            e.object for e in graph.edges_of(FLUAZINAM_ID) if e.predicate == EdgeType.SUBJECT_OF
+        )
+        assert graph.as_of(date(2025, 1, 1)).has_node(event_node)
+        assert not graph.as_of(date(2024, 1, 1)).has_node(event_node)
+
+    def test_two_events_one_substance_get_distinct_nodes(self) -> None:
+        graph = _register_graph()
+        applied, _ = merge_eu_ppdb(
+            graph,
+            [
+                self._event(RegulatoryEventKind.APPROVAL, date(2009, 3, 1)),
+                self._event(RegulatoryEventKind.NON_RENEWAL, date(2023, 8, 31)),
+            ],
+        )
+        assert applied == 2
+        event_nodes = [n for n in graph.nodes() if n.type == NodeType.REGULATORY_EVENT]
+        assert len(event_nodes) == 2
 
 
 class TestLoadGraph:

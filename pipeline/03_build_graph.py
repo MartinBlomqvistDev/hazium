@@ -19,13 +19,14 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
-from hazium.graph.build import build_from_register, merge_clp, merge_openfoodtox
+from hazium.graph.build import build_from_register, merge_clp, merge_eu_ppdb, merge_openfoodtox
 from hazium.graph.store import TemporalGraph
 from hazium.models import (
     DegradationLink,
     EdgeType,
     HazardClassification,
     ProductRegistration,
+    RegulatoryEvent,
     SalesRecord,
     SourceDocument,
     Substance,
@@ -106,6 +107,14 @@ def _check_fluazinam(graph: TemporalGraph) -> None:
         hazard_class = f" ({attrs['hazard_class']})" if "hazard_class" in attrs else ""
         print(f"  classified as ({known_at}): {code}{hazard_class}")
 
+    reg_events = [
+        graph.node(e.object).label
+        for e in graph.edges_of(FLUAZINAM_ID)
+        if e.predicate == EdgeType.SUBJECT_OF and e.subject == FLUAZINAM_ID
+    ]
+    for label in sorted(reg_events):
+        print(f"  regulatory event: {label}")
+
     evidence = [
         (graph.node(e.object).label, e.known_at)
         for e in graph.edges_of(FLUAZINAM_ID)
@@ -159,6 +168,16 @@ def main() -> int:
         applied, skipped = merge_clp(graph, classifications)
         print(
             f"merged CLP classifications: +{applied} applied "
+            f"({skipped} skipped, substance not yet in graph)"
+        )
+        print(f"graph after merge: {len(graph)} nodes, {graph.edge_count} edges")
+
+    ppdb_path = args.processed_dir / "eu_ppdb_events.jsonl"
+    if ppdb_path.exists():
+        events = _load(ppdb_path, RegulatoryEvent)
+        applied, skipped = merge_eu_ppdb(graph, events)
+        print(
+            f"merged EU PPDB events: +{applied} applied "
             f"({skipped} skipped, substance not yet in graph)"
         )
         print(f"graph after merge: {len(graph)} nodes, {graph.edge_count} edges")

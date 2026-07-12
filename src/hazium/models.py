@@ -78,6 +78,8 @@ class Edge(Fact):
 class RegulatoryEventKind(StrEnum):
     APPROVAL = "approval"
     RENEWAL = "renewal"
+    NON_RENEWAL = "non_renewal"  # was approved, approval ended and was not renewed
+    NON_APPROVAL = "non_approval"  # never approved (non-inclusion decision)
     WITHDRAWAL = "withdrawal"
     RESTRICTION = "restriction"
     REEVALUATION_STARTED = "reevaluation_started"

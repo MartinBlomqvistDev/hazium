@@ -76,6 +76,16 @@ def hazard_node_id(hazard_code: str) -> str:
     return f"hazard:clp:{hazard_code}"
 
 
+def regulatory_event_node_id(substance_id: str, kind: str, event_date: str) -> str:
+    """Canonical node id for a regulatory event, unique per (substance, kind, date).
+
+    e.g. 'regevent:eu:non_renewal:2023-08-31:substance:cas:79622-59-6'. Keyed on
+    the triple so re-ingesting the same act is idempotent and two distinct acts
+    on one substance (an approval and a later non-renewal) get distinct nodes.
+    """
+    return f"regevent:eu:{kind}:{event_date}:{substance_id}"
+
+
 def safe_substance_node_id(cas_number: str | None, name: str | None) -> str:
     """Like ``substance_node_id``, but never raises on a malformed CAS.
 

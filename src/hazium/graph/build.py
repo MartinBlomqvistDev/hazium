@@ -22,6 +22,8 @@ KEMI already created (e.g. fluazinam), rather than creating parallel ones.
 
 ``merge_clp`` layers ECHA Annex VI hazard classifications the same way, but
 scoped to substances the graph already knows about (see its docstring).
+``merge_eu_ppdb`` layers EU regulatory events (approvals, non-renewals) with
+the same scoping; its non-renewal events are V1's regulatory-action label.
 """
 
 from __future__ import annotations
@@ -39,6 +41,7 @@ from hazium.models import (
     Node,
     NodeType,
     ProductRegistration,
+    RegulatoryEvent,
     SourceDocument,
     Substance,
 )
@@ -47,6 +50,7 @@ from hazium.resolve.ids import (
     document_node_id,
     hazard_node_id,
     product_node_id,
+    regulatory_event_node_id,
     safe_substance_node_id,
     substance_node_id,
 )
@@ -292,6 +296,52 @@ def merge_clp(graph: TemporalGraph, classifications: list[HazardClassification])
                 source=classification.source,
                 known_at=classification.known_at,
                 attrs=attrs,
+            )
+        )
+        applied += 1
+    return applied, skipped
+
+
+def merge_eu_ppdb(graph: TemporalGraph, events: list[RegulatoryEvent]) -> tuple[int, int]:
+    """Layer EU regulatory events onto an existing graph, in place.
+
+    Scoped to substances already present (like ``merge_clp``): the EU register
+    covers thousands of substances, most outside the pesticide domain the graph
+    holds, so an event whose substance is absent is counted and skipped.
+    Returns ``(applied, skipped)``.
+
+    Each event becomes a ``regulatory_event`` node plus a ``SUBJECT_OF`` edge
+    from the substance. A dated event also pulls the substance node's own
+    ``known_at`` earlier (an approval dated 2009 is proof the substance was
+    knowable in 2009): the same fix `merge_openfoodtox`/`merge_clp` rely on for
+    the substance to survive an early ``as_of`` view, not just its edges.
+    """
+    applied = skipped = 0
+    for event in events:
+        if not graph.has_node(event.substance_id):
+            skipped += 1
+            continue
+        _pull_known_at_earlier(graph, event.substance_id, event.source, event.known_at)
+        event_id = regulatory_event_node_id(
+            event.substance_id, event.kind.value, event.event_date.isoformat()
+        )
+        graph.add_node(
+            Node(
+                id=event_id,
+                type=NodeType.REGULATORY_EVENT,
+                label=f"{event.kind.value} {event.event_date.isoformat()}",
+                source=event.source,
+                known_at=event.known_at,
+                attrs={"kind": event.kind.value, "jurisdiction": event.jurisdiction},
+            )
+        )
+        graph.add_edge(
+            Edge(
+                subject=event.substance_id,
+                predicate=EdgeType.SUBJECT_OF,
+                object=event_id,
+                source=event.source,
+                known_at=event.known_at,
             )
         )
         applied += 1
