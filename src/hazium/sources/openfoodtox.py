@@ -14,9 +14,14 @@ Three surfaces are extracted from the 18-sheet document graph:
   identity spine with an authoritative source, not to invent identifiers.
 * ``FLEX_SUM.Metabolites`` — parent-substance -> metabolite links, becoming
   ``DEGRADES_TO`` edges. This sheet carries no per-row date (a metabolic
-  pathway is a property of the substance record, not a dated observation),
-  so these edges get ``known_at`` = the export's own publication date, the
-  same snapshot honesty as the KEMI register structure.
+  pathway is a property of the substance record, not a dated observation), so
+  a link's ``known_at`` is the parent substance's *earliest dated EFSA
+  assessment* (from ``DOSSIER``): a metabolite relationship reported in a 2008
+  EFSA conclusion was knowable in 2008, not just at the 2026 export date. This
+  is a real join over already-ingested dates, not an invented one. Only when
+  the parent has no dated assessment does the link fall back to the export's
+  own publication date, the same snapshot honesty as the KEMI register
+  structure.
 * ``DOSSIER`` — one row per EFSA scientific opinion/conclusion, dated and
   DOI-linked. Becomes ``SourceDocument`` facts with real ``known_at``.
 
@@ -259,21 +264,46 @@ def substances_from(index: OpenFoodToxIndex, known_at: date) -> list[Substance]:
     return list(seen.values())
 
 
-def degradation_links_from(index: OpenFoodToxIndex, known_at: date) -> list[DegradationLink]:
+def _earliest_assessment_by_substance(index: OpenFoodToxIndex) -> dict[str, date]:
+    """Each substance's earliest dated EFSA assessment, keyed by node id.
+
+    Used to back-date degradation links to when the metabolic relationship
+    was actually knowable, rather than the export's snapshot date.
+    """
+    earliest: dict[str, date] = {}
+    for row in index.assessments:
+        subject = index.substances.get(row["subject_uuid"])
+        if not subject:
+            continue
+        node_id = _node_id(subject)
+        published: date = row["published_at"]
+        if node_id not in earliest or published < earliest[node_id]:
+            earliest[node_id] = published
+    return earliest
+
+
+def degradation_links_from(
+    index: OpenFoodToxIndex, fallback_known_at: date
+) -> list[DegradationLink]:
     """DEGRADES_TO facts: a substance's declared metabolic degradation.
 
-    ``known_at`` is the export's publication date, not a per-row date: see
-    the module docstring's snapshot-honesty note.
+    ``known_at`` is the parent substance's earliest dated EFSA assessment
+    where one exists (a real join, not an invented date); ``fallback_known_at``
+    (the export's publication date) applies only when the parent has no dated
+    assessment at all. See the module docstring's dating note.
     """
+    earliest = _earliest_assessment_by_substance(index)
     links = []
     for parent_uuid, metabolite_uuid in index.degradation_pairs:
         parent = index.substances.get(parent_uuid)
         metabolite = index.substances.get(metabolite_uuid)
         if not parent or not metabolite:
             continue
+        parent_node_id = _node_id(parent)
+        known_at = earliest.get(parent_node_id, fallback_known_at)
         links.append(
             DegradationLink(
-                parent_substance_id=_node_id(parent),
+                parent_substance_id=parent_node_id,
                 metabolite_substance_id=_node_id(metabolite),
                 source=SOURCE,
                 known_at=known_at,
