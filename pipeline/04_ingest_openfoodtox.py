@@ -3,8 +3,9 @@ links, and dated scientific assessments to JSONL.
 
 This is the first source with genuinely dated evidence (each assessment
 carries the EFSA opinion's real evaluation date), rather than a live-register
-snapshot. See ``sources/openfoodtox.py`` for the temporal caveats on the
-degradation links, which are not per-row dated.
+snapshot. Degradation links carry no per-row date of their own; see
+``sources/openfoodtox.py`` for how they are back-dated to the parent
+substance's earliest assessment instead of the export snapshot date.
 
 Usage:
     python pipeline/04_ingest_openfoodtox.py
@@ -53,8 +54,9 @@ def main() -> int:
     print(f"substances: {len(substances)} ({with_cas} with CAS)")
     _write_jsonl(args.out_dir / "openfoodtox_substances.jsonl", substances)
 
-    links = degradation_links_from(index, known_at=published)
-    print(f"degradation links: {len(links)}")
+    links = degradation_links_from(index, fallback_known_at=published)
+    dated_before_2023 = sum(1 for link in links if link.known_at.year < 2023)
+    print(f"degradation links: {len(links)} ({dated_before_2023} before 2023)")
     _write_jsonl(args.out_dir / "openfoodtox_degradation.jsonl", links)
 
     documents = assessments_from(index)

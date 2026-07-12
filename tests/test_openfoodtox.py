@@ -86,18 +86,44 @@ class TestSubstancesFrom:
 
 class TestDegradationLinksFrom:
     def test_resolves_both_endpoints_to_cas_ids(self) -> None:
-        links = degradation_links_from(_index(), known_at=PUBLISHED)
+        links = degradation_links_from(_index(), fallback_known_at=PUBLISHED)
         assert len(links) == 1
         assert links[0].parent_substance_id == "substance:cas:142459-58-3"
         assert links[0].metabolite_substance_id == "substance:cas:76-05-1"
 
-    def test_known_at_is_export_publication_date_not_per_row(self) -> None:
-        links = degradation_links_from(_index(), known_at=PUBLISHED)
+    def test_falls_back_to_export_date_when_parent_has_no_dated_assessment(self) -> None:
+        # The fixture's one assessment is for fluazinam, not flufenacet (the
+        # parent in the only degradation pair), so no earlier date exists.
+        links = degradation_links_from(_index(), fallback_known_at=PUBLISHED)
         assert links[0].known_at == PUBLISHED
+
+    def test_back_dated_to_parents_earliest_assessment_when_one_exists(self) -> None:
+        earlier = date(2008, 3, 26)
+        index = _index(
+            degradation_pairs=[(FLUAZINAM_UUID, TFA_UUID)],
+            assessments=[
+                {
+                    "dossier_uuid": "dossier-1",
+                    "subject_uuid": FLUAZINAM_UUID,
+                    "published_at": earlier,
+                    "title": "Conclusion regarding fluazinam",
+                    "doi": "doi:10.2903/j.efsa.2008.137r",
+                },
+                {
+                    "dossier_uuid": "dossier-2",
+                    "subject_uuid": FLUAZINAM_UUID,
+                    "published_at": date(2015, 1, 1),
+                    "title": "Later conclusion regarding fluazinam",
+                    "doi": "doi:10.2903/j.efsa.2015.001",
+                },
+            ],
+        )
+        links = degradation_links_from(index, fallback_known_at=PUBLISHED)
+        assert links[0].known_at == earlier  # earliest of the parent's assessments, not export date
 
     def test_pair_referencing_unindexed_substance_is_dropped(self) -> None:
         index = _index(degradation_pairs=[(FLUFENACET_UUID, GHOST_UUID)])
-        assert degradation_links_from(index, known_at=PUBLISHED) == []
+        assert degradation_links_from(index, fallback_known_at=PUBLISHED) == []
 
 
 class TestAssessmentsFrom:
