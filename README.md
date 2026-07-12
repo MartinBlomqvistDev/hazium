@@ -88,9 +88,9 @@ other hazard codes) from 2015.
 
 V1 — a real, dated regulatory-action label (EU non-renewal events), a
 temporally-clean feature set, and a rolling-origin backtest. **XGBoost beats
-every trivial baseline at every cutoff** (2023-01-01: AP 0.183 vs. 0.016 best
-trivial, on 25 positives out of 5,585 substances). Under this headline label,
-fluazinam is an honest negative (ranks 5,271st of 5,585) — the EU-only
+every trivial baseline at every cutoff** (2023-01-01: AP 0.240 vs. 0.016 best
+trivial, on 25 positives out of 5,934 substances). Under this headline label,
+fluazinam is an honest negative (ranks 3,702nd of 5,934) — the EU-only
 feature set has no signal for its actual 2026 concern (a national
 TFA/groundwater finding).
 
@@ -100,11 +100,13 @@ risk. Ingested and used to build a second, clearly-caveated label variant
 (early-warning: also counts a Swedish reevaluation, not just an EU
 non-renewal — a weaker, earlier signal, reported separately, never merged
 into the headline table). **Under that variant, fluazinam becomes a genuine
-positive and ranks 597th of 5,585 — top 10.7%, out-of-fold** — the closest
-result yet to the project's own north-star question. Both results are
-reported side by side, honestly caveated, every time the eval runs: see
-[`V1_SCOPE.md`](V1_SCOPE.md) for the deliverable and [`DEV_LOG.md`](DEV_LOG.md)
-for the full eval tables and reasoning.
+positive and ranks 176th of 5,934 — top 3.0%, out-of-fold** — the closest
+result yet to the project's own north-star question. (A V2a correctness fix
+to the graph's temporal dating — see Roadmap — moved this from an earlier
+597th/top-10.7% result; both figures are on record in DEV_LOG, nothing
+hidden.) Both results are reported side by side, honestly caveated, every
+time the eval runs: see [`V1_SCOPE.md`](V1_SCOPE.md) for the deliverable and
+[`DEV_LOG.md`](DEV_LOG.md) for the full eval tables and reasoning.
 
 See [`DEV_LOG.md`](DEV_LOG.md) for the full build record, including several
 corrections and bugs found and fixed along the way: a scoping correction (the
