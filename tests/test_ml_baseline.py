@@ -11,9 +11,14 @@ import numpy as np
 import pandas as pd
 
 from hazium.graph.store import TemporalGraph
-from hazium.ml.baseline import TRIVIAL_BASELINES, evaluate_cutoff, score_xgboost
+from hazium.ml.baseline import (
+    TRIVIAL_BASELINES,
+    evaluate_cutoff,
+    evaluate_cutoff_with_embeddings,
+    score_xgboost,
+)
 from hazium.ml.dataset import EARLY_WARNING_POSITIVE_KINDS, FEATURE_COLUMNS
-from hazium.models import Node, NodeType, RegulatoryEvent, RegulatoryEventKind
+from hazium.models import Edge, EdgeType, Node, NodeType, RegulatoryEvent, RegulatoryEventKind
 
 CUTOFF = date(2023, 1, 1)
 
@@ -121,3 +126,119 @@ class TestEvaluateCutoff:
         result = evaluate_cutoff(self._graph(), [], [], CUTOFF)
         for scores in result.scores.values():
             assert len(scores) == result.population
+
+
+class TestEvaluateCutoffWithEmbeddings:
+    """V2b's three-condition comparison, and its one hard correctness
+    requirement: the embedding must be blind to anything dated `>= cutoff`.
+    """
+
+    _SUBSTANCES = [
+        ("substance:cas:79622-59-6", date(2015, 1, 1)),  # fluazinam
+        ("substance:cas:142459-58-3", date(2004, 1, 1)),  # flufenacet
+        ("substance:cas:76-05-1", date(2008, 1, 1)),  # TFA
+        ("substance:cas:11111-11-1", date(2010, 1, 1)),
+        ("substance:cas:22222-22-2", date(2012, 1, 1)),
+        ("substance:cas:33333-33-3", date(2011, 1, 1)),
+    ]
+
+    def _graph(self) -> TemporalGraph:
+        g = TemporalGraph()
+        for sid, known_at in self._SUBSTANCES:
+            g.add_node(
+                Node(id=sid, type=NodeType.SUBSTANCE, label=sid, source="s", known_at=known_at)
+            )
+        g.add_node(
+            Node(
+                id="hazard:clp:H410",
+                type=NodeType.HAZARD,
+                label="H410",
+                source="s",
+                known_at=date(2010, 1, 1),
+            )
+        )
+        # Pre-cutoff informative structure: one degradation edge, two
+        # substances sharing a hazard.
+        g.add_edge(
+            Edge(
+                subject="substance:cas:142459-58-3",
+                predicate=EdgeType.DEGRADES_TO,
+                object="substance:cas:76-05-1",
+                source="s",
+                known_at=date(2008, 3, 3),
+            )
+        )
+        for sid in ("substance:cas:79622-59-6", "substance:cas:11111-11-1"):
+            g.add_edge(
+                Edge(
+                    subject=sid,
+                    predicate=EdgeType.CLASSIFIED_AS,
+                    object="hazard:clp:H410",
+                    source="s",
+                    known_at=date(2012, 1, 1),
+                )
+            )
+        return g
+
+    def _events(self) -> list[RegulatoryEvent]:
+        return [
+            RegulatoryEvent(
+                substance_id="substance:cas:22222-22-2",
+                kind=RegulatoryEventKind.NON_RENEWAL,
+                jurisdiction="EU",
+                event_date=date(2024, 1, 1),
+                source="s",
+                known_at=date(2024, 1, 1),
+            ),
+            RegulatoryEvent(
+                substance_id="substance:cas:33333-33-3",
+                kind=RegulatoryEventKind.NON_RENEWAL,
+                jurisdiction="EU",
+                event_date=date(2024, 6, 1),
+                source="s",
+                known_at=date(2024, 6, 1),
+            ),
+        ]
+
+    def test_includes_trivial_plus_three_xgboost_conditions(self) -> None:
+        result = evaluate_cutoff_with_embeddings(self._graph(), [], self._events(), CUTOFF)
+        assert set(result.scores.keys()) == set(TRIVIAL_BASELINES) | {
+            "xgboost_tabular",
+            "xgboost_embed_only",
+            "xgboost_tabular_plus_embed",
+        }
+
+    def test_all_score_arrays_match_population_length(self) -> None:
+        result = evaluate_cutoff_with_embeddings(self._graph(), [], self._events(), CUTOFF)
+        for scores in result.scores.values():
+            assert len(scores) == result.population
+
+    def test_embedding_scores_invariant_to_facts_dated_on_or_after_cutoff(self) -> None:
+        # The temporal-refit correctness test V2_SCOPE.md calls for: perturb
+        # the graph with a *post-cutoff* degrades_to edge between two
+        # population members, and confirm every score (embedding included)
+        # is byte-identical to the unperturbed run -- proof the embedding
+        # never saw it, because evaluate_cutoff_with_embeddings refits on
+        # graph.as_of(cutoff) fresh, every call.
+        baseline_graph = self._graph()
+        baseline_result = evaluate_cutoff_with_embeddings(
+            baseline_graph, [], self._events(), CUTOFF
+        )
+
+        perturbed_graph = self._graph()
+        perturbed_graph.add_edge(
+            Edge(
+                subject="substance:cas:22222-22-2",
+                predicate=EdgeType.DEGRADES_TO,
+                object="substance:cas:33333-33-3",
+                source="s",
+                known_at=date(2024, 1, 1),  # dated >= CUTOFF: must not leak in
+            )
+        )
+        perturbed_result = evaluate_cutoff_with_embeddings(
+            perturbed_graph, [], self._events(), CUTOFF
+        )
+
+        assert baseline_result.ids == perturbed_result.ids
+        for name in baseline_result.scores:
+            assert (baseline_result.scores[name] == perturbed_result.scores[name]).all(), name

@@ -18,6 +18,7 @@ from xgboost import XGBClassifier
 
 from hazium.graph.store import TemporalGraph
 from hazium.ml.dataset import DEFAULT_POSITIVE_KINDS, build_dataset
+from hazium.ml.embed import embedding_dataframe, fit_metapath2vec
 from hazium.models import RegulatoryEvent, RegulatoryEventKind, SalesRecord
 
 TRIVIAL_BASELINES = {
@@ -122,4 +123,63 @@ def rolling_origin_eval(
 ) -> list[CutoffResult]:
     return [
         evaluate_cutoff(graph, sales, regevents, cutoff, seed, positive_kinds) for cutoff in cutoffs
+    ]
+
+
+def evaluate_cutoff_with_embeddings(
+    graph: TemporalGraph,
+    sales: list[SalesRecord],
+    regevents: list[RegulatoryEvent],
+    cutoff: date,
+    seed: int = 42,
+    positive_kinds: frozenset[RegulatoryEventKind] = DEFAULT_POSITIVE_KINDS,
+    embed_dim: int = 32,
+) -> CutoffResult:
+    """V2b: the baseline rule, literally -- tabular alone, embedding alone,
+    and tabular+embedding concatenated, on the identical population/split/seed.
+
+    The embedding is fit fresh on ``graph.as_of(cutoff)`` inside this one
+    call (see ``ml/embed.py``'s module docstring for why that is the entire
+    leakage-safety story): there is no separate "fit once, reuse per cutoff"
+    step available to get wrong, because calling this per-cutoff *is* the
+    refit.
+    """
+    X, y, ids = build_dataset(graph, sales, regevents, cutoff, positive_kinds)
+    view = graph.as_of(cutoff)
+    vectors = fit_metapath2vec(view, ids, dim=embed_dim, seed=seed)
+    X_embed = embedding_dataframe(vectors, ids, embed_dim)
+    X_concat = pd.concat([X, X_embed], axis=1)
+
+    tabular_scores, tabular_oof = score_xgboost(X, y, seed)
+    embed_scores, embed_oof = score_xgboost(X_embed, y, seed)
+    concat_scores, concat_oof = score_xgboost(X_concat, y, seed)
+
+    scores = {name: fn(X).to_numpy(dtype=float) for name, fn in TRIVIAL_BASELINES.items()}
+    scores["xgboost_tabular"] = tabular_scores
+    scores["xgboost_embed_only"] = embed_scores
+    scores["xgboost_tabular_plus_embed"] = concat_scores
+
+    return CutoffResult(
+        cutoff=cutoff,
+        ids=ids,
+        y_true=y.to_numpy(),
+        scores=scores,
+        out_of_fold=tabular_oof and embed_oof and concat_oof,
+    )
+
+
+def rolling_origin_eval_with_embeddings(
+    graph: TemporalGraph,
+    sales: list[SalesRecord],
+    regevents: list[RegulatoryEvent],
+    cutoffs: list[date],
+    seed: int = 42,
+    positive_kinds: frozenset[RegulatoryEventKind] = DEFAULT_POSITIVE_KINDS,
+    embed_dim: int = 32,
+) -> list[CutoffResult]:
+    return [
+        evaluate_cutoff_with_embeddings(
+            graph, sales, regevents, cutoff, seed, positive_kinds, embed_dim
+        )
+        for cutoff in cutoffs
     ]
