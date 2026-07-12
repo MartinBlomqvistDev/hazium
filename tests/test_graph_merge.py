@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from hazium.graph.build import load_graph, merge_clp, merge_eu_ppdb, merge_openfoodtox
+from hazium.graph.build import load_graph, merge_clp, merge_regulatory_events, merge_openfoodtox
 from hazium.graph.store import TemporalGraph
 from hazium.models import (
     DegradationLink,
@@ -376,7 +376,7 @@ class TestMergeClp:
         assert len(hazard_nodes) == 1
 
 
-class TestMergeEuPpdb:
+class TestMergeRegulatoryEvents:
     def _event(self, kind, event_date, substance_id=FLUAZINAM_ID):
         return RegulatoryEvent(
             substance_id=substance_id,
@@ -389,7 +389,7 @@ class TestMergeEuPpdb:
 
     def test_event_creates_node_and_subject_of_edge(self) -> None:
         graph = _register_graph()
-        applied, skipped = merge_eu_ppdb(
+        applied, skipped = merge_regulatory_events(
             graph, [self._event(RegulatoryEventKind.NON_RENEWAL, date(2023, 8, 31))]
         )
         assert (applied, skipped) == (1, 0)
@@ -401,7 +401,7 @@ class TestMergeEuPpdb:
 
     def test_event_for_absent_substance_is_skipped(self) -> None:
         graph = _register_graph()
-        applied, skipped = merge_eu_ppdb(
+        applied, skipped = merge_regulatory_events(
             graph,
             [self._event(RegulatoryEventKind.NON_RENEWAL, date(2023, 8, 31), TFA_ID)],
         )
@@ -411,12 +411,16 @@ class TestMergeEuPpdb:
         # a 2009 approval is proof the substance was knowable in 2009
         graph = _register_graph()
         assert graph.node(FLUAZINAM_ID).known_at == REGISTER_SNAPSHOT
-        merge_eu_ppdb(graph, [self._event(RegulatoryEventKind.APPROVAL, date(2009, 3, 1))])
+        merge_regulatory_events(
+            graph, [self._event(RegulatoryEventKind.APPROVAL, date(2009, 3, 1))]
+        )
         assert graph.node(FLUAZINAM_ID).known_at == date(2009, 3, 1)
 
     def test_non_renewal_survives_its_cutoff_but_not_an_earlier_one(self) -> None:
         graph = _register_graph()
-        merge_eu_ppdb(graph, [self._event(RegulatoryEventKind.NON_RENEWAL, date(2024, 6, 1))])
+        merge_regulatory_events(
+            graph, [self._event(RegulatoryEventKind.NON_RENEWAL, date(2024, 6, 1))]
+        )
         event_node = next(
             e.object for e in graph.edges_of(FLUAZINAM_ID) if e.predicate == EdgeType.SUBJECT_OF
         )
@@ -425,7 +429,7 @@ class TestMergeEuPpdb:
 
     def test_two_events_one_substance_get_distinct_nodes(self) -> None:
         graph = _register_graph()
-        applied, _ = merge_eu_ppdb(
+        applied, _ = merge_regulatory_events(
             graph,
             [
                 self._event(RegulatoryEventKind.APPROVAL, date(2009, 3, 1)),

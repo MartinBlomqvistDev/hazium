@@ -22,8 +22,9 @@ KEMI already created (e.g. fluazinam), rather than creating parallel ones.
 
 ``merge_clp`` layers ECHA Annex VI hazard classifications the same way, but
 scoped to substances the graph already knows about (see its docstring).
-``merge_eu_ppdb`` layers EU regulatory events (approvals, non-renewals) with
-the same scoping; its non-renewal events are V1's regulatory-action label.
+``merge_regulatory_events`` layers regulatory events (approvals,
+non-renewals, reevaluations, from any source) with the same scoping; its
+non-renewal and reevaluation events feed V1's regulatory-action label.
 """
 
 from __future__ import annotations
@@ -302,13 +303,15 @@ def merge_clp(graph: TemporalGraph, classifications: list[HazardClassification])
     return applied, skipped
 
 
-def merge_eu_ppdb(graph: TemporalGraph, events: list[RegulatoryEvent]) -> tuple[int, int]:
-    """Layer EU regulatory events onto an existing graph, in place.
+def merge_regulatory_events(graph: TemporalGraph, events: list[RegulatoryEvent]) -> tuple[int, int]:
+    """Layer regulatory events onto an existing graph, in place.
 
-    Scoped to substances already present (like ``merge_clp``): the EU register
-    covers thousands of substances, most outside the pesticide domain the graph
-    holds, so an event whose substance is absent is counted and skipped.
-    Returns ``(applied, skipped)``.
+    Source-agnostic: EU PPDB non-renewals, KEMI's hand-curated Swedish
+    reevaluation announcements, or any future ``RegulatoryEvent`` source all
+    go through this one merge. Scoped to substances already present (like
+    ``merge_clp``): the substance universe these sources cover is larger
+    than the pesticide domain the graph holds, so an event whose substance
+    is absent is counted and skipped. Returns ``(applied, skipped)``.
 
     Each event becomes a ``regulatory_event`` node plus a ``SUBJECT_OF`` edge
     from the substance. A dated event also pulls the substance node's own
