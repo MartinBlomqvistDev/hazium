@@ -33,6 +33,7 @@ public data (KEMI, EU Pesticides DB, ECHA, EFSA, SLV)
 ├── TODO.md               current state and next step — read this to resume work
 ├── DEV_LOG.md            historical build record and decision rationale
 ├── V1_SCOPE.md           executable design doc for the V1 ML task
+├── V2_SCOPE.md           executable design doc for the V2 embedding experiment
 ├── src/hazium/
 │   ├── sources/          ingestion adapters (one per agency/registry)
 │   ├── resolve/          entity resolution across vocabularies
@@ -59,13 +60,13 @@ The full constitution is in [MANIFESTO.md](MANIFESTO.md). The three that shape t
 |---|---|---|
 | V0 ✅ | Knowledge graph: ingestion, entity resolution, evidence-path queries | Fluazinam evidence graph reconstructable and traversable |
 | V1 ✅ | Defined ML tasks, tabular baselines, SHAP, time-split retrodetection eval | Published eval table |
-| V2 | Node embeddings on the same tasks | Beats V1 baseline, or the negative result is documented |
-| V3 | GNNs with evidence-path explanations | Entered only if V2 shows signal |
+| V2 ✅ | Node embeddings on the same tasks | Beats V1 baseline, or the negative result is documented — **documented negative** |
+| V3 ⛔ | GNNs with evidence-path explanations | Entered only if V2 shows signal — **not entered**, per gate |
 | V4 | Second domain (PFAS, via a verified shared-metabolite bridge to TFA) | Two domains share one architecture |
 
 ## Status
 
-**V0 and V1 gates both met.**
+**V0, V1, and V2 gates all met.**
 
 V0 — the fluazinam evidence graph is reconstructable and traversable from
 real ingested data, carrying dated evidence and a dated hazard classification
@@ -107,6 +108,21 @@ to the graph's temporal dating — see Roadmap — moved this from an earlier
 hidden.) Both results are reported side by side, honestly caveated, every
 time the eval runs: see [`V1_SCOPE.md`](V1_SCOPE.md) for the deliverable and
 [`DEV_LOG.md`](DEV_LOG.md) for the full eval tables and reasoning.
+
+V2 — node embeddings (metapath2vec, run per the baseline rule: alone and
+concatenated with V1's tabular features, on the identical rolling-origin
+split) **lose decisively, for a measured reason, not an assumed one.**
+Concatenation actively hurts AP at every cutoff (2023 headline: 0.240 tabular
+alone → 0.149 concatenated). Why: only 29.2% of the 2023 population has any
+walkable graph structure (`DEGRADES_TO`/`CLASSIFIED_AS` edges) — the other
+71% is a constant zero-vector block that dilutes signal rather than adding
+it, in a ~5,900-row, 25-99-positive population. Per the roadmap, **V3 (GNN)
+is not entered**: a GNN's message-passing would hit the identical coverage
+problem, so this result legitimately closes the deep-graph track for this
+domain rather than escalating to a heavier method. V1's tabular baseline
+remains the published result. See [`V2_SCOPE.md`](V2_SCOPE.md) for the full
+scoping and gate reasoning, and `DEV_LOG.md`'s "V2b shipped" entry for the
+eval table and mechanism.
 
 See [`DEV_LOG.md`](DEV_LOG.md) for the full build record, including several
 corrections and bugs found and fixed along the way: a scoping correction (the
