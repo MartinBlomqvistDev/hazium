@@ -40,6 +40,7 @@ FEATURE_COLUMNS = [
     "sales_max_yoy_jump",
     "graph_degree",
     "graph_shared_hazard_substance_count",
+    "graph_metabolite_degree",
     "eu_has_approval",
     "eu_years_since_first_approval",
 ]
