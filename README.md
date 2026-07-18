@@ -68,23 +68,27 @@ reports against, so results stay comparable across methods.
 | V2 ✅ | Node embeddings on the same tasks | Beats V1 baseline, or the negative result is documented — **documented negative** |
 | V3 ⛔ | GNNs with evidence-path explanations | Entered only if V2 shows signal — **not entered**, per gate |
 | V4 | Second domain (PFAS, via a verified shared-metabolite bridge to TFA) | Two domains share one architecture |
-| HEWB v1.0 ✅ | Versioned early-warning benchmark: annual rolling-origin eval + per-case lead-time | Rigorous, reproducible, honestly-reported — **met** |
+| HEWB v1.1 ✅ | Versioned early-warning benchmark: annual rolling-origin eval + per-case lead-time | Rigorous, reproducible, honestly-reported — **met** |
 
 ## Status
 
-**V0, V1, V2, and HEWB v1.0 all met.**
+**V0, V1, V2, and HEWB v1.1 all met.**
 
-HEWB v1.0 — the north-star generalised from one case into a versioned
+HEWB v1.1 — the north-star generalised from one case into a versioned
 benchmark over historical EU regulatory actions. Using only data known before
-each annual cutoff, XGBoost beats every trivial baseline at every cutoff
-2016-2024, and ranked the real EU-banned substances in the top-k *years* before
-the ban: the three bee-toxicity neonicotinoids and chlorpyrifos — the most
-recognizable cases — were flagged **2 to 4 years ahead** (clothianidin 36
-months, chlorpyrifos-methyl 48 months, at k=10). Reported honestly alongside
-its misses: two of ten headline landmarks (propikonazol, epoxiconazole) were
-never in the top-50 before their bans, and fluazinam itself — the anchor case —
-ranks top-3% but not top-50, i.e. a miss under the strict lead-time bar. See
-[`BENCHMARK_SCOPE.md`](BENCHMARK_SCOPE.md) and `DEV_LOG.md`'s HEWB entry for the
+each annual cutoff (**2009-2024**), XGBoost beats every trivial baseline at
+every cutoff, and ranked the real EU-banned substances in the top-k *years*
+before the ban: chlorpyrifos-methyl was flagged **132 months (11 years)** before
+its 2020 EU ban, at k=10 — and that's a lower bound, since its earliest flag
+sits at the very first cutoff tested (Jan 2009). Clothianidin — one of the
+three neonicotinoids banned over bee toxicity — was flagged **96 months
+(8 years)** before its 2019 ban, at k=10, which lands ~35 months *before* the
+EU's real first action on the substance (a December 2013 partial restriction),
+not just before the later formal non-renewal. **9 of the 10 headline landmark
+cases now flag within top-50**, only epoxiconazole is a genuine miss.
+Fluazinam itself — the anchor case — ranks top-3% but not top-50, i.e. a miss
+under the strict lead-time bar; reported as such, not smoothed over. See
+[`BENCHMARK_SCOPE.md`](BENCHMARK_SCOPE.md) and `DEV_LOG.md`'s HEWB entries for the
 full tables, the lead-time definition, and the correctness discipline.
 
 V0 — the fluazinam evidence graph is reconstructable and traversable from
