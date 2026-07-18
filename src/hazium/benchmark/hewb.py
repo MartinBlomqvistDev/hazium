@@ -43,18 +43,30 @@ from hazium.models import RegulatoryEvent, RegulatoryEventKind, SalesRecord
 #: values). A result labelled HEWB 1.0 is only comparable to another HEWB 1.0
 #: result. Graph/data changes that move the numbers are a new minor version,
 #: logged in DEV_LOG, never a silent restatement.
-HEWB_VERSION = "1.0"
+HEWB_VERSION = "1.1"
 
-#: Annual cutoffs. Verified viable at scoping time: each carries 28-133 future
-#: non-renewals, well above the stratified-CV floor. Finer than the V1 eval's
-#: {2018, 2020, 2022, 2023} — annual resolution is what makes a lead-time
-#: metric meaningful rather than a "sometime in the last two years" band.
-ANNUAL_CUTOFFS: tuple[date, ...] = tuple(date(y, 1, 1) for y in range(2016, 2025))
+#: Annual cutoffs, 2009-2024. Extended backward from v1.0's 2016 floor after
+#: checking real coverage, not assuming it: hazard classifications reach back
+#: to 2010, EFSA assessments to 2000, regulatory events to 1996 -- 2016 was an
+#: arbitrary-ish starting point carried over from an earlier viability check,
+#: not a real data floor. Verified before extending: population 2,617-4,928
+#: and 68-106 positives at every cutoff 2009-2015, comfortably above the
+#: stratified-CV floor. One real gap, disclosed rather than hidden: KEMI sales
+#: data starts in 2013, so sales_* features are zero for every substance
+#: before that -- the pre-2013 result rests entirely on EU-wide hazard/
+#: approval/graph features, not Swedish sales, which is itself informative
+#: (the signal isn't Sweden-dependent). Annual resolution throughout is what
+#: makes a lead-time metric meaningful rather than a "sometime in the last two
+#: years" band.
+ANNUAL_CUTOFFS: tuple[date, ...] = tuple(date(y, 1, 1) for y in range(2009, 2025))
 
 #: Rank thresholds. A landmark is "flagged" at cutoff T for k if its rank in
 #: the scored population at T is <= k. Reported for all three; never tuned to
 #: the value that flatters a case (that is the tuning-until-it-wins the
-#: baseline rule forbids). Note top-50 of ~5,900 is top ~0.85%, a strict bar.
+#: baseline rule forbids). A strict bar throughout: top-50 is ~0.85% of the
+#: ~5,900-substance population at the latest cutoffs, ~1.9% of the
+#: ~2,600-substance population at the earliest (2009) -- population grows
+#: over the schedule as more substances accumulate a pre-cutoff dated fact.
 K_VALUES: tuple[int, ...] = (10, 20, 50)
 
 
