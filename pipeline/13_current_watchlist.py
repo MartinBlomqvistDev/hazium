@@ -64,7 +64,12 @@ from pydantic import BaseModel
 from hazium.graph.build import load_graph
 from hazium.graph.store import TemporalGraph
 from hazium.ml.baseline import make_model
-from hazium.ml.dataset import DEFAULT_POSITIVE_KINDS, EARLY_WARNING_POSITIVE_KINDS, build_dataset
+from hazium.ml.dataset import (
+    DEFAULT_POSITIVE_KINDS,
+    EARLY_WARNING_POSITIVE_KINDS,
+    approval_age_non_renewal_rates,
+    build_dataset,
+)
 from hazium.models import RegulatoryEvent, SalesRecord, Substance
 from hazium.resolve.ids import safe_substance_node_id
 from hazium.resolve.names import SubstanceResolver, resolve_sales_records
@@ -202,6 +207,32 @@ def main() -> int:
         "nothing here has been checked against reality, because it can't be yet.\n"
     )
 
+    print("=== Approval-age vs. non-renewal rate (all EU PPDB events, unfiltered) ===")
+    print(
+        "Read this BEFORE the cohort breakdown below: an empty/thin band there means\n"
+        "'no substances that old exist in the data' (the EU approval framework itself\n"
+        "only dates to the early-to-mid 1990s), NOT 'everything that old was banned'.\n"
+        "'Non-renewed' also isn't a synonym for 'deemed toxic' -- EU PPDB records that\n"
+        "a non-renewal happened and when, not why; this data can't rule out\n"
+        "commercial or administrative reasons.\n"
+    )
+    age_rows = approval_age_non_renewal_rates(regevents, date.today())
+    print(f"{'band':10s} {'total':>7s} {'non-renewed':>13s} {'still active':>13s} {'rate':>7s}")
+    for r in age_rows:
+        rate_str = f"{r['non_renewal_rate']:.1%}" if r["non_renewal_rate"] is not None else "n/a"
+        print(
+            f"{r['age_band']:10s} {r['total']:7d} {r['non_renewed']:13d} "
+            f"{r['still_active']:13d} {rate_str:>7s}"
+        )
+    _write_csv(
+        PROCESSED / "approval_age_non_renewal_rates.csv",
+        ["age_band", "total", "non_renewed", "still_active", "non_renewal_rate"],
+        [
+            [r["age_band"], r["total"], r["non_renewed"], r["still_active"], r["non_renewal_rate"]]
+            for r in age_rows
+        ],
+    )
+
     for variant, positive_kinds in VARIANTS:
         result = build_watchlist(graph, sales, regevents, positive_kinds)
         if result is None:
@@ -250,6 +281,12 @@ def main() -> int:
 
         print(
             f"\n=== [{variant}] COHORT-RELATIVE: top {TOP_N_PER_COHORT} per approval-age band ==="
+        )
+        print(
+            "(counts below are the STILL-ACTIVE population only -- see the unfiltered "
+            "approval-age table printed above for the true total including non-renewed "
+            "substances; an empty band here does not mean '0 substances ever approved that "
+            "old', it can also mean 'all of them were already non-renewed'.)"
         )
         cohort_rows: list[dict] = []
         for label, lo, hi in AGE_COHORTS:
