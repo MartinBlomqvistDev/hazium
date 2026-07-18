@@ -57,6 +57,10 @@ The full constitution is in [MANIFESTO.md](MANIFESTO.md). The three that shape t
 
 ## Roadmap
 
+The V-ladder is the capability ladder. **HEWB** (the Hazium Early Warning
+Benchmark) is orthogonal to it: the versioned measuring stick every version
+reports against, so results stay comparable across methods.
+
 | Version | Deliverable | Gate |
 |---|---|---|
 | V0 ✅ | Knowledge graph: ingestion, entity resolution, evidence-path queries | Fluazinam evidence graph reconstructable and traversable |
@@ -64,10 +68,24 @@ The full constitution is in [MANIFESTO.md](MANIFESTO.md). The three that shape t
 | V2 ✅ | Node embeddings on the same tasks | Beats V1 baseline, or the negative result is documented — **documented negative** |
 | V3 ⛔ | GNNs with evidence-path explanations | Entered only if V2 shows signal — **not entered**, per gate |
 | V4 | Second domain (PFAS, via a verified shared-metabolite bridge to TFA) | Two domains share one architecture |
+| HEWB v1.0 ✅ | Versioned early-warning benchmark: annual rolling-origin eval + per-case lead-time | Rigorous, reproducible, honestly-reported — **met** |
 
 ## Status
 
-**V0, V1, and V2 gates all met.**
+**V0, V1, V2, and HEWB v1.0 all met.**
+
+HEWB v1.0 — the north-star generalised from one case into a versioned
+benchmark over historical EU regulatory actions. Using only data known before
+each annual cutoff, XGBoost beats every trivial baseline at every cutoff
+2016-2024, and ranked the real EU-banned substances in the top-k *years* before
+the ban: the three bee-toxicity neonicotinoids and chlorpyrifos — the most
+recognizable cases — were flagged **2 to 4 years ahead** (clothianidin 36
+months, chlorpyrifos-methyl 48 months, at k=10). Reported honestly alongside
+its misses: two of ten headline landmarks (propikonazol, epoxiconazole) were
+never in the top-50 before their bans, and fluazinam itself — the anchor case —
+ranks top-3% but not top-50, i.e. a miss under the strict lead-time bar. See
+[`BENCHMARK_SCOPE.md`](BENCHMARK_SCOPE.md) and `DEV_LOG.md`'s HEWB entry for the
+full tables, the lead-time definition, and the correctness discipline.
 
 V0 — the fluazinam evidence graph is reconstructable and traversable from
 real ingested data, carrying dated evidence and a dated hazard classification
