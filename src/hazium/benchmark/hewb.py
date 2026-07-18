@@ -31,7 +31,7 @@ no I/O, no fetching. ``pipeline/12_run_hewb.py`` is the I/O boundary.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 
 from hazium.graph.store import TemporalGraph
@@ -229,6 +229,56 @@ def compute_case_result(
     )
 
 
+#: The V2b embedding-vs-tabular comparison this frozen row is sourced from.
+#: Not re-run at HEWB's annual cutoffs: V2b's mechanism finding (only 29.2% of
+#: the population has any walkable degrades_to/classified_as edge, so the
+#: embedding is a constant zero vector for 71% of substances) is a property of
+#: graph coverage, not cutoff granularity -- re-running at nine annual cutoffs
+#: instead of four would not change *why* embeddings lose, only cost ~2x the
+#: compute for no new conclusion. That is exactly the "squeezing another 0.01"
+#: the scope's non-scope section warns against. See DEV_LOG's "V2b shipped"
+#: entry for the original result and mechanism.
+_V2B_EMBEDDING_MODELS = ("xgboost_tabular", "xgboost_embed_only", "xgboost_tabular_plus_embed")
+_V2B_VARIANT_KEYS = {
+    "headline": "headline (EU non-renewal only)",
+    "early_warning": "early_warning (+ SE reevaluation)",
+}
+
+
+def embedding_comparison_rows(embed_eval_json: dict) -> list[dict]:
+    """Reshape the raw V2b ``embed_eval_results.json`` into HEWB's frozen
+    comparison rows: one row per (variant, cutoff, model), tagged so a reader
+    can never mistake this for a fresh annual-cutoff run.
+
+    Pure over its input (already-loaded JSON); the pipeline script does the
+    file read. Silently returns ``[]`` for a variant/model missing from the
+    input rather than raising -- a stale or partial V2b file should degrade
+    the report, not crash the whole HEWB run.
+    """
+    rows: list[dict] = []
+    for hewb_variant, v2b_key in _V2B_VARIANT_KEYS.items():
+        payload = embed_eval_json.get(v2b_key)
+        if not payload:
+            continue
+        for row in payload.get("full_population", []):
+            if row["model"] not in _V2B_EMBEDDING_MODELS:
+                continue
+            rows.append(
+                {
+                    "variant": hewb_variant,
+                    "cutoff": row["cutoff"],
+                    "model": row["model"],
+                    "population": row["population"],
+                    "positives": row["positives"],
+                    "average_precision": row["average_precision"],
+                    "ap_ci_lo": row["ap_ci_lo"],
+                    "ap_ci_hi": row["ap_ci_hi"],
+                    "source": "frozen_v2b",
+                }
+            )
+    return rows
+
+
 @dataclass(frozen=True)
 class HewbReport:
     """A full HEWB run: the aggregate ranking table plus every case result."""
@@ -236,6 +286,7 @@ class HewbReport:
     version: str
     aggregate: list[dict]  # summarize() rows, tagged with variant
     cases: list[CaseResult]
+    embedding_comparison: list[dict] = field(default_factory=list)  # frozen V2b rows
 
 
 def run_hewb(
@@ -243,6 +294,7 @@ def run_hewb(
     sales: list[SalesRecord],
     regevents: list[RegulatoryEvent],
     seed: int = 42,
+    v2b_embedding_json: dict | None = None,
 ) -> HewbReport:
     """Run HEWB end to end over both label variants.
 
@@ -250,6 +302,13 @@ def run_hewb(
     for each variant runs the annual rolling-origin backtest once and derives
     both the aggregate table and every landmark's lead-time from those same
     per-cutoff results — no substance is scored twice.
+
+    ``v2b_embedding_json``, if given, is the already-loaded contents of
+    ``embed_eval_results.json`` (the pipeline script reads the file; this
+    function stays pure). Reshaped via ``embedding_comparison_rows`` into
+    ``HewbReport.embedding_comparison`` — the frozen graph-vs-tabular row the
+    scope calls for, not a fresh embedding fit at annual cutoffs (see
+    ``embedding_comparison_rows``'s docstring for why).
     """
     from hazium.ml.evaluate import summarize
 
@@ -267,4 +326,13 @@ def run_hewb(
         for case in LANDMARK_CASES:
             cases.append(compute_case_result(case, variant, results, regevents, positive_kinds))
 
-    return HewbReport(version=HEWB_VERSION, aggregate=aggregate, cases=cases)
+    embedding_comparison = (
+        embedding_comparison_rows(v2b_embedding_json) if v2b_embedding_json else []
+    )
+
+    return HewbReport(
+        version=HEWB_VERSION,
+        aggregate=aggregate,
+        cases=cases,
+        embedding_comparison=embedding_comparison,
+    )

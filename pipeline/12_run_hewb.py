@@ -16,6 +16,7 @@ Usage:
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from pydantic import BaseModel
@@ -107,6 +108,24 @@ def _write_trajectories(report: HewbReport) -> None:
     _write_csv(PROCESSED / "hewb_rank_trajectories.csv", cols, rows)
 
 
+def _write_embedding_comparison(report: HewbReport) -> None:
+    if not report.embedding_comparison:
+        return
+    cols = [
+        "variant",
+        "cutoff",
+        "model",
+        "population",
+        "positives",
+        "average_precision",
+        "ap_ci_lo",
+        "ap_ci_hi",
+        "source",
+    ]
+    rows = [[r.get(c) for c in cols] for r in report.embedding_comparison]
+    _write_csv(PROCESSED / "hewb_embedding_comparison.csv", cols, rows)
+
+
 def _print_summary(report: HewbReport) -> None:
     print(f"\n=== HEWB v{report.version} -- aggregate (xgboost vs. best trivial, per cutoff) ===")
     # Compact: for each variant/cutoff, xgboost AP vs. the best trivial AP.
@@ -152,6 +171,36 @@ def _print_summary(report: HewbReport) -> None:
         if misses:
             print(f"    MISSED (never in top-50 before action): {', '.join(misses)}")
 
+    if report.embedding_comparison:
+        print(
+            f"\n=== HEWB v{report.version} -- frozen V2 embedding comparison "
+            "(from V2b, 2-year cutoffs, NOT re-run at annual granularity -- see "
+            "embedding_comparison_rows docstring for why) ==="
+        )
+        by_key: dict[tuple[str, str], dict[str, float]] = {}
+        for r in report.embedding_comparison:
+            by_key.setdefault((r["variant"], r["cutoff"]), {})[r["model"]] = r["average_precision"]
+        for variant in ("headline", "early_warning"):
+            rows = {k: v for k, v in by_key.items() if k[0] == variant}
+            if not rows:
+                continue
+            print(f"\n  [{variant}]")
+            print(
+                f"    {'cutoff':12s} {'tabular AP':>11s} {'embed_only AP':>14s} "
+                f"{'tabular+embed AP':>18s}"
+            )
+            for (_v, cutoff), models in sorted(rows.items()):
+                print(
+                    f"    {cutoff:12s} {models.get('xgboost_tabular', 0.0):>11.3f} "
+                    f"{models.get('xgboost_embed_only', 0.0):>14.3f} "
+                    f"{models.get('xgboost_tabular_plus_embed', 0.0):>18.3f}"
+                )
+    else:
+        print(
+            f"\n=== HEWB v{report.version} -- embedding comparison: SKIPPED "
+            "(no data/processed/embed_eval_results.json found; run pipeline/10 first) ==="
+        )
+
 
 def main() -> int:
     graph = load_graph(PROCESSED / "graph_nodes.jsonl", PROCESSED / "graph_edges.jsonl")
@@ -163,15 +212,24 @@ def main() -> int:
     if kemi_reeval_path.exists():
         regevents += _load(kemi_reeval_path, RegulatoryEvent)
 
-    report = run_hewb(graph, sales, regevents)
+    v2b_path = PROCESSED / "embed_eval_results.json"
+    v2b_embedding_json = (
+        json.loads(v2b_path.read_text(encoding="utf-8")) if v2b_path.exists() else None
+    )
+
+    report = run_hewb(graph, sales, regevents, v2b_embedding_json=v2b_embedding_json)
 
     _write_aggregate(report)
     _write_lead_times(report)
     _write_trajectories(report)
+    _write_embedding_comparison(report)
     _print_summary(report)
 
     print(f"\nwrote HEWB v{report.version} tables to {PROCESSED}")
-    print("  hewb_aggregate.csv, hewb_lead_times.csv, hewb_rank_trajectories.csv")
+    written = ["hewb_aggregate.csv", "hewb_lead_times.csv", "hewb_rank_trajectories.csv"]
+    if report.embedding_comparison:
+        written.append("hewb_embedding_comparison.csv")
+    print("  " + ", ".join(written))
     return 0
 
 

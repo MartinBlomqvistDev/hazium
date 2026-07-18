@@ -17,6 +17,7 @@ from hazium.benchmark.hewb import (
     LandmarkCase,
     action_date_for,
     compute_case_result,
+    embedding_comparison_rows,
     rank_of,
     verify_landmark_cas,
 )
@@ -219,3 +220,71 @@ class TestVerifyLandmarkCas:
             assert "not in graph" in str(e)
         else:
             raise AssertionError("expected ValueError on missing node")
+
+
+class TestEmbeddingComparisonRows:
+    """Reshaping the frozen V2b JSON -- a real, if small, integration point:
+    the keys here must match V2b's actual output schema exactly, or this
+    silently returns an empty comparison instead of failing loudly.
+    """
+
+    def _payload(self) -> dict:
+        return {
+            "headline (EU non-renewal only)": {
+                "full_population": [
+                    {
+                        "cutoff": "2023-01-01",
+                        "model": "xgboost_tabular",
+                        "population": 5934,
+                        "positives": 25,
+                        "average_precision": 0.240,
+                        "ap_ci_lo": 0.148,
+                        "ap_ci_hi": 0.371,
+                    },
+                    {
+                        "cutoff": "2023-01-01",
+                        "model": "xgboost_embed_only",
+                        "population": 5934,
+                        "positives": 25,
+                        "average_precision": 0.003,
+                        "ap_ci_lo": 0.002,
+                        "ap_ci_hi": 0.003,
+                    },
+                    {
+                        "cutoff": "2023-01-01",
+                        "model": "severe_hazard_count",  # trivial baseline: excluded
+                        "population": 5934,
+                        "positives": 25,
+                        "average_precision": 0.016,
+                        "ap_ci_lo": 0.007,
+                        "ap_ci_hi": 0.031,
+                    },
+                ]
+            },
+            "early_warning (+ SE reevaluation)": {"full_population": []},
+        }
+
+    def test_extracts_only_embedding_models_tagged_by_variant(self) -> None:
+        rows = embedding_comparison_rows(self._payload())
+        models = {r["model"] for r in rows}
+        assert models == {"xgboost_tabular", "xgboost_embed_only"}
+        assert all(r["variant"] == "headline" for r in rows)
+        assert all(r["source"] == "frozen_v2b" for r in rows)
+
+    def test_trivial_baselines_excluded(self) -> None:
+        rows = embedding_comparison_rows(self._payload())
+        assert not any(r["model"] == "severe_hazard_count" for r in rows)
+
+    def test_missing_variant_key_yields_no_rows_for_it(self) -> None:
+        rows = embedding_comparison_rows(self._payload())
+        assert not any(r["variant"] == "early_warning" for r in rows)
+
+    def test_empty_input_yields_empty_output(self) -> None:
+        assert embedding_comparison_rows({}) == []
+
+    def test_values_preserved_exactly(self) -> None:
+        rows = embedding_comparison_rows(self._payload())
+        tabular = next(r for r in rows if r["model"] == "xgboost_tabular")
+        assert tabular["average_precision"] == 0.240
+        assert tabular["cutoff"] == "2023-01-01"
+        assert tabular["population"] == 5934
