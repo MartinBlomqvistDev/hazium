@@ -4,7 +4,7 @@
 
 *Building computational models that help humans investigate environmental and public health hazards.*
 
-**Manifesto, version 0.2. A living document.** Every significant architectural decision in this repository should be traceable to a principle stated here. If evidence shows a principle is wrong, revise the principle, not just the implementation.
+**Manifesto, version 0.3. A living document.** Every significant architectural decision in this repository should be traceable to a principle stated here. If evidence shows a principle is wrong, revise the principle, not just the implementation.
 
 ---
 
@@ -44,13 +44,17 @@ Its first domain is pesticides, with a Nordic focus. This choice is pragmatic: t
 
 **Temporal integrity.** Every fact and every edge carries a `known_at` timestamp. Evaluation uses time-based splits only: a model claiming it could have detected a hazard in year T may see nothing dated after T. Without this discipline, every retrospective claim is invalid.
 
-## 4. The north-star evaluation
+## 4. The north-star evaluation, and the Hazium Early Warning Benchmark (HEWB)
 
 One falsifiable question anchors the project:
 
 > **Using only data with `known_at` before 2023-01-01, does Hazium rank fluazinam among the highest-concern substances approved in Sweden?**
 
-Every version of the system is measured against this question (and, over time, a growing set of retrodetection cases). Ambition without falsifiability is decoration.
+This question is no longer answered by one case in isolation. It is formalised as the **Hazium Early Warning Benchmark (HEWB)**: a versioned, reproducible evaluation program that every model — trivial baseline, tabular, graph, or future architecture — reports against. HEWB fixes a set of historical EU regulatory actions, a temporal-evaluation protocol under strict `known_at` discipline, and a **lead-time** metric: not merely whether a substance ranks highly, but how many months before the real regulatory action it would have. A result is comparable to another only if both ran the same frozen HEWB version.
+
+HEWB v1.0 (2026-07-18) measured lead time against ten landmark EU non-renewals under this discipline. At k=10, the model ranked clothianidin (a bee-toxicity neonicotinoid) 36 months, and chlorpyrifos-methyl 48 months, before their EU bans — using only data known before each measurement date. Two landmarks (propikonazol, epoxiconazole) were never flagged in the top 50 before their bans; this is reported, not hidden, per §3's honesty-over-novelty principle. Full methodology in `BENCHMARK_SCOPE.md`; full result in `DEV_LOG.md`.
+
+Every version of the system is measured against HEWB. Ambition without falsifiability is decoration.
 
 ## 5. Position among prior work
 
@@ -101,6 +105,8 @@ Candidate future domains: endocrine disruptors, pharmaceuticals in waterways, an
 If these hold after honest effort, the correct output is a write-up saying so.
 
 ## 11. Roadmap
+
+HEWB (§4) is orthogonal to this ladder: the versioned measuring stick every version below reports against, not a rung on it.
 
 | Version | Deliverable | Gate |
 |---|---|---|
