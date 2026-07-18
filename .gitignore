@@ -34,3 +34,7 @@ data/**
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Private ideation transcripts (candid personal/strategy notes; kept on disk
+# for reference, never committed to this portfolio-facing repo)
+ideation/
