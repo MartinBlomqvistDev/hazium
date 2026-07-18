@@ -27,6 +27,28 @@ which fits and explains the same data -- here training data and scoring data
 are deliberately different populations, so the explainer is built once from
 the trained model and applied to the current data directly).
 
+Two corrections over the first pass, both real bugs, not polish:
+
+1. **Pesticide labelling.** `is_pesticide` was wrongly defined as "in KEMI's
+   Swedish register" -- several genuine EU-approved pesticide active
+   substances (Propoxycarbazone, Cyhalofop-butyl) were mislabelled `False`
+   just because they aren't marketed in Sweden specifically. Fixed: a
+   substance is flagged a pesticide if it has ``eu_has_approval`` set --
+   membership in the EU *Pesticides* Database's approval events is a direct,
+   correct test, not a proxy. `in_kemi_sweden_register` is kept as a
+   separate, honestly-named column for readers who specifically want
+   Swedish-market presence.
+2. **Time dominance.** `eu_years_since_first_approval` swamped every other
+   feature in the global ranking (5-10x the next-largest SHAP contribution),
+   making the list read as "oldest first" rather than a differentiated risk
+   read -- true, and not very informative on its own. Mitigated by
+   **cohort-relative ranking**: bucket substances by approval-age band, then
+   rank within each band. This does not discard the age signal (HEWB
+   repeatedly showed it is genuinely predictive) or require retraining; it
+   answers a sharper question -- "of substances that have been around
+   roughly this long, which one looks worst" -- which is what actually
+   surfaces something non-obvious.
+
 Usage:
     python pipeline/13_current_watchlist.py
 """
@@ -52,7 +74,19 @@ PROCESSED = ROOT / "data" / "processed"
 
 TRAIN_CUTOFF = date(2024, 1, 1)
 TOP_N = 30
+TOP_N_PER_COHORT = 5
 EXPLAIN_TOP = 3
+
+#: Approval-age bands in years, half-open [lo, hi). Chosen to split the
+#: observed range (roughly 0-30+ years) into a handful of readable groups,
+#: not derived from any statistical criterion -- revisit if the population's
+#: age distribution shifts materially.
+AGE_COHORTS: tuple[tuple[str, float, float], ...] = (
+    ("0-9 years approved", 0, 10),
+    ("10-19 years approved", 10, 20),
+    ("20-29 years approved", 20, 30),
+    ("30+ years approved", 30, float("inf")),
+)
 
 VARIANTS = (
     ("headline", DEFAULT_POSITIVE_KINDS),
@@ -79,7 +113,14 @@ def _write_csv(path: Path, header: list[str], rows: list[list]) -> None:
             f.write(",".join(cells) + "\n")
 
 
-def _pesticide_ids(register_substances: list[Substance]) -> set[str]:
+def _kemi_register_ids(register_substances: list[Substance]) -> set[str]:
+    """Swedish-market presence only -- NOT a general pesticide test.
+
+    Kept distinct from ``eu_has_approval`` deliberately: a substance can be a
+    real, EU-approved pesticide without being marketed in Sweden, and this
+    column exists so that distinction stays visible rather than collapsed
+    into one ambiguous flag.
+    """
     return {
         safe_substance_node_id(cas_number=s.cas_number, name=s.name) for s in register_substances
     }
@@ -89,12 +130,14 @@ def _name_of(graph: TemporalGraph, substance_id: str) -> str:
     return graph.node(substance_id).label if graph.has_node(substance_id) else substance_id
 
 
-def build_watchlist(graph, sales, regevents, positive_kinds, top_n=TOP_N):
+def build_watchlist(graph, sales, regevents, positive_kinds):
     """Train on TRAIN_CUTOFF (complete, real labels by now); score today.
 
     Returns ``None`` if there are too few training positives. Otherwise
-    ``(ranked_rows, explainer, X_now, ids_now)`` -- the explainer is built
-    from the *trained* model, ready to explain any row of ``X_now``.
+    ``(ranked, explainer, X_now)`` where ``ranked`` is the *full* population,
+    sorted best-first, as ``(substance_id, score)`` pairs -- not truncated
+    here, so callers can build both the global top-N and cohort-relative
+    views from the same scoring pass.
     """
     X_train, y_train, _train_ids = build_dataset(
         graph, sales, regevents, TRAIN_CUTOFF, positive_kinds
@@ -109,10 +152,36 @@ def build_watchlist(graph, sales, regevents, positive_kinds, top_n=TOP_N):
 
     scores = model.predict_proba(X_now)[:, 1]
     ranked = sorted(zip(ids_now, scores, strict=True), key=lambda pair: -pair[1])
-    top = ranked[:top_n]
 
     explainer = shap.TreeExplainer(model)
-    return top, explainer, X_now, ids_now
+    return ranked, explainer, X_now
+
+
+def _row_dict(graph, sid, score, rank, X_now, kemi_ids) -> dict:
+    feature_row = X_now.loc[sid]
+    return {
+        "rank": rank,
+        "substance_id": sid,
+        "name": _name_of(graph, sid),
+        "score": round(float(score), 6),
+        "eu_approved_pesticide": bool(feature_row["eu_has_approval"]),
+        "in_kemi_sweden_register": sid in kemi_ids,
+        "years_since_eu_approval": feature_row["eu_years_since_first_approval"],
+    }
+
+
+def _explain(explainer, X_now, rows: list[dict]) -> None:
+    if not rows:
+        return
+    ids = [r["substance_id"] for r in rows]
+    shap_values = explainer(X_now.loc[ids])
+    for i, r in enumerate(rows):
+        print(f"  {r['name']} (global rank {r['rank']}):")
+        contributions = sorted(
+            zip(X_now.columns, shap_values.values[i], strict=True), key=lambda pair: -pair[1]
+        )
+        for fname, val in contributions[:4]:
+            print(f"    {fname}: {val:+.4f}")
 
 
 def main() -> int:
@@ -124,7 +193,7 @@ def main() -> int:
     kemi_reeval_path = PROCESSED / "kemi_reevaluations.jsonl"
     if kemi_reeval_path.exists():
         regevents += _load(kemi_reeval_path, RegulatoryEvent)
-    pesticide_ids = _pesticide_ids(register_substances)
+    kemi_ids = _kemi_register_ids(register_substances)
 
     print(f"Trained on {TRAIN_CUTOFF} (complete, materialised outcomes as of today).")
     print(f"Scored on today's features ({date.today()}).")
@@ -138,49 +207,81 @@ def main() -> int:
         if result is None:
             print(f"[{variant}] skipped: too few positives in training data")
             continue
-        top, explainer, X_now, ids_now = result
+        ranked, explainer, X_now = result
 
-        rows = []
-        for rank, (sid, score) in enumerate(top, start=1):
-            rows.append(
-                {
-                    "rank": rank,
-                    "substance_id": sid,
-                    "name": _name_of(graph, sid),
-                    "score": round(float(score), 6),
-                    "is_pesticide": sid in pesticide_ids,
-                }
-            )
+        all_rows = [
+            _row_dict(graph, sid, score, rank, X_now, kemi_ids)
+            for rank, (sid, score) in enumerate(ranked, start=1)
+        ]
+        top_rows = all_rows[:TOP_N]
 
-        print(f"\n=== [{variant}] current watchlist, top {len(rows)} ===")
-        print(f"{'rank':>4s}  {'score':>8s}  {'pesticide?':>10s}  name")
-        for r in rows:
+        print(f"\n=== [{variant}] GLOBAL top {len(top_rows)} ===")
+        print(f"{'rank':>4s}  {'score':>8s}  {'EU pesticide?':>13s}  name")
+        for r in top_rows:
             print(
-                f"{r['rank']:>4d}  {r['score']:>8.4f}  {str(r['is_pesticide']):>10s}  {r['name']}"
+                f"{r['rank']:>4d}  {r['score']:>8.4f}  "
+                f"{str(r['eu_approved_pesticide']):>13s}  {r['name']}"
             )
 
         _write_csv(
             PROCESSED / f"current_watchlist_{variant}.csv",
-            ["rank", "substance_id", "name", "score", "is_pesticide"],
             [
-                [r["rank"], r["substance_id"], r["name"], r["score"], r["is_pesticide"]]
-                for r in rows
+                "rank",
+                "substance_id",
+                "name",
+                "score",
+                "eu_approved_pesticide",
+                "in_kemi_sweden_register",
+                "years_since_eu_approval",
+            ],
+            [
+                [
+                    r["rank"],
+                    r["substance_id"],
+                    r["name"],
+                    r["score"],
+                    r["eu_approved_pesticide"],
+                    r["in_kemi_sweden_register"],
+                    r["years_since_eu_approval"],
+                ]
+                for r in all_rows
             ],
         )
 
-        print(f"\n  --- why the top {EXPLAIN_TOP} rank highly (today's features) ---")
-        top_ids = [r["substance_id"] for r in rows[:EXPLAIN_TOP]]
-        shap_values = explainer(X_now.loc[top_ids])
-        for i, r in enumerate(rows[:EXPLAIN_TOP]):
-            print(f"  {r['name']}:")
-            contributions = sorted(
-                zip(X_now.columns, shap_values.values[i], strict=True),
-                key=lambda pair: -pair[1],
-            )
-            for fname, val in contributions[:4]:
-                print(f"    {fname}: {val:+.4f}")
+        print(
+            f"\n=== [{variant}] COHORT-RELATIVE: top {TOP_N_PER_COHORT} per approval-age band ==="
+        )
+        cohort_rows: list[dict] = []
+        for label, lo, hi in AGE_COHORTS:
+            band = [r for r in all_rows if lo <= r["years_since_eu_approval"] < hi]
+            band_top = band[:TOP_N_PER_COHORT]  # all_rows is already globally sorted
+            print(f"\n  [{label}] ({len(band)} substances in this band)")
+            for local_rank, r in enumerate(band_top, start=1):
+                print(
+                    f"    {local_rank}. {r['name']}  (global rank {r['rank']}, score {r['score']:.4f})"
+                )
+                cohort_rows.append({**r, "cohort": label, "rank_in_cohort": local_rank})
 
-    print(f"\nwrote current_watchlist_{{headline,early_warning}}.csv to {PROCESSED}")
+        _write_csv(
+            PROCESSED / f"current_watchlist_{variant}_by_cohort.csv",
+            ["cohort", "rank_in_cohort", "rank", "substance_id", "name", "score"],
+            [
+                [
+                    r["cohort"],
+                    r["rank_in_cohort"],
+                    r["rank"],
+                    r["substance_id"],
+                    r["name"],
+                    r["score"],
+                ]
+                for r in cohort_rows
+            ],
+        )
+
+        print(f"\n  --- why the GLOBAL top {EXPLAIN_TOP} rank highly (today's features) ---")
+        _explain(explainer, X_now, top_rows[:EXPLAIN_TOP])
+
+    print(f"\nwrote current_watchlist_{{headline,early_warning}}[_by_cohort].csv to {PROCESSED}")
     return 0
 
 
