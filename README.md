@@ -34,6 +34,7 @@ public data (KEMI, EU Pesticides DB, ECHA, EFSA, SLV)
 ├── DEV_LOG.md            historical build record and decision rationale
 ├── V1_SCOPE.md           executable design doc for the V1 ML task
 ├── V2_SCOPE.md           executable design doc for the V2 embedding experiment
+├── BENCHMARK_SCOPE.md    executable design doc for HEWB, the early-warning benchmark
 ├── src/hazium/
 │   ├── sources/          ingestion adapters (one per agency/registry)
 │   ├── resolve/          entity resolution across vocabularies
