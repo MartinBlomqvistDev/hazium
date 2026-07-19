@@ -34,6 +34,9 @@ data/**
 .env
 *.env
 
+# Local agent/editor config
+.claude/
+
 # OS / editor
 .DS_Store
 Thumbs.db

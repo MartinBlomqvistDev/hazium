@@ -71,6 +71,20 @@ export interface SubstanceDetail {
 
 export type SubstanceDetailMap = Record<string, SubstanceDetail>;
 
+export interface RankRaceRow {
+  cas: string;
+  name: string;
+  score: number;
+  rank: number;
+  banned_year: number | null;
+}
+
+export interface RankRaceData {
+  years: number[];
+  top_n: number;
+  per_year: Record<string, RankRaceRow[]>;
+}
+
 export interface HewbData {
   hewb_version: string;
   provisional: boolean;
