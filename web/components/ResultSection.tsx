@@ -1,8 +1,13 @@
-import type { HewbData } from "@/lib/types";
-import LeadTimeChart from "./LeadTimeChart";
+import type { CapabilityData, HewbData } from "@/lib/types";
+import CapabilityTimeline from "./CapabilityTimeline";
 
-export default function ResultSection({ data }: { data: HewbData }) {
-  const missed = data.landmarks.filter((lm) => !lm.flagged);
+export default function ResultSection({
+  data,
+  capability,
+}: {
+  data: HewbData;
+  capability: CapabilityData;
+}) {
   return (
     <section id="result" className="border-b border-hairline">
       <div className="mx-auto max-w-3xl px-6 py-16">
@@ -11,31 +16,47 @@ export default function ResultSection({ data }: { data: HewbData }) {
         </h2>
         <p className="mt-4 text-text-secondary">
           The <strong className="text-text-primary">Hazium Early Warning Benchmark</strong>{" "}
-          fixes ten historical EU non-renewals, real bans, not hypothetical
-          cases, and asks: at each annual cutoff from 2009 onward, using
-          only evidence dated before that cutoff, where would Hazium have
-          ranked this substance? Lead time is measured in months between the
-          earliest cutoff where a substance entered the top 10 riskiest
-          substances and the real EU action.
+          fixes ten historical EU pesticide bans, real regulatory actions, not
+          hypothetical cases. At each annual cutoff from 2009, using only evidence
+          dated before that cutoff, it asks where Hazium would have ranked the
+          substance among the thousands of approved actives of that year.
+        </p>
+        <p className="mt-4 text-text-secondary">
+          Months before the ban is the easy number. The harder question, and the
+          one that shows capability, is whether Hazium was ahead of the
+          independent world: the regulator&apos;s first public concern, not the
+          final paperwork. The literature signal became a model input, so it is
+          left out of this comparison; what remains are dated regulatory
+          milestones the model never sees.
         </p>
 
-        <div className="mt-10 rounded-xl border border-hairline bg-surface p-6 sm:p-8">
-          <LeadTimeChart landmarks={data.landmarks} />
+        <div className="mt-10 rounded-xl border border-hairline bg-surface p-5 sm:p-7">
+          <CapabilityTimeline data={capability} />
         </div>
 
-        {missed.length > 0 && (
-          <div className="mt-6 rounded-lg border border-status-critical/30 bg-status-critical/[0.06] p-4 text-sm">
-            <p className="text-text-primary">
-              {missed.map((m) => m.name).join(", ")} never entered the top 50
-              before its real action. Every HEWB result is published against
-              its baseline and its misses.
-            </p>
-          </div>
-        )}
+        <p className="mt-6 text-sm leading-relaxed text-text-secondary">
+          On the developmental-neurotoxicity and reprotoxic cases, chlorpyrifos,
+          its methyl sister, thiacloprid, and mancozeb, Hazium ranked the
+          substance among the riskiest roughly a decade before EFSA&apos;s first
+          public concern. On the neonicotinoids it was early relative to the
+          2013 EU restriction, though national bans were already emerging. On
+          imidacloprid and dimethoate it moved level with the regulator rather
+          than ahead, and that is shown. Epoxiconazole it never flagged at all.
+          Where a substance had a real public controversy, the chart marks that
+          too: Hazium flagged chlorpyrifos years before its 2015 US ban fight,
+          and the neonicotinoids before the 2012 bee campaign. Most landmarks had
+          no public profile at all when Hazium flagged them, which is the sharper
+          point. The chart carries the misses next to the leads, not just the
+          wins.
+        </p>
 
-        {data.provisional && (
-          <p className="mt-6 text-xs text-text-muted">{data.provisional_note}</p>
-        )}
+        <p className="mt-6 text-xs text-text-muted">
+          HEWB v{data.hewb_version}. Flag dates come from the frozen benchmark
+          run under strict pre-cutoff evidence discipline; out-of-fold scores are
+          averaged over repeated cross-validation, so the ranks are reproducible
+          rather than an artifact of one split. Regulatory milestone dates are
+          hand-verified against the enacting act or EFSA output.
+        </p>
       </div>
     </section>
   );

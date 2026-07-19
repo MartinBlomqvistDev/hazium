@@ -17,6 +17,47 @@ export interface AggregatePoint {
   best_trivial_ap: number;
 }
 
+export type MarkerType = "media" | "regulator" | "ban";
+
+export interface CapabilityMarker {
+  type: MarkerType;
+  date: string;
+  precision: "day" | "month" | "year";
+  label: string;
+  source: string;
+  url: string;
+}
+
+export type CapabilityOutcome =
+  | "clean_lead"
+  | "ahead_of_eu_action"
+  | "level"
+  | "behind"
+  | "miss"
+  | "data_issue";
+
+export interface CapabilityLandmark {
+  name: string;
+  cas: string;
+  hazard: string;
+  outcome: CapabilityOutcome;
+  hazium_flag: {
+    date: string;
+    rank: number;
+    k: number;
+    lower_bound: boolean;
+  } | null;
+  markers: CapabilityMarker[];
+  note: string;
+}
+
+export interface CapabilityData {
+  k_primary: number;
+  note: string;
+  outcomes: Record<string, string>;
+  landmarks: CapabilityLandmark[];
+}
+
 export interface HewbData {
   hewb_version: string;
   provisional: boolean;
