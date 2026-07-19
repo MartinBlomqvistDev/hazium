@@ -66,7 +66,7 @@ Using only pre-cutoff data across **2009-2024**, XGBoost beats every trivial bas
 
 - **Chlorpyrifos**: flagged 132 months (11 years) before its 2020 EU ban, at k=10.
 - **Mancozeb**: in the top-20 from 2010, about nine years before its 2021 non-renewal.
-- **9 of 10** headline landmark cases flag within the top-50. Epoxiconazole is the one the model does not flag.
+- **9 of 10** headline landmark cases flag within the top-50 at some cutoff, and **7 of the 10** do so ahead of the EU's own first regulatory action, not merely before the final ban. Epoxiconazole is the one the model never flags.
 
 Out-of-fold scores are averaged over repeated cross-validation, so lead-times are reproducible rather than an artifact of one fold split.
 

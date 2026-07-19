@@ -17,12 +17,20 @@ const capability = capabilityData as CapabilityData;
 const detail = substanceDetail as SubstanceDetailMap;
 const rankRace = rankRaceData as RankRaceData;
 
+// The ten benchmark EU bans (fluazinam is the held-out north-star, not one of them).
+// "Ahead" means flagged before the EU's own first regulatory action, which is the
+// stricter bar the capability timeline reports, not merely before the final ban.
+const benchmarkBans = capability.landmarks.filter((l) => !l.held_out);
+const flaggedAhead = benchmarkBans.filter(
+  (l) => l.outcome === "clean_lead" || l.outcome === "ahead_of_eu_action",
+).length;
+
 export default function Home() {
   return (
     <div className="flex min-h-full flex-col">
       <Nav />
       <main className="flex-1">
-        <Hero data={data} />
+        <Hero data={data} flaggedAhead={flaggedAhead} banTotal={benchmarkBans.length} />
         <OriginStory />
         <ResultSection data={data} capability={capability} detail={detail} />
         <section id="radar" className="border-b border-hairline bg-surface/40">
