@@ -21,7 +21,7 @@ const SIGNALS = [
   },
   {
     title: "Independent literature signal",
-    body: "How a substance's share of hazard-flavoured scientific literature (Europe PMC) compares to the rest of the field in the same year. This is the one signal here that sits upstream of any regulator, not downstream of one.",
+    body: "How a substance's share of hazard-flavoured scientific literature (Europe PMC) compares to the rest of the field in the same year. This is the one signal here that sits upstream of the regulatory process itself.",
   },
 ];
 
@@ -33,9 +33,9 @@ export default function HowItWorks() {
           How it decides
         </h2>
         <p className="mt-4 text-text-secondary">
-          Every ranking traces back to real, dated, publicly-sourced facts,
-          never a black box. A gradient-boosted model (XGBoost) is trained on
-          six feature groups, each grounded in a specific public source:
+          Every ranking traces back to real, dated, publicly-sourced facts. A
+          gradient-boosted model (XGBoost) is trained on six feature groups,
+          each grounded in a specific public source:
         </p>
         <div className="mt-8 space-y-5">
           {SIGNALS.map((s) => (
@@ -49,7 +49,7 @@ export default function HowItWorks() {
           The model is always compared against dead-simple trivial baselines:
           severe-hazard count alone, latest sales tonnage alone, assessment
           count alone, on the identical task and split. If it doesn&apos;t
-          beat them, the baseline is the published result, not the model.
+          beat them, the baseline becomes the published result.
         </p>
       </div>
     </section>

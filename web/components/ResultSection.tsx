@@ -24,10 +24,10 @@ export default function ResultSection({
         <p className="mt-4 text-text-secondary">
           Months before the ban is the easy number. The harder question, and the
           one that shows capability, is whether Hazium was ahead of the
-          independent world: the regulator&apos;s first public concern, not the
-          final paperwork. The literature signal became a model input, so it is
-          left out of this comparison; what remains are dated regulatory
-          milestones the model never sees.
+          independent world: the regulator&apos;s first public concern, which
+          arrives long before the final paperwork. The literature signal became a
+          model input, so it is left out of this comparison; what remains are
+          dated regulatory milestones the model never sees.
         </p>
 
         <div className="mt-10 rounded-xl border border-hairline bg-surface p-5 sm:p-7">
@@ -51,8 +51,8 @@ export default function ResultSection({
         <p className="mt-6 text-xs text-text-muted">
           HEWB v{data.hewb_version}. Flag dates come from the frozen benchmark
           run under strict pre-cutoff evidence discipline; out-of-fold scores are
-          averaged over repeated cross-validation, so the ranks are reproducible
-          rather than an artifact of one split. Regulatory milestone dates are
+          averaged over repeated cross-validation, so the ranks hold steady
+          across resampling. Regulatory milestone dates are
           hand-verified against the enacting act or EFSA output.
         </p>
       </div>
