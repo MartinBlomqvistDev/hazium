@@ -41,6 +41,8 @@ export interface CapabilityLandmark {
   cas: string;
   hazard: string;
   outcome: CapabilityOutcome;
+  /** True for the held-out north-star (fluazinam), which is not one of the ten benchmark EU bans. */
+  held_out?: boolean;
   hazium_flag: {
     date: string;
     rank: number;

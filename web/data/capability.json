@@ -137,6 +137,7 @@
       "cas": "79622-59-6",
       "hazard": "national groundwater / TFA concern",
       "outcome": "miss",
+      "held_out": true,
       "hazium_flag": null,
       "markers": [
         { "type": "ban", "date": "2025-11-20", "precision": "day", "label": "Swedish national reevaluation (outside the EU non-renewal process)", "source": "The anchor case; a Swedish national concern", "url": "https://github.com/MartinBlomqvistDev/hazium" }

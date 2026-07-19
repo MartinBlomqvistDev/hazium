@@ -1,6 +1,14 @@
 import type { HewbData } from "@/lib/types";
 
-export default function Hero({ data }: { data: HewbData }) {
+export default function Hero({
+  data,
+  flaggedAhead,
+  banTotal,
+}: {
+  data: HewbData;
+  flaggedAhead: number;
+  banTotal: number;
+}) {
   const { headline } = data;
   return (
     <section id="top" className="border-b border-hairline">
@@ -30,8 +38,8 @@ export default function Hero({ data }: { data: HewbData }) {
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
           <Stat
-            value={`${headline.landmarks_flagged} / ${headline.landmarks_total}`}
-            label="landmark EU bans flagged in advance"
+            value={`${flaggedAhead} / ${banTotal}`}
+            label="landmark EU bans flagged ahead of the EU's own first action"
           />
           <Stat
             value={
