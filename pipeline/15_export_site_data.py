@@ -36,8 +36,12 @@ def _read_csv(path: Path) -> list[dict]:
 def main() -> int:
     from hazium.benchmark.hewb import HEWB_VERSION
 
-    lead_times_rows = [r for r in _read_csv(PROCESSED / "hewb_lead_times.csv") if r["variant"] == VARIANT]
-    aggregate_rows = [r for r in _read_csv(PROCESSED / "hewb_aggregate.csv") if r["variant"] == VARIANT]
+    lead_times_rows = [
+        r for r in _read_csv(PROCESSED / "hewb_lead_times.csv") if r["variant"] == VARIANT
+    ]
+    aggregate_rows = [
+        r for r in _read_csv(PROCESSED / "hewb_aggregate.csv") if r["variant"] == VARIANT
+    ]
 
     landmarks = []
     for case in LANDMARK_CASES:
