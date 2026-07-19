@@ -19,6 +19,10 @@ const SIGNALS = [
     title: "Graph structure",
     body: "Shared hazard classifications and metabolic degradation links to other substances already flagged as concerning.",
   },
+  {
+    title: "Independent literature signal",
+    body: "How a substance's share of hazard-flavoured scientific literature (Europe PMC) compares to the rest of the field in the same year — the one signal here that sits upstream of any regulator, not downstream of one.",
+  },
 ];
 
 export default function HowItWorks() {
@@ -31,7 +35,7 @@ export default function HowItWorks() {
         <p className="mt-4 text-text-secondary">
           Every ranking traces back to real, dated, publicly-sourced facts —
           never a black box. A gradient-boosted model (XGBoost) is trained on
-          five feature groups, each grounded in a specific public source:
+          six feature groups, each grounded in a specific public source:
         </p>
         <div className="mt-8 space-y-5">
           {SIGNALS.map((s) => (

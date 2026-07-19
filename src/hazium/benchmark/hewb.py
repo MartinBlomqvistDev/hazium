@@ -43,7 +43,15 @@ from hazium.models import LiteratureVolumeRecord, RegulatoryEvent, RegulatoryEve
 #: values). A result labelled HEWB 1.0 is only comparable to another HEWB 1.0
 #: result. Graph/data changes that move the numbers are a new minor version,
 #: logged in DEV_LOG, never a silent restatement.
-HEWB_VERSION = "1.1"
+#:
+#: v1.2 (2026-07-19): Tier 1 (Europe PMC literature-volume feature,
+#: SOURCE_ENHANCEMENT_SCOPE.md) added to the tabular feature set. Real
+#: movement, not noise: 4 landmarks newly flag at k=10 (previously misses at
+#: that threshold), 2 flag earlier, one pair of chemically-related landmarks
+#: (Chlorpyrifos / Chlorpyrifos-methyl) swap order by the same 24 months, and
+#: the 2023-01-01 headline AP rises 0.240 -> 0.264. See DEV_LOG's "HEWB v1.2"
+#: entry for the full before/after table.
+HEWB_VERSION = "1.2"
 
 #: Annual cutoffs, 2009-2024. Extended backward from v1.0's 2016 floor after
 #: checking real coverage, not assuming it: hazard classifications reach back

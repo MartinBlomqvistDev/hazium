@@ -92,11 +92,10 @@ def main() -> int:
 
     payload = {
         "hewb_version": HEWB_VERSION,
-        "provisional": True,
+        "provisional": False,
         "provisional_note": (
-            "These are HEWB v1.1 numbers (tabular features only). A literature-volume "
-            "feature (Tier 1) is being added and may move these numbers to v1.2 -- "
-            "re-export after that run lands."
+            "HEWB v1.2 -- includes the Tier 1 literature-volume feature "
+            "(Europe PMC, full population), settled result."
         ),
         "headline": {
             "landmarks_flagged": flagged_count,
