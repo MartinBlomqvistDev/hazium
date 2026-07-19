@@ -228,6 +228,33 @@ def literature_features(
     return {"lit_hazard_percentile": percentile, "lit_has_literature_signal": 1.0}
 
 
+def clh_intention_features(substance_id: str, clh_records: list, cutoff: date) -> dict[str, float]:
+    """ECHA CLH-intention signal from pre-cutoff intention facts.
+
+    Filters on ``known_at < cutoff`` (Jan 1 of the intention year + 1), like
+    every other dated feature, so a 2015 intention is only visible from the
+    2016 cutoff onward. ``clh_years_since_intention`` grows with how long the
+    substance has sat in the CLH pipeline before the cutoff, a recency signal
+    matching ``efsa_years_since_last``'s shape.
+
+    This is an **in-funnel** signal (see ``SOURCE_ENHANCEMENT_SCOPE.md`` Tier 2):
+    it reads the regulator's own classification pipeline, so it is expected to
+    aid precision more than genuine early warning, and HEWB reports its SHAP
+    contribution in the inside-funnel group so that stays explicit.
+    """
+    years = [
+        r.intention_year
+        for r in clh_records
+        if r.substance_id == substance_id and r.known_at < cutoff
+    ]
+    if not years:
+        return {"clh_has_intention": 0.0, "clh_years_since_intention": 0.0}
+    return {
+        "clh_has_intention": 1.0,
+        "clh_years_since_intention": float(cutoff.year - min(years)),
+    }
+
+
 def _years_since(dates: list[date], cutoff: date) -> float:
     """Years between the latest of ``dates`` and ``cutoff`` — never today's date.
 

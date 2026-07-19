@@ -25,6 +25,7 @@ from hazium.benchmark.hewb import K_VALUES, HewbReport, run_hewb
 from hazium.graph.build import load_graph
 from hazium.models import LiteratureVolumeRecord, RegulatoryEvent, SalesRecord, Substance
 from hazium.resolve.names import SubstanceResolver, resolve_sales_records
+from hazium.sources.echa_clh import clh_intention_records, earliest_intention_year
 
 ROOT = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"
@@ -221,13 +222,26 @@ def main() -> int:
     lit_records = _load_literature(PROCESSED / "literature_volume.jsonl")
     print(f"literature-volume records: {len(lit_records)}")
 
+    clh_snapshot = ROOT / "data" / "raw" / "clh_intentions_ppp.jsonl"
+    clh_records = (
+        clh_intention_records(earliest_intention_year(clh_snapshot))
+        if clh_snapshot.exists()
+        else []
+    )
+    print(f"CLH-intention records: {len(clh_records)}")
+
     v2b_path = PROCESSED / "embed_eval_results.json"
     v2b_embedding_json = (
         json.loads(v2b_path.read_text(encoding="utf-8")) if v2b_path.exists() else None
     )
 
     report = run_hewb(
-        graph, sales, regevents, v2b_embedding_json=v2b_embedding_json, lit_records=lit_records
+        graph,
+        sales,
+        regevents,
+        v2b_embedding_json=v2b_embedding_json,
+        lit_records=lit_records,
+        clh_records=clh_records,
     )
 
     _write_aggregate(report)

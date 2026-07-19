@@ -15,6 +15,7 @@ import pandas as pd
 from hazium.graph.store import TemporalGraph
 from hazium.ml.features import (
     LITERATURE_MIN_TOTAL_MENTIONS,
+    clh_intention_features,
     clp_features,
     efsa_features,
     eu_regulatory_features,
@@ -23,6 +24,7 @@ from hazium.ml.features import (
     sales_features,
 )
 from hazium.models import (
+    CLHIntentionRecord,
     LiteratureVolumeRecord,
     NodeType,
     RegulatoryEvent,
@@ -53,6 +55,8 @@ FEATURE_COLUMNS = [
     "eu_years_since_first_approval",
     "lit_hazard_percentile",
     "lit_has_literature_signal",
+    "clh_has_intention",
+    "clh_years_since_intention",
 ]
 
 
@@ -107,6 +111,7 @@ def build_dataset(
     cutoff: date,
     positive_kinds: frozenset[RegulatoryEventKind] = DEFAULT_POSITIVE_KINDS,
     lit_records: list[LiteratureVolumeRecord] = (),
+    clh_records: list[CLHIntentionRecord] = (),
 ) -> tuple[pd.DataFrame, pd.Series, list[str]]:
     """Build (X, y, substance_ids) for one rolling-origin cutoff.
 
@@ -145,6 +150,7 @@ def build_dataset(
     }
 
     lit_fractions = _literature_fractions_at_reference_year(list(lit_records), cutoff)
+    clh_list = list(clh_records)
 
     rows = []
     for substance_id in population:
@@ -155,6 +161,7 @@ def build_dataset(
         row.update(graph_structural_features(view, substance_id))
         row.update(eu_regulatory_features(substance_id, regevents, cutoff))
         row.update(literature_features(substance_id, lit_fractions))
+        row.update(clh_intention_features(substance_id, clh_list, cutoff))
         rows.append(row)
 
     X = pd.DataFrame(rows, columns=FEATURE_COLUMNS, index=population)
