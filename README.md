@@ -68,16 +68,18 @@ reports against, so results stay comparable across methods.
 | V2 ✅ | Node embeddings on the same tasks | Beats V1 baseline, or the negative result is documented — **documented negative** |
 | V3 ⛔ | GNNs with evidence-path explanations | Entered only if V2 shows signal — **not entered**, per gate |
 | V4 | Second domain (PFAS, via a verified shared-metabolite bridge to TFA) | Two domains share one architecture |
-| HEWB v1.3 ✅ | Versioned early-warning benchmark: annual rolling-origin eval + per-case lead-time | Rigorous, reproducible, honestly-reported — **met** |
+| HEWB v1.4 ✅ | Versioned early-warning benchmark: annual rolling-origin eval + per-case lead-time | Rigorous, reproducible, honestly-reported — **met** |
 
 ## Status
 
-**V0, V1, V2, and HEWB v1.3 all met.**
+**V0, V1, V2, and HEWB v1.4 all met.**
 
-HEWB v1.3, the north-star generalised from one case into a versioned
+HEWB v1.4, the north-star generalised from one case into a versioned
 benchmark over historical EU regulatory actions, including a
 literature-volume feature (population-relative hazard-language prevalence in
-Europe PMC). Using only data known before each annual cutoff (**2009-2024**),
+Europe PMC) and an ECHA CLH-intention feature (Tier 2, browser-acquired from
+a WAF-gated registry; a modest in-funnel signal that SHAP places below the
+independent literature signal, 2023 AP 0.226 to 0.254). Using only data known before each annual cutoff (**2009-2024**),
 XGBoost beats every trivial baseline at every cutoff, and ranked the real
 EU-banned substances in the top-k *years* before the ban: chlorpyrifos was
 flagged **132 months (11 years)** before its 2020 EU ban, at k=10, a lower
