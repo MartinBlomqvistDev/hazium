@@ -40,8 +40,8 @@ export default function ResultSection({
           substance among the riskiest roughly a decade before EFSA&apos;s first
           public concern. On the neonicotinoids it was early relative to the
           2013 EU restriction, though national bans were already emerging. On
-          imidacloprid and dimethoate it moved level with the regulator rather
-          than ahead, and that is shown. Epoxiconazole it never flagged at all.
+          dimethoate it moved level with the regulator, and on imidacloprid it
+          flagged late, both shown rather than dropped. Epoxiconazole it never flagged at all.
           Where a substance had a real public controversy, the chart marks that
           too: Hazium flagged chlorpyrifos years before its 2015 US ban fight,
           and the neonicotinoids before the 2012 bee campaign. Most landmarks had
