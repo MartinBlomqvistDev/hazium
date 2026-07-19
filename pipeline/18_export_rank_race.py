@@ -95,7 +95,9 @@ def main() -> int:
         per_year[r.cutoff.year] = rows
 
     out = {"years": [c.year for c in ANNUAL_CUTOFFS], "top_n": TOP_N, "per_year": per_year}
-    (ROOT / "web" / "data" / "rank_race.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
+    (ROOT / "web" / "data" / "rank_race.json").write_text(
+        json.dumps(out, indent=1), encoding="utf-8"
+    )
     sample = [x["name"] for x in per_year[min(per_year)][:3]]
     print(f"wrote {len(per_year)} years to web/data/rank_race.json; earliest-year top-3: {sample}")
     return 0
