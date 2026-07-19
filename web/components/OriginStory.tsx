@@ -12,8 +12,10 @@ export default function OriginStory() {
         </p>
         <p className="mt-4 leading-relaxed text-text-secondary">
           The answer was no, and the reason is precise. Fluazinam&apos;s actual
-          2026 concern is a national groundwater contamination finding involving
-          trifluoroacetic acid (TFA). The sources ingested so far, EU regulatory
+          concern is a national groundwater contamination finding involving
+          trifluoroacetic acid (TFA), raised by a November 2025 Swedish
+          reevaluation and the public controversy that followed in 2026. The
+          sources ingested so far, EU regulatory
           history, EU hazard classifications, and Swedish sales, do not cover
           groundwater or residue monitoring, so that specific signal sits outside
           the current data. Bringing residue and groundwater monitoring into the
