@@ -58,6 +58,19 @@ export interface CapabilityData {
   landmarks: CapabilityLandmark[];
 }
 
+export interface TrajectoryPoint {
+  year: number;
+  rank: number;
+  population: number;
+}
+
+export interface SubstanceDetail {
+  use: string;
+  trajectory: TrajectoryPoint[];
+}
+
+export type SubstanceDetailMap = Record<string, SubstanceDetail>;
+
 export interface HewbData {
   hewb_version: string;
   provisional: boolean;
