@@ -14,7 +14,7 @@ export default function Hero({ data }: { data: HewbData }) {
             aria-hidden
           />
           HEWB v{data.hewb_version}
-          {data.provisional ? " — provisional, being re-run" : ""}
+          {data.provisional ? " · provisional, being re-run" : ""}
         </div>
         <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
           Would public data have caught it{" "}
@@ -22,7 +22,7 @@ export default function Hero({ data }: { data: HewbData }) {
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-text-secondary">
           Hazium builds a temporally-aware knowledge graph over EU pesticide
-          approvals, hazard classifications, and scientific literature — then
+          approvals, hazard classifications, and scientific literature, then
           asks a falsifiable question of it: ranking substances for future
           regulatory risk using only evidence that existed at the time,
           measured against real EU bans that happened years later.
@@ -37,7 +37,7 @@ export default function Hero({ data }: { data: HewbData }) {
             value={
               headline.best_lead_time_months
                 ? `${headline.best_lead_time_months} mo`
-                : "—"
+                : "n/a"
             }
             label={
               headline.best_lead_time_case

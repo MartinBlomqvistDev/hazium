@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hazium — early warning from public evidence",
+  title: "Hazium: early warning from public evidence",
   description:
-    "A temporally-aware knowledge graph over EU pesticide regulation, hazard classification, and scientific literature — evaluated against a versioned, falsifiable early-warning benchmark (HEWB).",
+    "A temporally-aware knowledge graph over EU pesticide regulation, hazard classification, and scientific literature, evaluated against a versioned, falsifiable early-warning benchmark (HEWB).",
 };
 
 export default function RootLayout({

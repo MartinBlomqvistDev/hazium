@@ -11,15 +11,21 @@ export default function OriginStory() {
           national news?
         </p>
         <p className="mt-4 leading-relaxed text-text-secondary">
-          The honest answer, checked rather than assumed, was no — not with
-          the data ingested so far. That negative result is reported, not
-          hidden, in the project&apos;s own dev log. But investigating it
-          surfaced a bigger, more useful question: Europe doesn&apos;t lack
-          environmental data — it has enormous amounts of scientific,
-          regulatory, and market evidence. It&apos;s just scattered across
-          agencies that don&apos;t talk to each other. Hazium is what happens
-          when that evidence is joined into one temporally-honest graph and
-          asked, systematically, what it would have known — and when.
+          The answer, tested rather than assumed, was no. Fluazinam&apos;s
+          actual 2026 concern is a national groundwater contamination finding
+          involving trifluoroacetic acid (TFA). None of the sources ingested
+          so far, EU regulatory history, EU hazard classifications, Swedish
+          sales data, capture groundwater or residue monitoring, so the model
+          has no way to see this specific concern.
+        </p>
+        <p className="mt-4 leading-relaxed text-text-secondary">
+          That gap is the real origin of the project. Environmental and
+          public health evidence exists in volume across Europe: regulatory
+          decisions, hazard classifications, sales statistics, scientific
+          literature. It is split across agencies that do not share a
+          schema, a timeline, or even a common substance identifier. Hazium
+          joins that evidence into one temporally dated graph, so a ranking
+          can be checked against a real cutoff instead of hindsight.
         </p>
       </div>
     </section>

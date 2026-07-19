@@ -1,19 +1,19 @@
 const SIGNALS = [
   {
     title: "Hazard classification history",
-    body: "How many severe hazard codes a substance carries under EU CLP — carcinogenicity, aquatic toxicity, reproductive toxicity — and how recently a classification was added.",
+    body: "How many severe hazard codes a substance carries under EU CLP: carcinogenicity, aquatic toxicity, reproductive toxicity, and how recently a classification was added.",
   },
   {
     title: "Scientific assessment scrutiny",
-    body: "How many EFSA toxicological assessments exist, over what span of years — sustained scientific attention is itself a signal, independent of the conclusion.",
+    body: "How many EFSA toxicological assessments exist, over what span of years. Sustained scientific attention is itself a signal, independent of the conclusion.",
   },
   {
     title: "Sales and usage trends",
-    body: "Tonnage sold over time, trend direction, and volatility — a substance quietly losing market share behaves differently from one still expanding.",
+    body: "Tonnage sold over time, trend direction, and volatility. A substance quietly losing market share behaves differently from one still expanding.",
   },
   {
     title: "EU regulatory history",
-    body: "How long a substance has held EU approval, and its history of renewals or restrictions — the single strongest signal the model has found so far.",
+    body: "How long a substance has held EU approval, and its history of renewals or restrictions: the single strongest signal the model has found so far.",
   },
   {
     title: "Graph structure",
@@ -21,7 +21,7 @@ const SIGNALS = [
   },
   {
     title: "Independent literature signal",
-    body: "How a substance's share of hazard-flavoured scientific literature (Europe PMC) compares to the rest of the field in the same year — the one signal here that sits upstream of any regulator, not downstream of one.",
+    body: "How a substance's share of hazard-flavoured scientific literature (Europe PMC) compares to the rest of the field in the same year. This is the one signal here that sits upstream of any regulator, not downstream of one.",
   },
 ];
 
@@ -33,7 +33,7 @@ export default function HowItWorks() {
           How it decides
         </h2>
         <p className="mt-4 text-text-secondary">
-          Every ranking traces back to real, dated, publicly-sourced facts —
+          Every ranking traces back to real, dated, publicly-sourced facts,
           never a black box. A gradient-boosted model (XGBoost) is trained on
           six feature groups, each grounded in a specific public source:
         </p>
@@ -46,9 +46,9 @@ export default function HowItWorks() {
           ))}
         </div>
         <p className="mt-8 text-sm text-text-secondary">
-          The model is always compared against dead-simple trivial baselines —
+          The model is always compared against dead-simple trivial baselines:
           severe-hazard count alone, latest sales tonnage alone, assessment
-          count alone — on the identical task and split. If it doesn&apos;t
+          count alone, on the identical task and split. If it doesn&apos;t
           beat them, the baseline is the published result, not the model.
         </p>
       </div>
