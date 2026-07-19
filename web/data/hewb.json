@@ -1,5 +1,5 @@
 {
-  "hewb_version": "1.2",
+  "hewb_version": "1.3",
   "provisional": false,
   "provisional_note": "HEWB v1.2 -- includes the Tier 1 literature-volume feature (Europe PMC, full population), settled result.",
   "headline": {
@@ -16,8 +16,8 @@
       "action_date": "2019-01-31",
       "flagged": true,
       "lead_time_months": {
-        "10": 120,
-        "20": 120,
+        "10": 108,
+        "20": 108,
         "50": 120
       }
     },
@@ -28,7 +28,7 @@
       "action_date": "2019-04-30",
       "flagged": true,
       "lead_time_months": {
-        "10": 123,
+        "10": 3,
         "20": 123,
         "50": 123
       }
@@ -40,9 +40,9 @@
       "action_date": "2020-12-01",
       "flagged": true,
       "lead_time_months": {
-        "10": 23,
-        "20": 35,
-        "50": 47
+        "10": 47,
+        "20": 95,
+        "50": 95
       }
     },
     {
@@ -97,12 +97,12 @@
       "name": "Mancozeb",
       "cas": "8018-01-7",
       "note": "reprotoxic / endocrine",
-      "action_date": "2017-01-31",
+      "action_date": "2021-01-04",
       "flagged": true,
       "lead_time_months": {
-        "10": 12,
-        "20": 12,
-        "50": 96
+        "10": 60,
+        "20": 132,
+        "50": 132
       }
     },
     {
@@ -112,8 +112,8 @@
       "action_date": "2019-06-30",
       "flagged": true,
       "lead_time_months": {
-        "10": 17,
-        "20": 17,
+        "10": 5,
+        "20": 5,
         "50": 125
       }
     },
@@ -125,7 +125,7 @@
       "flagged": true,
       "lead_time_months": {
         "10": null,
-        "20": 119,
+        "20": null,
         "50": 119
       }
     }
@@ -133,83 +133,83 @@
   "aggregate": [
     {
       "cutoff": "2009-01-01",
-      "xgboost_ap": 0.6512415315697961,
-      "best_trivial_ap": 0.025983951089033244
+      "xgboost_ap": 0.6343325364659191,
+      "best_trivial_ap": 0.026355996944232237
     },
     {
       "cutoff": "2010-01-01",
-      "xgboost_ap": 0.6150671525186011,
-      "best_trivial_ap": 0.02515527950310559
+      "xgboost_ap": 0.6556044613856723,
+      "best_trivial_ap": 0.02545793231915554
     },
     {
       "cutoff": "2011-01-01",
-      "xgboost_ap": 0.5368312248007979,
-      "best_trivial_ap": 0.0951226150049115
+      "xgboost_ap": 0.5864865772288942,
+      "best_trivial_ap": 0.09761182161034086
     },
     {
       "cutoff": "2012-01-01",
-      "xgboost_ap": 0.5773119216510314,
-      "best_trivial_ap": 0.09368294033855708
+      "xgboost_ap": 0.6002387011999012,
+      "best_trivial_ap": 0.09615557630271847
     },
     {
       "cutoff": "2013-01-01",
-      "xgboost_ap": 0.6298934346876659,
-      "best_trivial_ap": 0.09105887111625009
+      "xgboost_ap": 0.5908754513016958,
+      "best_trivial_ap": 0.09348277523990932
     },
     {
       "cutoff": "2014-01-01",
-      "xgboost_ap": 0.5729605774137034,
-      "best_trivial_ap": 0.08769395250169074
+      "xgboost_ap": 0.5675562109192062,
+      "best_trivial_ap": 0.09003909914237608
     },
     {
       "cutoff": "2015-01-01",
-      "xgboost_ap": 0.5151807430581716,
-      "best_trivial_ap": 0.08015645069216498
+      "xgboost_ap": 0.552158241487934,
+      "best_trivial_ap": 0.08248538592926348
     },
     {
       "cutoff": "2016-01-01",
-      "xgboost_ap": 0.589000097441226,
-      "best_trivial_ap": 0.08185416735938421
+      "xgboost_ap": 0.5746003202119782,
+      "best_trivial_ap": 0.08413904695722783
     },
     {
       "cutoff": "2017-01-01",
-      "xgboost_ap": 0.5753449143418764,
-      "best_trivial_ap": 0.07778192492767842
+      "xgboost_ap": 0.5657797869030402,
+      "best_trivial_ap": 0.08005969685914949
     },
     {
       "cutoff": "2018-01-01",
-      "xgboost_ap": 0.4361389562357863,
-      "best_trivial_ap": 0.07720655998576317
+      "xgboost_ap": 0.4663646559814814,
+      "best_trivial_ap": 0.07688746201787655
     },
     {
       "cutoff": "2019-01-01",
-      "xgboost_ap": 0.4227584205754126,
-      "best_trivial_ap": 0.0734306202799825
+      "xgboost_ap": 0.4542723656108431,
+      "best_trivial_ap": 0.0730149681022753
     },
     {
       "cutoff": "2020-01-01",
-      "xgboost_ap": 0.39650783537354073,
-      "best_trivial_ap": 0.0569747075354552
+      "xgboost_ap": 0.3791814504563701,
+      "best_trivial_ap": 0.05652680652680652
     },
     {
       "cutoff": "2021-01-01",
-      "xgboost_ap": 0.21609279860045127,
-      "best_trivial_ap": 0.03527368547131393
+      "xgboost_ap": 0.25086962075419533,
+      "best_trivial_ap": 0.034908568439112456
     },
     {
       "cutoff": "2022-01-01",
-      "xgboost_ap": 0.17298807085825443,
-      "best_trivial_ap": 0.014951581559390758
+      "xgboost_ap": 0.17714105254896145,
+      "best_trivial_ap": 0.01498535010457086
     },
     {
       "cutoff": "2023-01-01",
-      "xgboost_ap": 0.2641641940606778,
-      "best_trivial_ap": 0.016070333632182524
+      "xgboost_ap": 0.2260610927009336,
+      "best_trivial_ap": 0.016109683128265634
     },
     {
       "cutoff": "2024-01-01",
-      "xgboost_ap": 0.12904116977594024,
-      "best_trivial_ap": 0.018361989307344326
+      "xgboost_ap": 0.20201867288033196,
+      "best_trivial_ap": 0.018406271340283806
     }
   ]
 }

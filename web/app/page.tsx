@@ -6,9 +6,11 @@ import HowItWorks from "@/components/HowItWorks";
 import Principles from "@/components/Principles";
 import Footer from "@/components/Footer";
 import hewbData from "@/data/hewb.json";
-import type { HewbData } from "@/lib/types";
+import capabilityData from "@/data/capability.json";
+import type { CapabilityData, HewbData } from "@/lib/types";
 
 const data = hewbData as HewbData;
+const capability = capabilityData as CapabilityData;
 
 export default function Home() {
   return (
@@ -17,7 +19,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero data={data} />
         <OriginStory />
-        <ResultSection data={data} />
+        <ResultSection data={data} capability={capability} />
         <HowItWorks />
         <Principles />
       </main>

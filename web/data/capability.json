@@ -1,0 +1,147 @@
+{
+  "k_primary": 20,
+  "note": "Each landmark places Hazium's first flag (the earliest annual cutoff where it entered the top-20 riskiest of ~5,900 substances, from the stabilized HEWB v1.3 run under strict known_at discipline) against independent, dated milestones that Hazium does not consume as features. The literature-volume feature is a model input, so it is deliberately absent here: comparing against it would be circular. Regulatory and public-awareness dates are hand-verified against the enacting act, EFSA output, or a documented public controversy, cited per marker. A public marker appears only where a substance had a genuine dated public controversy (the neonicotinoid bee campaign, the US chlorpyrifos ban); most landmarks had no public profile at all when Hazium flagged them, and carry no such marker, which is itself the point. GDELT news-media volume is ingested as an independent axis (a soft rate limit needs backoff, not a block), but the DOC index only reaches back to 2017, after every landmark's pre-2017 story, so these historical public markers stay hand-curated and GDELT's live value is the present-day watchlist. Each row is labeled with the tightest threshold it actually reached (top-10, top-20, or top-50); k=20 is the primary bar because the strict top-10 line is sensitive to fold-level noise for borderline substances, while top-20 is stable.",
+  "outcomes": {
+    "clean_lead": "Hazium ranked it top-tier years before the first independent concern.",
+    "ahead_of_eu_action": "Hazium flagged it before the first EU-wide restriction, though national concern was already emerging.",
+    "level": "Hazium and the regulator's assessment moved at roughly the same time.",
+    "behind": "The regulator restricted it before Hazium's model flagged it.",
+    "miss": "Hazium never flagged it before its real action."
+  },
+  "landmarks": [
+    {
+      "name": "Chlorpyrifos",
+      "cas": "2921-88-2",
+      "hazard": "developmental neurotoxicity",
+      "outcome": "clean_lead",
+      "hazium_flag": { "date": "2009-01-01", "rank": 2, "k": 10, "lower_bound": true },
+      "markers": [
+        { "type": "media", "date": "2015-10-31", "precision": "day", "label": "US EPA proposes to revoke all tolerances (public controversy)", "source": "US EPA, 80 FR 69080 (2015-11-06)", "url": "https://www.regulations.gov/document/EPA-HQ-OPP-2015-0653-0001" },
+        { "type": "regulator", "date": "2019-08-02", "precision": "day", "label": "EFSA statement: human-health concerns, DNT and genotoxicity", "source": "EFSA Journal 2019;17(8):5809", "url": "https://efsa.onlinelibrary.wiley.com/doi/full/10.2903/j.efsa.2019.5809" },
+        { "type": "ban", "date": "2020-01-16", "precision": "day", "label": "EU non-renewal (Reg 2020/18)", "source": "Commission Implementing Regulation (EU) 2020/18", "url": "https://eur-lex.europa.eu/eli/reg_impl/2020/18/oj" }
+      ],
+      "note": "Ranked second-riskiest of the whole population at the first cutoff tested. It was already flagged years before the substance became a US public controversy in 2015, and roughly a decade before EFSA's 2019 concern. The most robust case: unmoved across every re-run."
+    },
+    {
+      "name": "Thiacloprid",
+      "cas": "111988-49-9",
+      "hazard": "reprotoxic, endocrine",
+      "outcome": "clean_lead",
+      "hazium_flag": { "date": "2010-01-01", "rank": 8, "k": 10, "lower_bound": false },
+      "markers": [
+        { "type": "regulator", "date": "2019-03-13", "precision": "day", "label": "EFSA peer review: reprotoxic 1B, endocrine-disruptor criteria met", "source": "EFSA Journal 2019;17(3):5595", "url": "https://efsa.onlinelibrary.wiley.com/doi/10.2903/j.efsa.2019.5595" },
+        { "type": "ban", "date": "2020-02-03", "precision": "day", "label": "EU non-renewal (Reg 2020/23)", "source": "Commission Implementing Regulation (EU) 2020/23", "url": "https://eur-lex.europa.eu/eli/reg_impl/2020/23/oj" }
+      ],
+      "note": "Top-8 riskiest in 2010, about nine years before EFSA's peer review concluded the reprotoxic and endocrine concerns. No public profile: a substance the public never debated."
+    },
+    {
+      "name": "Chlorpyrifos-methyl",
+      "cas": "5598-13-0",
+      "hazard": "developmental neurotoxicity",
+      "outcome": "clean_lead",
+      "hazium_flag": { "date": "2011-01-01", "rank": 3, "k": 10, "lower_bound": false },
+      "markers": [
+        { "type": "regulator", "date": "2019-08-02", "precision": "day", "label": "EFSA statement: human-health concerns (updated 2019-11-26)", "source": "EFSA Journal 2019;17(8):5908", "url": "https://efsa.onlinelibrary.wiley.com/doi/10.2903/j.efsa.2019.5908" },
+        { "type": "ban", "date": "2020-01-16", "precision": "day", "label": "EU non-renewal (Reg 2020/17)", "source": "Commission Implementing Regulation (EU) 2020/17", "url": "https://eur-lex.europa.eu/eli/reg_impl/2020/17/oj" }
+      ],
+      "note": "Sister compound to chlorpyrifos; top-3 riskiest in 2011, about eight years before the EFSA concern statement. It rode along with chlorpyrifos in the regulatory decision but had little public profile of its own."
+    },
+    {
+      "name": "Mancozeb",
+      "cas": "8018-01-7",
+      "hazard": "reprotoxic, endocrine",
+      "outcome": "clean_lead",
+      "hazium_flag": { "date": "2010-01-01", "rank": 16, "k": 20, "lower_bound": false },
+      "markers": [
+        { "type": "regulator", "date": "2019-11-01", "precision": "month", "label": "EFSA review: endocrine-disruptor criteria met", "source": "EFSA Journal 2020;18(1):5755", "url": "https://efsa.onlinelibrary.wiley.com/doi/10.2903/j.efsa.2020.5755" },
+        { "type": "ban", "date": "2021-01-04", "precision": "day", "label": "EU non-renewal (Reg 2020/2087)", "source": "Commission Implementing Regulation (EU) 2020/2087", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32020R2087" }
+      ],
+      "note": "Top-20 from 2010, roughly nine years before EFSA's endocrine finding. This is the case a benchmark bug had been hiding: the EU PPDB export listed Maneb under Mancozeb's CAS, so the benchmark had measured Mancozeb against Maneb's 2017 withdrawal. Corrected in HEWB v1.3, its real lead against the 2021 ban is now visible."
+    },
+    {
+      "name": "Propikonazol",
+      "cas": "60207-90-1",
+      "hazard": "reprotoxic, endocrine",
+      "outcome": "clean_lead",
+      "hazium_flag": { "date": "2009-01-01", "rank": 34, "k": 50, "lower_bound": true },
+      "markers": [
+        { "type": "regulator", "date": "2017-06-14", "precision": "day", "label": "EFSA conclusion communicated to Commission", "source": "EFSA Journal 2017;15(7):4887", "url": "https://efsa.onlinelibrary.wiley.com/doi/10.2903/j.efsa.2017.4887" },
+        { "type": "ban", "date": "2018-12-19", "precision": "day", "label": "EU non-renewal (Reg 2018/1865)", "source": "Commission Implementing Regulation (EU) 2018/1865", "url": "https://eur-lex.europa.eu/eli/reg_impl/2018/1865/oj" }
+      ],
+      "note": "Reached the top-50 at the first cutoff tested, roughly eight years before EFSA's conclusion. It never entered the top-20, so this is a top-50 flag, shown as such rather than dressed up. No public profile."
+    },
+    {
+      "name": "Clothianidin",
+      "cas": "210880-92-5",
+      "hazard": "neonicotinoid, bee toxicity",
+      "outcome": "ahead_of_eu_action",
+      "hazium_flag": { "date": "2010-01-01", "rank": 10, "k": 10, "lower_bound": false },
+      "markers": [
+        { "type": "media", "date": "2012-05-01", "precision": "month", "label": "Public bee campaign (2.5M-signature petition, mass coverage)", "source": "EU neonicotinoid-bee public debate, 2012", "url": "https://commonslibrary.parliament.uk/research-briefings/sn06656/" },
+        { "type": "regulator", "date": "2013-05-24", "precision": "day", "label": "First EU-wide restriction (Reg 485/2013)", "source": "Commission Implementing Regulation (EU) No 485/2013", "url": "https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=celex:32013R0485" },
+        { "type": "ban", "date": "2019-01-31", "precision": "day", "label": "EU non-renewal", "source": "Approval expired 2019-01-31 after withdrawn renewal", "url": "https://food.ec.europa.eu/plants/pesticides/approval-active-substances-safeners-and-synergists/renewal-approval/neonicotinoids_en" }
+      ],
+      "note": "Top-10 riskiest in 2010, before the public bee campaign of 2012 and about three years before the EU-wide 2013 restriction. Honesty note: national bans and EFSA bee-risk work were already underway around 2008 to 2012, so Hazium was early relative to EU-wide action, not relative to the whole world."
+    },
+    {
+      "name": "Thiamethoxam",
+      "cas": "153719-23-4",
+      "hazard": "neonicotinoid, bee toxicity",
+      "outcome": "ahead_of_eu_action",
+      "hazium_flag": { "date": "2009-01-01", "rank": 12, "k": 20, "lower_bound": true },
+      "markers": [
+        { "type": "media", "date": "2012-05-01", "precision": "month", "label": "Public bee campaign (2.5M-signature petition, mass coverage)", "source": "EU neonicotinoid-bee public debate, 2012", "url": "https://commonslibrary.parliament.uk/research-briefings/sn06656/" },
+        { "type": "regulator", "date": "2013-05-24", "precision": "day", "label": "First EU-wide restriction (Reg 485/2013)", "source": "Commission Implementing Regulation (EU) No 485/2013", "url": "https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=celex:32013R0485" },
+        { "type": "ban", "date": "2019-04-30", "precision": "day", "label": "EU non-renewal", "source": "Approval expired 2019-04-30 after withdrawn renewal", "url": "https://food.ec.europa.eu/plants/pesticides/approval-active-substances-safeners-and-synergists/renewal-approval/neonicotinoids_en" }
+      ],
+      "note": "Top-20 from the first cutoff tested, before the 2012 public campaign and about four years before the 2013 restriction. It only reaches the strict top-10 in 2019, so this is a top-20 flag: robustly early at that bar, borderline at the tighter one."
+    },
+    {
+      "name": "Imidacloprid",
+      "cas": "138261-41-3",
+      "hazard": "neonicotinoid, bee toxicity",
+      "outcome": "level",
+      "hazium_flag": { "date": "2013-01-01", "rank": 19, "k": 20, "lower_bound": false },
+      "markers": [
+        { "type": "media", "date": "2012-05-01", "precision": "month", "label": "Public bee campaign (2.5M-signature petition, mass coverage)", "source": "EU neonicotinoid-bee public debate, 2012", "url": "https://commonslibrary.parliament.uk/research-briefings/sn06656/" },
+        { "type": "regulator", "date": "2013-05-24", "precision": "day", "label": "First EU-wide restriction (Reg 485/2013)", "source": "Commission Implementing Regulation (EU) No 485/2013", "url": "https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=celex:32013R0485" },
+        { "type": "ban", "date": "2020-12-01", "precision": "day", "label": "EU non-renewal", "source": "Approval expired 2020-12-01 after withdrawn renewal", "url": "https://food.ec.europa.eu/plants/pesticides/approval-active-substances-safeners-and-synergists/renewal-approval/neonicotinoids_en" }
+      ],
+      "note": "The honest neighbour to the other neonicotinoids: Hazium reached the top-20 in early 2013, after the 2012 public campaign and the same year as the EU restriction, not years ahead. It tracked the wave here rather than leading, and that is shown."
+    },
+    {
+      "name": "Dimethoate",
+      "cas": "60-51-5",
+      "hazard": "organophosphate, mutagenic metabolite",
+      "outcome": "level",
+      "hazium_flag": { "date": "2019-01-01", "rank": 8, "k": 10, "lower_bound": false },
+      "markers": [
+        { "type": "regulator", "date": "2018-10-15", "precision": "month", "label": "EFSA peer review: genotoxicity of omethoate metabolite", "source": "EFSA Journal 2018;16(10):5454", "url": "https://efsa.onlinelibrary.wiley.com/doi/10.2903/j.efsa.2018.5454" },
+        { "type": "ban", "date": "2019-06-30", "precision": "day", "label": "EU non-renewal (Reg 2019/1090)", "source": "Commission Implementing Regulation (EU) 2019/1090", "url": "https://eur-lex.europa.eu/eli/reg_impl/2019/1090/oj" }
+      ],
+      "note": "Entered the top-10 in early 2019, a few months after EFSA's 2018 peer-review conclusion and about five months before the ban. An honest case where Hazium tracked the regulator rather than leading it. No public profile."
+    },
+    {
+      "name": "Epoxiconazole",
+      "cas": "133855-98-8",
+      "hazard": "CMR concern",
+      "outcome": "miss",
+      "hazium_flag": null,
+      "markers": [
+        { "type": "ban", "date": "2020-04-30", "precision": "day", "label": "EU non-renewal", "source": "Approval expired 2020-04-30", "url": "https://food.ec.europa.eu/plants/pesticides/approval-active-substances-safeners-and-synergists_en" }
+      ],
+      "note": "The one landmark HEWB never flags before its real action, at any k. Under a single unstable scoring shuffle it had briefly flickered into a top-50 flag; with stabilized scoring it is a miss again, which is the honest result. Reported plainly."
+    },
+    {
+      "name": "Fluazinam",
+      "cas": "79622-59-6",
+      "hazard": "national groundwater / TFA concern",
+      "outcome": "miss",
+      "hazium_flag": null,
+      "markers": [
+        { "type": "ban", "date": "2025-11-20", "precision": "day", "label": "Swedish reevaluation (national, not an EU non-renewal)", "source": "The anchor case; a national concern, not an EU regulatory action", "url": "https://github.com/MartinBlomqvistDev/hazium" }
+      ],
+      "note": "The original case that motivated Hazium, and a deliberate miss. Its 2025 concern is national groundwater and TFA contamination, which no ingested source (EU regulatory, hazard classification, Swedish sales) captures. Included because that honesty is the point."
+    }
+  ]
+}
