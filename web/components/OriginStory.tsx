@@ -12,9 +12,10 @@ export default function OriginStory() {
         </p>
         <p className="mt-4 leading-relaxed text-text-secondary">
           The answer was no, and the reason is precise. Fluazinam&apos;s actual
-          concern is a national groundwater contamination finding involving
-          trifluoroacetic acid (TFA), raised by a November 2025 Swedish
-          reevaluation and the public controversy that followed in 2026. The
+          concern is groundwater: it breaks down into the PFAS substance
+          trifluoroacetic acid (TFA), which spreads to groundwater.
+          Kemikalieinspektionen opened a formal reevaluation in November 2025,
+          and an SVT investigation made it national news in July 2026. The
           sources ingested so far, EU regulatory
           history, EU hazard classifications, and Swedish sales, do not cover
           groundwater or residue monitoring, so that specific signal sits outside
