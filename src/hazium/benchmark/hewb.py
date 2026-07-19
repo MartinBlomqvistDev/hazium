@@ -51,7 +51,19 @@ from hazium.models import LiteratureVolumeRecord, RegulatoryEvent, RegulatoryEve
 #: (Chlorpyrifos / Chlorpyrifos-methyl) swap order by the same 24 months, and
 #: the 2023-01-01 headline AP rises 0.240 -> 0.264. See DEV_LOG's "HEWB v1.2"
 #: entry for the full before/after table.
-HEWB_VERSION = "1.2"
+#:
+#: v1.3 (2026-07-19): two changes, both correctness, logged together.
+#: (1) Data: the EU PPDB export listed Maneb under Mancozeb's CAS (8018-01-7);
+#: corrected in the adapter (see ``sources/eu_ppdb.py``), so Mancozeb's action
+#: date is now its real 2021 non-renewal, not Maneb's 2017 one. (2) Method:
+#: out-of-fold scoring is now averaged over repeated CV shuffles
+#: (``baseline.N_SCORING_REPEATS``). The Mancozeb data fix, by adding one
+#: substance to the population, swung several landmarks' k=10 ranks under the
+#: old single-shuffle scoring (Thiamethoxam's 2009 rank moved 9 -> 47) while
+#: the deep-top-k cases held exactly, exposing fold-assignment variance that
+#: was always present. Repeated CV removes it; lead-times are now
+#: reproducible. See DEV_LOG's "HEWB v1.3" entry for the full before/after.
+HEWB_VERSION = "1.3"
 
 #: Annual cutoffs, 2009-2024. Extended backward from v1.0's 2016 floor after
 #: checking real coverage, not assuming it: hazard classifications reach back

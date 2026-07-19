@@ -31,6 +31,21 @@ TRIVIAL_BASELINES = {
 
 K_VALUES = (10, 20, 50)
 
+#: Out-of-fold scores are averaged over this many independent CV shuffles.
+#: A single ``StratifiedKFold(shuffle=True)`` split assigns every substance to
+#: one fold; with a small positive class (tens of positives in a ~5,900-row
+#: population) the fold a borderline substance lands in materially moves its
+#: out-of-fold score, so the exact rank near a k threshold is partly an
+#: artifact of one random fold assignment. Verified 2026-07-19 (DEV_LOG, HEWB
+#: v1.3): a single-substance data change (the Maneb/Mancozeb split) swung
+#: Thiamethoxam's 2009 rank from 9 to 47 under single-shuffle scoring, while
+#: substances ranked deep inside the top-k were unmoved. Averaging the
+#: out-of-fold probability over several shuffles removes the fold-assignment
+#: variance and makes lead-times reproducible; 10 is the standard
+#: repeated-CV default, enough to stabilise the ranking without turning the
+#: benchmark into a compute sink.
+N_SCORING_REPEATS = 10
+
 
 @dataclass(frozen=True)
 class CutoffResult:
@@ -65,7 +80,7 @@ def make_model(y: pd.Series, seed: int = 42) -> XGBClassifier:
 
 
 def score_xgboost(X: pd.DataFrame, y: pd.Series, seed: int = 42) -> tuple[np.ndarray, bool]:
-    """Predicted probabilities, out-of-fold via stratified k-fold CV.
+    """Predicted probabilities, out-of-fold via *repeated* stratified k-fold CV.
 
     Out-of-fold, not in-sample: fitting on the full (X, y) and scoring those
     same rows would be optimistic — the model has seen the label it's being
@@ -73,6 +88,13 @@ def score_xgboost(X: pd.DataFrame, y: pd.Series, seed: int = 42) -> tuple[np.nda
     (fewer than 2 positives total) CV can't stratify meaningfully, and this
     falls back to in-sample fit-and-predict, flagged via the returned bool so
     callers can report the result as descriptive rather than held-out.
+
+    The out-of-fold probability is averaged over ``N_SCORING_REPEATS``
+    independent shuffles (seeds ``seed .. seed + N_SCORING_REPEATS - 1``), each
+    a full out-of-fold pass. This removes the fold-assignment variance that a
+    single shuffle leaves in a small-positive-class ranking problem — see
+    ``N_SCORING_REPEATS`` for the finding that motivated it. Deterministic
+    given ``seed``: reproducible, just no longer hostage to one random split.
     """
     n_pos = int(y.sum())
     if n_pos < 2:
@@ -81,13 +103,15 @@ def score_xgboost(X: pd.DataFrame, y: pd.Series, seed: int = 42) -> tuple[np.nda
         return model.predict_proba(X)[:, 1], False
 
     n_splits = max(2, min(5, n_pos))
-    skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
-    scores = np.zeros(len(y))
-    for train_idx, test_idx in skf.split(X, y):
-        model = make_model(y.iloc[train_idx], seed)
-        model.fit(X.iloc[train_idx], y.iloc[train_idx])
-        scores[test_idx] = model.predict_proba(X.iloc[test_idx])[:, 1]
-    return scores, True
+    accumulated = np.zeros(len(y))
+    for repeat in range(N_SCORING_REPEATS):
+        repeat_seed = seed + repeat
+        skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=repeat_seed)
+        for train_idx, test_idx in skf.split(X, y):
+            model = make_model(y.iloc[train_idx], repeat_seed)
+            model.fit(X.iloc[train_idx], y.iloc[train_idx])
+            accumulated[test_idx] += model.predict_proba(X.iloc[test_idx])[:, 1]
+    return accumulated / N_SCORING_REPEATS, True
 
 
 def evaluate_cutoff(

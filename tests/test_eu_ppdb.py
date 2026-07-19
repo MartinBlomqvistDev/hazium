@@ -100,6 +100,29 @@ class TestLoadExport:
         )
         assert load_export(path)[0].approval_date is None
 
+    def test_maneb_miscas_corrected_mancozeb_untouched(self, tmp_path) -> None:
+        # The real export lists Maneb under Mancozeb's CAS (8018-01-7). Only the
+        # Maneb row is corrected to Maneb's real CAS; the genuine Mancozeb row is
+        # left alone, so the two no longer collapse to one substance id.
+        path = _write_export(
+            tmp_path,
+            [
+                ["120", "Mancozeb", "8018-01-7", "Not approved", "01/07/2006", "04/01/2021", "x"],
+                ["121", "Maneb", "8018-01-7", "Not approved", "01/07/2006", "31/01/2017", "x"],
+            ],
+        )
+        rows = {r.name: r for r in load_export(path)}
+        assert rows["Mancozeb"].cas_number == "8018-01-7"
+        assert rows["Maneb"].cas_number == "12427-38-2"
+        events = regulatory_events_from(list(rows.values()))
+        non_renewals = {
+            e.substance_id: e.event_date
+            for e in events
+            if e.kind == RegulatoryEventKind.NON_RENEWAL
+        }
+        assert non_renewals["substance:cas:8018-01-7"] == date(2021, 1, 4)
+        assert non_renewals["substance:cas:12427-38-2"] == date(2017, 1, 31)
+
     def test_blank_id_rows_skipped(self, tmp_path) -> None:
         path = _write_export(
             tmp_path,

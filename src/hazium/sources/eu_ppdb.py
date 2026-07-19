@@ -50,6 +50,23 @@ DEFAULT_EXPORT = Path("data/raw/ActiveSubstanceExport_12-07-2026.xlsx")
 STATUS_APPROVED = "Approved"
 STATUS_NOT_APPROVED = "Not approved"
 
+#: Known CAS errors in the EU PPDB bulk export, corrected at load time so that
+#: CAS-keyed resolution does not silently merge two distinct substances.
+#:
+#: The export lists **Maneb** (real CAS 12427-38-2) under **Mancozeb**'s CAS
+#: (8018-01-7). They are distinct dithiocarbamate fungicides with distinct EC
+#: numbers (Maneb 235-654-8, Mancozeb 616-995-5) and distinct EU non-renewals
+#: (Maneb expired 2017-01-31, Mancozeb 2021-01-04). Without this correction,
+#: ``safe_substance_node_id`` maps both rows to ``substance:cas:8018-01-7`` and
+#: Maneb's 2017 non-renewal is attributed to Mancozeb; since HEWB anchors
+#: lead-time to the *earliest* non-renewal, Mancozeb's benchmark action date
+#: becomes 2017 instead of its real 2021 date. Verified against the raw export
+#: rows 2026-07-19 (DEV_LOG). Keyed on (name, exported CAS) so only the
+#: mis-CAS'd Maneb row is touched, never the genuine Mancozeb row.
+_CAS_CORRECTIONS: dict[tuple[str, str], str] = {
+    ("Maneb", "8018-01-7"): "12427-38-2",
+}
+
 _COLUMNS = {
     "as_id": "Active Substance ID",
     "name": "Substance",
@@ -98,11 +115,15 @@ def load_export(xlsx_path: Path) -> list[_ASRow]:
         as_id = row[idx["as_id"]]
         if not as_id:
             continue
+        name = str(row[idx["name"]])
+        cas_number = _clean_cas(row[idx["cas"]])
+        if cas_number is not None:
+            cas_number = _CAS_CORRECTIONS.get((name, cas_number), cas_number)
         out.append(
             _ASRow(
                 as_id=str(as_id),
-                name=str(row[idx["name"]]),
-                cas_number=_clean_cas(row[idx["cas"]]),
+                name=name,
+                cas_number=cas_number,
                 status=str(row[status_i]) if row[status_i] else "",
                 approval_date=_parse_date(row[idx["approval"]]),
                 expiry_date=_parse_date(row[idx["expiry"]]),
