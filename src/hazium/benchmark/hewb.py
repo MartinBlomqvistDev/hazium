@@ -37,7 +37,7 @@ from datetime import date
 from hazium.graph.store import TemporalGraph
 from hazium.ml.baseline import CutoffResult, rolling_origin_eval
 from hazium.ml.dataset import DEFAULT_POSITIVE_KINDS, EARLY_WARNING_POSITIVE_KINDS
-from hazium.models import RegulatoryEvent, RegulatoryEventKind, SalesRecord
+from hazium.models import LiteratureVolumeRecord, RegulatoryEvent, RegulatoryEventKind, SalesRecord
 
 #: Bump on any change to the frozen configuration below (case set, cutoffs, k
 #: values). A result labelled HEWB 1.0 is only comparable to another HEWB 1.0
@@ -307,6 +307,7 @@ def run_hewb(
     regevents: list[RegulatoryEvent],
     seed: int = 42,
     v2b_embedding_json: dict | None = None,
+    lit_records: list[LiteratureVolumeRecord] = (),
 ) -> HewbReport:
     """Run HEWB end to end over both label variants.
 
@@ -321,6 +322,11 @@ def run_hewb(
     ``HewbReport.embedding_comparison`` — the frozen graph-vs-tabular row the
     scope calls for, not a fresh embedding fit at annual cutoffs (see
     ``embedding_comparison_rows``'s docstring for why).
+
+    ``lit_records`` (optional): the Tier-1 literature-volume feature group
+    (``SOURCE_ENHANCEMENT_SCOPE.md``). Defaults to none, in which case the
+    feature reads as its documented no-signal default and HEWB numbers are
+    unchanged from before Tier 1 existed.
     """
     from hazium.ml.evaluate import summarize
 
@@ -330,7 +336,13 @@ def run_hewb(
     cases: list[CaseResult] = []
     for variant, positive_kinds in VARIANTS:
         results = rolling_origin_eval(
-            graph, sales, regevents, list(ANNUAL_CUTOFFS), seed=seed, positive_kinds=positive_kinds
+            graph,
+            sales,
+            regevents,
+            list(ANNUAL_CUTOFFS),
+            seed=seed,
+            positive_kinds=positive_kinds,
+            lit_records=lit_records,
         )
         for result in results:
             for row in summarize(result):

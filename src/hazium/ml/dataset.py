@@ -14,13 +14,21 @@ import pandas as pd
 
 from hazium.graph.store import TemporalGraph
 from hazium.ml.features import (
+    LITERATURE_MIN_TOTAL_MENTIONS,
     clp_features,
     efsa_features,
     eu_regulatory_features,
     graph_structural_features,
+    literature_features,
     sales_features,
 )
-from hazium.models import NodeType, RegulatoryEvent, RegulatoryEventKind, SalesRecord
+from hazium.models import (
+    LiteratureVolumeRecord,
+    NodeType,
+    RegulatoryEvent,
+    RegulatoryEventKind,
+    SalesRecord,
+)
 
 FEATURE_COLUMNS = [
     "clp_n_hazard_codes",
@@ -43,6 +51,8 @@ FEATURE_COLUMNS = [
     "graph_metabolite_degree",
     "eu_has_approval",
     "eu_years_since_first_approval",
+    "lit_hazard_percentile",
+    "lit_has_literature_signal",
 ]
 
 
@@ -61,12 +71,42 @@ EARLY_WARNING_POSITIVE_KINDS = frozenset(
 )
 
 
+def _literature_fractions_at_reference_year(
+    lit_records: list[LiteratureVolumeRecord], cutoff: date
+) -> dict[str, float]:
+    """Every population member's hazard-fraction at ONE shared reference
+    year -- the most recent calendar year fully knowable before ``cutoff``.
+
+    A single shared year across the whole population, not each substance's
+    own latest available year, is the load-bearing choice: ranking
+    substances against each other only means something if they're compared
+    at the same point on the same secular trend. Verified 2026-07-18
+    (DEV_LOG): the corpus-wide hazard-language baseline drifts over time
+    (more toxicology-flavoured framing in pesticide literature generally,
+    unrelated to any one substance), so comparing substances at different
+    reference years would silently reintroduce that exact confound.
+
+    ``LiteratureVolumeRecord.known_at`` is Jan 1 of ``year + 1`` (a
+    calendar year's count isn't complete/indexed until the year is over),
+    so the latest year strictly knowable before a Jan-1-``cutoff.year``
+    cutoff is ``cutoff.year - 2``.
+    """
+    reference_year = cutoff.year - 2
+    fractions: dict[str, float] = {}
+    for r in lit_records:
+        if r.year != reference_year or r.total_hit_count < LITERATURE_MIN_TOTAL_MENTIONS:
+            continue
+        fractions[r.substance_id] = r.hazard_hit_count / r.total_hit_count
+    return fractions
+
+
 def build_dataset(
     graph: TemporalGraph,
     sales: list[SalesRecord],
     regevents: list[RegulatoryEvent],
     cutoff: date,
     positive_kinds: frozenset[RegulatoryEventKind] = DEFAULT_POSITIVE_KINDS,
+    lit_records: list[LiteratureVolumeRecord] = (),
 ) -> tuple[pd.DataFrame, pd.Series, list[str]]:
     """Build (X, y, substance_ids) for one rolling-origin cutoff.
 
@@ -85,6 +125,12 @@ def build_dataset(
     ``positive_kinds``, dated `>= cutoff`. Defaults to EU non-renewal only
     (V1's headline label); pass ``EARLY_WARNING_POSITIVE_KINDS`` for the
     broadened secondary variant.
+
+    ``lit_records`` (optional, defaults to none) feeds the literature-volume
+    feature group; see ``_literature_fractions_at_reference_year`` and
+    ``ml.features.literature_features`` for why this one group needs a
+    population-wide precomputation before the per-substance loop, unlike
+    every other feature group here.
     """
     view = graph.as_of(cutoff)
     already_realized = {
@@ -98,6 +144,8 @@ def build_dataset(
         e.substance_id for e in regevents if e.kind in positive_kinds and e.event_date >= cutoff
     }
 
+    lit_fractions = _literature_fractions_at_reference_year(list(lit_records), cutoff)
+
     rows = []
     for substance_id in population:
         row: dict[str, float] = {}
@@ -106,6 +154,7 @@ def build_dataset(
         row.update(sales_features(substance_id, sales, cutoff))
         row.update(graph_structural_features(view, substance_id))
         row.update(eu_regulatory_features(substance_id, regevents, cutoff))
+        row.update(literature_features(substance_id, lit_fractions))
         rows.append(row)
 
     X = pd.DataFrame(rows, columns=FEATURE_COLUMNS, index=population)

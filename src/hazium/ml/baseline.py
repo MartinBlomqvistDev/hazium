@@ -19,7 +19,7 @@ from xgboost import XGBClassifier
 from hazium.graph.store import TemporalGraph
 from hazium.ml.dataset import DEFAULT_POSITIVE_KINDS, build_dataset
 from hazium.ml.embed import embedding_dataframe, fit_metapath2vec
-from hazium.models import RegulatoryEvent, RegulatoryEventKind, SalesRecord
+from hazium.models import LiteratureVolumeRecord, RegulatoryEvent, RegulatoryEventKind, SalesRecord
 
 TRIVIAL_BASELINES = {
     "severe_hazard_count": lambda X: (
@@ -97,8 +97,9 @@ def evaluate_cutoff(
     cutoff: date,
     seed: int = 42,
     positive_kinds: frozenset[RegulatoryEventKind] = DEFAULT_POSITIVE_KINDS,
+    lit_records: list[LiteratureVolumeRecord] = (),
 ) -> CutoffResult:
-    X, y, ids = build_dataset(graph, sales, regevents, cutoff, positive_kinds)
+    X, y, ids = build_dataset(graph, sales, regevents, cutoff, positive_kinds, lit_records)
     xgb_scores, out_of_fold = score_xgboost(X, y, seed)
 
     scores = {name: fn(X).to_numpy(dtype=float) for name, fn in TRIVIAL_BASELINES.items()}
@@ -120,9 +121,11 @@ def rolling_origin_eval(
     cutoffs: list[date],
     seed: int = 42,
     positive_kinds: frozenset[RegulatoryEventKind] = DEFAULT_POSITIVE_KINDS,
+    lit_records: list[LiteratureVolumeRecord] = (),
 ) -> list[CutoffResult]:
     return [
-        evaluate_cutoff(graph, sales, regevents, cutoff, seed, positive_kinds) for cutoff in cutoffs
+        evaluate_cutoff(graph, sales, regevents, cutoff, seed, positive_kinds, lit_records)
+        for cutoff in cutoffs
     ]
 
 
@@ -134,6 +137,7 @@ def evaluate_cutoff_with_embeddings(
     seed: int = 42,
     positive_kinds: frozenset[RegulatoryEventKind] = DEFAULT_POSITIVE_KINDS,
     embed_dim: int = 32,
+    lit_records: list[LiteratureVolumeRecord] = (),
 ) -> CutoffResult:
     """V2b: the baseline rule, literally -- tabular alone, embedding alone,
     and tabular+embedding concatenated, on the identical population/split/seed.
@@ -144,7 +148,7 @@ def evaluate_cutoff_with_embeddings(
     step available to get wrong, because calling this per-cutoff *is* the
     refit.
     """
-    X, y, ids = build_dataset(graph, sales, regevents, cutoff, positive_kinds)
+    X, y, ids = build_dataset(graph, sales, regevents, cutoff, positive_kinds, lit_records)
     view = graph.as_of(cutoff)
     vectors = fit_metapath2vec(view, ids, dim=embed_dim, seed=seed)
     X_embed = embedding_dataframe(vectors, ids, embed_dim)
@@ -176,10 +180,11 @@ def rolling_origin_eval_with_embeddings(
     seed: int = 42,
     positive_kinds: frozenset[RegulatoryEventKind] = DEFAULT_POSITIVE_KINDS,
     embed_dim: int = 32,
+    lit_records: list[LiteratureVolumeRecord] = (),
 ) -> list[CutoffResult]:
     return [
         evaluate_cutoff_with_embeddings(
-            graph, sales, regevents, cutoff, seed, positive_kinds, embed_dim
+            graph, sales, regevents, cutoff, seed, positive_kinds, embed_dim, lit_records
         )
         for cutoff in cutoffs
     ]

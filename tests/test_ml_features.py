@@ -10,6 +10,7 @@ from hazium.ml.features import (
     efsa_features,
     eu_regulatory_features,
     graph_structural_features,
+    literature_features,
     sales_features,
 )
 from hazium.models import (
@@ -268,3 +269,46 @@ class TestEuRegulatoryFeatures:
         ]
         f = eu_regulatory_features(FLUAZINAM, events, CUTOFF)
         assert f["eu_has_approval"] == 0.0
+
+
+class TestLiteratureFeatures:
+    """Population-relative hazard-literature percentile.
+
+    ``literature_features`` only ranks one substance within an already-built
+    map (``ml/dataset.py``'s ``_literature_fractions_at_reference_year``
+    builds the map itself -- covered in ``test_ml_dataset.py``). These tests
+    exercise the pure ranking logic and its two failure-safe defaults.
+    """
+
+    def test_missing_from_map_returns_no_signal_default(self) -> None:
+        f = literature_features(FLUAZINAM, {})
+        assert f == {"lit_hazard_percentile": 0.0, "lit_has_literature_signal": 0.0}
+
+    def test_present_but_alone_returns_no_signal_default(self) -> None:
+        # a population of one has no distribution to rank against
+        f = literature_features(FLUAZINAM, {FLUAZINAM: 0.3})
+        assert f == {"lit_hazard_percentile": 0.0, "lit_has_literature_signal": 0.0}
+
+    def test_highest_fraction_ranks_at_100th_percentile(self) -> None:
+        fractions = {FLUAZINAM: 0.9, TFA: 0.1, "substance:cas:1-1-1": 0.2}
+        f = literature_features(FLUAZINAM, fractions)
+        assert f["lit_hazard_percentile"] == 100.0
+        assert f["lit_has_literature_signal"] == 1.0
+
+    def test_lowest_fraction_ranks_at_0th_percentile(self) -> None:
+        fractions = {FLUAZINAM: 0.05, TFA: 0.1, "substance:cas:1-1-1": 0.2}
+        f = literature_features(FLUAZINAM, fractions)
+        assert f["lit_hazard_percentile"] == 0.0
+
+    def test_middle_fraction_ranks_between(self) -> None:
+        fractions = {FLUAZINAM: 0.2, TFA: 0.1, "substance:cas:1-1-1": 0.3}
+        f = literature_features(FLUAZINAM, fractions)
+        assert f["lit_hazard_percentile"] == 50.0  # ranks above exactly 1 of 2 others
+
+    def test_self_excluded_from_its_own_comparison_population(self) -> None:
+        # if self counted among "others", an identical middle value would
+        # never register as strictly greater than itself -- percentile must
+        # still reflect where it sits among the *other* substances only
+        fractions = {FLUAZINAM: 0.5, TFA: 0.5, "substance:cas:1-1-1": 0.1}
+        f = literature_features(FLUAZINAM, fractions)
+        assert f["lit_hazard_percentile"] == 50.0
