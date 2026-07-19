@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import type { CapabilityData, CapabilityLandmark, CapabilityMarker } from "@/lib/types";
+import type {
+  CapabilityData,
+  CapabilityLandmark,
+  CapabilityMarker,
+  SubstanceDetail,
+  SubstanceDetailMap,
+} from "@/lib/types";
 
 const AXIS_START = 2008;
 const AXIS_END = 2021;
@@ -47,8 +53,15 @@ function leadLabel(lm: CapabilityLandmark): string | null {
   return years >= 2 ? `${prefix}${years} yr ahead` : `${prefix}${months} mo ahead`;
 }
 
-export default function CapabilityTimeline({ data }: { data: CapabilityData }) {
+export default function CapabilityTimeline({
+  data,
+  detail,
+}: {
+  data: CapabilityData;
+  detail: SubstanceDetailMap;
+}) {
   const [active, setActive] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
 
   const flagged = data.landmarks
     .filter((lm) => lm.hazium_flag !== null)
@@ -67,14 +80,19 @@ export default function CapabilityTimeline({ data }: { data: CapabilityData }) {
     <div>
       <Legend />
 
-      <div className="mt-6 space-y-1.5">
+      <p className="mt-4 text-xs text-text-muted">Click a substance for its use and full rank history.</p>
+
+      <div className="mt-2 space-y-1.5">
         {flagged.map((lm) => (
           <TimelineRow
             key={lm.name}
             lm={lm}
+            detail={detail[lm.cas]}
             active={active === lm.name}
+            selected={selected === lm.name}
             onEnter={() => setActive(lm.name)}
             onLeave={() => setActive(null)}
+            onToggle={() => setSelected(selected === lm.name ? null : lm.name)}
           />
         ))}
       </div>
@@ -99,12 +117,17 @@ export default function CapabilityTimeline({ data }: { data: CapabilityData }) {
           <h4 className="text-xs font-semibold uppercase tracking-wider text-text-muted">
             The landmarks it misses{dataIssue.length > 0 ? ", and the open data issue" : ""}
           </h4>
-          <div className="mt-3 space-y-3">
-            {misses.map((lm) => (
-              <HonestRow key={lm.name} lm={lm} tag="never flagged" tone="critical" />
-            ))}
-            {dataIssue.map((lm) => (
-              <HonestRow key={lm.name} lm={lm} tag="excluded, data fix pending" tone="muted" />
+          <div className="mt-3 space-y-2">
+            {[...misses, ...dataIssue].map((lm) => (
+              <MissRow
+                key={lm.name}
+                lm={lm}
+                detail={detail[lm.cas]}
+                tag={lm.outcome === "miss" ? "never flagged" : "excluded, data fix pending"}
+                tone={lm.outcome === "miss" ? "critical" : "muted"}
+                selected={selected === lm.name}
+                onToggle={() => setSelected(selected === lm.name ? null : lm.name)}
+              />
             ))}
           </div>
         </div>
@@ -115,14 +138,20 @@ export default function CapabilityTimeline({ data }: { data: CapabilityData }) {
 
 function TimelineRow({
   lm,
+  detail,
   active,
+  selected,
   onEnter,
   onLeave,
+  onToggle,
 }: {
   lm: CapabilityLandmark;
+  detail: SubstanceDetail | undefined;
   active: boolean;
+  selected: boolean;
   onEnter: () => void;
   onLeave: () => void;
+  onToggle: () => void;
 }) {
   const flag = lm.hazium_flag!;
   const cmp = comparisonMarker(lm);
@@ -135,49 +164,184 @@ function TimelineRow({
   const spanWidth = Math.abs(spanEnd - flagX);
 
   return (
-    <div
-      className="relative flex items-center rounded-md py-2 pr-2 transition-colors hover:bg-surface-raised/60"
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
-    >
-      <div className="w-[38%] shrink-0 pr-3">
-        <div className="flex items-baseline gap-2">
-          <span className="text-sm font-medium text-text-primary">{lm.name}</span>
-          {lead && (
-            <span
-              className="tabular-nums text-xs font-semibold"
-              style={{ color: behind ? "var(--status-critical)" : "var(--accent)" }}
-            >
-              {lead}
+    <div className={`rounded-md ${selected ? "bg-surface-raised/50" : ""}`}>
+      <div
+        role="button"
+        tabIndex={0}
+        aria-expanded={selected}
+        className="relative flex cursor-pointer items-center rounded-md py-2 pr-2 transition-colors hover:bg-surface-raised/60"
+        onMouseEnter={onEnter}
+        onMouseLeave={onLeave}
+        onClick={onToggle}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onToggle();
+          }
+        }}
+      >
+        <div className="w-[38%] shrink-0 pr-3">
+          <div className="flex items-baseline gap-2">
+            <span className="text-sm font-medium text-text-primary">{lm.name}</span>
+            {lead && (
+              <span
+                className="tabular-nums text-xs font-semibold"
+                style={{ color: behind ? "var(--status-critical)" : "var(--accent)" }}
+              >
+                {lead}
+              </span>
+            )}
+            <span className="text-text-muted" aria-hidden>
+              {selected ? "▾" : "▸"}
             </span>
-          )}
+          </div>
+          <div className="text-[11px] leading-snug text-text-muted">
+            {detail?.use ?? lm.hazard}
+          </div>
         </div>
-        <div className="text-[11px] text-text-muted">{lm.hazard}</div>
+
+        {/* Track */}
+        <div className="relative h-8 flex-1">
+          <div
+            className="absolute top-1/2 h-px -translate-y-1/2"
+            style={{
+              left: `${spanStart}%`,
+              width: `${spanWidth}%`,
+              background: "var(--hairline)",
+            }}
+          />
+          {lm.markers.map((mk) => (
+            <Marker key={mk.type} marker={mk} />
+          ))}
+          <HaziumMarker x={flagX} rank={flag.rank} k={flag.k} lowerBound={flag.lower_bound} />
+          {active && !selected && <Tooltip lm={lm} />}
+        </div>
       </div>
 
-      {/* Track */}
-      <div className="relative h-8 flex-1">
-        {/* span line from Hazium flag to ban */}
-        <div
-          className="absolute top-1/2 h-px -translate-y-1/2"
-          style={{
-            left: `${spanStart}%`,
-            width: `${spanWidth}%`,
-            background: "var(--hairline)",
-          }}
-        />
-        {/* regulator + ban markers */}
-        {lm.markers.map((mk) => (
-          <Marker key={mk.type} marker={mk} />
-        ))}
-        {/* Hazium flag marker (drawn last, on top) */}
-        <HaziumMarker x={flagX} rank={flag.rank} k={flag.k} lowerBound={flag.lower_bound} />
-
-        {active && (
-          <Tooltip lm={lm} />
-        )}
-      </div>
+      {selected && <DetailPanel lm={lm} detail={detail} />}
     </div>
+  );
+}
+
+function DetailPanel({
+  lm,
+  detail,
+}: {
+  lm: CapabilityLandmark;
+  detail: SubstanceDetail | undefined;
+}) {
+  const flag = lm.hazium_flag;
+  return (
+    <div className="mx-1 mb-2 rounded-md border border-hairline bg-page/60 px-4 py-4 text-xs">
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span className="text-sm font-medium text-text-primary">{lm.name}</span>
+        <span className="text-text-muted">CAS {lm.cas}</span>
+      </div>
+      {detail?.use && (
+        <p className="mt-2 text-text-secondary">
+          <span className="text-text-muted">Used as: </span>
+          {detail.use}
+        </p>
+      )}
+      <p className="mt-1 text-text-secondary">
+        <span className="text-text-muted">Hazard behind the ban: </span>
+        {lm.hazard}
+      </p>
+
+      {detail?.trajectory && detail.trajectory.length > 1 && (
+        <div className="mt-4">
+          <div className="mb-1 text-text-muted">
+            Rank among all approved substances, by year (lower is more concerning):
+          </div>
+          <RankTrajectory trajectory={detail.trajectory} />
+        </div>
+      )}
+
+      <div className="mt-4 space-y-1.5 border-t border-hairline pt-3">
+        {flag && (
+          <div className="flex items-start gap-2">
+            <span
+              className="mt-0.5 inline-block h-2 w-2 shrink-0 rotate-45 rounded-[1px]"
+              style={{ background: "var(--accent)" }}
+              aria-hidden
+            />
+            <span className="text-text-secondary">
+              Hazium first flagged it {flag.date.slice(0, 4)}
+              {flag.lower_bound ? " or earlier" : ""}: rank {flag.rank}, top {flag.k}.
+            </span>
+          </div>
+        )}
+        {lm.markers.map((mk) => (
+          <div key={mk.type} className="flex items-start gap-2">
+            <span
+              className={`mt-0.5 inline-block h-2 w-2 shrink-0 ${mk.type === "ban" ? "rounded-[1px]" : "rounded-full"}`}
+              style={{ background: markerColor(mk.type) }}
+              aria-hidden
+            />
+            <span className="text-text-secondary">
+              {mk.date.slice(0, mk.precision === "day" ? 10 : 7)}: {mk.label}.{" "}
+              <a
+                href={mk.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-accent hover:underline"
+              >
+                {mk.source}
+              </a>
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <p className="mt-3 leading-relaxed text-text-secondary">{lm.note}</p>
+    </div>
+  );
+}
+
+function RankTrajectory({ trajectory }: { trajectory: { year: number; rank: number }[] }) {
+  const W = 480;
+  const H = 130;
+  const padL = 30;
+  const padR = 10;
+  const padT = 10;
+  const padB = 20;
+  const years = trajectory.map((p) => p.year);
+  const minYear = Math.min(...years);
+  const maxYear = Math.max(...years);
+  const maxRank = Math.max(...trajectory.map((p) => p.rank));
+  const cap = Math.max(50, Math.min(150, maxRank));
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+  const x = (yr: number) =>
+    padL + (maxYear === minYear ? 0 : ((yr - minYear) / (maxYear - minYear)) * plotW);
+  // rank 1 at top (most concerning), cap at bottom
+  const y = (rank: number) => padT + ((Math.min(rank, cap) - 1) / (cap - 1)) * plotH;
+  const line = trajectory.map((p) => `${x(p.year)},${y(p.rank)}`).join(" ");
+  const top20Y = y(20);
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Rank trajectory over time">
+      {/* top-20 danger band */}
+      <rect x={padL} y={padT} width={plotW} height={top20Y - padT} fill="var(--status-critical)" opacity="0.08" />
+      <line x1={padL} y1={top20Y} x2={W - padR} y2={top20Y} stroke="var(--status-critical)" strokeWidth="0.5" strokeDasharray="3 3" opacity="0.5" />
+      <text x={W - padR} y={top20Y - 2} textAnchor="end" fontSize="9" fill="var(--status-critical)" opacity="0.8">
+        top 20
+      </text>
+      {/* y-axis labels */}
+      <text x={padL - 4} y={padT + 4} textAnchor="end" fontSize="9" fill="var(--text-muted)">1</text>
+      <text x={padL - 4} y={padT + plotH} textAnchor="end" fontSize="9" fill="var(--text-muted)">{cap}</text>
+      {/* rank line */}
+      <polyline points={line} fill="none" stroke="var(--accent)" strokeWidth="1.6" strokeLinejoin="round" />
+      {trajectory.map((p) => (
+        <circle key={p.year} cx={x(p.year)} cy={y(p.rank)} r="2.4" fill="var(--accent)" />
+      ))}
+      {/* x-axis year labels (first, middle, last) */}
+      {[minYear, Math.round((minYear + maxYear) / 2), maxYear].map((yr) => (
+        <text key={yr} x={x(yr)} y={H - 6} textAnchor="middle" fontSize="9" fill="var(--text-muted)">
+          {yr}
+        </text>
+      ))}
+    </svg>
   );
 }
 
@@ -300,25 +464,49 @@ function Tooltip({ lm }: { lm: CapabilityLandmark }) {
   );
 }
 
-function HonestRow({
+function MissRow({
   lm,
+  detail,
   tag,
   tone,
+  selected,
+  onToggle,
 }: {
   lm: CapabilityLandmark;
+  detail: SubstanceDetail | undefined;
   tag: string;
   tone: "critical" | "muted";
+  selected: boolean;
+  onToggle: () => void;
 }) {
   const color = tone === "critical" ? "var(--status-critical)" : "var(--text-muted)";
   return (
-    <div className="text-sm">
-      <div className="flex items-baseline gap-2">
-        <span className="font-medium text-text-primary">{lm.name}</span>
-        <span className="text-xs font-semibold" style={{ color }}>
-          {tag}
-        </span>
+    <div className={`rounded-md ${selected ? "bg-surface-raised/50" : ""}`}>
+      <div
+        role="button"
+        tabIndex={0}
+        aria-expanded={selected}
+        className="cursor-pointer rounded-md px-1 py-1.5 transition-colors hover:bg-surface-raised/60"
+        onClick={onToggle}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onToggle();
+          }
+        }}
+      >
+        <div className="flex items-baseline gap-2">
+          <span className="text-sm font-medium text-text-primary">{lm.name}</span>
+          <span className="text-xs font-semibold" style={{ color }}>
+            {tag}
+          </span>
+          <span className="text-xs text-text-muted" aria-hidden>
+            {selected ? "▾" : "▸"}
+          </span>
+        </div>
+        <div className="text-[11px] leading-snug text-text-muted">{detail?.use ?? lm.hazard}</div>
       </div>
-      <p className="mt-0.5 text-xs leading-relaxed text-text-secondary">{lm.note}</p>
+      {selected && <DetailPanel lm={lm} detail={detail} />}
     </div>
   );
 }

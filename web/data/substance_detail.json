@@ -1,0 +1,636 @@
+{
+  "210880-92-5": {
+    "use": "Neonicotinoid insecticide; seed treatment on oilseed rape, maize, and cereals",
+    "trajectory": [
+      {
+        "year": 2009,
+        "rank": 40,
+        "population": 2618
+      },
+      {
+        "year": 2010,
+        "rank": 10,
+        "population": 3221
+      },
+      {
+        "year": 2011,
+        "rank": 2,
+        "population": 3846
+      },
+      {
+        "year": 2012,
+        "rank": 3,
+        "population": 4121
+      },
+      {
+        "year": 2013,
+        "rank": 26,
+        "population": 4451
+      },
+      {
+        "year": 2014,
+        "rank": 15,
+        "population": 4740
+      },
+      {
+        "year": 2015,
+        "rank": 6,
+        "population": 4928
+      },
+      {
+        "year": 2016,
+        "rank": 1,
+        "population": 5051
+      },
+      {
+        "year": 2017,
+        "rank": 3,
+        "population": 5268
+      },
+      {
+        "year": 2018,
+        "rank": 1,
+        "population": 5424
+      },
+      {
+        "year": 2019,
+        "rank": 1,
+        "population": 5641
+      }
+    ]
+  },
+  "153719-23-4": {
+    "use": "Neonicotinoid insecticide; seed treatment on oilseed rape, cereals, and sugar beet",
+    "trajectory": [
+      {
+        "year": 2009,
+        "rank": 12,
+        "population": 2618
+      },
+      {
+        "year": 2010,
+        "rank": 41,
+        "population": 3221
+      },
+      {
+        "year": 2011,
+        "rank": 39,
+        "population": 3846
+      },
+      {
+        "year": 2012,
+        "rank": 63,
+        "population": 4121
+      },
+      {
+        "year": 2013,
+        "rank": 32,
+        "population": 4451
+      },
+      {
+        "year": 2014,
+        "rank": 8,
+        "population": 4740
+      },
+      {
+        "year": 2015,
+        "rank": 26,
+        "population": 4928
+      },
+      {
+        "year": 2016,
+        "rank": 46,
+        "population": 5051
+      },
+      {
+        "year": 2017,
+        "rank": 8,
+        "population": 5268
+      },
+      {
+        "year": 2018,
+        "rank": 19,
+        "population": 5424
+      },
+      {
+        "year": 2019,
+        "rank": 10,
+        "population": 5641
+      }
+    ]
+  },
+  "138261-41-3": {
+    "use": "Neonicotinoid insecticide; seed and soil treatment across many crops",
+    "trajectory": [
+      {
+        "year": 2009,
+        "rank": 126,
+        "population": 2618
+      },
+      {
+        "year": 2010,
+        "rank": 115,
+        "population": 3221
+      },
+      {
+        "year": 2011,
+        "rank": 96,
+        "population": 3846
+      },
+      {
+        "year": 2012,
+        "rank": 147,
+        "population": 4121
+      },
+      {
+        "year": 2013,
+        "rank": 25,
+        "population": 4451
+      },
+      {
+        "year": 2014,
+        "rank": 108,
+        "population": 4740
+      },
+      {
+        "year": 2015,
+        "rank": 145,
+        "population": 4928
+      },
+      {
+        "year": 2016,
+        "rank": 90,
+        "population": 5051
+      },
+      {
+        "year": 2017,
+        "rank": 13,
+        "population": 5268
+      },
+      {
+        "year": 2018,
+        "rank": 128,
+        "population": 5424
+      },
+      {
+        "year": 2019,
+        "rank": 32,
+        "population": 5641
+      },
+      {
+        "year": 2020,
+        "rank": 46,
+        "population": 5720
+      }
+    ]
+  },
+  "2921-88-2": {
+    "use": "Broad-spectrum organophosphate insecticide on fruit, vegetables, and cereals",
+    "trajectory": [
+      {
+        "year": 2009,
+        "rank": 2,
+        "population": 2618
+      },
+      {
+        "year": 2010,
+        "rank": 113,
+        "population": 3221
+      },
+      {
+        "year": 2011,
+        "rank": 41,
+        "population": 3846
+      },
+      {
+        "year": 2012,
+        "rank": 14,
+        "population": 4121
+      },
+      {
+        "year": 2013,
+        "rank": 24,
+        "population": 4451
+      },
+      {
+        "year": 2014,
+        "rank": 16,
+        "population": 4740
+      },
+      {
+        "year": 2015,
+        "rank": 13,
+        "population": 4928
+      },
+      {
+        "year": 2016,
+        "rank": 23,
+        "population": 5051
+      },
+      {
+        "year": 2017,
+        "rank": 11,
+        "population": 5268
+      },
+      {
+        "year": 2018,
+        "rank": 2,
+        "population": 5424
+      },
+      {
+        "year": 2019,
+        "rank": 2,
+        "population": 5641
+      },
+      {
+        "year": 2020,
+        "rank": 6,
+        "population": 5720
+      }
+    ]
+  },
+  "5598-13-0": {
+    "use": "Organophosphate insecticide, mainly on stored grain and fruit",
+    "trajectory": [
+      {
+        "year": 2009,
+        "rank": 57,
+        "population": 2618
+      },
+      {
+        "year": 2010,
+        "rank": 34,
+        "population": 3221
+      },
+      {
+        "year": 2011,
+        "rank": 3,
+        "population": 3846
+      },
+      {
+        "year": 2012,
+        "rank": 12,
+        "population": 4121
+      },
+      {
+        "year": 2013,
+        "rank": 9,
+        "population": 4451
+      },
+      {
+        "year": 2014,
+        "rank": 12,
+        "population": 4740
+      },
+      {
+        "year": 2015,
+        "rank": 20,
+        "population": 4928
+      },
+      {
+        "year": 2016,
+        "rank": 25,
+        "population": 5051
+      },
+      {
+        "year": 2017,
+        "rank": 4,
+        "population": 5268
+      },
+      {
+        "year": 2018,
+        "rank": 6,
+        "population": 5424
+      },
+      {
+        "year": 2019,
+        "rank": 12,
+        "population": 5641
+      },
+      {
+        "year": 2020,
+        "rank": 2,
+        "population": 5720
+      }
+    ]
+  },
+  "111988-49-9": {
+    "use": "Neonicotinoid insecticide on oilseed rape, fruit, and vegetables",
+    "trajectory": [
+      {
+        "year": 2009,
+        "rank": 25,
+        "population": 2618
+      },
+      {
+        "year": 2010,
+        "rank": 8,
+        "population": 3221
+      },
+      {
+        "year": 2011,
+        "rank": 68,
+        "population": 3846
+      },
+      {
+        "year": 2012,
+        "rank": 28,
+        "population": 4121
+      },
+      {
+        "year": 2013,
+        "rank": 69,
+        "population": 4451
+      },
+      {
+        "year": 2014,
+        "rank": 7,
+        "population": 4740
+      },
+      {
+        "year": 2015,
+        "rank": 37,
+        "population": 4928
+      },
+      {
+        "year": 2016,
+        "rank": 7,
+        "population": 5051
+      },
+      {
+        "year": 2017,
+        "rank": 50,
+        "population": 5268
+      },
+      {
+        "year": 2018,
+        "rank": 10,
+        "population": 5424
+      },
+      {
+        "year": 2019,
+        "rank": 9,
+        "population": 5641
+      },
+      {
+        "year": 2020,
+        "rank": 7,
+        "population": 5720
+      }
+    ]
+  },
+  "133855-98-8": {
+    "use": "Triazole fungicide on cereals and sugar beet",
+    "trajectory": [
+      {
+        "year": 2009,
+        "rank": 73,
+        "population": 2618
+      },
+      {
+        "year": 2010,
+        "rank": 150,
+        "population": 3221
+      },
+      {
+        "year": 2011,
+        "rank": 163,
+        "population": 3846
+      },
+      {
+        "year": 2012,
+        "rank": 181,
+        "population": 4121
+      },
+      {
+        "year": 2013,
+        "rank": 160,
+        "population": 4451
+      },
+      {
+        "year": 2014,
+        "rank": 85,
+        "population": 4740
+      },
+      {
+        "year": 2015,
+        "rank": 144,
+        "population": 4928
+      },
+      {
+        "year": 2016,
+        "rank": 190,
+        "population": 5051
+      },
+      {
+        "year": 2017,
+        "rank": 52,
+        "population": 5268
+      },
+      {
+        "year": 2018,
+        "rank": 153,
+        "population": 5424
+      },
+      {
+        "year": 2019,
+        "rank": 179,
+        "population": 5641
+      },
+      {
+        "year": 2020,
+        "rank": 152,
+        "population": 5720
+      }
+    ]
+  },
+  "8018-01-7": {
+    "use": "Dithiocarbamate fungicide on potatoes, vines, vegetables, and cereals",
+    "trajectory": [
+      {
+        "year": 2009,
+        "rank": 58,
+        "population": 2618
+      },
+      {
+        "year": 2010,
+        "rank": 16,
+        "population": 3221
+      },
+      {
+        "year": 2011,
+        "rank": 40,
+        "population": 3846
+      },
+      {
+        "year": 2012,
+        "rank": 43,
+        "population": 4121
+      },
+      {
+        "year": 2013,
+        "rank": 42,
+        "population": 4451
+      },
+      {
+        "year": 2014,
+        "rank": 27,
+        "population": 4740
+      },
+      {
+        "year": 2015,
+        "rank": 78,
+        "population": 4928
+      },
+      {
+        "year": 2016,
+        "rank": 12,
+        "population": 5051
+      },
+      {
+        "year": 2017,
+        "rank": 25,
+        "population": 5268
+      },
+      {
+        "year": 2018,
+        "rank": 5,
+        "population": 5424
+      },
+      {
+        "year": 2019,
+        "rank": 25,
+        "population": 5641
+      },
+      {
+        "year": 2020,
+        "rank": 9,
+        "population": 5720
+      },
+      {
+        "year": 2021,
+        "rank": 63,
+        "population": 5808
+      }
+    ]
+  },
+  "60-51-5": {
+    "use": "Organophosphate insecticide on cereals, olives, fruit, and vegetables",
+    "trajectory": [
+      {
+        "year": 2009,
+        "rank": 38,
+        "population": 2618
+      },
+      {
+        "year": 2010,
+        "rank": 107,
+        "population": 3221
+      },
+      {
+        "year": 2011,
+        "rank": 93,
+        "population": 3846
+      },
+      {
+        "year": 2012,
+        "rank": 98,
+        "population": 4121
+      },
+      {
+        "year": 2013,
+        "rank": 80,
+        "population": 4451
+      },
+      {
+        "year": 2014,
+        "rank": 31,
+        "population": 4740
+      },
+      {
+        "year": 2015,
+        "rank": 47,
+        "population": 4928
+      },
+      {
+        "year": 2016,
+        "rank": 79,
+        "population": 5051
+      },
+      {
+        "year": 2017,
+        "rank": 87,
+        "population": 5268
+      },
+      {
+        "year": 2018,
+        "rank": 28,
+        "population": 5424
+      },
+      {
+        "year": 2019,
+        "rank": 8,
+        "population": 5641
+      }
+    ]
+  },
+  "60207-90-1": {
+    "use": "Triazole fungicide on cereals, turf, and orchard crops",
+    "trajectory": [
+      {
+        "year": 2009,
+        "rank": 34,
+        "population": 2618
+      },
+      {
+        "year": 2010,
+        "rank": 23,
+        "population": 3221
+      },
+      {
+        "year": 2011,
+        "rank": 87,
+        "population": 3846
+      },
+      {
+        "year": 2012,
+        "rank": 50,
+        "population": 4121
+      },
+      {
+        "year": 2013,
+        "rank": 90,
+        "population": 4451
+      },
+      {
+        "year": 2014,
+        "rank": 99,
+        "population": 4740
+      },
+      {
+        "year": 2015,
+        "rank": 79,
+        "population": 4928
+      },
+      {
+        "year": 2016,
+        "rank": 80,
+        "population": 5051
+      },
+      {
+        "year": 2017,
+        "rank": 88,
+        "population": 5268
+      },
+      {
+        "year": 2018,
+        "rank": 67,
+        "population": 5424
+      }
+    ]
+  },
+  "79622-59-6": {
+    "use": "Fungicide used against potato late blight",
+    "trajectory": []
+  }
+}

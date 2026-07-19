@@ -1,12 +1,14 @@
-import type { CapabilityData, HewbData } from "@/lib/types";
+import type { CapabilityData, HewbData, SubstanceDetailMap } from "@/lib/types";
 import CapabilityTimeline from "./CapabilityTimeline";
 
 export default function ResultSection({
   data,
   capability,
+  detail,
 }: {
   data: HewbData;
   capability: CapabilityData;
+  detail: SubstanceDetailMap;
 }) {
   return (
     <section id="result" className="border-b border-hairline">
@@ -31,7 +33,7 @@ export default function ResultSection({
         </p>
 
         <div className="mt-10 rounded-xl border border-hairline bg-surface p-5 sm:p-7">
-          <CapabilityTimeline data={capability} />
+          <CapabilityTimeline data={capability} detail={detail} />
         </div>
 
         <p className="mt-6 text-sm leading-relaxed text-text-secondary">

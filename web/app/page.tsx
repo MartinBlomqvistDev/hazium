@@ -7,10 +7,12 @@ import Principles from "@/components/Principles";
 import Footer from "@/components/Footer";
 import hewbData from "@/data/hewb.json";
 import capabilityData from "@/data/capability.json";
-import type { CapabilityData, HewbData } from "@/lib/types";
+import substanceDetail from "@/data/substance_detail.json";
+import type { CapabilityData, HewbData, SubstanceDetailMap } from "@/lib/types";
 
 const data = hewbData as HewbData;
 const capability = capabilityData as CapabilityData;
+const detail = substanceDetail as SubstanceDetailMap;
 
 export default function Home() {
   return (
@@ -19,7 +21,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero data={data} />
         <OriginStory />
-        <ResultSection data={data} capability={capability} />
+        <ResultSection data={data} capability={capability} detail={detail} />
         <HowItWorks />
         <Principles />
       </main>
