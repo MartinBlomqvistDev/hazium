@@ -1,0 +1,215 @@
+{
+  "hewb_version": "1.1",
+  "provisional": true,
+  "provisional_note": "These are HEWB v1.1 numbers (tabular features only). A literature-volume feature (Tier 1) is being added and may move these numbers to v1.2 -- re-export after that run lands.",
+  "headline": {
+    "landmarks_flagged": 9,
+    "landmarks_total": 10,
+    "best_lead_time_months": 132,
+    "best_lead_time_case": "Chlorpyrifos-methyl"
+  },
+  "landmarks": [
+    {
+      "name": "Clothianidin",
+      "cas": "210880-92-5",
+      "note": "neonicotinoid, bee-toxicity ban",
+      "action_date": "2019-01-31",
+      "flagged": true,
+      "lead_time_months": {
+        "10": 96,
+        "20": 120,
+        "50": 120
+      }
+    },
+    {
+      "name": "Thiamethoxam",
+      "cas": "153719-23-4",
+      "note": "neonicotinoid, bee-toxicity ban",
+      "action_date": "2019-04-30",
+      "flagged": true,
+      "lead_time_months": {
+        "10": null,
+        "20": 27,
+        "50": 75
+      }
+    },
+    {
+      "name": "Imidacloprid",
+      "cas": "138261-41-3",
+      "note": "neonicotinoid, bee-toxicity ban",
+      "action_date": "2020-12-01",
+      "flagged": true,
+      "lead_time_months": {
+        "10": 23,
+        "20": 23,
+        "50": 95
+      }
+    },
+    {
+      "name": "Chlorpyrifos",
+      "cas": "2921-88-2",
+      "note": "developmental neurotoxicity",
+      "action_date": "2020-01-16",
+      "flagged": true,
+      "lead_time_months": {
+        "10": 108,
+        "20": 108,
+        "50": 132
+      }
+    },
+    {
+      "name": "Chlorpyrifos-methyl",
+      "cas": "5598-13-0",
+      "note": "developmental neurotoxicity",
+      "action_date": "2020-01-16",
+      "flagged": true,
+      "lead_time_months": {
+        "10": 132,
+        "20": 132,
+        "50": 132
+      }
+    },
+    {
+      "name": "Thiacloprid",
+      "cas": "111988-49-9",
+      "note": "reprotoxic",
+      "action_date": "2020-02-03",
+      "flagged": true,
+      "lead_time_months": {
+        "10": null,
+        "20": 121,
+        "50": 133
+      }
+    },
+    {
+      "name": "Epoxiconazole",
+      "cas": "133855-98-8",
+      "note": "CMR concern",
+      "action_date": "2020-04-30",
+      "flagged": false,
+      "lead_time_months": {
+        "10": null,
+        "20": null,
+        "50": null
+      }
+    },
+    {
+      "name": "Mancozeb",
+      "cas": "8018-01-7",
+      "note": "reprotoxic / endocrine",
+      "action_date": "2017-01-31",
+      "flagged": true,
+      "lead_time_months": {
+        "10": null,
+        "20": 12,
+        "50": 96
+      }
+    },
+    {
+      "name": "Dimethoate",
+      "cas": "60-51-5",
+      "note": "organophosphate",
+      "action_date": "2019-06-30",
+      "flagged": true,
+      "lead_time_months": {
+        "10": null,
+        "20": 53,
+        "50": 125
+      }
+    },
+    {
+      "name": "Propikonazol",
+      "cas": "60207-90-1",
+      "note": "triazole fungicide",
+      "action_date": "2018-12-19",
+      "flagged": true,
+      "lead_time_months": {
+        "10": null,
+        "20": null,
+        "50": 119
+      }
+    }
+  ],
+  "aggregate": [
+    {
+      "cutoff": "2009-01-01",
+      "xgboost_ap": 0.5612314595620806,
+      "best_trivial_ap": 0.025983951089033244
+    },
+    {
+      "cutoff": "2010-01-01",
+      "xgboost_ap": 0.5249615390437147,
+      "best_trivial_ap": 0.02515527950310559
+    },
+    {
+      "cutoff": "2011-01-01",
+      "xgboost_ap": 0.47399104819697424,
+      "best_trivial_ap": 0.0951226150049115
+    },
+    {
+      "cutoff": "2012-01-01",
+      "xgboost_ap": 0.53362096885431,
+      "best_trivial_ap": 0.09368294033855708
+    },
+    {
+      "cutoff": "2013-01-01",
+      "xgboost_ap": 0.5997037702685116,
+      "best_trivial_ap": 0.09105887111625009
+    },
+    {
+      "cutoff": "2014-01-01",
+      "xgboost_ap": 0.5834178818833994,
+      "best_trivial_ap": 0.08769395250169074
+    },
+    {
+      "cutoff": "2015-01-01",
+      "xgboost_ap": 0.5257182705946629,
+      "best_trivial_ap": 0.08015645069216498
+    },
+    {
+      "cutoff": "2016-01-01",
+      "xgboost_ap": 0.5412546670273065,
+      "best_trivial_ap": 0.08185416735938421
+    },
+    {
+      "cutoff": "2017-01-01",
+      "xgboost_ap": 0.5353757093535797,
+      "best_trivial_ap": 0.07778192492767842
+    },
+    {
+      "cutoff": "2018-01-01",
+      "xgboost_ap": 0.45526194101969325,
+      "best_trivial_ap": 0.07720655998576317
+    },
+    {
+      "cutoff": "2019-01-01",
+      "xgboost_ap": 0.4157400040693877,
+      "best_trivial_ap": 0.0734306202799825
+    },
+    {
+      "cutoff": "2020-01-01",
+      "xgboost_ap": 0.32463599165538853,
+      "best_trivial_ap": 0.0569747075354552
+    },
+    {
+      "cutoff": "2021-01-01",
+      "xgboost_ap": 0.20932877232367889,
+      "best_trivial_ap": 0.03527368547131393
+    },
+    {
+      "cutoff": "2022-01-01",
+      "xgboost_ap": 0.1623212792641696,
+      "best_trivial_ap": 0.014951581559390758
+    },
+    {
+      "cutoff": "2023-01-01",
+      "xgboost_ap": 0.23965128383559656,
+      "best_trivial_ap": 0.016070333632182524
+    },
+    {
+      "cutoff": "2024-01-01",
+      "xgboost_ap": 0.17791408914538906,
+      "best_trivial_ap": 0.018361989307344326
+    }
+  ]
+}
