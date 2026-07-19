@@ -208,6 +208,37 @@ class LiteratureVolumeRecord(Fact):
     total_hit_count: int
 
 
+class MediaVolumeRecord(Fact):
+    """Annual news-media attention for a substance, from the GDELT DOC 2.0 API.
+
+    ``volume`` is GDELT's normalised coverage intensity (the share of all
+    monitored global news matching the substance name), averaged over the
+    calendar year. Normalised, not raw counts: it already compensates for the
+    secular growth in total news volume, the same confound the literature
+    feature has to correct for by hand, so it is directly comparable across
+    years.
+
+    **Coverage floor: GDELT DOC indexes from 2017-01-01** (verified 2026-07-19,
+    live API). A substance's media attention before 2017 is simply not in this
+    source, so any pre-2017 year is absent, not zero. This is a hard limit of
+    the source, disclosed rather than papered over: for the historical HEWB
+    landmarks (bans 2017-2021, public stories mostly 2008-2016) the pre-2017
+    build-up is invisible here, which is why the site's public-controversy
+    markers for the neonicotinoids (2012) and chlorpyrifos (2015) stay
+    hand-curated. GDELT's real reach is the present-day watchlist and the
+    2017+ tail, not the historical demo.
+
+    Independent of the regulatory funnel and never used as a model *feature*
+    (it would be a noisy, name-based echo); its role is a benchmark/comparison
+    axis and a live present-day signal. ``known_at`` is Jan 1 of ``year + 1``,
+    matching the literature feature's conservative-late convention.
+    """
+
+    substance_id: str
+    year: int
+    volume: float
+
+
 class SourceDocument(Fact):
     """A document evidence can point to: EFSA conclusion, paper, article.
 
