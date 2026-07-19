@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --surface-raised: #201f1d;
+
+  /* Ink */
+  --text-primary: #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+
+  /* Structure */
+  --hairline: #2c2c2a;
+  --border: rgba(255, 255, 255, 0.1);
+
+  /* Brand accent (categorical slot 8 -- orange -- repurposed as UI/brand
+     identity, not data encoding; validated dark-surface value from the
+     dataviz skill's reference palette) */
+  --accent: #d95926;
+  --accent-soft: rgba(217, 89, 38, 0.14);
+
+  /* Status (fixed roles, dark-surface steps -- reserved for data meaning:
+     "flagged" vs "missed" in the HEWB landmark table/chart, never brand) */
+  --status-good: #0ca30c;
+  --status-critical: #d03b3b;
+  --status-warning: #fab219;
+
+  /* Sequential (blue ramp, for magnitude encodings) */
+  --seq-100: #cde2fb;
+  --seq-400: #3987e5;
+  --seq-700: #0d366b;
+}
+
+@theme inline {
+  --color-background: var(--page);
+  --color-foreground: var(--text-primary);
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-hairline: var(--hairline);
+  --color-accent: var(--accent);
+  --color-status-good: var(--status-good);
+  --color-status-critical: var(--status-critical);
+  --color-status-warning: var(--status-warning);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--page);
+  color: var(--text-primary);
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
