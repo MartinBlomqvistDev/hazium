@@ -39,14 +39,15 @@ export default function Home() {
               Risk radar over time
             </h2>
             <p className="mt-4 text-text-secondary">
-              The model&apos;s top 14 highest-risk substances at each annual cutoff,
-              2009 to 2024. Press play to watch them rise and fall. These are the
-              model&apos;s risk ranking, and most were still approved at the time;
-              the ones in red were later confirmed by a real EU ban, and a substance
-              leaves the chart the year after it is banned.
+              The model&apos;s top 10 highest-risk substances at each annual cutoff,
+              2009 to 2024. Press play to watch them rise and fall, or click any
+              substance to follow its whole arc. These are the model&apos;s risk
+              ranking, and most were still approved at the time; the ones in red were
+              later confirmed by a real EU ban, and a substance leaves the chart the
+              year after it is banned.
             </p>
             <div className="mt-8 rounded-xl border border-hairline bg-surface p-5 sm:p-7">
-              <RankRace data={rankRace} />
+              <RankRace data={rankRace} detail={detail} />
             </div>
           </div>
         </section>
