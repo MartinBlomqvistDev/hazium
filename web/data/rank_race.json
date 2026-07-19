@@ -1,0 +1,2855 @@
+{
+ "years": [
+  2009,
+  2010,
+  2011,
+  2012,
+  2013,
+  2014,
+  2015,
+  2016,
+  2017,
+  2018,
+  2019,
+  2020,
+  2021,
+  2022,
+  2023,
+  2024
+ ],
+ "top_n": 25,
+ "per_year": {
+  "2009": [
+   {
+    "cas": "173584-44-6",
+    "name": "Indoxacarb",
+    "score": 0.9997,
+    "rank": 1,
+    "banned_year": 2021
+   },
+   {
+    "cas": "2921-88-2",
+    "name": "Chlorpyrifos",
+    "score": 0.9988,
+    "rank": 2,
+    "banned_year": 2020
+   },
+   {
+    "cas": "10605-21-7",
+    "name": "Carbendazim",
+    "score": 0.9982,
+    "rank": 3,
+    "banned_year": 2014
+   },
+   {
+    "cas": "85-00-7",
+    "name": "Diquat dibromide",
+    "score": 0.9976,
+    "rank": 4,
+    "banned_year": 2018
+   },
+   {
+    "cas": "16484-77-8",
+    "name": "Mecoprop-P",
+    "score": 0.9975,
+    "rank": 5,
+    "banned_year": null
+   },
+   {
+    "cas": "13684-63-4",
+    "name": "Phenmedipham",
+    "score": 0.9974,
+    "rank": 6,
+    "banned_year": null
+   },
+   {
+    "cas": "87392-12-9",
+    "name": "(S)-Metolachlor (isomer)",
+    "score": 0.9969,
+    "rank": 7,
+    "banned_year": 2024
+   },
+   {
+    "cas": "1689-84-5",
+    "name": "Bromoxynil",
+    "score": 0.9968,
+    "rank": 8,
+    "banned_year": 2020
+   },
+   {
+    "cas": "93-65-2",
+    "name": "Mecoprop",
+    "score": 0.9966,
+    "rank": 9,
+    "banned_year": 2017
+   },
+   {
+    "cas": "1596-84-5",
+    "name": "Daminozide",
+    "score": 0.9966,
+    "rank": 10,
+    "banned_year": null
+   },
+   {
+    "cas": "175013-18-0",
+    "name": "Pyraclostrobin",
+    "score": 0.9965,
+    "rank": 11,
+    "banned_year": null
+   },
+   {
+    "cas": "153719-23-4",
+    "name": "Thiamethoxam",
+    "score": 0.9961,
+    "rank": 12,
+    "banned_year": 2019
+   },
+   {
+    "cas": "71626-11-4",
+    "name": "Benalaxyl",
+    "score": 0.996,
+    "rank": 13,
+    "banned_year": 2020
+   },
+   {
+    "cas": "52918-63-5",
+    "name": "Deltamethrin (cis-deltamethrin)",
+    "score": 0.9959,
+    "rank": 14,
+    "banned_year": null
+   },
+   {
+    "cas": "137-26-8",
+    "name": "Tiram",
+    "score": 0.9954,
+    "rank": 15,
+    "banned_year": 2018
+   },
+   {
+    "cas": "82097-50-5",
+    "name": "Triasulfuron",
+    "score": 0.9952,
+    "rank": 16,
+    "banned_year": 2016
+   },
+   {
+    "cas": "131807-57-3",
+    "name": "Famoxadone",
+    "score": 0.9952,
+    "rank": 17,
+    "banned_year": 2021
+   },
+   {
+    "cas": "124495-18-7",
+    "name": "Quinoxyfen",
+    "score": 0.9951,
+    "rank": 18,
+    "banned_year": 2018
+   },
+   {
+    "cas": "21087-64-9",
+    "name": "Metribuzin",
+    "score": 0.9946,
+    "rank": 19,
+    "banned_year": 2024
+   },
+   {
+    "cas": "96525-23-4",
+    "name": "Flurtamone",
+    "score": 0.9946,
+    "rank": 20,
+    "banned_year": 2018
+   },
+   {
+    "cas": "161326-34-7",
+    "name": "Fenamidone",
+    "score": 0.9944,
+    "rank": 21,
+    "banned_year": 2018
+   },
+   {
+    "cas": "137-30-4",
+    "name": "Ziram",
+    "score": 0.9943,
+    "rank": 22,
+    "banned_year": null
+   },
+   {
+    "cas": "36734-19-7",
+    "name": "Iprodione",
+    "score": 0.9941,
+    "rank": 23,
+    "banned_year": 2017
+   },
+   {
+    "cas": "122548-33-8",
+    "name": "Imazosulfuron",
+    "score": 0.994,
+    "rank": 24,
+    "banned_year": 2017
+   },
+   {
+    "cas": "111988-49-9",
+    "name": "Thiacloprid",
+    "score": 0.9936,
+    "rank": 25,
+    "banned_year": 2020
+   }
+  ],
+  "2010": [
+   {
+    "cas": "34123-59-6",
+    "name": "Isoproturon",
+    "score": 0.999,
+    "rank": 1,
+    "banned_year": 2016
+   },
+   {
+    "cas": "1689-84-5",
+    "name": "Bromoxynil",
+    "score": 0.999,
+    "rank": 2,
+    "banned_year": 2020
+   },
+   {
+    "cas": "1897-45-6",
+    "name": "Chlorothalonil",
+    "score": 0.9986,
+    "rank": 3,
+    "banned_year": 2019
+   },
+   {
+    "cas": "161326-34-7",
+    "name": "Fenamidone",
+    "score": 0.9984,
+    "rank": 4,
+    "banned_year": 2018
+   },
+   {
+    "cas": "117428-22-5",
+    "name": "Picoxystrobin",
+    "score": 0.9979,
+    "rank": 5,
+    "banned_year": 2017
+   },
+   {
+    "cas": "87392-12-9",
+    "name": "(S)-Metolachlor (isomer)",
+    "score": 0.9978,
+    "rank": 6,
+    "banned_year": 2024
+   },
+   {
+    "cas": "131807-57-3",
+    "name": "Famoxadone",
+    "score": 0.9977,
+    "rank": 7,
+    "banned_year": 2021
+   },
+   {
+    "cas": "111988-49-9",
+    "name": "Thiacloprid",
+    "score": 0.9975,
+    "rank": 8,
+    "banned_year": 2020
+   },
+   {
+    "cas": "36734-19-7",
+    "name": "Iprodione",
+    "score": 0.9975,
+    "rank": 9,
+    "banned_year": 2017
+   },
+   {
+    "cas": "210880-92-5",
+    "name": "Clothianidin",
+    "score": 0.9975,
+    "rank": 10,
+    "banned_year": 2019
+   },
+   {
+    "cas": "2212-67-1",
+    "name": "Molinate",
+    "score": 0.9973,
+    "rank": 11,
+    "banned_year": 2014
+   },
+   {
+    "cas": "96525-23-4",
+    "name": "Flurtamone",
+    "score": 0.9972,
+    "rank": 12,
+    "banned_year": 2018
+   },
+   {
+    "cas": "137-26-8",
+    "name": "Tiram",
+    "score": 0.9971,
+    "rank": 13,
+    "banned_year": 2018
+   },
+   {
+    "cas": "24579-73-5",
+    "name": "Propamocarb",
+    "score": 0.9971,
+    "rank": 14,
+    "banned_year": null
+   },
+   {
+    "cas": "9006-42-2",
+    "name": "Metiram",
+    "score": 0.9971,
+    "rank": 15,
+    "banned_year": 2023
+   },
+   {
+    "cas": "8018-01-7",
+    "name": "Mancozeb",
+    "score": 0.997,
+    "rank": 16,
+    "banned_year": 2021
+   },
+   {
+    "cas": "82097-50-5",
+    "name": "Triasulfuron",
+    "score": 0.9967,
+    "rank": 17,
+    "banned_year": 2016
+   },
+   {
+    "cas": "9016-72-2",
+    "name": "Propineb",
+    "score": 0.9967,
+    "rank": 18,
+    "banned_year": 2018
+   },
+   {
+    "cas": "16484-77-8",
+    "name": "Mecoprop-P",
+    "score": 0.9955,
+    "rank": 19,
+    "banned_year": null
+   },
+   {
+    "cas": "52918-63-5",
+    "name": "Deltamethrin (cis-deltamethrin)",
+    "score": 0.9954,
+    "rank": 20,
+    "banned_year": null
+   },
+   {
+    "cas": "1596-84-5",
+    "name": "Daminozide",
+    "score": 0.9952,
+    "rank": 21,
+    "banned_year": null
+   },
+   {
+    "cas": "124495-18-7",
+    "name": "Quinoxyfen",
+    "score": 0.9951,
+    "rank": 22,
+    "banned_year": 2018
+   },
+   {
+    "cas": "60207-90-1",
+    "name": "Propikonazol",
+    "score": 0.995,
+    "rank": 23,
+    "banned_year": 2018
+   },
+   {
+    "cas": "23564-05-8",
+    "name": "Thiophanate-methyl",
+    "score": 0.9931,
+    "rank": 24,
+    "banned_year": 2020
+   },
+   {
+    "cas": "61-82-5",
+    "name": "Amitrole",
+    "score": 0.993,
+    "rank": 25,
+    "banned_year": 2016
+   }
+  ],
+  "2011": [
+   {
+    "cas": "34123-59-6",
+    "name": "Isoproturon",
+    "score": 0.9993,
+    "rank": 1,
+    "banned_year": 2016
+   },
+   {
+    "cas": "210880-92-5",
+    "name": "Clothianidin",
+    "score": 0.9989,
+    "rank": 2,
+    "banned_year": 2019
+   },
+   {
+    "cas": "5598-13-0",
+    "name": "Chlorpyrifos-methyl",
+    "score": 0.9983,
+    "rank": 3,
+    "banned_year": 2020
+   },
+   {
+    "cas": "98886-44-3",
+    "name": "Fosthiazate",
+    "score": 0.9976,
+    "rank": 4,
+    "banned_year": null
+   },
+   {
+    "cas": "175013-18-0",
+    "name": "Pyraclostrobin",
+    "score": 0.9975,
+    "rank": 5,
+    "banned_year": null
+   },
+   {
+    "cas": "87392-12-9",
+    "name": "(S)-Metolachlor (isomer)",
+    "score": 0.9974,
+    "rank": 6,
+    "banned_year": 2024
+   },
+   {
+    "cas": "124495-18-7",
+    "name": "Quinoxyfen",
+    "score": 0.9968,
+    "rank": 7,
+    "banned_year": 2018
+   },
+   {
+    "cas": "1820573-27-0",
+    "name": "Cyfluthrin-beta",
+    "score": 0.9962,
+    "rank": 8,
+    "banned_year": 2020
+   },
+   {
+    "cas": "144651-06-9",
+    "name": "Oxasulfuron",
+    "score": 0.9958,
+    "rank": 9,
+    "banned_year": 2018
+   },
+   {
+    "cas": "82097-50-5",
+    "name": "Triasulfuron",
+    "score": 0.9957,
+    "rank": 10,
+    "banned_year": 2016
+   },
+   {
+    "cas": "13684-63-4",
+    "name": "Phenmedipham",
+    "score": 0.9957,
+    "rank": 11,
+    "banned_year": null
+   },
+   {
+    "cas": "23564-05-8",
+    "name": "Thiophanate-methyl",
+    "score": 0.9953,
+    "rank": 12,
+    "banned_year": 2020
+   },
+   {
+    "cas": "131807-57-3",
+    "name": "Famoxadone",
+    "score": 0.9952,
+    "rank": 13,
+    "banned_year": 2021
+   },
+   {
+    "cas": "12427-38-2",
+    "name": "Maneb",
+    "score": 0.995,
+    "rank": 14,
+    "banned_year": 2017
+   },
+   {
+    "cas": "71626-11-4",
+    "name": "Benalaxyl",
+    "score": 0.9941,
+    "rank": 15,
+    "banned_year": 2020
+   },
+   {
+    "cas": "142459-58-3",
+    "name": "Flufenacet",
+    "score": 0.9936,
+    "rank": 16,
+    "banned_year": 2025
+   },
+   {
+    "cas": "1689-84-5",
+    "name": "Bromoxynil",
+    "score": 0.9934,
+    "rank": 17,
+    "banned_year": 2020
+   },
+   {
+    "cas": "52918-63-5",
+    "name": "Deltamethrin (cis-deltamethrin)",
+    "score": 0.9933,
+    "rank": 18,
+    "banned_year": null
+   },
+   {
+    "cas": "137-30-4",
+    "name": "Ziram",
+    "score": 0.9928,
+    "rank": 19,
+    "banned_year": null
+   },
+   {
+    "cas": "16484-77-8",
+    "name": "Mecoprop-P",
+    "score": 0.9924,
+    "rank": 20,
+    "banned_year": null
+   },
+   {
+    "cas": "101-21-3",
+    "name": "Chlorpropham",
+    "score": 0.9922,
+    "rank": 21,
+    "banned_year": 2019
+   },
+   {
+    "cas": "137-26-8",
+    "name": "Tiram",
+    "score": 0.9921,
+    "rank": 22,
+    "banned_year": 2018
+   },
+   {
+    "cas": "93-65-2",
+    "name": "Mecoprop",
+    "score": 0.9912,
+    "rank": 23,
+    "banned_year": 2017
+   },
+   {
+    "cas": "149979-41-9",
+    "name": "Tepraloxidim",
+    "score": 0.9886,
+    "rank": 24,
+    "banned_year": 2015
+   },
+   {
+    "cas": "173584-44-6",
+    "name": "Indoxacarb",
+    "score": 0.9885,
+    "rank": 25,
+    "banned_year": 2021
+   }
+  ],
+  "2012": [
+   {
+    "cas": "23564-05-8",
+    "name": "Thiophanate-methyl",
+    "score": 0.9986,
+    "rank": 1,
+    "banned_year": 2020
+   },
+   {
+    "cas": "131807-57-3",
+    "name": "Famoxadone",
+    "score": 0.9981,
+    "rank": 2,
+    "banned_year": 2021
+   },
+   {
+    "cas": "210880-92-5",
+    "name": "Clothianidin",
+    "score": 0.998,
+    "rank": 3,
+    "banned_year": 2019
+   },
+   {
+    "cas": "98886-44-3",
+    "name": "Fosthiazate",
+    "score": 0.9977,
+    "rank": 4,
+    "banned_year": null
+   },
+   {
+    "cas": "94-81-5",
+    "name": "MCPB",
+    "score": 0.9976,
+    "rank": 5,
+    "banned_year": null
+   },
+   {
+    "cas": "13684-63-4",
+    "name": "Phenmedipham",
+    "score": 0.9975,
+    "rank": 6,
+    "banned_year": null
+   },
+   {
+    "cas": "137-30-4",
+    "name": "Ziram",
+    "score": 0.9974,
+    "rank": 7,
+    "banned_year": null
+   },
+   {
+    "cas": "52918-63-5",
+    "name": "Deltamethrin (cis-deltamethrin)",
+    "score": 0.9973,
+    "rank": 8,
+    "banned_year": null
+   },
+   {
+    "cas": "12427-38-2",
+    "name": "Maneb",
+    "score": 0.9973,
+    "rank": 9,
+    "banned_year": 2017
+   },
+   {
+    "cas": "34123-59-6",
+    "name": "Isoproturon",
+    "score": 0.997,
+    "rank": 10,
+    "banned_year": 2016
+   },
+   {
+    "cas": "36734-19-7",
+    "name": "Iprodione",
+    "score": 0.9968,
+    "rank": 11,
+    "banned_year": 2017
+   },
+   {
+    "cas": "5598-13-0",
+    "name": "Chlorpyrifos-methyl",
+    "score": 0.996,
+    "rank": 12,
+    "banned_year": 2020
+   },
+   {
+    "cas": "1820573-27-0",
+    "name": "Cyfluthrin-beta",
+    "score": 0.9959,
+    "rank": 13,
+    "banned_year": 2020
+   },
+   {
+    "cas": "2921-88-2",
+    "name": "Chlorpyrifos",
+    "score": 0.9951,
+    "rank": 14,
+    "banned_year": 2020
+   },
+   {
+    "cas": "101-21-3",
+    "name": "Chlorpropham",
+    "score": 0.9939,
+    "rank": 15,
+    "banned_year": 2019
+   },
+   {
+    "cas": "85-00-7",
+    "name": "Diquat dibromide",
+    "score": 0.9932,
+    "rank": 16,
+    "banned_year": 2018
+   },
+   {
+    "cas": "16484-77-8",
+    "name": "Mecoprop-P",
+    "score": 0.9915,
+    "rank": 17,
+    "banned_year": null
+   },
+   {
+    "cas": "149979-41-9",
+    "name": "Tepraloxidim",
+    "score": 0.9914,
+    "rank": 18,
+    "banned_year": 2015
+   },
+   {
+    "cas": "144651-06-9",
+    "name": "Oxasulfuron",
+    "score": 0.9912,
+    "rank": 19,
+    "banned_year": 2018
+   },
+   {
+    "cas": "87392-12-9",
+    "name": "(S)-Metolachlor (isomer)",
+    "score": 0.9908,
+    "rank": 20,
+    "banned_year": 2024
+   },
+   {
+    "cas": "1596-84-5",
+    "name": "Daminozide",
+    "score": 0.9908,
+    "rank": 21,
+    "banned_year": null
+   },
+   {
+    "cas": "1897-45-6",
+    "name": "Chlorothalonil",
+    "score": 0.9908,
+    "rank": 22,
+    "banned_year": 2019
+   },
+   {
+    "cas": "124495-18-7",
+    "name": "Quinoxyfen",
+    "score": 0.9898,
+    "rank": 23,
+    "banned_year": 2018
+   },
+   {
+    "cas": "1689-84-5",
+    "name": "Bromoxynil",
+    "score": 0.9893,
+    "rank": 24,
+    "banned_year": 2020
+   },
+   {
+    "cas": "9016-72-2",
+    "name": "Propineb",
+    "score": 0.9884,
+    "rank": 25,
+    "banned_year": 2018
+   }
+  ],
+  "2013": [
+   {
+    "cas": "98886-44-3",
+    "name": "Fosthiazate",
+    "score": 0.9994,
+    "rank": 1,
+    "banned_year": null
+   },
+   {
+    "cas": "137-30-4",
+    "name": "Ziram",
+    "score": 0.9989,
+    "rank": 2,
+    "banned_year": null
+   },
+   {
+    "cas": "23564-05-8",
+    "name": "Thiophanate-methyl",
+    "score": 0.9985,
+    "rank": 3,
+    "banned_year": 2020
+   },
+   {
+    "cas": "94-81-5",
+    "name": "MCPB",
+    "score": 0.9976,
+    "rank": 4,
+    "banned_year": null
+   },
+   {
+    "cas": "35367-38-5",
+    "name": "Diflubenzuron",
+    "score": 0.9976,
+    "rank": 5,
+    "banned_year": 2020
+   },
+   {
+    "cas": "52918-63-5",
+    "name": "Deltamethrin (cis-deltamethrin)",
+    "score": 0.9973,
+    "rank": 6,
+    "banned_year": null
+   },
+   {
+    "cas": "1596-84-5",
+    "name": "Daminozide",
+    "score": 0.997,
+    "rank": 7,
+    "banned_year": null
+   },
+   {
+    "cas": "144651-06-9",
+    "name": "Oxasulfuron",
+    "score": 0.9966,
+    "rank": 8,
+    "banned_year": 2018
+   },
+   {
+    "cas": "5598-13-0",
+    "name": "Chlorpyrifos-methyl",
+    "score": 0.9964,
+    "rank": 9,
+    "banned_year": 2020
+   },
+   {
+    "cas": "13684-63-4",
+    "name": "Phenmedipham",
+    "score": 0.9963,
+    "rank": 10,
+    "banned_year": null
+   },
+   {
+    "cas": "122548-33-8",
+    "name": "Imazosulfuron",
+    "score": 0.9962,
+    "rank": 11,
+    "banned_year": 2017
+   },
+   {
+    "cas": "1689-84-5",
+    "name": "Bromoxynil",
+    "score": 0.9957,
+    "rank": 12,
+    "banned_year": 2020
+   },
+   {
+    "cas": "124495-18-7",
+    "name": "Quinoxyfen",
+    "score": 0.9955,
+    "rank": 13,
+    "banned_year": 2018
+   },
+   {
+    "cas": "36734-19-7",
+    "name": "Iprodione",
+    "score": 0.9941,
+    "rank": 14,
+    "banned_year": 2017
+   },
+   {
+    "cas": "117428-22-5",
+    "name": "Picoxystrobin",
+    "score": 0.9938,
+    "rank": 15,
+    "banned_year": 2017
+   },
+   {
+    "cas": "71626-11-4",
+    "name": "Benalaxyl",
+    "score": 0.9937,
+    "rank": 16,
+    "banned_year": 2020
+   },
+   {
+    "cas": "330-55-2",
+    "name": "Linuron",
+    "score": 0.9934,
+    "rank": 17,
+    "banned_year": 2017
+   },
+   {
+    "cas": "1820573-27-0",
+    "name": "Cyfluthrin-beta",
+    "score": 0.993,
+    "rank": 18,
+    "banned_year": 2020
+   },
+   {
+    "cas": "161326-34-7",
+    "name": "Fenamidone",
+    "score": 0.993,
+    "rank": 19,
+    "banned_year": 2018
+   },
+   {
+    "cas": "12427-38-2",
+    "name": "Maneb",
+    "score": 0.9928,
+    "rank": 20,
+    "banned_year": 2017
+   },
+   {
+    "cas": "29232-93-7",
+    "name": "Pirimiphos-methyl",
+    "score": 0.9927,
+    "rank": 21,
+    "banned_year": null
+   },
+   {
+    "cas": "34123-59-6",
+    "name": "Isoproturon",
+    "score": 0.9926,
+    "rank": 22,
+    "banned_year": 2016
+   },
+   {
+    "cas": "101-21-3",
+    "name": "Chlorpropham",
+    "score": 0.992,
+    "rank": 23,
+    "banned_year": 2019
+   },
+   {
+    "cas": "2921-88-2",
+    "name": "Chlorpyrifos",
+    "score": 0.9912,
+    "rank": 24,
+    "banned_year": 2020
+   },
+   {
+    "cas": "138261-41-3",
+    "name": "Imidacloprid",
+    "score": 0.9911,
+    "rank": 25,
+    "banned_year": 2020
+   }
+  ],
+  "2014": [
+   {
+    "cas": "98886-44-3",
+    "name": "Fosthiazate",
+    "score": 0.9995,
+    "rank": 1,
+    "banned_year": null
+   },
+   {
+    "cas": "137-30-4",
+    "name": "Ziram",
+    "score": 0.9986,
+    "rank": 2,
+    "banned_year": null
+   },
+   {
+    "cas": "23564-05-8",
+    "name": "Thiophanate-methyl",
+    "score": 0.9983,
+    "rank": 3,
+    "banned_year": 2020
+   },
+   {
+    "cas": "52918-63-5",
+    "name": "Deltamethrin (cis-deltamethrin)",
+    "score": 0.9979,
+    "rank": 4,
+    "banned_year": null
+   },
+   {
+    "cas": "13684-63-4",
+    "name": "Phenmedipham",
+    "score": 0.9978,
+    "rank": 5,
+    "banned_year": null
+   },
+   {
+    "cas": "124495-18-7",
+    "name": "Quinoxyfen",
+    "score": 0.9975,
+    "rank": 6,
+    "banned_year": 2018
+   },
+   {
+    "cas": "111988-49-9",
+    "name": "Thiacloprid",
+    "score": 0.9972,
+    "rank": 7,
+    "banned_year": 2020
+   },
+   {
+    "cas": "153719-23-4",
+    "name": "Thiamethoxam",
+    "score": 0.9971,
+    "rank": 8,
+    "banned_year": 2019
+   },
+   {
+    "cas": "94-81-5",
+    "name": "MCPB",
+    "score": 0.997,
+    "rank": 9,
+    "banned_year": null
+   },
+   {
+    "cas": "1820573-27-0",
+    "name": "Cyfluthrin-beta",
+    "score": 0.997,
+    "rank": 10,
+    "banned_year": 2020
+   },
+   {
+    "cas": "85-00-7",
+    "name": "Diquat dibromide",
+    "score": 0.9969,
+    "rank": 11,
+    "banned_year": 2018
+   },
+   {
+    "cas": "5598-13-0",
+    "name": "Chlorpyrifos-methyl",
+    "score": 0.9968,
+    "rank": 12,
+    "banned_year": 2020
+   },
+   {
+    "cas": "36734-19-7",
+    "name": "Iprodione",
+    "score": 0.9962,
+    "rank": 13,
+    "banned_year": 2017
+   },
+   {
+    "cas": "87392-12-9",
+    "name": "(S)-Metolachlor (isomer)",
+    "score": 0.9949,
+    "rank": 14,
+    "banned_year": 2024
+   },
+   {
+    "cas": "210880-92-5",
+    "name": "Clothianidin",
+    "score": 0.9948,
+    "rank": 15,
+    "banned_year": 2019
+   },
+   {
+    "cas": "2921-88-2",
+    "name": "Chlorpyrifos",
+    "score": 0.9944,
+    "rank": 16,
+    "banned_year": 2020
+   },
+   {
+    "cas": "34123-59-6",
+    "name": "Isoproturon",
+    "score": 0.9943,
+    "rank": 17,
+    "banned_year": 2016
+   },
+   {
+    "cas": "149979-41-9",
+    "name": "Tepraloxidim",
+    "score": 0.9939,
+    "rank": 18,
+    "banned_year": 2015
+   },
+   {
+    "cas": "144651-06-9",
+    "name": "Oxasulfuron",
+    "score": 0.9933,
+    "rank": 19,
+    "banned_year": 2018
+   },
+   {
+    "cas": "13194-48-4",
+    "name": "Ethoprophos",
+    "score": 0.9932,
+    "rank": 20,
+    "banned_year": 2019
+   },
+   {
+    "cas": "16484-77-8",
+    "name": "Mecoprop-P",
+    "score": 0.9918,
+    "rank": 21,
+    "banned_year": null
+   },
+   {
+    "cas": "131807-57-3",
+    "name": "Famoxadone",
+    "score": 0.9894,
+    "rank": 22,
+    "banned_year": 2021
+   },
+   {
+    "cas": "189278-12-4",
+    "name": "Proquinazid",
+    "score": 0.9875,
+    "rank": 23,
+    "banned_year": null
+   },
+   {
+    "cas": "1689-84-5",
+    "name": "Bromoxynil",
+    "score": 0.987,
+    "rank": 24,
+    "banned_year": 2020
+   },
+   {
+    "cas": "1596-84-5",
+    "name": "Daminozide",
+    "score": 0.9856,
+    "rank": 25,
+    "banned_year": null
+   }
+  ],
+  "2015": [
+   {
+    "cas": "98886-44-3",
+    "name": "Fosthiazate",
+    "score": 0.999,
+    "rank": 1,
+    "banned_year": null
+   },
+   {
+    "cas": "52918-63-5",
+    "name": "Deltamethrin (cis-deltamethrin)",
+    "score": 0.9989,
+    "rank": 2,
+    "banned_year": null
+   },
+   {
+    "cas": "13194-48-4",
+    "name": "Ethoprophos",
+    "score": 0.9984,
+    "rank": 3,
+    "banned_year": 2019
+   },
+   {
+    "cas": "36734-19-7",
+    "name": "Iprodione",
+    "score": 0.998,
+    "rank": 4,
+    "banned_year": 2017
+   },
+   {
+    "cas": "117428-22-5",
+    "name": "Picoxystrobin",
+    "score": 0.998,
+    "rank": 5,
+    "banned_year": 2017
+   },
+   {
+    "cas": "210880-92-5",
+    "name": "Clothianidin",
+    "score": 0.9979,
+    "rank": 6,
+    "banned_year": 2019
+   },
+   {
+    "cas": "1820573-27-0",
+    "name": "Cyfluthrin-beta",
+    "score": 0.9977,
+    "rank": 7,
+    "banned_year": 2020
+   },
+   {
+    "cas": "137-30-4",
+    "name": "Ziram",
+    "score": 0.9972,
+    "rank": 8,
+    "banned_year": null
+   },
+   {
+    "cas": "9016-72-2",
+    "name": "Propineb",
+    "score": 0.9968,
+    "rank": 9,
+    "banned_year": 2018
+   },
+   {
+    "cas": "94-81-5",
+    "name": "MCPB",
+    "score": 0.9965,
+    "rank": 10,
+    "banned_year": null
+   },
+   {
+    "cas": "71626-11-4",
+    "name": "Benalaxyl",
+    "score": 0.9963,
+    "rank": 11,
+    "banned_year": 2020
+   },
+   {
+    "cas": "1689-84-5",
+    "name": "Bromoxynil",
+    "score": 0.9961,
+    "rank": 12,
+    "banned_year": 2020
+   },
+   {
+    "cas": "2921-88-2",
+    "name": "Chlorpyrifos",
+    "score": 0.9961,
+    "rank": 13,
+    "banned_year": 2020
+   },
+   {
+    "cas": "23564-05-8",
+    "name": "Thiophanate-methyl",
+    "score": 0.996,
+    "rank": 14,
+    "banned_year": 2020
+   },
+   {
+    "cas": "124495-18-7",
+    "name": "Quinoxyfen",
+    "score": 0.9957,
+    "rank": 15,
+    "banned_year": 2018
+   },
+   {
+    "cas": "87392-12-9",
+    "name": "(S)-Metolachlor (isomer)",
+    "score": 0.9955,
+    "rank": 16,
+    "banned_year": 2024
+   },
+   {
+    "cas": "13684-63-4",
+    "name": "Phenmedipham",
+    "score": 0.9953,
+    "rank": 17,
+    "banned_year": null
+   },
+   {
+    "cas": "82097-50-5",
+    "name": "Triasulfuron",
+    "score": 0.9951,
+    "rank": 18,
+    "banned_year": 2016
+   },
+   {
+    "cas": "34123-59-6",
+    "name": "Isoproturon",
+    "score": 0.9945,
+    "rank": 19,
+    "banned_year": 2016
+   },
+   {
+    "cas": "5598-13-0",
+    "name": "Chlorpyrifos-methyl",
+    "score": 0.9945,
+    "rank": 20,
+    "banned_year": 2020
+   },
+   {
+    "cas": "144651-06-9",
+    "name": "Oxasulfuron",
+    "score": 0.9943,
+    "rank": 21,
+    "banned_year": 2018
+   },
+   {
+    "cas": "81335-37-7",
+    "name": "Imazaquin",
+    "score": 0.9929,
+    "rank": 22,
+    "banned_year": 2018
+   },
+   {
+    "cas": "9006-42-2",
+    "name": "Metiram",
+    "score": 0.9925,
+    "rank": 23,
+    "banned_year": 2023
+   },
+   {
+    "cas": "732-11-6",
+    "name": "Phosmet",
+    "score": 0.9907,
+    "rank": 24,
+    "banned_year": 2022
+   },
+   {
+    "cas": "29232-93-7",
+    "name": "Pirimiphos-methyl",
+    "score": 0.9904,
+    "rank": 25,
+    "banned_year": null
+   }
+  ],
+  "2016": [
+   {
+    "cas": "210880-92-5",
+    "name": "Clothianidin",
+    "score": 0.9995,
+    "rank": 1,
+    "banned_year": 2019
+   },
+   {
+    "cas": "36734-19-7",
+    "name": "Iprodione",
+    "score": 0.9984,
+    "rank": 2,
+    "banned_year": 2017
+   },
+   {
+    "cas": "12427-38-2",
+    "name": "Maneb",
+    "score": 0.9983,
+    "rank": 3,
+    "banned_year": 2017
+   },
+   {
+    "cas": "137-30-4",
+    "name": "Ziram",
+    "score": 0.9981,
+    "rank": 4,
+    "banned_year": null
+   },
+   {
+    "cas": "85-00-7",
+    "name": "Diquat dibromide",
+    "score": 0.9978,
+    "rank": 5,
+    "banned_year": 2018
+   },
+   {
+    "cas": "131807-57-3",
+    "name": "Famoxadone",
+    "score": 0.9974,
+    "rank": 6,
+    "banned_year": 2021
+   },
+   {
+    "cas": "111988-49-9",
+    "name": "Thiacloprid",
+    "score": 0.9971,
+    "rank": 7,
+    "banned_year": 2020
+   },
+   {
+    "cas": "161326-34-7",
+    "name": "Fenamidone",
+    "score": 0.9965,
+    "rank": 8,
+    "banned_year": 2018
+   },
+   {
+    "cas": "13684-63-4",
+    "name": "Phenmedipham",
+    "score": 0.9965,
+    "rank": 9,
+    "banned_year": null
+   },
+   {
+    "cas": "16484-77-8",
+    "name": "Mecoprop-P",
+    "score": 0.9956,
+    "rank": 10,
+    "banned_year": null
+   },
+   {
+    "cas": "1820573-27-0",
+    "name": "Cyfluthrin-beta",
+    "score": 0.995,
+    "rank": 11,
+    "banned_year": 2020
+   },
+   {
+    "cas": "8018-01-7",
+    "name": "Mancozeb",
+    "score": 0.995,
+    "rank": 12,
+    "banned_year": 2021
+   },
+   {
+    "cas": "98886-44-3",
+    "name": "Fosthiazate",
+    "score": 0.9944,
+    "rank": 13,
+    "banned_year": null
+   },
+   {
+    "cas": "101-21-3",
+    "name": "Chlorpropham",
+    "score": 0.9936,
+    "rank": 14,
+    "banned_year": 2019
+   },
+   {
+    "cas": "124495-18-7",
+    "name": "Quinoxyfen",
+    "score": 0.9932,
+    "rank": 15,
+    "banned_year": 2018
+   },
+   {
+    "cas": "144651-06-9",
+    "name": "Oxasulfuron",
+    "score": 0.9929,
+    "rank": 16,
+    "banned_year": 2018
+   },
+   {
+    "cas": "23564-05-8",
+    "name": "Thiophanate-methyl",
+    "score": 0.9916,
+    "rank": 17,
+    "banned_year": 2020
+   },
+   {
+    "cas": "94-81-5",
+    "name": "MCPB",
+    "score": 0.9905,
+    "rank": 18,
+    "banned_year": null
+   },
+   {
+    "cas": "1689-84-5",
+    "name": "Bromoxynil",
+    "score": 0.9898,
+    "rank": 19,
+    "banned_year": 2020
+   },
+   {
+    "cas": "52918-63-5",
+    "name": "Deltamethrin (cis-deltamethrin)",
+    "score": 0.9879,
+    "rank": 20,
+    "banned_year": null
+   },
+   {
+    "cas": "82097-50-5",
+    "name": "Triasulfuron",
+    "score": 0.9871,
+    "rank": 21,
+    "banned_year": 2016
+   },
+   {
+    "cas": "1596-84-5",
+    "name": "Daminozide",
+    "score": 0.9858,
+    "rank": 22,
+    "banned_year": null
+   },
+   {
+    "cas": "2921-88-2",
+    "name": "Chlorpyrifos",
+    "score": 0.9853,
+    "rank": 23,
+    "banned_year": 2020
+   },
+   {
+    "cas": "34123-59-6",
+    "name": "Isoproturon",
+    "score": 0.985,
+    "rank": 24,
+    "banned_year": 2016
+   },
+   {
+    "cas": "5598-13-0",
+    "name": "Chlorpyrifos-methyl",
+    "score": 0.9844,
+    "rank": 25,
+    "banned_year": 2020
+   }
+  ],
+  "2017": [
+   {
+    "cas": "131807-57-3",
+    "name": "Famoxadone",
+    "score": 0.9995,
+    "rank": 1,
+    "banned_year": 2021
+   },
+   {
+    "cas": "137-30-4",
+    "name": "Ziram",
+    "score": 0.9994,
+    "rank": 2,
+    "banned_year": null
+   },
+   {
+    "cas": "210880-92-5",
+    "name": "Clothianidin",
+    "score": 0.9988,
+    "rank": 3,
+    "banned_year": 2019
+   },
+   {
+    "cas": "5598-13-0",
+    "name": "Chlorpyrifos-methyl",
+    "score": 0.9987,
+    "rank": 4,
+    "banned_year": 2020
+   },
+   {
+    "cas": "117428-22-5",
+    "name": "Picoxystrobin",
+    "score": 0.9978,
+    "rank": 5,
+    "banned_year": 2017
+   },
+   {
+    "cas": "124495-18-7",
+    "name": "Quinoxyfen",
+    "score": 0.9978,
+    "rank": 6,
+    "banned_year": 2018
+   },
+   {
+    "cas": "85-00-7",
+    "name": "Diquat dibromide",
+    "score": 0.9977,
+    "rank": 7,
+    "banned_year": 2018
+   },
+   {
+    "cas": "153719-23-4",
+    "name": "Thiamethoxam",
+    "score": 0.9963,
+    "rank": 8,
+    "banned_year": 2019
+   },
+   {
+    "cas": "94-81-5",
+    "name": "MCPB",
+    "score": 0.9962,
+    "rank": 9,
+    "banned_year": null
+   },
+   {
+    "cas": "1820573-27-0",
+    "name": "Cyfluthrin-beta",
+    "score": 0.996,
+    "rank": 10,
+    "banned_year": 2020
+   },
+   {
+    "cas": "2921-88-2",
+    "name": "Chlorpyrifos",
+    "score": 0.9955,
+    "rank": 11,
+    "banned_year": 2020
+   },
+   {
+    "cas": "41483-43-6",
+    "name": "Bupirimate",
+    "score": 0.995,
+    "rank": 12,
+    "banned_year": null
+   },
+   {
+    "cas": "138261-41-3",
+    "name": "Imidacloprid",
+    "score": 0.9949,
+    "rank": 13,
+    "banned_year": 2020
+   },
+   {
+    "cas": "330-55-2",
+    "name": "Linuron",
+    "score": 0.9946,
+    "rank": 14,
+    "banned_year": 2017
+   },
+   {
+    "cas": "98886-44-3",
+    "name": "Fosthiazate",
+    "score": 0.9935,
+    "rank": 15,
+    "banned_year": null
+   },
+   {
+    "cas": "23564-05-8",
+    "name": "Thiophanate-methyl",
+    "score": 0.993,
+    "rank": 16,
+    "banned_year": 2020
+   },
+   {
+    "cas": "1596-84-5",
+    "name": "Daminozide",
+    "score": 0.9927,
+    "rank": 17,
+    "banned_year": null
+   },
+   {
+    "cas": "36734-19-7",
+    "name": "Iprodione",
+    "score": 0.9921,
+    "rank": 18,
+    "banned_year": 2017
+   },
+   {
+    "cas": "52918-63-5",
+    "name": "Deltamethrin (cis-deltamethrin)",
+    "score": 0.9918,
+    "rank": 19,
+    "banned_year": null
+   },
+   {
+    "cas": "161326-34-7",
+    "name": "Fenamidone",
+    "score": 0.9898,
+    "rank": 20,
+    "banned_year": 2018
+   },
+   {
+    "cas": "943831-98-9",
+    "name": "Halauxifen-methyl",
+    "score": 0.9891,
+    "rank": 21,
+    "banned_year": null
+   },
+   {
+    "cas": "12427-38-2",
+    "name": "Maneb",
+    "score": 0.9885,
+    "rank": 22,
+    "banned_year": 2017
+   },
+   {
+    "cas": "96525-23-4",
+    "name": "Flurtamone",
+    "score": 0.9874,
+    "rank": 23,
+    "banned_year": 2018
+   },
+   {
+    "cas": "107534-96-3",
+    "name": "Tebuconazole",
+    "score": 0.9872,
+    "rank": 24,
+    "banned_year": null
+   },
+   {
+    "cas": "8018-01-7",
+    "name": "Mancozeb",
+    "score": 0.985,
+    "rank": 25,
+    "banned_year": 2021
+   }
+  ],
+  "2018": [
+   {
+    "cas": "210880-92-5",
+    "name": "Clothianidin",
+    "score": 0.9998,
+    "rank": 1,
+    "banned_year": 2019
+   },
+   {
+    "cas": "2921-88-2",
+    "name": "Chlorpyrifos",
+    "score": 0.9993,
+    "rank": 2,
+    "banned_year": 2020
+   },
+   {
+    "cas": "98886-44-3",
+    "name": "Fosthiazate",
+    "score": 0.9986,
+    "rank": 3,
+    "banned_year": null
+   },
+   {
+    "cas": "131807-57-3",
+    "name": "Famoxadone",
+    "score": 0.9982,
+    "rank": 4,
+    "banned_year": 2021
+   },
+   {
+    "cas": "8018-01-7",
+    "name": "Mancozeb",
+    "score": 0.9977,
+    "rank": 5,
+    "banned_year": 2021
+   },
+   {
+    "cas": "5598-13-0",
+    "name": "Chlorpyrifos-methyl",
+    "score": 0.9976,
+    "rank": 6,
+    "banned_year": 2020
+   },
+   {
+    "cas": "101-21-3",
+    "name": "Chlorpropham",
+    "score": 0.997,
+    "rank": 7,
+    "banned_year": 2019
+   },
+   {
+    "cas": "13684-63-4",
+    "name": "Phenmedipham",
+    "score": 0.997,
+    "rank": 8,
+    "banned_year": null
+   },
+   {
+    "cas": "137-30-4",
+    "name": "Ziram",
+    "score": 0.9961,
+    "rank": 9,
+    "banned_year": null
+   },
+   {
+    "cas": "111988-49-9",
+    "name": "Thiacloprid",
+    "score": 0.9932,
+    "rank": 10,
+    "banned_year": 2020
+   },
+   {
+    "cas": "16484-77-8",
+    "name": "Mecoprop-P",
+    "score": 0.9912,
+    "rank": 11,
+    "banned_year": null
+   },
+   {
+    "cas": "85-00-7",
+    "name": "Diquat dibromide",
+    "score": 0.9909,
+    "rank": 12,
+    "banned_year": 2018
+   },
+   {
+    "cas": "61213-25-0",
+    "name": "Flurochloridone",
+    "score": 0.9879,
+    "rank": 13,
+    "banned_year": null
+   },
+   {
+    "cas": "161326-34-7",
+    "name": "Fenamidone",
+    "score": 0.9875,
+    "rank": 14,
+    "banned_year": 2018
+   },
+   {
+    "cas": "41483-43-6",
+    "name": "Bupirimate",
+    "score": 0.9849,
+    "rank": 15,
+    "banned_year": null
+   },
+   {
+    "cas": "52918-63-5",
+    "name": "Deltamethrin (cis-deltamethrin)",
+    "score": 0.9832,
+    "rank": 16,
+    "banned_year": null
+   },
+   {
+    "cas": "1596-84-5",
+    "name": "Daminozide",
+    "score": 0.9828,
+    "rank": 17,
+    "banned_year": null
+   },
+   {
+    "cas": "9016-72-2",
+    "name": "Propineb",
+    "score": 0.9817,
+    "rank": 18,
+    "banned_year": 2018
+   },
+   {
+    "cas": "153719-23-4",
+    "name": "Thiamethoxam",
+    "score": 0.98,
+    "rank": 19,
+    "banned_year": 2019
+   },
+   {
+    "cas": "13194-48-4",
+    "name": "Ethoprophos",
+    "score": 0.979,
+    "rank": 20,
+    "banned_year": 2019
+   },
+   {
+    "cas": "3060-89-7",
+    "name": "Metobromuron",
+    "score": 0.9777,
+    "rank": 21,
+    "banned_year": null
+   },
+   {
+    "cas": "143390-89-0",
+    "name": "Kresoxim-methyl",
+    "score": 0.9765,
+    "rank": 22,
+    "banned_year": null
+   },
+   {
+    "cas": "1820573-27-0",
+    "name": "Cyfluthrin-beta",
+    "score": 0.976,
+    "rank": 23,
+    "banned_year": 2020
+   },
+   {
+    "cas": "2032-65-7",
+    "name": "Methiocarb",
+    "score": 0.9738,
+    "rank": 24,
+    "banned_year": 2019
+   },
+   {
+    "cas": "112410-23-8",
+    "name": "Tebufenozide",
+    "score": 0.9722,
+    "rank": 25,
+    "banned_year": null
+   }
+  ],
+  "2019": [
+   {
+    "cas": "210880-92-5",
+    "name": "Clothianidin",
+    "score": 0.9994,
+    "rank": 1,
+    "banned_year": 2019
+   },
+   {
+    "cas": "2921-88-2",
+    "name": "Chlorpyrifos",
+    "score": 0.9986,
+    "rank": 2,
+    "banned_year": 2020
+   },
+   {
+    "cas": "13684-63-4",
+    "name": "Phenmedipham",
+    "score": 0.9979,
+    "rank": 3,
+    "banned_year": null
+   },
+   {
+    "cas": "35367-38-5",
+    "name": "Diflubenzuron",
+    "score": 0.9945,
+    "rank": 4,
+    "banned_year": 2020
+   },
+   {
+    "cas": "1897-45-6",
+    "name": "Chlorothalonil",
+    "score": 0.9936,
+    "rank": 5,
+    "banned_year": 2019
+   },
+   {
+    "cas": "15299-99-7",
+    "name": "Napropamide",
+    "score": 0.9903,
+    "rank": 6,
+    "banned_year": null
+   },
+   {
+    "cas": "79538-32-2",
+    "name": "Tefluthrin",
+    "score": 0.9888,
+    "rank": 7,
+    "banned_year": null
+   },
+   {
+    "cas": "60-51-5",
+    "name": "Dimethoate",
+    "score": 0.9877,
+    "rank": 8,
+    "banned_year": 2019
+   },
+   {
+    "cas": "111988-49-9",
+    "name": "Thiacloprid",
+    "score": 0.9876,
+    "rank": 9,
+    "banned_year": 2020
+   },
+   {
+    "cas": "153719-23-4",
+    "name": "Thiamethoxam",
+    "score": 0.984,
+    "rank": 10,
+    "banned_year": 2019
+   },
+   {
+    "cas": "82657-04-3",
+    "name": "Bifenthrin (sum of isomers)",
+    "score": 0.9829,
+    "rank": 11,
+    "banned_year": 2019
+   },
+   {
+    "cas": "5598-13-0",
+    "name": "Chlorpyrifos-methyl",
+    "score": 0.9828,
+    "rank": 12,
+    "banned_year": 2020
+   },
+   {
+    "cas": "119791-41-2",
+    "name": "Emamectin",
+    "score": 0.9792,
+    "rank": 13,
+    "banned_year": null
+   },
+   {
+    "cas": "571-58-4",
+    "name": "1,4-Dimethylnaphthalene",
+    "score": 0.9758,
+    "rank": 14,
+    "banned_year": null
+   },
+   {
+    "cas": "110-60-1",
+    "name": "Putrescine",
+    "score": 0.9749,
+    "rank": 15,
+    "banned_year": 2019
+   },
+   {
+    "cas": "8003-34-7",
+    "name": "Pyrethrins",
+    "score": 0.9705,
+    "rank": 16,
+    "banned_year": null
+   },
+   {
+    "cas": "2032-65-7",
+    "name": "Methiocarb",
+    "score": 0.9701,
+    "rank": 17,
+    "banned_year": 2019
+   },
+   {
+    "cas": "99129-21-2",
+    "name": "Clethodim",
+    "score": 0.9698,
+    "rank": 18,
+    "banned_year": null
+   },
+   {
+    "cas": "94-81-5",
+    "name": "MCPB",
+    "score": 0.9696,
+    "rank": 19,
+    "banned_year": null
+   },
+   {
+    "cas": "8008-79-5",
+    "name": "Spearmint oil",
+    "score": 0.9687,
+    "rank": 20,
+    "banned_year": null
+   },
+   {
+    "cas": "64902-72-3",
+    "name": "Chlorsulfuron",
+    "score": 0.9686,
+    "rank": 21,
+    "banned_year": 2019
+   },
+   {
+    "cas": "16484-77-8",
+    "name": "Mecoprop-P",
+    "score": 0.9655,
+    "rank": 22,
+    "banned_year": null
+   },
+   {
+    "cas": "120928-09-8",
+    "name": "Fenazaquin",
+    "score": 0.9641,
+    "rank": 23,
+    "banned_year": null
+   },
+   {
+    "cas": "40843-25-2",
+    "name": "Diclofop",
+    "score": 0.9634,
+    "rank": 24,
+    "banned_year": null
+   },
+   {
+    "cas": "8018-01-7",
+    "name": "Mancozeb",
+    "score": 0.961,
+    "rank": 25,
+    "banned_year": 2021
+   }
+  ],
+  "2020": [
+   {
+    "cas": "98886-44-3",
+    "name": "Fosthiazate",
+    "score": 0.9976,
+    "rank": 1,
+    "banned_year": null
+   },
+   {
+    "cas": "5598-13-0",
+    "name": "Chlorpyrifos-methyl",
+    "score": 0.9973,
+    "rank": 2,
+    "banned_year": 2020
+   },
+   {
+    "cas": "16484-77-8",
+    "name": "Mecoprop-P",
+    "score": 0.9957,
+    "rank": 3,
+    "banned_year": null
+   },
+   {
+    "cas": "3060-89-7",
+    "name": "Metobromuron",
+    "score": 0.9946,
+    "rank": 4,
+    "banned_year": null
+   },
+   {
+    "cas": "1689-84-5",
+    "name": "Bromoxynil",
+    "score": 0.9932,
+    "rank": 5,
+    "banned_year": 2020
+   },
+   {
+    "cas": "2921-88-2",
+    "name": "Chlorpyrifos",
+    "score": 0.9921,
+    "rank": 6,
+    "banned_year": 2020
+   },
+   {
+    "cas": "111988-49-9",
+    "name": "Thiacloprid",
+    "score": 0.9912,
+    "rank": 7,
+    "banned_year": 2020
+   },
+   {
+    "cas": "35554-44-0",
+    "name": "Imazalil",
+    "score": 0.9896,
+    "rank": 8,
+    "banned_year": null
+   },
+   {
+    "cas": "8018-01-7",
+    "name": "Mancozeb",
+    "score": 0.9857,
+    "rank": 9,
+    "banned_year": 2021
+   },
+   {
+    "cas": "71626-11-4",
+    "name": "Benalaxyl",
+    "score": 0.9848,
+    "rank": 10,
+    "banned_year": 2020
+   },
+   {
+    "cas": "1596-84-5",
+    "name": "Daminozide",
+    "score": 0.9832,
+    "rank": 11,
+    "banned_year": null
+   },
+   {
+    "cas": "99129-21-2",
+    "name": "Clethodim",
+    "score": 0.9819,
+    "rank": 12,
+    "banned_year": null
+   },
+   {
+    "cas": "94-81-5",
+    "name": "MCPB",
+    "score": 0.9686,
+    "rank": 13,
+    "banned_year": null
+   },
+   {
+    "cas": "361377-29-9",
+    "name": "Fluoxastrobin",
+    "score": 0.9683,
+    "rank": 14,
+    "banned_year": null
+   },
+   {
+    "cas": "335104-84-2",
+    "name": "Tembotrione",
+    "score": 0.9666,
+    "rank": 15,
+    "banned_year": null
+   },
+   {
+    "cas": "64628-44-0",
+    "name": "Triflumuron",
+    "score": 0.9662,
+    "rank": 16,
+    "banned_year": 2021
+   },
+   {
+    "cas": "61213-25-0",
+    "name": "Flurochloridone",
+    "score": 0.9659,
+    "rank": 17,
+    "banned_year": null
+   },
+   {
+    "cas": "10004-44-1",
+    "name": "Hymexazol",
+    "score": 0.9623,
+    "rank": 18,
+    "banned_year": null
+   },
+   {
+    "cas": "21293-29-8",
+    "name": "S-abscisic acid",
+    "score": 0.9577,
+    "rank": 19,
+    "banned_year": null
+   },
+   {
+    "cas": "42874-03-3",
+    "name": "Oxyfluorfen",
+    "score": 0.9498,
+    "rank": 20,
+    "banned_year": null
+   },
+   {
+    "cas": "131807-57-3",
+    "name": "Famoxadone",
+    "score": 0.9496,
+    "rank": 21,
+    "banned_year": 2021
+   },
+   {
+    "cas": "72490-01-8",
+    "name": "Fenoxycarb",
+    "score": 0.9483,
+    "rank": 22,
+    "banned_year": 2021
+   },
+   {
+    "cas": "143390-89-0",
+    "name": "Kresoxim-methyl",
+    "score": 0.9447,
+    "rank": 23,
+    "banned_year": null
+   },
+   {
+    "cas": "66063-05-6",
+    "name": "Pencycuron",
+    "score": 0.9426,
+    "rank": 24,
+    "banned_year": 2021
+   },
+   {
+    "cas": "143807-66-3",
+    "name": "Chromafenozide",
+    "score": 0.9411,
+    "rank": 25,
+    "banned_year": 2025
+   }
+  ],
+  "2021": [
+   {
+    "cas": "1596-84-5",
+    "name": "Daminozide",
+    "score": 0.9986,
+    "rank": 1,
+    "banned_year": null
+   },
+   {
+    "cas": "90717-03-6",
+    "name": "Quinmerac",
+    "score": 0.9886,
+    "rank": 2,
+    "banned_year": null
+   },
+   {
+    "cas": "61213-25-0",
+    "name": "Flurochloridone",
+    "score": 0.9855,
+    "rank": 3,
+    "banned_year": null
+   },
+   {
+    "cas": "69377-81-7",
+    "name": "Fluroxypyr",
+    "score": 0.9848,
+    "rank": 4,
+    "banned_year": null
+   },
+   {
+    "cas": "99129-21-2",
+    "name": "Clethodim",
+    "score": 0.9816,
+    "rank": 5,
+    "banned_year": null
+   },
+   {
+    "cas": "15299-99-7",
+    "name": "Napropamide",
+    "score": 0.9786,
+    "rank": 6,
+    "banned_year": null
+   },
+   {
+    "cas": "94-81-5",
+    "name": "MCPB",
+    "score": 0.9779,
+    "rank": 7,
+    "banned_year": null
+   },
+   {
+    "cas": "2164-17-2",
+    "name": "Fluometuron",
+    "score": 0.9735,
+    "rank": 8,
+    "banned_year": null
+   },
+   {
+    "cas": "143390-89-0",
+    "name": "Kresoxim-methyl",
+    "score": 0.9678,
+    "rank": 9,
+    "banned_year": null
+   },
+   {
+    "cas": "133-32-4",
+    "name": "Indolylbutyric acid",
+    "score": 0.9672,
+    "rank": 10,
+    "banned_year": null
+   },
+   {
+    "cas": "150114-71-9",
+    "name": "Aminopyralid",
+    "score": 0.966,
+    "rank": 11,
+    "banned_year": null
+   },
+   {
+    "cas": "52918-63-5",
+    "name": "Deltamethrin (cis-deltamethrin)",
+    "score": 0.9658,
+    "rank": 12,
+    "banned_year": null
+   },
+   {
+    "cas": "119791-41-2",
+    "name": "Emamectin",
+    "score": 0.958,
+    "rank": 13,
+    "banned_year": null
+   },
+   {
+    "cas": "3060-89-7",
+    "name": "Metobromuron",
+    "score": 0.9558,
+    "rank": 14,
+    "banned_year": null
+   },
+   {
+    "cas": "42874-03-3",
+    "name": "Oxyfluorfen",
+    "score": 0.9552,
+    "rank": 15,
+    "banned_year": null
+   },
+   {
+    "cas": "76703-62-3",
+    "name": "Cyhalothrin, gamma-",
+    "score": 0.9418,
+    "rank": 16,
+    "banned_year": 2025
+   },
+   {
+    "cas": "112410-23-8",
+    "name": "Tebufenozide",
+    "score": 0.9337,
+    "rank": 17,
+    "banned_year": null
+   },
+   {
+    "cas": "79538-32-2",
+    "name": "Tefluthrin",
+    "score": 0.9294,
+    "rank": 18,
+    "banned_year": null
+   },
+   {
+    "cas": "143807-66-3",
+    "name": "Chromafenozide",
+    "score": 0.9251,
+    "rank": 19,
+    "banned_year": 2025
+   },
+   {
+    "cas": "72459-58-6",
+    "name": "Triazoxide",
+    "score": 0.9181,
+    "rank": 20,
+    "banned_year": 2021
+   },
+   {
+    "cas": "131860-33-8",
+    "name": "Azoxystrobin",
+    "score": 0.9094,
+    "rank": 21,
+    "banned_year": null
+   },
+   {
+    "cas": "13684-63-4",
+    "name": "Phenmedipham",
+    "score": 0.9049,
+    "rank": 22,
+    "banned_year": null
+   },
+   {
+    "cas": "173662-97-0",
+    "name": "Mandestrobin",
+    "score": 0.9048,
+    "rank": 23,
+    "banned_year": null
+   },
+   {
+    "cas": "64628-44-0",
+    "name": "Triflumuron",
+    "score": 0.8985,
+    "rank": 24,
+    "banned_year": 2021
+   },
+   {
+    "cas": "688046-61-9",
+    "name": "Pyriofenone",
+    "score": 0.8917,
+    "rank": 25,
+    "banned_year": null
+   }
+  ],
+  "2022": [
+   {
+    "cas": "119791-41-2",
+    "name": "Emamectin",
+    "score": 0.9921,
+    "rank": 1,
+    "banned_year": null
+   },
+   {
+    "cas": "16484-77-8",
+    "name": "Mecoprop-P",
+    "score": 0.9914,
+    "rank": 2,
+    "banned_year": null
+   },
+   {
+    "cas": "943831-98-9",
+    "name": "Halauxifen-methyl",
+    "score": 0.9815,
+    "rank": 3,
+    "banned_year": null
+   },
+   {
+    "cas": "500008-45-7",
+    "name": "Chlorantraniliprole",
+    "score": 0.9584,
+    "rank": 4,
+    "banned_year": null
+   },
+   {
+    "cas": "571-58-4",
+    "name": "1,4-Dimethylnaphthalene",
+    "score": 0.9501,
+    "rank": 5,
+    "banned_year": null
+   },
+   {
+    "cas": "23422-53-9",
+    "name": "Formetanate hydrochloride",
+    "score": 0.9279,
+    "rank": 6,
+    "banned_year": null
+   },
+   {
+    "cas": "137-30-4",
+    "name": "Ziram",
+    "score": 0.9135,
+    "rank": 7,
+    "banned_year": null
+   },
+   {
+    "cas": "29232-93-7",
+    "name": "Pirimiphos-methyl",
+    "score": 0.8926,
+    "rank": 8,
+    "banned_year": null
+   },
+   {
+    "cas": "55335-06-3",
+    "name": "Triclopyr",
+    "score": 0.8903,
+    "rank": 9,
+    "banned_year": null
+   },
+   {
+    "cas": "361377-29-9",
+    "name": "Fluoxastrobin",
+    "score": 0.8635,
+    "rank": 10,
+    "banned_year": null
+   },
+   {
+    "cas": "94-81-5",
+    "name": "MCPB",
+    "score": 0.8619,
+    "rank": 11,
+    "banned_year": null
+   },
+   {
+    "cas": "1861-40-1",
+    "name": "Benfluralin",
+    "score": 0.8597,
+    "rank": 12,
+    "banned_year": 2023
+   },
+   {
+    "cas": "98243-83-5",
+    "name": "Benalaxyl-M",
+    "score": 0.8586,
+    "rank": 13,
+    "banned_year": null
+   },
+   {
+    "cas": "98886-44-3",
+    "name": "Fosthiazate",
+    "score": 0.8569,
+    "rank": 14,
+    "banned_year": null
+   },
+   {
+    "cas": "67601-06-3",
+    "name": "Rescalure",
+    "score": 0.8488,
+    "rank": 15,
+    "banned_year": null
+   },
+   {
+    "cas": "1596-84-5",
+    "name": "Daminozide",
+    "score": 0.8468,
+    "rank": 16,
+    "banned_year": null
+   },
+   {
+    "cas": "substance:name:cos-oga",
+    "name": "COS-OGA",
+    "score": 0.846,
+    "rank": 17,
+    "banned_year": null
+   },
+   {
+    "cas": "865318-97-4",
+    "name": "Ametoctradin",
+    "score": 0.8444,
+    "rank": 18,
+    "banned_year": null
+   },
+   {
+    "cas": "951659-40-8",
+    "name": "Flupyradifurone",
+    "score": 0.8442,
+    "rank": 19,
+    "banned_year": null
+   },
+   {
+    "cas": "272451-65-7",
+    "name": "Flubendiamide",
+    "score": 0.8228,
+    "rank": 20,
+    "banned_year": 2024
+   },
+   {
+    "cas": "143807-66-3",
+    "name": "Chromafenozide",
+    "score": 0.7915,
+    "rank": 21,
+    "banned_year": 2025
+   },
+   {
+    "cas": "179101-81-6",
+    "name": "Pyridalyl",
+    "score": 0.7767,
+    "rank": 22,
+    "banned_year": 2024
+   },
+   {
+    "cas": "76703-62-3",
+    "name": "Cyhalothrin, gamma-",
+    "score": 0.7701,
+    "rank": 23,
+    "banned_year": 2025
+   },
+   {
+    "cas": "113614-08-7",
+    "name": "Beflubutamid",
+    "score": 0.7595,
+    "rank": 24,
+    "banned_year": null
+   },
+   {
+    "cas": "substance:name:bacillus-amyloliquefaciens-subsp.-plantarum-d747",
+    "name": "Bacillus amyloliquefaciens subsp. plantarum D747",
+    "score": 0.7319,
+    "rank": 25,
+    "banned_year": null
+   }
+  ],
+  "2023": [
+   {
+    "cas": "143807-66-3",
+    "name": "Chromafenozide",
+    "score": 0.9946,
+    "rank": 1,
+    "banned_year": 2025
+   },
+   {
+    "cas": "16484-77-8",
+    "name": "Mecoprop-P",
+    "score": 0.9904,
+    "rank": 2,
+    "banned_year": null
+   },
+   {
+    "cas": "67601-06-3",
+    "name": "Rescalure",
+    "score": 0.9813,
+    "rank": 3,
+    "banned_year": null
+   },
+   {
+    "cas": "1596-84-5",
+    "name": "Daminozide",
+    "score": 0.9749,
+    "rank": 4,
+    "banned_year": null
+   },
+   {
+    "cas": "272451-65-7",
+    "name": "Flubendiamide",
+    "score": 0.9748,
+    "rank": 5,
+    "banned_year": 2024
+   },
+   {
+    "cas": "179101-81-6",
+    "name": "Pyridalyl",
+    "score": 0.9581,
+    "rank": 6,
+    "banned_year": 2024
+   },
+   {
+    "cas": "122008-85-9",
+    "name": "Cyhalofop-butyl",
+    "score": 0.9507,
+    "rank": 7,
+    "banned_year": null
+   },
+   {
+    "cas": "66332-96-5",
+    "name": "Flutolanil",
+    "score": 0.9105,
+    "rank": 8,
+    "banned_year": null
+   },
+   {
+    "cas": "13708-85-5",
+    "name": "Disodium phosphonate",
+    "score": 0.8968,
+    "rank": 9,
+    "banned_year": null
+   },
+   {
+    "cas": "361377-29-9",
+    "name": "Fluoxastrobin",
+    "score": 0.8863,
+    "rank": 10,
+    "banned_year": null
+   },
+   {
+    "cas": "23422-53-9",
+    "name": "Formetanate hydrochloride",
+    "score": 0.8572,
+    "rank": 11,
+    "banned_year": null
+   },
+   {
+    "cas": "98243-83-5",
+    "name": "Benalaxyl-M",
+    "score": 0.8532,
+    "rank": 12,
+    "banned_year": null
+   },
+   {
+    "cas": "119791-41-2",
+    "name": "Emamectin",
+    "score": 0.8482,
+    "rank": 13,
+    "banned_year": null
+   },
+   {
+    "cas": "76703-62-3",
+    "name": "Cyhalothrin, gamma-",
+    "score": 0.7875,
+    "rank": 14,
+    "banned_year": 2025
+   },
+   {
+    "cas": "9006-42-2",
+    "name": "Metiram",
+    "score": 0.7783,
+    "rank": 15,
+    "banned_year": 2023
+   },
+   {
+    "cas": "943831-98-9",
+    "name": "Halauxifen-methyl",
+    "score": 0.7489,
+    "rank": 16,
+    "banned_year": null
+   },
+   {
+    "cas": "500008-45-7",
+    "name": "Chlorantraniliprole",
+    "score": 0.7466,
+    "rank": 17,
+    "banned_year": null
+   },
+   {
+    "cas": "112410-23-8",
+    "name": "Tebufenozide",
+    "score": 0.7233,
+    "rank": 18,
+    "banned_year": null
+   },
+   {
+    "cas": "97-53-0",
+    "name": "Eugenol",
+    "score": 0.7169,
+    "rank": 19,
+    "banned_year": null
+   },
+   {
+    "cas": "113614-08-7",
+    "name": "Beflubutamid",
+    "score": 0.6503,
+    "rank": 20,
+    "banned_year": null
+   },
+   {
+    "cas": "150114-71-9",
+    "name": "Aminopyralid",
+    "score": 0.6502,
+    "rank": 21,
+    "banned_year": null
+   },
+   {
+    "cas": "348635-87-0",
+    "name": "Amisulbrom",
+    "score": 0.6468,
+    "rank": 22,
+    "banned_year": null
+   },
+   {
+    "cas": "494793-67-8",
+    "name": "Penflufen",
+    "score": 0.6428,
+    "rank": 23,
+    "banned_year": 2024
+   },
+   {
+    "cas": "189278-12-4",
+    "name": "Proquinazid",
+    "score": 0.6424,
+    "rank": 24,
+    "banned_year": null
+   },
+   {
+    "cas": "62924-70-3",
+    "name": "Flumetralin",
+    "score": 0.6298,
+    "rank": 25,
+    "banned_year": 2025
+   }
+  ],
+  "2024": [
+   {
+    "cas": "67601-06-3",
+    "name": "Rescalure",
+    "score": 0.9799,
+    "rank": 1,
+    "banned_year": null
+   },
+   {
+    "cas": "943831-98-9",
+    "name": "Halauxifen-methyl",
+    "score": 0.9755,
+    "rank": 2,
+    "banned_year": null
+   },
+   {
+    "cas": "98243-83-5",
+    "name": "Benalaxyl-M",
+    "score": 0.9343,
+    "rank": 3,
+    "banned_year": null
+   },
+   {
+    "cas": "500008-45-7",
+    "name": "Chlorantraniliprole",
+    "score": 0.8462,
+    "rank": 4,
+    "banned_year": null
+   },
+   {
+    "cas": "substance:name:bacillus-amyloliquefaciens-subsp.-plantarum-d747",
+    "name": "Bacillus amyloliquefaciens subsp. plantarum D747",
+    "score": 0.8308,
+    "rank": 5,
+    "banned_year": null
+   },
+   {
+    "cas": "substance:name:cos-oga",
+    "name": "COS-OGA",
+    "score": 0.8252,
+    "rank": 6,
+    "banned_year": null
+   },
+   {
+    "cas": "688046-61-9",
+    "name": "Pyriofenone",
+    "score": 0.8044,
+    "rank": 7,
+    "banned_year": null
+   },
+   {
+    "cas": "110235-47-7",
+    "name": "Mepanipyrim",
+    "score": 0.7996,
+    "rank": 8,
+    "banned_year": 2024
+   },
+   {
+    "cas": "143807-66-3",
+    "name": "Chromafenozide",
+    "score": 0.7453,
+    "rank": 9,
+    "banned_year": 2025
+   },
+   {
+    "cas": "104040-78-0",
+    "name": "Flazasulfuron",
+    "score": 0.7271,
+    "rank": 10,
+    "banned_year": null
+   },
+   {
+    "cas": "13708-85-5",
+    "name": "Disodium phosphonate",
+    "score": 0.7259,
+    "rank": 11,
+    "banned_year": null
+   },
+   {
+    "cas": "272451-65-7",
+    "name": "Flubendiamide",
+    "score": 0.6943,
+    "rank": 12,
+    "banned_year": 2024
+   },
+   {
+    "cas": "21087-64-9",
+    "name": "Metribuzin",
+    "score": 0.6662,
+    "rank": 13,
+    "banned_year": 2024
+   },
+   {
+    "cas": "422556-08-9",
+    "name": "Pyroxsulam",
+    "score": 0.6661,
+    "rank": 14,
+    "banned_year": null
+   },
+   {
+    "cas": "179101-81-6",
+    "name": "Pyridalyl",
+    "score": 0.6614,
+    "rank": 15,
+    "banned_year": 2024
+   },
+   {
+    "cas": "137-30-4",
+    "name": "Ziram",
+    "score": 0.6378,
+    "rank": 16,
+    "banned_year": null
+   },
+   {
+    "cas": "106700-29-2",
+    "name": "Pethoxamid",
+    "score": 0.6333,
+    "rank": 17,
+    "banned_year": null
+   },
+   {
+    "cas": "335104-84-2",
+    "name": "Tembotrione",
+    "score": 0.6109,
+    "rank": 18,
+    "banned_year": null
+   },
+   {
+    "cas": "16484-77-8",
+    "name": "Mecoprop-P",
+    "score": 0.5998,
+    "rank": 19,
+    "banned_year": null
+   },
+   {
+    "cas": "131983-72-7",
+    "name": "Tritikonazol",
+    "score": 0.5958,
+    "rank": 20,
+    "banned_year": null
+   },
+   {
+    "cas": "62924-70-3",
+    "name": "Flumetralin",
+    "score": 0.5792,
+    "rank": 21,
+    "banned_year": 2025
+   },
+   {
+    "cas": "951659-40-8",
+    "name": "Flupyradifurone",
+    "score": 0.5661,
+    "rank": 22,
+    "banned_year": null
+   },
+   {
+    "cas": "283159-90-0",
+    "name": "Valifenalate",
+    "score": 0.5659,
+    "rank": 23,
+    "banned_year": null
+   },
+   {
+    "cas": "105512-06-9",
+    "name": "Clodinafop-Propargyl",
+    "score": 0.5628,
+    "rank": 24,
+    "banned_year": null
+   },
+   {
+    "cas": "119791-41-2",
+    "name": "Emamectin",
+    "score": 0.5532,
+    "rank": 25,
+    "banned_year": null
+   }
+  ]
+ }
+}
