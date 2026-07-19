@@ -42,3 +42,12 @@ desktop.ini
 # Private ideation transcripts (candid personal/strategy notes; kept on disk
 # for reference, never committed to this portfolio-facing repo)
 ideation/
+
+# Internal planning/process docs -- not for the public portfolio repo
+CLAUDE.md
+DEV_LOG.md
+TODO.md
+BENCHMARK_SCOPE.md
+SOURCE_ENHANCEMENT_SCOPE.md
+V1_SCOPE.md
+V2_SCOPE.md

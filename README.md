@@ -4,52 +4,42 @@
 
 > Tracing systemic exposure.
 
-Hazium is an explainable machine learning platform that constructs a temporally-aware knowledge graph of environmental and public health evidence from heterogeneous public data: regulatory decisions, hazard classifications, national sales statistics, residue monitoring and scientific conclusions. Machine learning over that graph produces early-warning signals; every signal is traceable back to source evidence.
+Hazium is an explainable machine learning platform that builds a temporally-aware knowledge graph of environmental and public-health evidence from heterogeneous public data: regulatory decisions, hazard classifications, national sales statistics, residue monitoring, and scientific conclusions. Machine learning over that graph ranks substances for future regulatory risk, and every signal traces back to the source evidence behind it.
 
-The first domain is pesticides, with a Nordic focus. The intelligence comes from ML. LLMs are presentation only.
+The first domain is pesticides, with a Nordic focus. The intelligence is in the ML; large language models are used for presentation only.
 
 ## The north-star question
 
 > Using only data known before 2023-01-01, does Hazium rank fluazinam, the fungicide at the centre of Sweden's 2026 pesticide controversy, among the highest-concern substances approved in Sweden?
 
-Every version of the system is measured against this retrodetection question under strict temporal discipline: every fact and every edge carries a `known_at` timestamp, and models never see evidence dated after the evaluation cutoff.
+Every version of the system is measured against this retrodetection question under strict temporal discipline. Every fact and every edge carries a `known_at` timestamp, and a model evaluated at a given cutoff never sees evidence dated on or after it.
 
 ## Architecture
 
 ```
-public data (KEMI, EU Pesticides DB, ECHA, EFSA, SLV)
-    → ingestion + entity resolution (CAS/EC, PubChem/ChEBI, AGROVOC)
-    → temporal knowledge graph (Postgres source of truth → PyTorch Geometric)
-    → ML tasks: link prediction · early-warning ranking · anomaly detection
-    → explainability: evidence paths · SHAP baselines
-    → interfaces (reports, BI, API)
+public data (KEMI, EU Pesticides DB, ECHA, EFSA, Europe PMC)
+    -> ingestion + entity resolution (CAS/EC, PubChem/ChEBI, AGROVOC)
+    -> temporal knowledge graph (known_at on every fact and edge)
+    -> ML: early-warning ranking, link prediction, anomaly detection
+    -> explainability: evidence paths and SHAP over a tabular baseline
+    -> interfaces (reports, BI, API)
 ```
 
-## Repository layout
-
 ```
-├── MANIFESTO.md          project constitution — read this first
-├── CLAUDE.md             working rules for AI-assisted development
-├── TODO.md               current state and next step — read this to resume work
-├── DEV_LOG.md            historical build record and decision rationale
-├── V1_SCOPE.md           executable design doc for the V1 ML task
-├── V2_SCOPE.md           executable design doc for the V2 embedding experiment
-├── BENCHMARK_SCOPE.md    executable design doc for HEWB, the early-warning benchmark
-├── src/hazium/
-│   ├── sources/          ingestion adapters (one per agency/registry)
-│   ├── resolve/          entity resolution across vocabularies
-│   ├── graph/            knowledge graph construction and queries
-│   ├── ml/               tasks, baselines, embeddings, GNNs
-│   └── explain/          evidence paths, SHAP, explainer comparisons
-├── pipeline/             numbered pipeline scripts (01_, 02_, ...)
-├── tests/
-├── notebooks/            exploration only — nothing load-bearing lives here
-└── data/                 local data snapshots (gitignored)
+src/hazium/
+├── sources/     ingestion adapters, one per agency or registry
+├── resolve/     entity resolution across vocabularies
+├── graph/       knowledge graph construction and as_of queries
+├── ml/          tasks, tabular baselines, embeddings
+├── benchmark/   HEWB, the versioned early-warning benchmark
+└── explain/     evidence paths and SHAP
+pipeline/        numbered pipeline scripts (01_, 02_, ...)
+tests/
 ```
 
 ## Principles
 
-The full constitution is in [MANIFESTO.md](MANIFESTO.md). The three that shape the code most:
+The full set is in [MANIFESTO.md](MANIFESTO.md). The three that shape the code most:
 
 - **The baseline rule.** Every graph or deep model is compared against a tabular gradient-boosting baseline on the identical task and split. If it does not win, the baseline is the published result.
 - **Explainability is mandatory.** The system never outputs "high risk" without a traceable evidence path to source documents.
@@ -57,119 +47,34 @@ The full constitution is in [MANIFESTO.md](MANIFESTO.md). The three that shape t
 
 ## Roadmap
 
-The V-ladder is the capability ladder. **HEWB** (the Hazium Early Warning
-Benchmark) is orthogonal to it: the versioned measuring stick every version
-reports against, so results stay comparable across methods.
+The V-ladder is the capability ladder. HEWB, the Hazium Early Warning Benchmark, is orthogonal to it: the versioned measuring stick every version reports against, so results stay comparable across methods.
 
-| Version | Deliverable | Gate |
+| Version | Deliverable | State |
 |---|---|---|
-| V0 ✅ | Knowledge graph: ingestion, entity resolution, evidence-path queries | Fluazinam evidence graph reconstructable and traversable |
-| V1 ✅ | Defined ML tasks, tabular baselines, SHAP, time-split retrodetection eval | Published eval table |
-| V2 ✅ | Node embeddings on the same tasks | Beats V1 baseline, or the negative result is documented — **documented negative** |
-| V3 ⛔ | GNNs with evidence-path explanations | Entered only if V2 shows signal — **not entered**, per gate |
-| V4 | Second domain (PFAS, via a verified shared-metabolite bridge to TFA) | Two domains share one architecture |
-| HEWB v1.4 ✅ | Versioned early-warning benchmark: annual rolling-origin eval + per-case lead-time | Rigorous, reproducible, honestly-reported — **met** |
+| V0 | Knowledge graph: ingestion, entity resolution, evidence-path queries | Done |
+| V1 | ML tasks, tabular baselines, SHAP, time-split retrodetection eval | Done |
+| V2 | Node embeddings on the same tasks | Documented negative |
+| V3 | GNNs with evidence-path explanations | Not entered, per the V2 gate |
+| V4 | Second domain (PFAS, via a shared-metabolite bridge to TFA) | Planned |
+| HEWB v1.4 | Versioned early-warning benchmark: annual rolling-origin eval and per-case lead-time | Met |
 
-## Status
+## Results
 
-**V0, V1, V2, and HEWB v1.4 all met.**
+HEWB fixes ten historical EU pesticide bans and asks, at each annual cutoff from 2009, where Hazium would have ranked each substance using only evidence dated before that cutoff. Lead time is measured in months between the earliest cutoff a substance enters the top-k and the real regulatory action.
 
-HEWB v1.4, the north-star generalised from one case into a versioned
-benchmark over historical EU regulatory actions, including a
-literature-volume feature (population-relative hazard-language prevalence in
-Europe PMC) and an ECHA CLH-intention feature (Tier 2, browser-acquired from
-a WAF-gated registry; a modest in-funnel signal that SHAP places below the
-independent literature signal, 2023 AP 0.226 to 0.254). Using only data known before each annual cutoff (**2009-2024**),
-XGBoost beats every trivial baseline at every cutoff, and ranked the real
-EU-banned substances in the top-k *years* before the ban: chlorpyrifos was
-flagged **132 months (11 years)** before its 2020 EU ban, at k=10, a lower
-bound, since its earliest flag sits at the very first cutoff tested (Jan
-2009). Mancozeb, whose benchmark date a v1.3 data fix corrected (the EU PPDB
-export had listed Maneb under mancozeb's CAS, so it had been measured against
-Maneb's 2017 withdrawal), ranks in the top-20 from 2010, roughly nine years
-before its real 2021 non-renewal. **9 of the 10 headline landmark cases flag
-within top-50**, only epoxiconazole is a genuine miss. Scores are averaged
-over repeated cross-validation, a v1.3 method fix after the data change
-exposed that borderline k=10 ranks were sensitive to a single fold shuffle,
-so lead-times are reproducible; the 2023-01-01 headline average precision,
-stabilised, is 0.226, still an order of magnitude above the trivial
-baselines. Fluazinam itself, the anchor case, ranks top-3% but not top-50,
-i.e. a miss under the strict lead-time bar, reported as such, not smoothed
-over. See [`BENCHMARK_SCOPE.md`](BENCHMARK_SCOPE.md) and `DEV_LOG.md`'s HEWB
-entries for the full tables, the lead-time definition, and the correctness
-discipline.
+Using only pre-cutoff data across **2009-2024**, XGBoost beats every trivial baseline at every cutoff (2023-01-01: average precision 0.254 against 0.016 for the best trivial ranker, on 25 positives in 5,933 substances). It ranked the real EU-banned substances years before the ban:
 
-V0 — the fluazinam evidence graph is reconstructable and traversable from
-real ingested data, carrying dated evidence and a dated hazard classification
-that genuinely survive a pre-2023 `as_of` view: an EFSA conclusion from 2008,
-and a CLP harmonised classification (Repr. 2, Aquatic Chronic 1, and four
-other hazard codes) from 2015.
+- **Chlorpyrifos**: flagged 132 months (11 years) before its 2020 EU ban, at k=10.
+- **Mancozeb**: in the top-20 from 2010, about nine years before its 2021 non-renewal.
+- **9 of 10** headline landmark cases flag within the top-50. Epoxiconazole is the one the model does not flag.
 
-| V0 component | State |
-|---|---|
-| Temporal data contracts (`known_at` on every fact) | Done |
-| Evidence-path graph with `as_of` views | Done |
-| KEMI sales adapter (annual report PDFs) | Done |
-| KEMI register adapter (JSON API, products + CAS) | Done |
-| Substance entity resolution (name → CAS) | Done |
-| Register structure graph (`CONTAINS`, `APPROVED_IN`) | Done |
-| EFSA OpenFoodTox adapter (`DEGRADES_TO`, dated `EVIDENCED_BY`) | Done |
-| ECHA CLP hazard classification (`CLASSIFIED_AS`) | Done |
-| EU PPDB regulatory events (`SUBJECT_OF`; V1 label source) | Done |
-| KEMI reevaluation announcements (Swedish national events) | Done |
+Out-of-fold scores are averaged over repeated cross-validation, so lead-times are reproducible rather than an artifact of one fold split.
 
-V1 — a real, dated regulatory-action label (EU non-renewal events), a
-temporally-clean feature set, and a rolling-origin backtest. **XGBoost beats
-every trivial baseline at every cutoff** (2023-01-01: AP 0.226 vs. 0.016 best
-trivial, on 25 positives out of 5,933 substances, with stabilised scoring
-matching HEWB v1.3). Under this headline label, fluazinam is an honest
-negative: it ranks in the top ~3% (204th of 5,933) on its general hazard and
-sales profile, but stays outside the strict top-50 lead-time bar, and the
-EU-only feature set has no signal for its actual 2026 concern (a national
-TFA/groundwater finding).
+The feature set spans six groups, each grounded in a dated public source: EU hazard classifications (ECHA CLP), EFSA assessment history, Swedish sales trends (KEMI), graph structure, scientific-literature volume (Europe PMC), and ECHA CLH-intention status. SHAP attributes the ranking to the independent literature signal well above the in-funnel regulatory features.
 
-A real Swedish signal was then found: Kemikalieinspektionen's 2025-11-20
-national reevaluation of fluazinam (and five others) over TFA/groundwater
-risk. Ingested and used to build a second, clearly-caveated label variant
-(early-warning: also counts a Swedish reevaluation, not just an EU
-non-renewal — a weaker, earlier signal, reported separately, never merged
-into the headline table). **Under that variant, fluazinam becomes a genuine
-positive and ranks 176th of 5,934 — top 3.0%, out-of-fold** — the closest
-result yet to the project's own north-star question. (A V2a correctness fix
-to the graph's temporal dating — see Roadmap — moved this from an earlier
-597th/top-10.7% result; both figures are on record in DEV_LOG, nothing
-hidden.) Both results are reported side by side, honestly caveated, every
-time the eval runs: see [`V1_SCOPE.md`](V1_SCOPE.md) for the deliverable and
-[`DEV_LOG.md`](DEV_LOG.md) for the full eval tables and reasoning.
+**The anchor case, fluazinam.** Under the headline EU-non-renewal label it ranks in the top 3% (204th of 5,933) on its general hazard and sales profile but stays outside the strict top-50 bar. Its actual 2026 concern is national groundwater contamination involving trifluoroacetic acid (TFA), which the EU-regulatory, hazard, and sales sources do not cover; residue and groundwater monitoring is the next data source on the roadmap. Under a second label variant that also counts a Swedish national reevaluation, fluazinam becomes a positive and ranks in the top 3% out-of-fold, the closest result yet to the north-star question.
 
-V2 — node embeddings (metapath2vec, run per the baseline rule: alone and
-concatenated with V1's tabular features, on the identical rolling-origin
-split) **lose decisively, for a measured reason, not an assumed one.**
-Concatenation actively hurts AP at every cutoff (2023 headline: 0.240 tabular
-alone → 0.149 concatenated). Why: only 29.2% of the 2023 population has any
-walkable graph structure (`DEGRADES_TO`/`CLASSIFIED_AS` edges) — the other
-71% is a constant zero-vector block that dilutes signal rather than adding
-it, in a ~5,900-row, 25-99-positive population. (These V2b figures predate the
-v1.3 repeated-CV stabilisation; the coverage-ceiling reason is structural, so
-the conclusion is unaffected and the row was not re-run.) Per the roadmap,
-**V3 (GNN) is not entered**: a GNN's message-passing would hit the identical coverage
-problem, so this result legitimately closes the deep-graph track for this
-domain rather than escalating to a heavier method. V1's tabular baseline
-remains the published result. See [`V2_SCOPE.md`](V2_SCOPE.md) for the full
-scoping and gate reasoning, and `DEV_LOG.md`'s "V2b shipped" entry for the
-eval table and mechanism.
-
-See [`DEV_LOG.md`](DEV_LOG.md) for the full build record, including several
-corrections and bugs found and fixed along the way: a scoping correction (the
-fluazinam→TFA edge suggested by an early plan turned out not to exist in the
-data; the verified alternative, a shared-metabolite bridge across three other
-fungicides, is what actually ships), a temporal-correctness bug (a
-substance's own node needs a dated fact to pull its `known_at` earlier, or it
-never appears in an early `as_of` view no matter how well-dated its edges
-are), and a silent feature bug in V1 (sales features were all-zero because
-`SalesRecord.substance_id` needs entity resolution before it joins to the
-graph). See [`TODO.md`](TODO.md) for the current next step and open
-decisions.
+**V2, node embeddings.** metapath2vec embeddings, run alone and concatenated with the tabular features on the identical split, lose at every cutoff. Only 29.2% of the population has any walkable graph structure, so the embedding is a constant zero vector for the rest and dilutes the signal. V3 (GNN) is not entered: message-passing would hit the same coverage ceiling.
 
 ---
 

@@ -41,13 +41,11 @@ export default function ResultSection({
           public concern. On the neonicotinoids it was early relative to the
           2013 EU restriction, though national bans were already emerging. On
           dimethoate it moved level with the regulator, and on imidacloprid it
-          flagged late, both shown rather than dropped. Epoxiconazole it never flagged at all.
-          Where a substance had a real public controversy, the chart marks that
-          too: Hazium flagged chlorpyrifos years before its 2015 US ban fight,
-          and the neonicotinoids before the 2012 bee campaign. Most landmarks had
-          no public profile at all when Hazium flagged them, which is the sharper
-          point. The chart carries the misses next to the leads, not just the
-          wins.
+          flagged late; both are on the chart. Epoxiconazole it never flagged at
+          all. Where a substance had a real public controversy, the chart marks
+          that too: Hazium flagged chlorpyrifos years before its 2015 US ban
+          fight, and the neonicotinoids before the 2012 bee campaign. Most
+          landmarks had no public profile at all when Hazium flagged them.
         </p>
 
         <p className="mt-6 text-xs text-text-muted">
