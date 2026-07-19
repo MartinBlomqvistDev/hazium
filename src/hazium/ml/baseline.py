@@ -19,7 +19,13 @@ from xgboost import XGBClassifier
 from hazium.graph.store import TemporalGraph
 from hazium.ml.dataset import DEFAULT_POSITIVE_KINDS, build_dataset
 from hazium.ml.embed import embedding_dataframe, fit_metapath2vec
-from hazium.models import LiteratureVolumeRecord, RegulatoryEvent, RegulatoryEventKind, SalesRecord
+from hazium.models import (
+    CLHIntentionRecord,
+    LiteratureVolumeRecord,
+    RegulatoryEvent,
+    RegulatoryEventKind,
+    SalesRecord,
+)
 
 TRIVIAL_BASELINES = {
     "severe_hazard_count": lambda X: (
@@ -122,8 +128,11 @@ def evaluate_cutoff(
     seed: int = 42,
     positive_kinds: frozenset[RegulatoryEventKind] = DEFAULT_POSITIVE_KINDS,
     lit_records: list[LiteratureVolumeRecord] = (),
+    clh_records: list[CLHIntentionRecord] = (),
 ) -> CutoffResult:
-    X, y, ids = build_dataset(graph, sales, regevents, cutoff, positive_kinds, lit_records)
+    X, y, ids = build_dataset(
+        graph, sales, regevents, cutoff, positive_kinds, lit_records, clh_records
+    )
     xgb_scores, out_of_fold = score_xgboost(X, y, seed)
 
     scores = {name: fn(X).to_numpy(dtype=float) for name, fn in TRIVIAL_BASELINES.items()}
@@ -146,9 +155,12 @@ def rolling_origin_eval(
     seed: int = 42,
     positive_kinds: frozenset[RegulatoryEventKind] = DEFAULT_POSITIVE_KINDS,
     lit_records: list[LiteratureVolumeRecord] = (),
+    clh_records: list[CLHIntentionRecord] = (),
 ) -> list[CutoffResult]:
     return [
-        evaluate_cutoff(graph, sales, regevents, cutoff, seed, positive_kinds, lit_records)
+        evaluate_cutoff(
+            graph, sales, regevents, cutoff, seed, positive_kinds, lit_records, clh_records
+        )
         for cutoff in cutoffs
     ]
 

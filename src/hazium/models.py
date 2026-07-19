@@ -239,6 +239,39 @@ class MediaVolumeRecord(Fact):
     volume: float
 
 
+class CLHIntentionRecord(Fact):
+    """A substance's earliest ECHA CLH (harmonised classification) intention.
+
+    The CLH process runs from an intention notification, through public
+    consultation, to a RAC opinion, and only then is the harmonised
+    classification enacted into CLP Annex VI (which `clp.py` already ingests,
+    dated per ATP). The *intention* is the earliest dated point in that
+    process, an in-funnel regulatory signal that precedes the Annex VI
+    classification by roughly one to three years. It is exactly the kind of
+    signal `SOURCE_ENHANCEMENT_SCOPE.md` Tier 2 scoped: earlier than the
+    classification the model already sees, but firmly inside the regulatory
+    funnel, so it is expected to help precision more than genuine early
+    warning. Reported with inside-vs-outside-funnel SHAP so that distinction
+    stays honest.
+
+    ``intention_year`` is the year ECHA received the CLH dossier (the registry's
+    bulk-filterable receipt date; the finer "date of intention" is a few months
+    earlier and lives on per-substance detail pages). Only year granularity is
+    kept, so ``known_at`` is conservatively Jan 1 of ``intention_year + 1`` (the
+    same never-claim-it-earlier-than-provable convention the literature and
+    media features use), since a receipt anywhere in the year is provably known
+    by year end.
+
+    Source acquisition is one-time and browser-assisted: ECHA's registry sits
+    behind a WAF that refuses programmatic (Python) access, so this is parsed
+    from a committed snapshot (`data/raw/clh_intentions_ppp.jsonl`), not fetched
+    live. See DEV_LOG's HEWB v1.4 entry.
+    """
+
+    substance_id: str
+    intention_year: int
+
+
 class SourceDocument(Fact):
     """A document evidence can point to: EFSA conclusion, paper, article.
 

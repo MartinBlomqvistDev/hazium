@@ -25,6 +25,10 @@ mlartifacts/
 data/**
 !data/**/
 !**/.gitkeep
+# ...except the browser-acquired ECHA CLH-intentions snapshot: ECHA is WAF-gated
+# (no programmatic access), so this is a non-reproducible source of record, not
+# regenerable local data. Committed so HEWB v1.4 reproduces. See sources/echa_clh.py.
+!data/raw/clh_intentions_ppp.jsonl
 
 # Secrets & environment
 .env

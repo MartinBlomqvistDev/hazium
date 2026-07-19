@@ -37,7 +37,13 @@ from datetime import date
 from hazium.graph.store import TemporalGraph
 from hazium.ml.baseline import CutoffResult, rolling_origin_eval
 from hazium.ml.dataset import DEFAULT_POSITIVE_KINDS, EARLY_WARNING_POSITIVE_KINDS
-from hazium.models import LiteratureVolumeRecord, RegulatoryEvent, RegulatoryEventKind, SalesRecord
+from hazium.models import (
+    CLHIntentionRecord,
+    LiteratureVolumeRecord,
+    RegulatoryEvent,
+    RegulatoryEventKind,
+    SalesRecord,
+)
 
 #: Bump on any change to the frozen configuration below (case set, cutoffs, k
 #: values). A result labelled HEWB 1.0 is only comparable to another HEWB 1.0
@@ -63,7 +69,12 @@ from hazium.models import LiteratureVolumeRecord, RegulatoryEvent, RegulatoryEve
 #: the deep-top-k cases held exactly, exposing fold-assignment variance that
 #: was always present. Repeated CV removes it; lead-times are now
 #: reproducible. See DEV_LOG's "HEWB v1.3" entry for the full before/after.
-HEWB_VERSION = "1.3"
+#: v1.4 (2026-07-19): Tier 2 (ECHA CLH-intention feature,
+#: SOURCE_ENHANCEMENT_SCOPE.md) added. An in-funnel signal, browser-acquired
+#: from a committed snapshot (ECHA is WAF-gated against programmatic access);
+#: reported with inside-vs-outside-funnel SHAP so its "reading the regulator's
+#: homework" character stays explicit. See DEV_LOG's "HEWB v1.4" entry.
+HEWB_VERSION = "1.4"
 
 #: Annual cutoffs, 2009-2024. Extended backward from v1.0's 2016 floor after
 #: checking real coverage, not assuming it: hazard classifications reach back
@@ -328,6 +339,7 @@ def run_hewb(
     seed: int = 42,
     v2b_embedding_json: dict | None = None,
     lit_records: list[LiteratureVolumeRecord] = (),
+    clh_records: list[CLHIntentionRecord] = (),
 ) -> HewbReport:
     """Run HEWB end to end over both label variants.
 
@@ -363,6 +375,7 @@ def run_hewb(
             seed=seed,
             positive_kinds=positive_kinds,
             lit_records=lit_records,
+            clh_records=clh_records,
         )
         for result in results:
             for row in summarize(result):
