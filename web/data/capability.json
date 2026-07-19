@@ -140,9 +140,10 @@
       "held_out": true,
       "hazium_flag": null,
       "markers": [
-        { "type": "ban", "date": "2025-11-20", "precision": "day", "label": "Swedish national reevaluation (outside the EU non-renewal process)", "source": "The anchor case; a Swedish national concern", "url": "https://github.com/MartinBlomqvistDev/hazium" }
+        { "type": "regulator", "date": "2025-11-20", "precision": "day", "label": "Kemikalieinspektionen opens a reevaluation of TFA-forming plant protection products (fluazinam among six; decision due by April 2028)", "source": "Kemikalieinspektionen", "url": "https://www.kemi.se/arkiv/nyhetsarkiv/nyheter/2025-11-20-vaxtskyddsmedel-som-kan-bilda-tfa-omprovas-for-att-skydda-grundvattnet" },
+        { "type": "media", "date": "2026-07-02", "precision": "day", "label": "SVT Granskning investigation: fluazinam, TFA and groundwater", "source": "SVT Nyheter, Granskning", "url": "https://www.svt.se/nyheter/granskning/forskare-larmar-hjarnstorande-vaxtgift-sprutas-pa-svensk-potatis" }
       ],
-      "note": "The original case that motivated Hazium. A November 2025 Swedish national reevaluation, outside the EU non-renewal process, raised groundwater and TFA contamination, and the wider controversy followed in 2026; the EU-regulatory, hazard, and sales sources ingested so far do not cover groundwater or residue monitoring, which is the next data source on the roadmap."
+      "note": "The original case that motivated Hazium. Kemikalieinspektionen opened a formal reevaluation on 2025-11-20 of plant protection products that break down into the PFAS substance TFA and spread to groundwater (fluazinam among six substances, 38 products, decision due by April 2028); an SVT Granskning investigation brought it to national attention in July 2026. Groundwater and residue monitoring sits outside the EU-regulatory, hazard, and sales sources ingested so far, which is the next data source on the roadmap."
     }
   ]
 }
