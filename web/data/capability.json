@@ -81,7 +81,7 @@
         { "type": "regulator", "date": "2013-05-24", "precision": "day", "label": "First EU-wide restriction (Reg 485/2013)", "source": "Commission Implementing Regulation (EU) No 485/2013", "url": "https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=celex:32013R0485" },
         { "type": "ban", "date": "2019-01-31", "precision": "day", "label": "EU non-renewal", "source": "Approval expired 2019-01-31 after withdrawn renewal", "url": "https://food.ec.europa.eu/plants/pesticides/approval-active-substances-safeners-and-synergists/renewal-approval/neonicotinoids_en" }
       ],
-      "note": "Top-10 riskiest in 2010, before the public bee campaign of 2012 and about three years before the EU-wide 2013 restriction. National bans and EFSA bee-risk work were already underway around 2008 to 2012, so Hazium was early relative to EU-wide action, not relative to the whole world."
+      "note": "Top-10 riskiest in 2010, before the public bee campaign of 2012 and about three years before the EU-wide 2013 restriction. National bans and EFSA bee-risk work were already underway around 2008 to 2012, so Hazium was early against EU-wide action, with national concern already building."
     },
     {
       "name": "Thiamethoxam",
@@ -107,7 +107,7 @@
         { "type": "regulator", "date": "2013-05-24", "precision": "day", "label": "First EU-wide restriction (Reg 485/2013)", "source": "Commission Implementing Regulation (EU) No 485/2013", "url": "https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=celex:32013R0485" },
         { "type": "ban", "date": "2020-12-01", "precision": "day", "label": "EU non-renewal", "source": "Approval expired 2020-12-01 after withdrawn renewal", "url": "https://food.ec.europa.eu/plants/pesticides/approval-active-substances-safeners-and-synergists/renewal-approval/neonicotinoids_en" }
       ],
-      "note": "The counterexample among the neonicotinoids: Hazium only reached the top-20 in 2017, years after the 2012 public campaign and the 2013 EU restriction. It flagged this one late, tracking rather than leading."
+      "note": "The counterexample among the neonicotinoids: Hazium only reached the top-20 in 2017, years after the 2012 public campaign and the 2013 EU restriction. It flagged this one late, following the regulatory wave."
     },
     {
       "name": "Dimethoate",
@@ -119,7 +119,7 @@
         { "type": "regulator", "date": "2018-10-15", "precision": "month", "label": "EFSA peer review: genotoxicity of omethoate metabolite", "source": "EFSA Journal 2018;16(10):5454", "url": "https://efsa.onlinelibrary.wiley.com/doi/10.2903/j.efsa.2018.5454" },
         { "type": "ban", "date": "2019-06-30", "precision": "day", "label": "EU non-renewal (Reg 2019/1090)", "source": "Commission Implementing Regulation (EU) 2019/1090", "url": "https://eur-lex.europa.eu/eli/reg_impl/2019/1090/oj" }
       ],
-      "note": "Entered the top-10 in early 2019, a few months after EFSA's 2018 peer-review conclusion and about five months before the ban. Hazium tracked the regulator here rather than leading it. No public profile."
+      "note": "Entered the top-10 in early 2019, a few months after EFSA's 2018 peer-review conclusion and about five months before the ban. Hazium moved in step with the regulator here. No public profile."
     },
     {
       "name": "Epoxiconazole",
@@ -139,7 +139,7 @@
       "outcome": "miss",
       "hazium_flag": null,
       "markers": [
-        { "type": "ban", "date": "2025-11-20", "precision": "day", "label": "Swedish reevaluation (national, not an EU non-renewal)", "source": "The anchor case; a national concern, not an EU regulatory action", "url": "https://github.com/MartinBlomqvistDev/hazium" }
+        { "type": "ban", "date": "2025-11-20", "precision": "day", "label": "Swedish national reevaluation (outside the EU non-renewal process)", "source": "The anchor case; a Swedish national concern", "url": "https://github.com/MartinBlomqvistDev/hazium" }
       ],
       "note": "The original case that motivated Hazium. Its 2025 concern is national groundwater and TFA contamination; the EU-regulatory, hazard, and sales sources ingested so far do not cover groundwater or residue monitoring, which is the next data source on the roadmap."
     }

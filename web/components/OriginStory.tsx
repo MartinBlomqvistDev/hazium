@@ -26,7 +26,7 @@ export default function OriginStory() {
           literature. It is split across agencies that do not share a
           schema, a timeline, or even a common substance identifier. Hazium
           joins that evidence into one temporally dated graph, so a ranking
-          can be checked against a real cutoff instead of hindsight.
+          can be checked against what was knowable at a real cutoff.
         </p>
       </div>
     </section>

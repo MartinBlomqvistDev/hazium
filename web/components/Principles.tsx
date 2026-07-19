@@ -1,19 +1,19 @@
 const PRINCIPLES = [
   {
     title: "Temporal integrity",
-    body: "Every fact and edge in the graph carries the earliest date it was publicly knowable. Evaluation only ever sees facts dated before the cutoff being tested, the discipline that makes a retrospective claim like “would have flagged it” valid instead of hindsight dressed up as foresight.",
+    body: "Every fact and edge carries the earliest date it was publicly knowable, and evaluation sees only facts dated before the cutoff being tested. A claim like “would have flagged it” is measured against what the model could actually have known at the time.",
   },
   {
     title: "The baseline rule",
-    body: "No learned model is reported without a trivial baseline run on the identical task and split. A negative result is a valid outcome, not a reason to keep tuning until something wins.",
+    body: "No learned model is reported without a trivial baseline on the identical task and split. When the baseline wins, it becomes the published result.",
   },
   {
     title: "Honesty over novelty",
-    body: "Misses are published alongside hits: HEWB always reports which landmarks a version fails to flag, not just the ones it catches.",
+    body: "HEWB publishes the misses next to the hits. Every version records which landmarks it fails to flag before their real regulatory action.",
   },
   {
-    title: "Evidence paths, not black boxes",
-    body: "A ranking is never just a number. Every score traces through the graph to the source documents behind it: an EFSA opinion, an EU regulation, a hazard classification, so a result can be checked, not just trusted.",
+    title: "Evidence paths",
+    body: "A ranking is more than a number. Every score traces through the graph to the documents behind it: an EFSA opinion, an EU regulation, a hazard classification, each one a reader can open and check.",
   },
 ];
 
