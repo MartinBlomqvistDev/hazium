@@ -6,8 +6,15 @@ export default function Hero({ data }: { data: HewbData }) {
     <section id="top" className="border-b border-hairline">
       <div className="mx-auto max-w-5xl px-6 py-20 sm:py-28">
         <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-hairline bg-surface px-3 py-1 text-xs text-text-secondary">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-status-warning" aria-hidden />
-          HEWB v{data.hewb_version} — provisional, being re-run
+          <span
+            className="inline-block h-1.5 w-1.5 rounded-full"
+            style={{
+              background: data.provisional ? "var(--status-warning)" : "var(--status-good)",
+            }}
+            aria-hidden
+          />
+          HEWB v{data.hewb_version}
+          {data.provisional ? " — provisional, being re-run" : ""}
         </div>
         <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
           Would public data have caught it{" "}
