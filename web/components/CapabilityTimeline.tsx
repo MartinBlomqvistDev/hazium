@@ -97,7 +97,7 @@ export default function CapabilityTimeline({ data }: { data: CapabilityData }) {
       {(misses.length > 0 || dataIssue.length > 0) && (
         <div className="mt-8 border-t border-hairline pt-6">
           <h4 className="text-xs font-semibold uppercase tracking-wider text-text-muted">
-            Reported alongside: the misses{dataIssue.length > 0 ? " and the open data issue" : ""}
+            The landmarks it misses{dataIssue.length > 0 ? ", and the open data issue" : ""}
           </h4>
           <div className="mt-3 space-y-3">
             {misses.map((lm) => (

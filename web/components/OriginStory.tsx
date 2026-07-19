@@ -11,12 +11,13 @@ export default function OriginStory() {
           national news?
         </p>
         <p className="mt-4 leading-relaxed text-text-secondary">
-          The answer, tested rather than assumed, was no. Fluazinam&apos;s
-          actual 2026 concern is a national groundwater contamination finding
-          involving trifluoroacetic acid (TFA). None of the sources ingested
-          so far, EU regulatory history, EU hazard classifications, Swedish
-          sales data, capture groundwater or residue monitoring, so the model
-          has no way to see this specific concern.
+          The answer was no, and the reason is precise. Fluazinam&apos;s actual
+          2026 concern is a national groundwater contamination finding involving
+          trifluoroacetic acid (TFA). The sources ingested so far, EU regulatory
+          history, EU hazard classifications, and Swedish sales, do not cover
+          groundwater or residue monitoring, so that specific signal sits outside
+          the current data. Bringing residue and groundwater monitoring into the
+          graph is the next data source on the roadmap.
         </p>
         <p className="mt-4 leading-relaxed text-text-secondary">
           That gap is the real origin of the project. Environmental and
