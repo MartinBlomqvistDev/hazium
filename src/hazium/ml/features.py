@@ -23,6 +23,13 @@ from datetime import date
 from hazium.graph.store import TemporalGraph
 from hazium.models import EdgeType, RegulatoryEvent, SalesRecord
 
+#: Below this many total literature mentions in a year, a substance's
+#: hazard-fraction for that year is noise or a spurious 0/0 -- verified
+#: 2026-07-18 (DEV_LOG): Epoxiconazole's 2004 fraction read a false 0.000
+#: from a year with essentially no literature on it at all, not genuine
+#: "no hazard concern".
+LITERATURE_MIN_TOTAL_MENTIONS = 5
+
 # CLP severe hazard classes: CMR (carcinogen/mutagen/reprotoxic), the
 # aquatic-chronic-1 tier, and STOT (specific target organ toxicity, repeated).
 _CMR_CODES = frozenset(
@@ -175,6 +182,50 @@ def eu_regulatory_features(
             _years_since([min(approvals)], cutoff) if approvals else 0.0
         ),
     }
+
+
+def literature_features(
+    substance_id: str, fractions_at_reference_year: dict[str, float]
+) -> dict[str, float]:
+    """Population-relative hazard-literature percentile at one fixed
+    reference year.
+
+    ``fractions_at_reference_year`` (every population member's own
+    hazard-fraction at one shared year) is a population-wide precomputation,
+    not a per-substance one -- see ``ml/dataset.py``'s
+    ``_literature_fractions_at_reference_year`` for how the year and the map
+    are built. This function only ranks one substance within an
+    already-built map.
+
+    **Why one shared year, computed fresh at each cutoff, and never a trend
+    across years:** raw hazard-hit counts and a substance's own trend over
+    time were both tried first and both failed -- Fluazinam (this project's
+    anchor negative, never EU non-renewed) rose in lockstep with a genuine
+    future non-renewal under both. Even *percentile* computed at two
+    different years and then subtracted still failed: Fluazinam's raw
+    fraction was literally unchanged across an 8-year window, yet its
+    percentile fell 19 points, because the comparison population's own
+    median drifted over that window (a corpus-wide secular trend in
+    hazard/toxicology language, not a per-substance signal). Percentile
+    computed fresh at one shared year, never differenced, is the design that
+    survived: verified 2026-07-18 against all 11 HEWB landmarks, every one
+    lands at the 71st percentile or above a year or more before its real EU
+    action. Full numbers in DEV_LOG.
+
+    Two outputs, not one: ``lit_has_literature_signal`` is an explicit
+    presence flag. Absence of data (no record at the reference year, or
+    fewer than ``LITERATURE_MIN_TOTAL_MENTIONS``) must never read as a real
+    low percentile -- a substance simply outside Europe PMC's coverage is
+    not the same claim as "the literature considers this unremarkable".
+    """
+    own_fraction = fractions_at_reference_year.get(substance_id)
+    if own_fraction is None:
+        return {"lit_hazard_percentile": 0.0, "lit_has_literature_signal": 0.0}
+    others = [v for sid, v in fractions_at_reference_year.items() if sid != substance_id]
+    if not others:
+        return {"lit_hazard_percentile": 0.0, "lit_has_literature_signal": 0.0}
+    percentile = 100.0 * sum(1 for v in others if v < own_fraction) / len(others)
+    return {"lit_hazard_percentile": percentile, "lit_has_literature_signal": 1.0}
 
 
 def _years_since(dates: list[date], cutoff: date) -> float:

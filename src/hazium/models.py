@@ -182,6 +182,32 @@ class RegulatoryEvent(Fact):
     event_date: date
 
 
+class LiteratureVolumeRecord(Fact):
+    """Annual scientific-literature volume for a substance, from Europe PMC.
+
+    Two counts per (substance, year): ``total_hit_count`` (every paper
+    mentioning the substance) and ``hazard_hit_count`` (the subset also
+    matching a fixed hazard/toxicity term list). The *ratio*, ranked against
+    the same-year population -- never the raw count alone, and never a
+    self-relative trend across years -- is the feature signal. Verified
+    2026-07-18 (DEV_LOG): raw hazard-hit counts rise for a genuine future EU
+    non-renewal (Clothianidin) and for the project's own anchor negative
+    (Fluazinam, never non-renewed) in the same direction; population-relative
+    percentile, computed fresh at each cutoff, is what actually separates
+    them (all 11 HEWB landmarks land at the 71st percentile or above a year
+    or more before their real actions).
+
+    ``known_at`` is Jan 1 of ``year + 1``: a calendar year's publication
+    count is not complete/indexed until the year is over -- the same
+    conservative-late convention ``eu_ppdb``'s non-renewal dating uses.
+    """
+
+    substance_id: str
+    year: int
+    hazard_hit_count: int
+    total_hit_count: int
+
+
 class SourceDocument(Fact):
     """A document evidence can point to: EFSA conclusion, paper, article.
 

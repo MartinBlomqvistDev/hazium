@@ -11,7 +11,13 @@ from hazium.ml.dataset import (
     approval_age_non_renewal_rates,
     build_dataset,
 )
-from hazium.models import Node, NodeType, RegulatoryEvent, RegulatoryEventKind
+from hazium.models import (
+    LiteratureVolumeRecord,
+    Node,
+    NodeType,
+    RegulatoryEvent,
+    RegulatoryEventKind,
+)
 
 CUTOFF = date(2023, 1, 1)
 
@@ -42,6 +48,17 @@ def _event(sid: str, kind: RegulatoryEventKind, event_date: date) -> RegulatoryE
         event_date=event_date,
         source="s",
         known_at=event_date,
+    )
+
+
+def _lit_record(sid: str, year: int, hazard: int, total: int) -> LiteratureVolumeRecord:
+    return LiteratureVolumeRecord(
+        substance_id=sid,
+        year=year,
+        hazard_hit_count=hazard,
+        total_hit_count=total,
+        source="s",
+        known_at=date(year + 1, 1, 1),
     )
 
 
@@ -226,3 +243,52 @@ class TestApprovalAgeNonRenewalRates:
         rows = approval_age_non_renewal_rates([], self.TODAY)
         assert [r["age_band"] for r in rows] == ["0-9", "10-19", "20-29", "30+"]
         assert all(r["total"] == 0 for r in rows)
+
+
+class TestLiteratureFeatureWiring:
+    """``build_dataset``'s population-wide precomputation for the
+    literature-volume feature group: which year counts as "the" reference
+    year for a given cutoff, and which records are trustworthy enough to
+    include. The ranking logic itself is tested directly in
+    ``test_ml_features.py``; these tests cover the wiring around it.
+    """
+
+    REFERENCE_YEAR = CUTOFF.year - 2  # 2021: known_at = 2022-01-01 < 2023-01-01
+
+    def test_default_empty_lit_records_yields_no_signal(self) -> None:
+        X, y, ids = build_dataset(_graph(), [], [], CUTOFF)
+        assert X.loc[FLUAZINAM, "lit_has_literature_signal"] == 0.0
+        assert X.loc[FLUAZINAM, "lit_hazard_percentile"] == 0.0
+
+    def test_reference_year_records_produce_a_real_percentile(self) -> None:
+        # ALREADY_GONE is excluded from the ML *population* (censored, see
+        # TestPopulation) but still contributes as a comparison point here --
+        # intentional: the literature comparison pool is a broad cross-
+        # section, matching the validated pilot design, not the narrower
+        # "still eligible for a future label" set.
+        records = [
+            _lit_record(FLUAZINAM, self.REFERENCE_YEAR, hazard=9, total=10),
+            _lit_record(ALREADY_GONE, self.REFERENCE_YEAR, hazard=1, total=10),
+        ]
+        X, y, ids = build_dataset(_graph(), [], [], CUTOFF, lit_records=records)
+        assert X.loc[FLUAZINAM, "lit_has_literature_signal"] == 1.0
+        assert X.loc[FLUAZINAM, "lit_hazard_percentile"] == 100.0
+
+    def test_records_outside_reference_year_are_ignored(self) -> None:
+        records = [
+            # not yet knowable at this cutoff
+            _lit_record(FLUAZINAM, self.REFERENCE_YEAR + 1, hazard=9, total=10),
+            # knowable, but not the shared reference year -- ignored so every
+            # substance is compared at the same point on the secular trend
+            _lit_record(FLUAZINAM, self.REFERENCE_YEAR - 5, hazard=1, total=10),
+        ]
+        X, y, ids = build_dataset(_graph(), [], [], CUTOFF, lit_records=records)
+        assert X.loc[FLUAZINAM, "lit_has_literature_signal"] == 0.0
+
+    def test_records_below_minimum_mentions_are_excluded(self) -> None:
+        records = [
+            _lit_record(FLUAZINAM, self.REFERENCE_YEAR, hazard=1, total=2),  # below the floor
+            _lit_record(ALREADY_GONE, self.REFERENCE_YEAR, hazard=1, total=10),
+        ]
+        X, y, ids = build_dataset(_graph(), [], [], CUTOFF, lit_records=records)
+        assert X.loc[FLUAZINAM, "lit_has_literature_signal"] == 0.0

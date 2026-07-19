@@ -37,7 +37,13 @@ from hazium.graph.build import load_graph
 from hazium.ml.baseline import CutoffResult, rolling_origin_eval
 from hazium.ml.dataset import DEFAULT_POSITIVE_KINDS, EARLY_WARNING_POSITIVE_KINDS, build_dataset
 from hazium.ml.evaluate import summarize
-from hazium.models import RegulatoryEvent, RegulatoryEventKind, SalesRecord, Substance
+from hazium.models import (
+    LiteratureVolumeRecord,
+    RegulatoryEvent,
+    RegulatoryEventKind,
+    SalesRecord,
+    Substance,
+)
 from hazium.resolve.ids import safe_substance_node_id
 from hazium.resolve.names import SubstanceResolver, resolve_sales_records
 
@@ -57,6 +63,13 @@ VARIANTS: tuple[tuple[str, frozenset[RegulatoryEventKind]], ...] = (
 def _load(path: Path, model: type[BaseModel]) -> list:
     with path.open(encoding="utf-8") as f:
         return [model.model_validate_json(line) for line in f]
+
+
+def _load_literature(path: Path) -> list[LiteratureVolumeRecord]:
+    """Optional: degrades to the feature's no-signal default if not yet run."""
+    if not path.exists():
+        return []
+    return _load(path, LiteratureVolumeRecord)
 
 
 def _pesticide_ids(register_substances: list[Substance]) -> set[str]:
@@ -114,8 +127,10 @@ def main() -> int:
     kemi_reeval_path = PROCESSED / "kemi_reevaluations.jsonl"
     if kemi_reeval_path.exists():
         regevents += _load(kemi_reeval_path, RegulatoryEvent)
+    lit_records = _load_literature(PROCESSED / "literature_volume.jsonl")
     pesticide_ids = _pesticide_ids(register_substances)
     print(f"pesticide-domain substances (KEMI register): {len(pesticide_ids)}")
+    print(f"literature-volume records: {len(lit_records)}")
 
     variant_results: dict[str, list[CutoffResult]] = {}
     output: dict[str, dict] = {}
@@ -123,7 +138,7 @@ def main() -> int:
     for label, positive_kinds in VARIANTS:
         print(f"\n{'#' * 70}\n# Variant: {label}\n{'#' * 70}")
         results = rolling_origin_eval(
-            graph, sales, regevents, CUTOFFS, positive_kinds=positive_kinds
+            graph, sales, regevents, CUTOFFS, positive_kinds=positive_kinds, lit_records=lit_records
         )
         variant_results[label] = results
 
@@ -145,7 +160,9 @@ def main() -> int:
         print("\n=== Pesticide subset (KEMI register) ===")
         _print_table(subset_rows)
 
-        X, y, ids = build_dataset(graph, sales, regevents, HEADLINE_CUTOFF, positive_kinds)
+        X, y, ids = build_dataset(
+            graph, sales, regevents, HEADLINE_CUTOFF, positive_kinds, lit_records
+        )
         print(f"\n=== SHAP global importance (cutoff {HEADLINE_CUTOFF}) ===")
         _, shap_values = fit_and_explain(X, y)
         for name, value in global_importance(shap_values):
