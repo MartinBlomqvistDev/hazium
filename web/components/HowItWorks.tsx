@@ -46,7 +46,7 @@ export default function HowItWorks() {
           ))}
         </div>
         <p className="mt-8 text-sm text-text-secondary">
-          The model is always compared against dead-simple trivial baselines:
+          The model is always compared against trivial baselines:
           severe-hazard count alone, latest sales tonnage alone, assessment
           count alone, on the identical task and split. If it doesn&apos;t
           beat them, the baseline becomes the published result.

@@ -4,7 +4,8 @@ export default function Footer() {
       <div className="mx-auto flex max-w-5xl flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="text-sm text-text-secondary">
           Built by <span className="text-text-primary">Martin Blomqvist</span>.
-          Python, XGBoost, SHAP, a hand-rolled temporal graph store. No LangChain.
+          Python, XGBoost, SHAP, and a temporally-aware knowledge graph over EU
+          public data.
         </div>
         <div className="flex flex-wrap items-center gap-4 text-sm text-text-secondary">
           <a
