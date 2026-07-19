@@ -1,19 +1,19 @@
 const PRINCIPLES = [
   {
     title: "Temporal integrity",
-    body: "Every fact and edge in the graph carries the earliest date it was publicly knowable. Evaluation only ever sees facts dated before the cutoff being tested — the discipline that makes a retrospective claim like “would have flagged it” actually valid, not hindsight dressed up as foresight.",
+    body: "Every fact and edge in the graph carries the earliest date it was publicly knowable. Evaluation only ever sees facts dated before the cutoff being tested, the discipline that makes a retrospective claim like “would have flagged it” valid instead of hindsight dressed up as foresight.",
   },
   {
     title: "The baseline rule",
-    body: "No learned model is reported without a trivial baseline run on the identical task and split. A negative result, honestly reported, is a valid outcome — not a reason to keep tuning until something wins.",
+    body: "No learned model is reported without a trivial baseline run on the identical task and split. A negative result is a valid outcome, not a reason to keep tuning until something wins.",
   },
   {
     title: "Honesty over novelty",
-    body: "Misses are published alongside hits. An early version of this project asked whether Hazium could have flagged a specific 2026 Swedish controversy before it broke — the honest answer was no, with current data, and that negative result is on the record.",
+    body: "Misses are published alongside hits: HEWB always reports which landmarks a version fails to flag, not just the ones it catches.",
   },
   {
     title: "Evidence paths, not black boxes",
-    body: "A ranking is never just a number. Every score traces through the graph to the source documents behind it — an EFSA opinion, an EU regulation, a hazard classification — so a result can be checked, not just trusted.",
+    body: "A ranking is never just a number. Every score traces through the graph to the source documents behind it: an EFSA opinion, an EU regulation, a hazard classification, so a result can be checked, not just trusted.",
   },
 ];
 
