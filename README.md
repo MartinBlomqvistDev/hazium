@@ -68,34 +68,34 @@ reports against, so results stay comparable across methods.
 | V2 ✅ | Node embeddings on the same tasks | Beats V1 baseline, or the negative result is documented — **documented negative** |
 | V3 ⛔ | GNNs with evidence-path explanations | Entered only if V2 shows signal — **not entered**, per gate |
 | V4 | Second domain (PFAS, via a verified shared-metabolite bridge to TFA) | Two domains share one architecture |
-| HEWB v1.2 ✅ | Versioned early-warning benchmark: annual rolling-origin eval + per-case lead-time | Rigorous, reproducible, honestly-reported — **met** |
+| HEWB v1.3 ✅ | Versioned early-warning benchmark: annual rolling-origin eval + per-case lead-time | Rigorous, reproducible, honestly-reported — **met** |
 
 ## Status
 
-**V0, V1, V2, and HEWB v1.2 all met.**
+**V0, V1, V2, and HEWB v1.3 all met.**
 
-HEWB v1.2 — the north-star generalised from one case into a versioned
-benchmark over historical EU regulatory actions, now including a
+HEWB v1.3, the north-star generalised from one case into a versioned
+benchmark over historical EU regulatory actions, including a
 literature-volume feature (population-relative hazard-language prevalence in
 Europe PMC). Using only data known before each annual cutoff (**2009-2024**),
 XGBoost beats every trivial baseline at every cutoff, and ranked the real
 EU-banned substances in the top-k *years* before the ban: chlorpyrifos was
-flagged **132 months (11 years)** before its 2020 EU ban, at k=10 — a lower
+flagged **132 months (11 years)** before its 2020 EU ban, at k=10, a lower
 bound, since its earliest flag sits at the very first cutoff tested (Jan
-2009). Clothianidin — one of the three neonicotinoids banned over bee
-toxicity — was flagged **120 months (10 years)** before its 2019 ban, at
-k=10, also a lower bound, which lands ~59 months *before* the EU's real
-first action on the substance (a December 2013 partial restriction), not
-just before the later formal non-renewal. **9 of the 10 headline landmark
-cases flag within top-50**, only epoxiconazole is a genuine miss. The
-literature feature is a measured improvement over the v1.1 tabular-only
-baseline: 4 landmarks that missed the strict k=10 threshold under v1.1 now
-flag inside it, and the 2023-01-01 aggregate average precision rose from
-0.240 to 0.264. Fluazinam itself — the anchor case — ranks top-3% but not
-top-50, i.e. a miss under the strict lead-time bar; reported as such, not
-smoothed over. See [`BENCHMARK_SCOPE.md`](BENCHMARK_SCOPE.md) and
-`DEV_LOG.md`'s HEWB entries for the full tables, the lead-time definition,
-and the correctness discipline.
+2009). Mancozeb, whose benchmark date a v1.3 data fix corrected (the EU PPDB
+export had listed Maneb under mancozeb's CAS, so it had been measured against
+Maneb's 2017 withdrawal), ranks in the top-20 from 2010, roughly nine years
+before its real 2021 non-renewal. **9 of the 10 headline landmark cases flag
+within top-50**, only epoxiconazole is a genuine miss. Scores are averaged
+over repeated cross-validation, a v1.3 method fix after the data change
+exposed that borderline k=10 ranks were sensitive to a single fold shuffle,
+so lead-times are reproducible; the 2023-01-01 headline average precision,
+stabilised, is 0.226, still an order of magnitude above the trivial
+baselines. Fluazinam itself, the anchor case, ranks top-3% but not top-50,
+i.e. a miss under the strict lead-time bar, reported as such, not smoothed
+over. See [`BENCHMARK_SCOPE.md`](BENCHMARK_SCOPE.md) and `DEV_LOG.md`'s HEWB
+entries for the full tables, the lead-time definition, and the correctness
+discipline.
 
 V0 — the fluazinam evidence graph is reconstructable and traversable from
 real ingested data, carrying dated evidence and a dated hazard classification
@@ -118,10 +118,12 @@ other hazard codes) from 2015.
 
 V1 — a real, dated regulatory-action label (EU non-renewal events), a
 temporally-clean feature set, and a rolling-origin backtest. **XGBoost beats
-every trivial baseline at every cutoff** (2023-01-01: AP 0.240 vs. 0.016 best
-trivial, on 25 positives out of 5,934 substances). Under this headline label,
-fluazinam is an honest negative (ranks 3,702nd of 5,934) — the EU-only
-feature set has no signal for its actual 2026 concern (a national
+every trivial baseline at every cutoff** (2023-01-01: AP 0.226 vs. 0.016 best
+trivial, on 25 positives out of 5,933 substances, with stabilised scoring
+matching HEWB v1.3). Under this headline label, fluazinam is an honest
+negative: it ranks in the top ~3% (204th of 5,933) on its general hazard and
+sales profile, but stays outside the strict top-50 lead-time bar, and the
+EU-only feature set has no signal for its actual 2026 concern (a national
 TFA/groundwater finding).
 
 A real Swedish signal was then found: Kemikalieinspektionen's 2025-11-20
@@ -145,8 +147,10 @@ Concatenation actively hurts AP at every cutoff (2023 headline: 0.240 tabular
 alone → 0.149 concatenated). Why: only 29.2% of the 2023 population has any
 walkable graph structure (`DEGRADES_TO`/`CLASSIFIED_AS` edges) — the other
 71% is a constant zero-vector block that dilutes signal rather than adding
-it, in a ~5,900-row, 25-99-positive population. Per the roadmap, **V3 (GNN)
-is not entered**: a GNN's message-passing would hit the identical coverage
+it, in a ~5,900-row, 25-99-positive population. (These V2b figures predate the
+v1.3 repeated-CV stabilisation; the coverage-ceiling reason is structural, so
+the conclusion is unaffected and the row was not re-run.) Per the roadmap,
+**V3 (GNN) is not entered**: a GNN's message-passing would hit the identical coverage
 problem, so this result legitimately closes the deep-graph track for this
 domain rather than escalating to a heavier method. V1's tabular baseline
 remains the published result. See [`V2_SCOPE.md`](V2_SCOPE.md) for the full
