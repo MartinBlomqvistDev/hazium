@@ -1,0 +1,21 @@
+HEWB: the Hazium Early Warning Benchmark (v1.4)
+Copyright (c) 2026 Martin Blomqvist
+
+This dataset (the benchmark definition, result tables, and robustness evidence
+in this directory) is licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0).
+
+You are free to share and adapt the material for any purpose, including
+commercially, provided you give appropriate credit, link to the license, and
+indicate if changes were made.
+
+To view a copy of this license, visit:
+https://creativecommons.org/licenses/by/4.0/
+
+Attribution:
+  Blomqvist, M. (2026). HEWB: the Hazium Early Warning Benchmark (v1.4).
+  https://github.com/MartinBlomqvistDev/hazium
+
+The underlying facts are derived from public sources that carry their own terms
+(EU Pesticides Database, ECHA, EFSA, Kemikalieinspektionen, Europe PMC); this
+license covers the compiled benchmark, not those upstream sources.
