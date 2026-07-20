@@ -85,7 +85,9 @@ def make_model(y: pd.Series, seed: int = 42) -> XGBClassifier:
     )
 
 
-def score_xgboost(X: pd.DataFrame, y: pd.Series, seed: int = 42) -> tuple[np.ndarray, bool]:
+def score_xgboost(
+    X: pd.DataFrame, y: pd.Series, seed: int = 42, repeats: int = N_SCORING_REPEATS
+) -> tuple[np.ndarray, bool]:
     """Predicted probabilities, out-of-fold via *repeated* stratified k-fold CV.
 
     Out-of-fold, not in-sample: fitting on the full (X, y) and scoring those
@@ -95,12 +97,15 @@ def score_xgboost(X: pd.DataFrame, y: pd.Series, seed: int = 42) -> tuple[np.nda
     falls back to in-sample fit-and-predict, flagged via the returned bool so
     callers can report the result as descriptive rather than held-out.
 
-    The out-of-fold probability is averaged over ``N_SCORING_REPEATS``
-    independent shuffles (seeds ``seed .. seed + N_SCORING_REPEATS - 1``), each
-    a full out-of-fold pass. This removes the fold-assignment variance that a
-    single shuffle leaves in a small-positive-class ranking problem — see
-    ``N_SCORING_REPEATS`` for the finding that motivated it. Deterministic
-    given ``seed``: reproducible, just no longer hostage to one random split.
+    The out-of-fold probability is averaged over ``repeats`` independent
+    shuffles (seeds ``seed .. seed + repeats - 1``), each a full out-of-fold
+    pass. This removes the fold-assignment variance that a single shuffle
+    leaves in a small-positive-class ranking problem — see ``N_SCORING_REPEATS``
+    for the finding that motivated it. Deterministic given ``seed``:
+    reproducible, just no longer hostage to one random split. ``repeats``
+    defaults to ``N_SCORING_REPEATS`` (HEWB's setting); the robustness
+    label-shuffle placebo lowers it so real and permuted labels can be scored
+    identically under a large permutation budget without a compute blowup.
     """
     n_pos = int(y.sum())
     if n_pos < 2:
@@ -110,14 +115,14 @@ def score_xgboost(X: pd.DataFrame, y: pd.Series, seed: int = 42) -> tuple[np.nda
 
     n_splits = max(2, min(5, n_pos))
     accumulated = np.zeros(len(y))
-    for repeat in range(N_SCORING_REPEATS):
+    for repeat in range(repeats):
         repeat_seed = seed + repeat
         skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=repeat_seed)
         for train_idx, test_idx in skf.split(X, y):
             model = make_model(y.iloc[train_idx], repeat_seed)
             model.fit(X.iloc[train_idx], y.iloc[train_idx])
             accumulated[test_idx] += model.predict_proba(X.iloc[test_idx])[:, 1]
-    return accumulated / N_SCORING_REPEATS, True
+    return accumulated / repeats, True
 
 
 def evaluate_cutoff(
