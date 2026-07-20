@@ -87,6 +87,34 @@ export interface RankRaceData {
   per_year: Record<string, RankRaceRow[]>;
 }
 
+export interface SubstanceRow {
+  /** name */ n: string;
+  /** CAS */ c: string;
+  /** is_pesticide */ p: number;
+  /** clp_n_hazard_codes */ hz: number;
+  /** clp_has_cmr */ cmr: number;
+  /** clp_has_aquatic_chronic_1 */ aq: number;
+  /** clp_has_stot */ st: number;
+  /** eu_has_approval */ ap: number;
+  /** years since first EU approval */ ag: number;
+  /** latest sales tonnage */ sl: number;
+  /** headline rank */ hr: number;
+  /** headline label */ hL: number;
+  /** early_warning rank */ er: number;
+  /** early_warning label */ eL: number;
+  /** landmark name, if this is a HEWB landmark */ lm?: string;
+}
+
+export interface SubstancesData {
+  cutoff: string;
+  hewb_version: string;
+  population: number;
+  headline_positives: number;
+  early_warning_positives: number;
+  note: string;
+  substances: SubstanceRow[];
+}
+
 export interface HewbData {
   hewb_version: string;
   provisional: boolean;
