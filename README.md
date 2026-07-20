@@ -55,10 +55,12 @@ The V-ladder is the capability ladder. HEWB, the Hazium Early Warning Benchmark,
 | V1 | ML tasks, tabular baselines, SHAP, time-split retrodetection eval | Done |
 | V2 | Node embeddings on the same tasks | Documented negative |
 | V3 | GNNs with evidence-path explanations | Not entered, per the V2 gate |
-| V4 | Second domain (PFAS, via a shared-metabolite bridge to TFA) | Planned |
-| HEWB v1.4 | Versioned early-warning benchmark: annual rolling-origin eval and per-case lead-time | Met |
+| V4 | Second domain: a sibling EU approval pipeline (biocides). PFAS scoped, then set aside as out of shape for the method (unbounded population, hazard-defined labels) | Scoped |
+| HEWB v1.4 | Versioned early-warning benchmark, released with a robustness capstone: annual rolling-origin eval, per-case lead-time, and a label-shuffle kill-criterion | Released |
 
 ## Results
+
+The frozen v1.4 benchmark, its result tables, and the full robustness evidence are packaged as a citable dataset in [`release/hewb-v1.4/`](release/hewb-v1.4/).
 
 HEWB fixes ten historical EU pesticide bans and asks, at each annual cutoff from 2009, where Hazium would have ranked each substance using only evidence dated before that cutoff. Lead time is measured in months between the earliest cutoff a substance enters the top-k and the real regulatory action.
 
@@ -70,7 +72,9 @@ Using only pre-cutoff data across **2009-2024**, XGBoost beats every trivial bas
 
 Out-of-fold scores are averaged over repeated cross-validation, so lead-times are reproducible rather than an artifact of one fold split.
 
-The feature set spans six groups, each grounded in a dated public source: EU hazard classifications (ECHA CLP), EFSA assessment history, Swedish sales trends (KEMI), graph structure, scientific-literature volume (Europe PMC), and ECHA CLH-intention status. SHAP attributes the ranking to the independent literature signal well above the in-funnel regulatory features.
+The feature set spans six groups, each grounded in a dated public source: EU hazard classifications (ECHA CLP), EFSA assessment history, Swedish sales trends (KEMI), graph structure, scientific-literature volume (Europe PMC), and ECHA CLH-intention status. SHAP puts the independent scientific-literature feature second overall, carrying as much weight as the in-funnel regulatory-concern signals rather than above them; the single largest driver is an approval-age prior, reported and mitigated separately with cohort-relative ranking.
+
+**Robustness.** Four tests harden the headline (raw outputs in `release/hewb-v1.4/`). A label-shuffle placebo, the project's kill-criterion, collapses to the base rate on permuted labels (real average precision 0.230 against a shuffled maximum of 0.013 over 50 permutations, p = 0.020), so the signal is real rather than small-class overfitting. The lead over baseline holds at every cutoff from 2020 to 2024, so 2023 is not a selected result. Substances that went through EU review and stayed approved rank well below the true positives, and hazardous-but-never-actioned substances put zero cases in the top 10, so the model is specific rather than flagging whatever looks dangerous.
 
 **The anchor case, fluazinam.** Under the headline EU-non-renewal label it ranks in the top 5% (269th of 5,933) on its general hazard and sales profile but stays outside the strict top-50 bar. Its actual concern is groundwater: fluazinam breaks down into the PFAS substance trifluoroacetic acid (TFA), which spreads to groundwater. Kemikalieinspektionen opened a formal reevaluation of the TFA-forming actives on 2025-11-20 (decision due by April 2028), and an SVT Granskning investigation brought it to national attention in July 2026. The EU-regulatory, hazard, and sales sources do not cover groundwater or residue monitoring, so that signal sits outside the current data. Under a second label variant that also counts that Swedish national reevaluation, fluazinam becomes a positive and ranks in the top 4% (206th of 5,933) out-of-fold, the closest result yet to the north-star question.
 

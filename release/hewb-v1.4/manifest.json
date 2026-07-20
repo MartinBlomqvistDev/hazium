@@ -1,0 +1,147 @@
+{
+  "benchmark": "HEWB",
+  "full_name": "Hazium Early Warning Benchmark",
+  "version": "1.4",
+  "summary": "A retrodetection benchmark: under strict as-of temporal discipline, how many months before each real EU pesticide regulatory action would an evidence-only model have flagged the substance.",
+  "temporal_discipline": "Every fact carries a known_at date; the model at cutoff T sees only facts dated strictly before T. Lead time is measured from the earliest cutoff that flags a substance within top-k to its real EU action date.",
+  "cutoffs": [
+    "2009-01-01",
+    "2010-01-01",
+    "2011-01-01",
+    "2012-01-01",
+    "2013-01-01",
+    "2014-01-01",
+    "2015-01-01",
+    "2016-01-01",
+    "2017-01-01",
+    "2018-01-01",
+    "2019-01-01",
+    "2020-01-01",
+    "2021-01-01",
+    "2022-01-01",
+    "2023-01-01",
+    "2024-01-01"
+  ],
+  "k_values": [
+    10,
+    20,
+    50
+  ],
+  "label_variants": {
+    "headline": "EU non-renewal only (a completed regulatory withdrawal)",
+    "early_warning": "EU non-renewal + a started Swedish national reevaluation (an earlier, weaker signal; the only variant under which fluazinam is a positive)"
+  },
+  "landmarks": [
+    {
+      "name": "Clothianidin",
+      "cas": "210880-92-5",
+      "note": "neonicotinoid, bee-toxicity ban",
+      "action_dates": {
+        "headline": "2019-01-31",
+        "early_warning": "2019-01-31"
+      }
+    },
+    {
+      "name": "Thiamethoxam",
+      "cas": "153719-23-4",
+      "note": "neonicotinoid, bee-toxicity ban",
+      "action_dates": {
+        "headline": "2019-04-30",
+        "early_warning": "2019-04-30"
+      }
+    },
+    {
+      "name": "Imidacloprid",
+      "cas": "138261-41-3",
+      "note": "neonicotinoid, bee-toxicity ban",
+      "action_dates": {
+        "headline": "2020-12-01",
+        "early_warning": "2020-12-01"
+      }
+    },
+    {
+      "name": "Chlorpyrifos",
+      "cas": "2921-88-2",
+      "note": "developmental neurotoxicity",
+      "action_dates": {
+        "headline": "2020-01-16",
+        "early_warning": "2020-01-16"
+      }
+    },
+    {
+      "name": "Chlorpyrifos-methyl",
+      "cas": "5598-13-0",
+      "note": "developmental neurotoxicity",
+      "action_dates": {
+        "headline": "2020-01-16",
+        "early_warning": "2020-01-16"
+      }
+    },
+    {
+      "name": "Thiacloprid",
+      "cas": "111988-49-9",
+      "note": "reprotoxic",
+      "action_dates": {
+        "headline": "2020-02-03",
+        "early_warning": "2020-02-03"
+      }
+    },
+    {
+      "name": "Epoxiconazole",
+      "cas": "133855-98-8",
+      "note": "CMR concern",
+      "action_dates": {
+        "headline": "2020-04-30",
+        "early_warning": "2020-04-30"
+      }
+    },
+    {
+      "name": "Mancozeb",
+      "cas": "8018-01-7",
+      "note": "reprotoxic / endocrine",
+      "action_dates": {
+        "headline": "2021-01-04",
+        "early_warning": "2021-01-04"
+      }
+    },
+    {
+      "name": "Dimethoate",
+      "cas": "60-51-5",
+      "note": "organophosphate",
+      "action_dates": {
+        "headline": "2019-06-30",
+        "early_warning": "2019-06-30"
+      }
+    },
+    {
+      "name": "Propikonazol",
+      "cas": "60207-90-1",
+      "note": "triazole fungicide",
+      "action_dates": {
+        "headline": "2018-12-19",
+        "early_warning": "2018-12-19"
+      }
+    },
+    {
+      "name": "Fluazinam",
+      "cas": "79622-59-6",
+      "note": "anchor case; SE reevaluation only",
+      "action_dates": {
+        "early_warning": "2025-11-20"
+      }
+    }
+  ],
+  "metrics": [
+    "average_precision (vs trivial baselines, per cutoff)",
+    "precision_at_k / recall_at_k / lift_at_k",
+    "lead_time_months (per landmark, per k)"
+  ],
+  "robustness": {
+    "label_shuffle_placebo": "permutation test; the project kill-criterion",
+    "cutoff_sweep": "aggregate AP + north-star rank across 2020-2024",
+    "negative_controls": "reviewed-but-not-banned specificity test",
+    "shap_funnel_split": "inside-funnel vs outside-funnel feature attribution"
+  },
+  "reproduce": "python pipeline/12_run_hewb.py && python pipeline/20_run_robustness.py && python pipeline/21_export_hewb_release.py",
+  "generated_by": "pipeline/21_export_hewb_release.py"
+}

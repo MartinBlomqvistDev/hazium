@@ -1,0 +1,3 @@
+variant,cutoff,population,positives,base_rate,real_ap,shuffled_mean,shuffled_p95,shuffled_max,p_value,n_permutations,repeats
+headline,2023-01-01,5933,25,0.004214,0.229852,0.005591,0.010604,0.0133,0.019608,50,3
+early_warning,2023-01-01,5933,31,0.005225,0.191454,0.006828,0.012343,0.015915,0.019608,50,3
