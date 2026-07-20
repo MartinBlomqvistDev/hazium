@@ -1,0 +1,9 @@
+variant,group,mean_abs_shap,share
+headline,approval_age,5.855792,0.522861
+headline,inside_funnel,1.801136,0.160823
+headline,outside_funnel,1.617706,0.144444
+headline,intrinsic,1.92489,0.171872
+early_warning,approval_age,5.374405,0.535275
+early_warning,inside_funnel,1.41696,0.141125
+early_warning,outside_funnel,1.362638,0.135715
+early_warning,intrinsic,1.886444,0.187884

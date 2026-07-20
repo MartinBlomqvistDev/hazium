@@ -1,0 +1,7 @@
+variant,cutoff,group,n_present,in_top_10,in_top_20,in_top_50,median_rank,median_percentile
+headline,2023-01-01,future_positives (ref),25,3,5,11,60,0.0101
+headline,2023-01-01,approved_survivors,256,7,15,39,152.5,0.0257
+headline,2023-01-01,hazardous_survivors,95,0,2,16,123,0.0207
+early_warning,2023-01-01,future_positives (ref),31,4,4,9,91,0.0153
+early_warning,2023-01-01,approved_survivors,256,6,16,41,146.5,0.0247
+early_warning,2023-01-01,hazardous_survivors,95,1,7,19,116,0.0196
