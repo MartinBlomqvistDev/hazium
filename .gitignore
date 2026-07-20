@@ -29,6 +29,10 @@ data/**
 # (no programmatic access), so this is a non-reproducible source of record, not
 # regenerable local data. Committed so HEWB v1.4 reproduces. See sources/echa_clh.py.
 !data/raw/clh_intentions_ppp.jsonl
+# ...and the browser-acquired ECHA SVHC Candidate List (V4/PFAS label source;
+# ECHA is WAF-gated, so this is a browser-scraped source of record). Committed
+# so V4 reproduces. See V4_SCOPE.md.
+!data/raw/echa_svhc_candidate_list.jsonl
 
 # Secrets & environment
 .env
