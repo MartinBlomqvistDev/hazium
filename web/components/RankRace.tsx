@@ -144,7 +144,7 @@ export default function RankRace({
               type="button"
               key={s.cas}
               onClick={() => setSelected((prev) => (prev === s.cas ? null : s.cas))}
-              className="absolute inset-x-0 flex cursor-pointer items-center gap-2 rounded-sm text-left transition-all duration-700 ease-out"
+              className="absolute inset-x-0 flex cursor-pointer items-center gap-2 overflow-hidden rounded-sm text-left transition-all duration-700 ease-out"
               style={{
                 transform: `translateY(${top}px)`,
                 opacity: visible ? (dim ? 0.28 : 1) : 0,
@@ -157,24 +157,32 @@ export default function RankRace({
               <span className="w-5 shrink-0 text-right text-[11px] tabular-nums text-text-muted">
                 {c?.rank ?? ""}
               </span>
+              {/* Fixed-width track, bar sized within it. Bounding the track
+                  rather than clipping the bar keeps the length encoding linear
+                  while leaving room for the label on a narrow screen. */}
+              <div className="w-[52%] shrink-0 sm:w-[58%]">
               <div
-                className="h-4 shrink-0 rounded-sm transition-all duration-700 ease-out"
+                className="h-4 rounded-sm transition-all duration-700 ease-out"
                 style={{
                   width: `${Math.max(w, 1)}%`,
                   background: banned ? "var(--status-critical)" : "var(--seq-400)",
                   opacity: banned ? 0.85 : 0.55,
                 }}
               />
+              </div>
               <span
-                className={`whitespace-nowrap text-xs ${isSel ? "font-semibold text-text-primary" : "text-text-secondary"}`}
+                className={`min-w-0 truncate text-xs ${isSel ? "font-semibold text-text-primary" : "text-text-secondary"}`}
               >
                 {shortName(s.name)}
-                {banned && (
-                  <span className="ml-1.5 text-[10px] text-status-critical/80">
-                    banned {s.banned}
-                  </span>
-                )}
               </span>
+              {/* Outside the truncating span so the status label survives on a
+                  narrow screen. A red bar on its own would leave the colour
+                  carrying the meaning alone, which the palette rules forbid. */}
+              {banned && (
+                <span className="shrink-0 text-[10px] text-status-critical/80">
+                  banned {s.banned}
+                </span>
+              )}
             </button>
           );
         })}
