@@ -21,7 +21,8 @@ export default function ResultSection({
           fixes ten historical EU pesticide bans, real regulatory actions, not
           hypothetical cases. At each annual cutoff from 2009, using only evidence
           dated before that cutoff, it asks where Hazium would have ranked the
-          substance among the thousands of approved actives of that year.
+          substance among every substance the graph knew about that year, roughly
+          5,900 of them.
         </p>
         <p className="mt-4 text-text-secondary">
           Months before the ban is the easy number. The harder question, and the
