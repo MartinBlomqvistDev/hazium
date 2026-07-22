@@ -406,6 +406,16 @@ export default function EvidenceMesh({ data }: { data: EvidenceMeshData }) {
         </span>
       </div>
 
+      {/* A reading key, not decoration. Watching people meet this for the first
+          time, the shape reads as pretty long before it reads as meaningful:
+          even a technical viewer needed a while to work out what a dot and a
+          line stood for. Saying it plainly costs one line. */}
+      <p className="mt-3 text-sm text-text-secondary">
+        <span className="text-text-primary">How to read it:</span> every mark is a substance or a
+        hazard classification, a line between two marks means they share something, and the picture
+        fills in as each fact became public.
+      </p>
+
       <canvas
         ref={canvasRef}
         style={{ height: HEIGHT }}
