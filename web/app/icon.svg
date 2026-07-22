@@ -1,13 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Hazium">
   <title>Hazium</title>
-  <!-- A periodic-table tile, per the project's own line: Hazium is a fictional
-       element, because the periodic table of public evidence is missing one.
-       Surfaces and accent are the site's tokens (#0d0d0d, #d95926) so the tab
-       icon and the page read as one thing. -->
+  <!-- A periodic-table tile, per the project's own closing line: Hazium is a
+       fictional element, because the periodic table of public evidence is
+       missing one. Surfaces and accent are the site's own tokens (page #0d0d0d,
+       accent #d95926), so the tab icon and the page read as one thing.
+
+       The Hz is drawn as geometry, not a text element. Favicons rasterise in an
+       isolated context where system font resolution is unreliable, so a glyph
+       can silently fail and leave an empty bordered square. Shapes always
+       render. Note also that a double hyphen is illegal inside an XML comment
+       and would make this file unparseable, so token names are written bare. -->
   <rect width="32" height="32" rx="6" fill="#0d0d0d"/>
   <rect x="1.75" y="1.75" width="28.5" height="28.5" rx="4.75" fill="none"
         stroke="#d95926" stroke-width="2"/>
-  <text x="16" y="22.5" text-anchor="middle"
-        font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif"
-        font-size="17" font-weight="700" fill="#ffffff" letter-spacing="-0.5">Hz</text>
+  <!-- H -->
+  <g fill="#ffffff">
+    <rect x="7" y="9" width="2.6" height="14" rx="0.3"/>
+    <rect x="12.4" y="9" width="2.6" height="14" rx="0.3"/>
+    <rect x="7" y="14.7" width="8" height="2.6" rx="0.3"/>
+    <!-- z -->
+    <path d="M17 13 L25 13 L25 15.4 L21 20.6 L25 20.6 L25 23 L17 23 L17 20.6
+             L21 15.4 L17 15.4 Z"/>
+  </g>
 </svg>
