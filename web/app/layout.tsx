@@ -12,7 +12,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://hazium.org";
+// Must match Vercel's primary domain, which currently redirects the apex and
+// the deployment URL to the www form. If the primary is ever switched to the
+// apex, change this with it: a canonical URL that disagrees with where visitors
+// land is how link previews and search results drift apart.
+const SITE_URL = "https://www.hazium.org";
 const TITLE = "Hazium: early warning from public evidence";
 const DESCRIPTION =
   "A temporally-aware knowledge graph over EU pesticide regulation, hazard classification, and scientific literature, evaluated against a versioned, falsifiable early-warning benchmark (HEWB).";
