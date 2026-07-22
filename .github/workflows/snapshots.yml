@@ -1,0 +1,113 @@
+name: Snapshots
+
+# Dated capture of current-state-only sources. See src/hazium/snapshots/.
+#
+# Deliberately a separate workflow from CI. A source going down is not a code
+# fault, and a red CI badge (or a failed-CI email) for someone else's server
+# outage trains the reader to ignore both. This workflow owns its own status.
+#
+# It never runs on push or pull_request: it makes network calls and writes to an
+# external store, neither of which belongs in a code check.
+
+on:
+  schedule:
+    # 03:17 UTC on the 2nd of each month. Off the hour and off the 1st, because
+    # everyone schedules on both and shared runners queue accordingly.
+    - cron: "17 3 2 * *"
+  workflow_dispatch:
+    inputs:
+      sources:
+        description: "Space-separated source names, or blank for all"
+        required: false
+        default: ""
+
+# One capture at a time: concurrent runs would interleave appends to the same
+# manifest and race on the upload.
+concurrency:
+  group: snapshots
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install -e .
+          pip install huggingface_hub
+
+      - name: Ensure the archive repo exists
+        # Self-healing: on a fresh setup the dataset repo does not exist yet, and
+        # neither restore nor publish should be the thing that discovers it.
+        # exist_ok makes this a no-op on every subsequent run.
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python - <<'PY'
+          from huggingface_hub import HfApi
+          HfApi().create_repo(
+              "MartinBlomqvist/hazium-snapshots",
+              repo_type="dataset",
+              private=True,
+              exist_ok=True,
+          )
+          print("archive repo ready")
+          PY
+
+      - name: Restore the existing archive
+        # The store is append-only and stateful: dedup and consecutive-failure
+        # detection both read prior observations. Runners are ephemeral, so the
+        # archive must be pulled back before capture. Absent on the first ever
+        # run, which is not an error.
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          hf download MartinBlomqvist/hazium-snapshots \
+            --repo-type dataset --local-dir data/snapshots \
+            || echo "no existing archive; starting a new one"
+
+      - name: Capture
+        id: capture
+        env:
+          SOURCES: ${{ github.event.inputs.sources }}
+          PYTHONUNBUFFERED: "1"
+        run: |
+          if [ -n "$SOURCES" ]; then
+            args=""
+            for s in $SOURCES; do args="$args --source $s"; done
+          else
+            args="--all"
+          fi
+          python pipeline/22_run_snapshots.py $args | tee capture.log
+
+      - name: Publish the archive
+        # Runs even when capture reported a problem, so a partial capture is
+        # still preserved and the manifest keeps its record of the failure.
+        if: always()
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          hf upload MartinBlomqvist/hazium-snapshots data/snapshots . \
+            --repo-type dataset \
+            --commit-message "Snapshot capture $(date -u +%Y-%m-%d)"
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### Snapshot capture"
+            echo ""
+            echo '```'
+            tail -n 30 capture.log 2>/dev/null || echo "no capture log"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
