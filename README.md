@@ -84,7 +84,13 @@ The concern has since been confirmed independently, after the fact: a national S
 
 ## License
 
-Code is [MIT](LICENSE). The HEWB benchmark release in [`release/hewb-v1.4/`](release/hewb-v1.4/) is CC-BY-4.0, licensed separately because it is data rather than software; see its own [LICENSE](release/hewb-v1.4/LICENSE). The underlying facts come from public sources (EU Pesticides Database, ECHA, EFSA, Kemikalieinspektionen, SGU, Europe PMC) that carry their own terms.
+Code is [AGPL-3.0](LICENSE). It is copyleft on purpose: anyone may study, run and build on it, but a modified version offered to others over a network has to publish its source. That keeps the work open without leaving it open to being taken proprietary.
+
+The benchmark release in [`release/hewb-v1.4/`](release/hewb-v1.4/) is CC-BY-4.0, licensed separately because it is data rather than software; see its own [LICENSE](release/hewb-v1.4/LICENSE). An open, citable benchmark is worth more than a restricted one.
+
+Copyright is held solely by Martin Blomqvist, who is not bound by the AGPL and may license the work on other terms. If the AGPL does not suit your use, write to <cm.blomqvist@gmail.com>.
+
+The underlying facts come from public sources (EU Pesticides Database, ECHA, EFSA, Kemikalieinspektionen, SGU, Europe PMC) that carry their own terms.
 
 ---
 

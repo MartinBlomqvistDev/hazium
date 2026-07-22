@@ -2,7 +2,7 @@
 name = "hazium"
 version = "0.0.1"
 description = "Explainable ML platform for early detection of emerging environmental and public health hazards from public data"
-license = "MIT"
+license = "AGPL-3.0-only"
 license-files = ["LICENSE"]
 requires-python = ">=3.12"
 dependencies = [
