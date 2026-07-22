@@ -128,3 +128,34 @@ export interface HewbData {
   landmarks: Landmark[];
   aggregate: AggregatePoint[];
 }
+
+export interface EvidenceMeshCase {
+  name: string;
+  cas: string;
+  note: string;
+  action_date: string | null;
+  center: number;
+  truncated: number;
+  ranks: (number | null)[];
+  /** index into EvidenceMeshData.type_order */
+  types: number[];
+  frames: number[];
+  core: number[];
+  labels: string[];
+  refs: string[];
+  /** why each node is in the mesh: 'direct:<predicate>' or 'shared:<label>' */
+  via: string[];
+  /** flat x,y,z triples */
+  xyz: number[];
+  /** flat source,target,first_frame triples */
+  edges: number[];
+  /** EUR-Lex URL for the CLP Regulation, which defines the H-statement codes */
+  clp_url: string;
+}
+
+export interface EvidenceMeshData {
+  variant: string;
+  cutoffs: string[];
+  type_order: string[];
+  cases: EvidenceMeshCase[];
+}

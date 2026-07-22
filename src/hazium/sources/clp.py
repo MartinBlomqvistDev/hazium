@@ -31,6 +31,8 @@ from ``SOURCE_URL`` into ``DEFAULT_SNAPSHOT``.
 
 from __future__ import annotations
 
+from collections import Counter, defaultdict
+
 from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
@@ -160,3 +162,40 @@ def classifications_from(rows: list[_HistoryRow]) -> list[HazardClassification]:
                 )
             )
     return classifications
+
+
+#: The CLP Regulation itself, which defines the H-statement codes. Taken from
+#: the Annex VI export's own EUR-Lex Link column rather than composed by hand.
+CLP_REGULATION_URL = "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32008R1272"
+
+
+def hazard_class_by_code(rows: list[_HistoryRow]) -> dict[str, str]:
+    """Map each H-statement code to the CLP hazard class it denotes.
+
+    An H-code on its own ("H400") says nothing to a reader; the class it stands
+    for ("Aquatic Acute 1") does. Annex VI carries both, positionally paired,
+    so the mapping is derived from the data rather than transcribed from
+    knowledge of CLP.
+
+    Rows whose two lists differ in length are skipped, exactly as
+    ``classifications_from`` skips them: CLP notes and supplementary statements
+    desync the lists, and a wrong pairing is worse than no pairing. Where a code
+    appears against more than one class across the table, the most frequent
+    pairing wins, and codes are compared on their base form so that qualified
+    variants ("H361d ***") resolve with their parent.
+
+    Args:
+        rows: Parsed Annex VI history rows.
+
+    Returns:
+        Base H-code to hazard class, e.g. ``{"H400": "Aquatic Acute 1"}``.
+    """
+    counts: dict[str, Counter[str]] = defaultdict(Counter)
+    for row in rows:
+        if len(row.hazard_classes) != len(row.hazard_codes):
+            continue
+        for code, hazard_class in zip(row.hazard_codes, row.hazard_classes, strict=True):
+            base = code.split()[0] if code.split() else code
+            if base and hazard_class:
+                counts[base][hazard_class] += 1
+    return {code: tally.most_common(1)[0][0] for code, tally in counts.items() if tally}

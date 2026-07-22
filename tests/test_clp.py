@@ -191,3 +191,48 @@ class TestClassificationsFrom:
 
     def test_source_is_echa_clp_annex_vi(self) -> None:
         assert classifications_from([_row()])[0].source == "echa:clp-annex-vi"
+
+
+def test_hazard_class_by_code_maps_codes_to_their_clp_class():
+    # An H-code alone is meaningless to a reader; the class it denotes is not.
+    # The mapping must come from Annex VI's own paired columns, never from
+    # transcribed knowledge of CLP.
+    from hazium.sources.clp import hazard_class_by_code
+
+    rows = [
+        _row(
+            hazard_classes=("Aquatic Acute 1", "Aquatic Chronic 1"), hazard_codes=("H400", "H410")
+        ),
+        _row(hazard_classes=("Aquatic Acute 1",), hazard_codes=("H400",)),
+    ]
+    mapping = hazard_class_by_code(rows)
+
+    assert mapping["H400"] == "Aquatic Acute 1"
+    assert mapping["H410"] == "Aquatic Chronic 1"
+
+
+def test_hazard_class_by_code_skips_desynced_rows():
+    # Same rule classifications_from follows: unequal list lengths mean the
+    # positional pairing is unreliable, and a wrong pairing is worse than none.
+    from hazium.sources.clp import hazard_class_by_code
+
+    rows = [_row(hazard_classes=("Acute Tox. 4",), hazard_codes=("H302", "H312"))]
+    assert hazard_class_by_code(rows) == {}
+
+
+def test_hazard_class_by_code_resolves_qualified_codes_to_their_base():
+    from hazium.sources.clp import hazard_class_by_code
+
+    rows = [_row(hazard_classes=("Repr. 2",), hazard_codes=("H361d ***",))]
+    assert hazard_class_by_code(rows)["H361d"] == "Repr. 2"
+
+
+def test_hazard_class_by_code_prefers_the_most_frequent_pairing():
+    from hazium.sources.clp import hazard_class_by_code
+
+    rows = [
+        _row(hazard_classes=("Acute Tox. 4",), hazard_codes=("H302",)),
+        _row(hazard_classes=("Acute Tox. 4",), hazard_codes=("H302",)),
+        _row(hazard_classes=("Odd Class",), hazard_codes=("H302",)),
+    ]
+    assert hazard_class_by_code(rows)["H302"] == "Acute Tox. 4"
