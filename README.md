@@ -4,6 +4,8 @@
 
 > Tracing systemic exposure.
 
+**[hazium.org](https://hazium.org)** · benchmark: **[HEWB v1.4 on HuggingFace](https://huggingface.co/datasets/MartinBlomqvist/hewb)**
+
 Hazium is an explainable machine learning platform that builds a temporally-aware knowledge graph of environmental and public-health evidence from heterogeneous public data: regulatory decisions, hazard classifications, national sales statistics, residue monitoring, and scientific conclusions. Machine learning over that graph ranks substances for future regulatory risk, and every signal traces back to the source evidence behind it.
 
 The first domain is pesticides, with a Nordic focus. The intelligence is in the ML; large language models are used for presentation only.
@@ -17,7 +19,8 @@ Every version of the system is measured against this retrodetection question und
 ## Architecture
 
 ```
-public data (KEMI, EU Pesticides DB, ECHA, EFSA, Europe PMC)
+public data (KEMI, EU Pesticides DB, ECHA, EFSA, SGU, Europe PMC)
+    -> scheduled dated snapshots of registers that publish current state only
     -> ingestion + entity resolution (CAS/EC, PubChem/ChEBI, AGROVOC)
     -> temporal knowledge graph (known_at on every fact and edge)
     -> ML: early-warning ranking, link prediction, anomaly detection
@@ -32,7 +35,8 @@ src/hazium/
 ├── graph/       knowledge graph construction and as_of queries
 ├── ml/          tasks, tabular baselines, embeddings
 ├── benchmark/   HEWB, the versioned early-warning benchmark
-└── explain/     evidence paths and SHAP
+├── explain/     evidence paths and SHAP
+└── snapshots/   dated capture of current-state-only sources
 pipeline/        numbered pipeline scripts (01_, 02_, ...)
 tests/
 ```
@@ -81,6 +85,24 @@ The feature set spans six groups, each grounded in a dated public source: EU haz
 The concern has since been confirmed independently, after the fact: a national SGU groundwater investigation across 2023-2025 found TFA at 91% of 237 sites (median 230 ng/l), tied to fluorinated plant-protection breakdown, while Sweden's historical pesticide monitoring records fluazinam itself at 0 of 139 groundwater analyses (the parent degrades to TFA before it reaches groundwater). That monitoring post-dates every benchmark cutoff, so it is not a model input; folding groundwater and residue monitoring in as a present-day signal is the next step on the roadmap.
 
 **V2, node embeddings.** metapath2vec embeddings, run alone and concatenated with the tabular features on the identical split, lose at every cutoff. Only 29.2% of the population has any walkable graph structure, so the embedding is a constant zero vector for the rest and dilutes the signal. V3 (GNN) is not entered: message-passing would hit the same coverage ceiling.
+
+## Provenance archive
+
+Several sources publish current state and keep no history, so a fact read today
+cannot be placed at a past cutoff without leaking. `hazium.snapshots` fixes that
+going forward rather than pretending it away: a monthly GitHub Action captures
+each source and stamps it with the date of capture, which becomes the `known_at`
+of anything derived from it. Content-addressed storage keeps repeated captures of
+a slow-moving register almost free, and failures are recorded rather than
+discarded, because a gap in the archive matters when reading it later.
+
+Four sources are captured, each with a stated future use: EU Pesticides Database
+per-substance details (which date the Candidate-for-Substitution and ADI fields
+that the bulk export publishes undated), SGU groundwater chemistry (CAS-coded, the
+fluazinam/TFA gap-closer, usable as a pre-cutoff feature from roughly 2029), KEMI
+sales reports, and the EFSA OpenFoodTox release metadata. ECHA is deliberately
+excluded: it returns 403 to programmatic clients, and a collector that silently
+fails every month is worse than none.
 
 ## License
 
