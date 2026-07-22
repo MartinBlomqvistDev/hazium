@@ -12,11 +12,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Must match Vercel's primary domain, which currently redirects the apex and
-// the deployment URL to the www form. If the primary is ever switched to the
-// apex, change this with it: a canonical URL that disagrees with where visitors
+// Must match Vercel's primary domain, which is the apex: both the www form and
+// the deployment URL redirect here. If the primary is ever switched, change this
+// with it, because a canonical URL that disagrees with where visitors actually
 // land is how link previews and search results drift apart.
-const SITE_URL = "https://www.hazium.org";
+const SITE_URL = "https://hazium.org";
 const TITLE = "Hazium: early warning from public evidence";
 const DESCRIPTION =
   "A temporally-aware knowledge graph over EU pesticide regulation, hazard classification, and scientific literature, evaluated against a versioned, falsifiable early-warning benchmark (HEWB).";
