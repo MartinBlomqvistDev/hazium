@@ -144,11 +144,32 @@ works where three conditions hold together:
   regulatory decision, not a hazard definition), and
 - **rich, CAS-joinable per-substance evidence**.
 
-EU pesticides satisfy all three, which is why HEWB works. PFAS do not: the
-population is effectively unbounded, and the natural labels (SVHC listing) are
-hazard-defined, which makes hazard prediction circular. The next pipeline that
-fits the same shape is EU biocides, a sibling ECHA-run approval regime with dated
-non-approval decisions. Naming where a method breaks is part of the result.
+EU pesticides satisfy all three, which is why HEWB works. Four other EU regimes were
+tested against the same conditions before any modelling code was written for them.
+All four fail, and each fails differently.
+
+| Regime | Fails on | Measured |
+|---|---|---|
+| PFAS | Population shape, circular labels | Effectively unbounded population; SVHC listing is hazard-defined, so predicting hazard from hazard is circular |
+| Biocides (BPR) | Independence, positive-class size | 101 of 239 review-programme actives (42%) are also EU pesticide actives, concentrated in the most informative ones; 286 unique CAS in total because many actives are generated in situ; 15 strict non-approval positives on the independent subset, at a 13% base rate |
+| Food additives | Positive-class size, task shape | ~4 clean safety withdrawals from 244 re-evaluated additives; review is calendar-driven (Reg. 257/2010), so entry into the funnel carries no signal; EFSA is both the labeller and the main evidence source |
+| Feed additives | Label validity | 309 of 1,958 register records are "not authorised", but 189 (61%) are flavourings withdrawn because no holder reapplied, so the label measures commercial abandonment rather than risk |
+
+The feed-additive case is the most instructive. It is the only one of the four with a
+large positive class, and a model trained on it would likely have scored well while
+measuring the wrong thing: "which legacy additive did nobody reapply for" is
+learnable almost entirely from approval age, which is already the single largest
+feature in this model. A large label set measuring the wrong construct is more
+dangerous than a small one measuring the right construct, because only the first is
+persuasive.
+
+What survives the four negatives is a sharper statement of scope than a second domain
+would have provided. The method needs a **risk-triggered** regulatory funnel, over a
+bounded population, large enough to generate a meaningful number of **safety-driven**
+decisions, with per-substance evidence that is independent of the funnel itself. Of
+the regimes examined, EU pesticides is the only one satisfying all of it at once.
+Naming where a method breaks, and measuring it before committing to the build, is
+part of the result.
 
 ## Files
 
@@ -183,10 +204,23 @@ python pipeline/21_export_hewb_release.py # assemble this release
   and administrative withdrawals are real and are not distinguished here from
   safety-driven ones.
 - The result is demonstrated on exactly one regulatory pipeline. The
-  generalisation claim is scoped accordingly: the boundary conditions are mapped,
-  and biocides are identified as the next fitting pipeline, not yet proven.
+  generalisation claim is scoped accordingly: four candidate regimes (PFAS,
+  biocides, food additives, feed additives) were each measured against the three
+  conditions and each failed for a different reason, so no second domain is claimed
+  and the boundary is reported instead. See "Where the method fits, and where it
+  does not".
 - KEMI Swedish sales data begins in 2013, so pre-2013 cutoffs rest entirely on
   EU-wide hazard, approval, and graph features, with no national sales signal.
+- The population is built from the EU Pesticides Database bulk export. This was
+  audited against the register's own API: the export matches the register's public
+  search **exactly**, as a set and not merely in count (1,482 substances).
+  Scanning the details endpoint by id reaches 100 further records, of which 87 are
+  flagged by the register as not for publication and 13 are superseded or split
+  entries whose canonical replacements are already in the population (for example
+  an older "Ammonium acetate" record replaced by "Ammonium Acetate", and an
+  umbrella pheromone entry since split into three). None of the reachable extras
+  contributes a dated non-renewal that the population lacks, so the positive class
+  is unaffected.
 
 ## Citation
 

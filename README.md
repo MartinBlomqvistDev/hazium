@@ -55,7 +55,7 @@ The V-ladder is the capability ladder. HEWB, the Hazium Early Warning Benchmark,
 | V1 | ML tasks, tabular baselines, SHAP, time-split retrodetection eval | Done |
 | V2 | Node embeddings on the same tasks | Documented negative |
 | V3 | GNNs with evidence-path explanations | Not entered, per the V2 gate |
-| V4 | Second domain: a sibling EU approval pipeline (biocides). PFAS scoped, then set aside as out of shape for the method (unbounded population, hazard-defined labels) | Scoped |
+| V4 | Second domain. Four candidate EU regimes gated against the method's three preconditions, each failing differently: PFAS (unbounded population, circular hazard-defined labels), biocides (42% dual-use with pesticides, 15 independent positives), food additives (~4 clean safety withdrawals, calendar-driven review), feed additives (309 positives but 61% are commercial non-reapplications). No second domain claimed; the boundary is the result | Gated, not entered |
 | HEWB v1.4 | Versioned early-warning benchmark, released with a robustness capstone: annual rolling-origin eval, per-case lead-time, and a label-shuffle kill-criterion | Released |
 
 ## Results
@@ -81,6 +81,10 @@ The feature set spans six groups, each grounded in a dated public source: EU haz
 The concern has since been confirmed independently, after the fact: a national SGU groundwater investigation across 2023-2025 found TFA at 91% of 237 sites (median 230 ng/l), tied to fluorinated plant-protection breakdown, while Sweden's historical pesticide monitoring records fluazinam itself at 0 of 139 groundwater analyses (the parent degrades to TFA before it reaches groundwater). That monitoring post-dates every benchmark cutoff, so it is not a model input; folding groundwater and residue monitoring in as a present-day signal is the next step on the roadmap.
 
 **V2, node embeddings.** metapath2vec embeddings, run alone and concatenated with the tabular features on the identical split, lose at every cutoff. Only 29.2% of the population has any walkable graph structure, so the embedding is a constant zero vector for the rest and dilutes the signal. V3 (GNN) is not entered: message-passing would hit the same coverage ceiling.
+
+## License
+
+Code is [MIT](LICENSE). The HEWB benchmark release in [`release/hewb-v1.4/`](release/hewb-v1.4/) is CC-BY-4.0, licensed separately because it is data rather than software; see its own [LICENSE](release/hewb-v1.4/LICENSE). The underlying facts come from public sources (EU Pesticides Database, ECHA, EFSA, Kemikalieinspektionen, SGU, Europe PMC) that carry their own terms.
 
 ---
 
