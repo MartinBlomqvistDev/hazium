@@ -193,18 +193,24 @@ def collect_ppdb_details(
         try:
             body = json.loads(fetch(url))
         except (FetchError, ValueError):
+            body = None
+
+        if body is None:
             misses += 1
-            continue
-        payload = body.get("payload")
-        if not _is_real_substance(payload):
-            misses += 1
-            continue
-        if not _is_public(payload):
-            non_public += 1
-            sleep(FANOUT_DELAY_SECONDS)
-            continue
-        hits += 1
-        lines.append(json.dumps({"id": substance_id, "payload": payload}, sort_keys=True))
+        else:
+            payload = body.get("payload")
+            if not _is_real_substance(payload):
+                misses += 1
+            elif not _is_public(payload):
+                non_public += 1
+            else:
+                hits += 1
+                lines.append(json.dumps({"id": substance_id, "payload": payload}, sort_keys=True))
+
+        # Delay once per request, whatever the outcome. A miss still cost the
+        # server a request, and most ids in the scanned range are misses, so
+        # skipping the delay on that path would fire hundreds of unthrottled
+        # requests at a public register.
         sleep(FANOUT_DELAY_SECONDS)
 
     return (

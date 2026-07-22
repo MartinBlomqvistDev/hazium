@@ -323,6 +323,28 @@ def test_ppdb_details_keeps_records_with_no_public_flag():
     assert meta["n_non_public"] == 0
 
 
+def test_ppdb_details_throttles_every_request_including_misses():
+    # Most ids in the scanned range are misses, and a miss still costs the server
+    # a request. Skipping the delay on that path fired hundreds of unthrottled
+    # requests at a public register in the first production run.
+    spec = _spec(kind=CollectorKind.PPDB_DETAILS, id_start=1, id_end=4)
+    delays: list[float] = []
+
+    def fake(url: str) -> bytes:
+        substance_id = int(url.rsplit("/", 1)[1])
+        if substance_id == 1:
+            raise FetchError("network")
+        if substance_id == 2:
+            return json.dumps({"payload": {"basicDetails": []}}).encode()
+        public = "0" if substance_id == 3 else "1"
+        return json.dumps({"payload": {"basicDetails": [{"AS_PUBLIC": public}]}}).encode()
+
+    _payload, meta = collect_ppdb_details(spec, fetch=fake, sleep=delays.append)
+
+    assert (meta["n_missing"], meta["n_non_public"], meta["n_substances"]) == (2, 1, 1)
+    assert len(delays) == 4, "one delay per request, regardless of outcome"
+
+
 def test_ppdb_default_id_range_covers_ids_above_the_observed_maximum():
     # The bulk export's highest id was 1577 with 38 substances above 1500, so
     # the scan must run past the current maximum or it truncates silently.
