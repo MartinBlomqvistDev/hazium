@@ -6,16 +6,25 @@ import HowItWorks from "@/components/HowItWorks";
 import Principles from "@/components/Principles";
 import Footer from "@/components/Footer";
 import RankRace from "@/components/RankRace";
+import EvidenceMesh from "@/components/EvidenceMesh";
 import hewbData from "@/data/hewb.json";
 import capabilityData from "@/data/capability.json";
 import substanceDetail from "@/data/substance_detail.json";
 import rankRaceData from "@/data/rank_race.json";
-import type { CapabilityData, HewbData, RankRaceData, SubstanceDetailMap } from "@/lib/types";
+import evidenceMeshData from "@/data/evidence_mesh.json";
+import type {
+  CapabilityData,
+  EvidenceMeshData,
+  HewbData,
+  RankRaceData,
+  SubstanceDetailMap,
+} from "@/lib/types";
 
 const data = hewbData as HewbData;
 const capability = capabilityData as CapabilityData;
 const detail = substanceDetail as SubstanceDetailMap;
 const rankRace = rankRaceData as RankRaceData;
+const evidenceMesh = evidenceMeshData as EvidenceMeshData;
 
 // The ten benchmark EU bans (fluazinam is the held-out north-star, not one of them).
 // "Ahead" means flagged before the EU's own first regulatory action, which is the
@@ -51,6 +60,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <EvidenceMesh data={evidenceMesh} />
         <HowItWorks />
         <Principles />
       </main>
