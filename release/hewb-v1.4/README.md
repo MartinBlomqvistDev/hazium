@@ -52,10 +52,9 @@ EU action. A flag at or after the action is not early, and is not counted.
 | `headline` | EU non-renewal only | A completed regulatory withdrawal. The strict result. |
 | `early_warning` | non-renewal + started Swedish national reevaluation | An earlier, weaker signal. The only variant under which the anchor case, fluazinam, is a positive. |
 
-Both are always reported. The broadened variant is not a replacement for the
-headline; its extra positives currently trace to a single Swedish reevaluation
-announcement, which is a real but narrow evidence source, and it is labelled as
-such.
+Both are always reported. The broadened variant is not a replacement for the headline. Its extra positives
+currently trace to a single Swedish reevaluation announcement, which is a real but
+narrow evidence source, and it is labelled as such.
 
 ## The landmark set
 
@@ -117,20 +116,17 @@ Four tests, so the headline survives a skeptical reader. All raw outputs are in
    representative, not selected.
 
 3. **Negative controls (specificity).** Substances that went through EU review
-   and stayed approved should not crowd the top of the ranking. The true
-   positives sit at a median 1.0 percentile; approved-and-surviving substances
-   sit deeper at 2.6 percentile; and substances that carry a severe hazard
-   classification yet were never actioned put zero substances in the top 10. The
+   and stayed approved should not crowd the top of the ranking. The true positives sit at a median 1.0 percentile, and approved-and-surviving substances
+sit deeper at 2.6 percentile. Substances that carry a severe hazard classification yet
+were never actioned put zero substances in the top 10. The
    model is not simply flagging whatever looks hazardous.
 
 4. **Feature attribution, inside vs outside the funnel.** Signals split into
    inside-funnel (reading the regulator's own pipeline: EFSA activity, ECHA
-   intentions) and outside-funnel (independent scientific literature). The
-   attribution is honest about what carries the model: an approval-age prior
-   dominates at about 52 percent of total attribution, and among the substantive
-   evidence signals the outside-funnel literature feature (the second most
-   important single feature overall) is on par with the inside-funnel
-   regulatory-concern signals, 14 percent against 16 percent. The independent
+   intentions) and outside-funnel (independent scientific literature). The attribution is honest about what carries the model. An approval-age prior dominates
+at about 52 percent of total attribution. Among the substantive evidence signals, the
+outside-funnel literature feature (the second most important single feature overall) is
+on par with the inside-funnel regulatory-concern signals, 14 percent against 16 percent. The independent
    literature signal carries real weight; it does not merely echo the paperwork.
 
 ## Where the method fits, and where it does not
@@ -155,11 +151,10 @@ All four fail, and each fails differently.
 | Food additives | Positive-class size, task shape | ~4 clean safety withdrawals from 244 re-evaluated additives; review is calendar-driven (Reg. 257/2010), so entry into the funnel carries no signal; EFSA is both the labeller and the main evidence source |
 | Feed additives | Label validity | 309 of 1,958 register records are "not authorised", but 189 (61%) are flavourings withdrawn because no holder reapplied, so the label measures commercial abandonment rather than risk |
 
-The feed-additive case is the most instructive. It is the only one of the four with a
-large positive class, and a model trained on it would likely have scored well while
-measuring the wrong thing: "which legacy additive did nobody reapply for" is
-learnable almost entirely from approval age, which is already the single largest
-feature in this model. A large label set measuring the wrong construct is more
+The feed-additive case is the most instructive. It is the only one of the four with a large positive class, and a model trained on it
+would likely have scored well while measuring the wrong thing. "Which legacy additive
+did nobody reapply for" is learnable almost entirely from approval age, which is already
+the single largest feature in this model. A large label set measuring the wrong construct is more
 dangerous than a small one measuring the right construct, because only the first is
 persuasive.
 

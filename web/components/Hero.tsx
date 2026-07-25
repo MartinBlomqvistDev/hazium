@@ -30,10 +30,10 @@ export default function Hero({
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-text-secondary">
           Hazium builds a temporally-aware knowledge graph over EU pesticide
-          approvals, hazard classifications, and scientific literature, then
-          asks a falsifiable question of it: ranking substances for future
-          regulatory risk using only evidence that existed at the time,
-          measured against real EU bans that happened years later.
+          approvals, hazard classifications, and scientific literature. It ranks
+          substances for future regulatory risk using only evidence that existed
+          at the time. Those rankings are then measured against the real EU bans
+          that happened years later.
         </p>
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">

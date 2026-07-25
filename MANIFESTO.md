@@ -20,7 +20,7 @@ The objective is not automation. The objective is understanding.
 
 ## 2. What Hazium is, and is not
 
-Hazium is an explainable machine learning platform that continuously constructs an investigable computational representation of environmental and public health evidence, with the ambition of surfacing emerging hazards before they become widely recognised.
+Hazium is an explainable machine learning platform. It continuously constructs an investigable computational representation of environmental and public health evidence, with the ambition of surfacing emerging hazards before they become widely recognised.
 
 Hazium is **not** a pesticide database, a watchlist, a dashboard, a news aggregator, a compliance tool, or a replacement for regulatory agencies. Any of these may become interfaces. None of them are the product.
 
@@ -50,9 +50,9 @@ One falsifiable question anchors the project:
 
 > **Using only data with `known_at` before 2023-01-01, does Hazium rank fluazinam among the highest-concern substances approved in Sweden?**
 
-This question is no longer answered by one case in isolation. It is formalised as the **Hazium Early Warning Benchmark (HEWB)**: a versioned, reproducible evaluation program that every model reports against, from a trivial baseline to a tabular model, a graph model, or a future architecture. HEWB fixes a set of historical EU regulatory actions, a temporal-evaluation protocol under strict `known_at` discipline, and a **lead-time** metric: not merely whether a substance ranks highly, but how many months before the real regulatory action it would have. A result is comparable to another only if both ran the same frozen HEWB version.
+This question is no longer answered by one case in isolation. It is formalised as the **Hazium Early Warning Benchmark (HEWB)**: a versioned, reproducible evaluation program that every model reports against. That covers everything from a trivial baseline to a tabular model, a graph model, or a future architecture. HEWB fixes three things: a set of historical EU regulatory actions, a temporal-evaluation protocol under strict `known_at` discipline, and a **lead-time** metric. Lead time asks not merely whether a substance ranks highly, but how many months before the real regulatory action it would have. A result is comparable to another only if both ran the same frozen HEWB version.
 
-HEWB v1.4 measures lead time against ten landmark EU non-renewals over an annual cutoff schedule from 2009, with a tabular feature set spanning EU hazard classifications, EFSA assessment history, Swedish sales trends, graph structure, scientific-literature volume (Europe PMC), and ECHA CLH-intention status. At k=10 the model ranks chlorpyrifos 132 months before its EU ban; mancozeb enters the top-20 from 2010, about nine years before its 2021 non-renewal. Nine of ten landmarks flag within the top-50 at some cutoff, and seven of the ten do so ahead of the EU's own first regulatory action rather than merely before the final ban; epoxiconazole is the one the model does not flag. Out-of-fold scores are averaged over repeated cross-validation, so lead-times are reproducible rather than an artifact of one fold split. The 2023-01-01 headline average precision is 0.254, an order of magnitude above the trivial baselines, and SHAP attributes the ranking to the independent literature signal well above the in-funnel regulatory features. Graph embeddings (Node2Vec-style structural representations) were run against this baseline and lose, a documented negative that keeps §11's V2 gate closed: only 29.2% of the population has walkable graph structure, so the embedding is a constant zero vector for the rest.
+HEWB v1.4 measures lead time against ten landmark EU non-renewals over an annual cutoff schedule from 2009. The tabular feature set spans EU hazard classifications, EFSA assessment history, Swedish sales trends, graph structure, scientific-literature volume (Europe PMC), and ECHA CLH-intention status. At k=10 the model ranks chlorpyrifos 132 months before its EU ban; mancozeb enters the top-20 from 2010, about nine years before its 2021 non-renewal. Nine of ten landmarks flag within the top-50 at some cutoff. Seven of the ten do so ahead of the EU's own first regulatory action rather than merely before the final ban, and epoxiconazole is the one the model does not flag. Out-of-fold scores are averaged over repeated cross-validation, so lead-times are reproducible rather than an artifact of one fold split. The 2023-01-01 headline average precision is 0.254, an order of magnitude above the trivial baselines. SHAP puts the independent literature signal second overall, on par with the in-funnel regulatory features rather than above them; the single largest driver is an approval-age prior, reported and mitigated separately. Graph embeddings (Node2Vec-style structural representations) were run against this baseline and lose. That documented negative keeps §11's V2 gate closed: only 29.2% of the population has walkable graph structure, so the embedding is a constant zero vector for the rest.
 
 Every version of the system is measured against HEWB. Ambition without falsifiability is decoration.
 
@@ -92,7 +92,13 @@ The knowledge graph is the world model, not a database choice. It is constructed
 
 ## 9. Domain trajectory
 
-The architecture becomes domain-agnostic **by evolution, not by upfront design**. Version zero is built for pesticides without apology. The second domain is PFAS, entered through a degradation edge the first domain already contains, verified in EFSA's OpenFoodTox data as three fungicides (flufenacet, flutolanil, flurtamone) converging on trifluoroacetic acid, a PFAS compound. Fluazinam's own suspected TFA link, the reason it made national news, is not yet in any ingested dataset and is not asserted until a dated source supports it; the bridge stands on what is verified, not on the specific case that motivated the search for it. Only when two domains coexist are the shared abstractions extracted. Premature generality is a known failure mode, and this document forbids it.
+The architecture becomes domain-agnostic **by evolution, not by upfront design**. Version zero is built for pesticides without apology.
+
+PFAS was the intended second domain, entered through a degradation edge the first domain already contains: EFSA's OpenFoodTox data verifies three fungicides (flufenacet, flutolanil, flurtamone) converging on trifluoroacetic acid, a PFAS compound. That edge is real and it stays. The domain does not. Measured against the method's three preconditions, PFAS fails two of them. The population is unbounded rather than a registry of a few thousand. The labels are hazard-defined rather than the outcome of a dated approval-review-withdrawal pipeline, which makes them circular. Fluazinam's own suspected TFA link, the reason it made national news, is not yet in any ingested dataset and is not asserted until a dated source supports it. The bridge stands on what is verified, not on the specific case that motivated the search for it.
+
+Three further regimes were gated the same way and failed differently. Biocides are 42% dual-use with pesticides, leaving 15 independent positives. Food additives yield roughly four clean safety withdrawals, and their review is driven by calendar rather than concern. Feed additives have 309 positives, but 61% are flavourings nobody reapplied for, so the label measures commercial abandonment rather than risk. **No second domain is claimed. The mapped boundary is the result.**
+
+This is the section working as intended rather than failing. Only when two domains coexist are the shared abstractions extracted. Premature generality is a known failure mode, and this document forbids it; four documented negatives are what obeying that looks like.
 
 Candidate future domains: endocrine disruptors, pharmaceuticals in waterways, antibiotic resistance, heavy metals, drinking water contaminants, air pollution, hazards not yet recognised today.
 
@@ -114,7 +120,7 @@ HEWB (§4) is orthogonal to this ladder: the versioned measuring stick every ver
 | V1 | Defined tasks, tabular baselines, SHAP, time-split retrodetection eval | Published eval table |
 | V2 | Node embeddings (Node2Vec) on the same tasks | Beats V1 baseline, or the negative result is documented |
 | V3 | GNNs (GraphSAGE, then attention variants), evidence-path explanations | Only entered if V2 shows signal |
-| V4 | Second domain (PFAS), extraction of domain-agnostic abstractions | Two domains share one architecture |
+| V4 | Second domain, extraction of domain-agnostic abstractions | Two domains share one architecture. Four candidates gated (PFAS, biocides, food additives, feed additives), all four failed a precondition, so the gate held and the boundary is published instead |
 
 ---
 

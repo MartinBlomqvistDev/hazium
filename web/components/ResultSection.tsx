@@ -19,10 +19,10 @@ export default function ResultSection({
         <p className="mt-4 text-text-secondary">
           The <strong className="text-text-primary">Hazium Early Warning Benchmark</strong>{" "}
           fixes ten historical EU pesticide bans, real regulatory actions, not
-          hypothetical cases. At each annual cutoff from 2009, using only evidence
-          dated before that cutoff, it asks where Hazium would have ranked the
-          substance among every substance the graph knew about that year, roughly
-          5,900 of them.
+          hypothetical cases. It then works through every annual cutoff from 2009,
+          using only evidence dated before each one. The question at each cutoff is
+          where Hazium would have ranked the substance among everything the graph
+          knew about that year, roughly 5,900 substances.
         </p>
         <p className="mt-4 text-text-secondary">
           Months before the ban is the easy number. The harder question, and the

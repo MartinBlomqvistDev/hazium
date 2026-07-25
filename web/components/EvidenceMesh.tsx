@@ -412,7 +412,7 @@ export default function EvidenceMesh({ data }: { data: EvidenceMeshData }) {
           line stood for. Saying it plainly costs one line. */}
       <p className="mt-3 text-sm text-text-secondary">
         <span className="text-text-primary">How to read it:</span> every mark is a substance or a
-        hazard classification, a line between two marks means they share something, and the picture
+        hazard classification. A line between two marks means they share something. The picture
         fills in as each fact became public.
       </p>
 

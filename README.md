@@ -6,7 +6,7 @@
 
 **[hazium.org](https://hazium.org)** · benchmark: **[HEWB v1.4 on HuggingFace](https://huggingface.co/datasets/MartinBlomqvist/hewb)**
 
-Hazium is an explainable machine learning platform that builds a temporally-aware knowledge graph of environmental and public-health evidence from heterogeneous public data: regulatory decisions, hazard classifications, national sales statistics, residue monitoring, and scientific conclusions. Machine learning over that graph ranks substances for future regulatory risk, and every signal traces back to the source evidence behind it.
+Hazium is an explainable machine learning platform. It builds a temporally-aware knowledge graph of environmental and public-health evidence from heterogeneous public data: regulatory decisions, hazard classifications, national sales statistics, residue monitoring, and scientific conclusions. Machine learning over that graph ranks substances for future regulatory risk, and every signal traces back to the source evidence behind it.
 
 The first domain is pesticides, with a Nordic focus. The intelligence is in the ML; large language models are used for presentation only.
 
@@ -76,13 +76,15 @@ Using only pre-cutoff data across **2009-2024**, XGBoost beats every trivial bas
 
 Out-of-fold scores are averaged over repeated cross-validation, so lead-times are reproducible rather than an artifact of one fold split.
 
-The feature set spans six groups, each grounded in a dated public source: EU hazard classifications (ECHA CLP), EFSA assessment history, Swedish sales trends (KEMI), graph structure, scientific-literature volume (Europe PMC), and ECHA CLH-intention status. SHAP puts the independent scientific-literature feature second overall, carrying as much weight as the in-funnel regulatory-concern signals rather than above them; the single largest driver is an approval-age prior, reported and mitigated separately with cohort-relative ranking.
+The feature set spans six groups, each grounded in a dated public source: EU hazard classifications (ECHA CLP), EFSA assessment history, Swedish sales trends (KEMI), graph structure, scientific-literature volume (Europe PMC), and ECHA CLH-intention status.
 
-**Robustness.** Four tests harden the headline (raw outputs in `release/hewb-v1.4/`). A label-shuffle placebo, the project's kill-criterion, collapses to the base rate on permuted labels (real average precision 0.230 against a shuffled maximum of 0.013 over 50 permutations, p = 0.020), so the signal is real rather than small-class overfitting. The lead over baseline holds at every cutoff from 2020 to 2024, so 2023 is not a selected result. Substances that went through EU review and stayed approved rank well below the true positives, and hazardous-but-never-actioned substances put zero cases in the top 10, so the model is specific rather than flagging whatever looks dangerous.
+SHAP puts the independent scientific-literature feature second overall. It carries as much weight as the in-funnel regulatory-concern signals rather than more. The single largest driver is an approval-age prior, reported and mitigated separately with cohort-relative ranking.
+
+**Robustness.** Four tests harden the headline (raw outputs in `release/hewb-v1.4/`). A label-shuffle placebo, the project's kill-criterion, collapses to the base rate on permuted labels: real average precision 0.230 against a shuffled maximum of 0.013 over 50 permutations, p = 0.020. The signal is real rather than small-class overfitting. The lead over baseline holds at every cutoff from 2020 to 2024, so 2023 is not a selected result. Substances that went through EU review and stayed approved rank well below the true positives, and hazardous-but-never-actioned substances put zero cases in the top 10. The model is specific rather than flagging whatever looks dangerous.
 
 **The anchor case, fluazinam.** Under the headline EU-non-renewal label it ranks in the top 5% (269th of 5,933) on its general hazard and sales profile but stays outside the strict top-50 bar. Its actual concern is groundwater: fluazinam breaks down into the PFAS substance trifluoroacetic acid (TFA), which spreads to groundwater. Kemikalieinspektionen opened a formal reevaluation of the TFA-forming actives on 2025-11-20 (decision due by April 2028), and an SVT Granskning investigation brought it to national attention in July 2026. The EU-regulatory, hazard, and sales sources do not cover groundwater or residue monitoring, so that signal sits outside the current data. Under a second label variant that also counts that Swedish national reevaluation, fluazinam becomes a positive and ranks in the top 4% (206th of 5,933) out-of-fold, the closest result yet to the north-star question.
 
-The concern has since been confirmed independently, after the fact: a national SGU groundwater investigation across 2023-2025 found TFA at 91% of 237 sites (median 230 ng/l), tied to fluorinated plant-protection breakdown, while Sweden's historical pesticide monitoring records fluazinam itself at 0 of 139 groundwater analyses (the parent degrades to TFA before it reaches groundwater). That monitoring post-dates every benchmark cutoff, so it is not a model input; folding groundwater and residue monitoring in as a present-day signal is the next step on the roadmap.
+The concern has since been confirmed independently, after the fact. A national SGU groundwater investigation across 2023-2025 found TFA at 91% of 237 sites (median 230 ng/l), tied to fluorinated plant-protection breakdown. Sweden's historical pesticide monitoring meanwhile records fluazinam itself at 0 of 139 groundwater analyses, because the parent degrades to TFA before it reaches groundwater. That monitoring post-dates every benchmark cutoff, so it is not a model input; folding groundwater and residue monitoring in as a present-day signal is the next step on the roadmap.
 
 **V2, node embeddings.** metapath2vec embeddings, run alone and concatenated with the tabular features on the identical split, lose at every cutoff. Only 29.2% of the population has any walkable graph structure, so the embedding is a constant zero vector for the rest and dilutes the signal. V3 (GNN) is not entered: message-passing would hit the same coverage ceiling.
 
@@ -96,11 +98,11 @@ of anything derived from it. Content-addressed storage keeps repeated captures o
 a slow-moving register almost free, and failures are recorded rather than
 discarded, because a gap in the archive matters when reading it later.
 
-Four sources are captured, each with a stated future use: EU Pesticides Database
-per-substance details (which date the Candidate-for-Substitution and ADI fields
-that the bulk export publishes undated), SGU groundwater chemistry (CAS-coded, the
-fluazinam/TFA gap-closer, usable as a pre-cutoff feature from roughly 2029), KEMI
-sales reports, and the EFSA OpenFoodTox release metadata. ECHA is deliberately
+Four sources are captured, each with a stated future use. EU Pesticides Database
+per-substance details date the Candidate-for-Substitution and ADI fields that the
+bulk export publishes undated. SGU groundwater chemistry is CAS-coded and is the
+fluazinam/TFA gap-closer, usable as a pre-cutoff feature from roughly 2029. The
+other two are KEMI sales reports and the EFSA OpenFoodTox release metadata. ECHA is deliberately
 excluded: it returns 403 to programmatic clients, and a collector that silently
 fails every month is worse than none.
 
