@@ -20,7 +20,12 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest",
-    "ruff",
+    # Pinned deliberately. CI installs this fresh on every run, so an unpinned
+    # linter means an upstream release can turn the build red without a line of
+    # code changing: ruff 0.16.0 did exactly that, flagging 68 pre-existing
+    # issues under newly-stable rules. Bump this on purpose, with the fixes in
+    # the same commit, rather than discovering it on an unrelated push.
+    "ruff==0.15.20",
 ]
 
 [build-system]
