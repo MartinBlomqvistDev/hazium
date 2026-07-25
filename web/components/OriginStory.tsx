@@ -34,9 +34,9 @@ export default function OriginStory() {
           present-day signal is the next step on the roadmap.
         </p>
         <p className="mt-4 leading-relaxed text-text-secondary">
-          That gap is the real origin of the project. Environmental and
-          public health evidence exists in volume across Europe: regulatory
-          decisions, hazard classifications, sales statistics, scientific
+          That gap is the real origin of the project. Europe does not lack
+          environmental and public health evidence: regulatory decisions,
+          hazard classifications, sales statistics, scientific
           literature. It is split across agencies that do not share a
           schema, a timeline, or even a common substance identifier. Hazium
           joins that evidence into one temporally dated graph, so a ranking

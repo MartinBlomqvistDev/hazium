@@ -5,7 +5,7 @@ const SIGNALS = [
   },
   {
     title: "Scientific assessment scrutiny",
-    body: "How many EFSA toxicological assessments exist, over what span of years. Sustained scientific attention is itself a signal, independent of the conclusion.",
+    body: "How many EFSA toxicological assessments exist, over what span of years. Sustained scientific attention is itself a signal, whatever each assessment concluded.",
   },
   {
     title: "Sales and usage trends",
@@ -16,7 +16,7 @@ const SIGNALS = [
     body: "How long a substance has held EU approval, and its history of renewals or restrictions: the single strongest signal the model has found so far.",
   },
   {
-    title: "Graph structure",
+    title: "Links to flagged substances",
     body: "Shared hazard classifications and metabolic degradation links to other substances already flagged as concerning.",
   },
   {
