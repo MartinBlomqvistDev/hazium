@@ -177,6 +177,18 @@ def main() -> int:
         ],
     )
 
+    # Population totals, written out because they cannot be recovered from the
+    # per-crop table: a product approved for wheat, barley and rye appears in
+    # three rows, so summing the columns counts it three times. Anything using
+    # the per-crop shares needs a real denominator to compare them against.
+    with_crop = len({p for s in crop_products.values() for p in s})
+    summary = PROCESSED / f"crop_exposure_{args.variant}_summary.csv"
+    _write_csv(
+        summary,
+        ["approved_products", "products_with_a_crop", "products_with_watchlist_substance"],
+        [[len(products), with_crop, len(flagged_products)]],
+    )
+
     on_market = len({n for n in substance_crops})
     print(f"\nwatchlist substances found in an approved Swedish product: {on_market}")
     print(f"products carrying one: {len(flagged_products)}")
@@ -186,6 +198,7 @@ def main() -> int:
         print(f"{row[0]:<24} {row[1]:>9} {row[2]:>8} {row[3]:>6}%")
     print(f"\nwrote {out}")
     print(f"wrote {detail}")
+    print(f"wrote {summary}")
     return 0
 
 
