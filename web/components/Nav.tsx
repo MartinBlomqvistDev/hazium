@@ -8,8 +8,10 @@ export default function Nav() {
           <span className="inline-block h-2 w-2 rounded-full bg-accent" aria-hidden />
           Hazium
         </Link>
-        <nav className="flex items-center gap-6 text-sm text-text-secondary">
-          <Link href="/#result" className="hover:text-text-primary">
+        <nav className="flex items-center gap-3 text-sm text-text-secondary sm:gap-6">
+          {/* Hidden below 400px: the four items plus the wordmark overflow a 360px
+              phone by a few pixels, which puts the whole page into sideways scroll. */}
+          <Link href="/#result" className="hidden hover:text-text-primary min-[400px]:inline">
             The result
           </Link>
           <Link href="/#how" className="hover:text-text-primary">

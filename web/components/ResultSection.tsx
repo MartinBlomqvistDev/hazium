@@ -25,12 +25,23 @@ export default function ResultSection({
           knew about that year, roughly 5,900 substances.
         </p>
         <p className="mt-4 text-text-secondary">
-          Months before the ban is the easy number. The harder question, and the
-          one that shows capability, is whether Hazium was ahead of the
-          independent world: the regulator&apos;s first public concern, which
-          arrives long before the final paperwork. The literature signal became a
-          model input, so it is left out of this comparison; what remains are
-          dated regulatory milestones the model never sees.
+          Months before the ban is the easy number. The stricter comparison is
+          against the regulator&apos;s first public concern, which arrives long
+          before the final paperwork. The literature signal became a model input,
+          so it is left out of this comparison; what remains are dated regulatory
+          milestones the model never sees.
+        </p>
+        <p className="mt-4 text-sm leading-relaxed text-text-secondary">
+          Before reading the chart, read what it is not. These lead times are
+          real, and they are also{" "}
+          <strong className="text-text-primary">reproducible without a model</strong>. Ranking on
+          approval age alone puts chlorpyrifos in the danger band at the same 132 months. The
+          timeline records <em>when</em> a substance entered the riskiest band. It is not evidence
+          that the evidence put it there, and that distinction is{" "}
+          <a href="#how" className="text-accent underline underline-offset-2">
+            what the previous section is about
+          </a>
+          .
         </p>
 
         <div className="mt-10 rounded-xl border border-hairline bg-surface p-5 sm:p-7">
@@ -53,23 +64,27 @@ export default function ResultSection({
 
         <div className="mt-8 rounded-lg border border-hairline bg-page p-5">
           <h3 className="font-medium text-text-primary">
-            The test that could have ended the project
+            The test that passed, and the thing it could not see
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-text-secondary">
             A ranking model with 25 positives in 5,933 substances can look good by accident. So
-            the labels were permuted and the whole thing refitted, fifty times. If the shuffled
-            runs had come close to the real one, the result was an artefact and would have been
-            retracted. Real average precision is 0.230 against a shuffled maximum of 0.013,
-            p&nbsp;=&nbsp;0.020.
+            the labels were permuted and the whole thing refitted, fifty times. Real average
+            precision is 0.230 against a shuffled maximum of 0.013, p&nbsp;=&nbsp;0.020. The
+            result is not noise.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            The benchmark, its result tables and the raw robustness outputs are published as a
-            citable dataset:{" "}
+            That test asks one question: can the model beat chance. It cannot ask whether
+            something simpler beats the model. Nothing in a permutation test would ever have
+            surfaced approval age, and nothing did. Only running the baseline did.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+            This version stays published and is not retracted, because its numbers are correct
+            for the question it asked. Both are citable datasets:{" "}
             <a
               href="https://huggingface.co/datasets/MartinBlomqvist/hewb"
               className="text-accent underline underline-offset-2"
             >
-              HEWB v1.4 on HuggingFace
+              HEWB v1.4 and v2 on HuggingFace
             </a>
             , CC-BY-4.0.
           </p>

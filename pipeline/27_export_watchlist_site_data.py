@@ -61,13 +61,22 @@ CROP_EXCLUDE = frozenset({"fruit (unspecified)", "berries (unspecified)", "cerea
 MIN_PRODUCTS = 10
 
 
-def _plant_protection_ids() -> set[str]:
-    """CAS ids of substances the EU register lists as plant protection actives."""
+def _eu_active_substance_ids() -> dict[str, int]:
+    """Substance id to the EU register's own Active Substance ID.
+
+    That number is the only stable handle on the Commission's public record for
+    a substance, so it is what the site links to: a reader who wants the primary
+    document should not have to retype a name into a search box.
+
+    A CAS number can appear twice under different register entries, acetic acid
+    at 1051 and vinegar at 1207 being the case that matters here. The first row
+    wins, which is the chemical entry rather than the derived one.
+    """
     workbook = load_workbook(PPP_EXPORT, read_only=True)
-    ids: set[str] = set()
+    ids: dict[str, int] = {}
     for row in workbook.active.iter_rows(min_row=4, values_only=True):
         if row and row[0] and row[2] and "No CAS" not in str(row[2]):
-            ids.add(f"substance:cas:{str(row[2]).strip()}")
+            ids.setdefault(f"substance:cas:{str(row[2]).strip()}", int(row[0]))
     return ids
 
 
@@ -98,7 +107,7 @@ def swedish_sales() -> tuple[dict[str, float], dict[str, int], int, int]:
         _load(PROCESSED / "kemi_sales.jsonl", SalesRecord),
         SubstanceResolver(_load(PROCESSED / "kemi_register_substances.jsonl", Substance)),
     )
-    ppp = _plant_protection_ids()
+    ppp = set(_eu_active_substance_ids())
     year = max(s.year for s in sales)
     tonnes: dict[str, float] = {}
     for record in sales:
@@ -137,6 +146,7 @@ def main() -> int:
     resolution = _read_csv(PROCESSED / f"resolution_{VARIANT}.csv")
 
     tonnes, sales_rank, n_ranked, sales_year = swedish_sales()
+    eu_ids = _eu_active_substance_ids()
     crops_of = {r["substance"]: r["crops"] for r in by_substance}
     expiry_of = {r["substance"]: r["baseline_expiry"] for r in resolution}
     outcome_of = {r["substance"]: r["outcome"] for r in resolution}
@@ -149,8 +159,17 @@ def main() -> int:
             {
                 "rank": int(row["rank"]),
                 "name": name,
+                "cas": row["substance_id"].removeprefix("substance:cas:"),
+                "eu_id": eu_ids.get(row["substance_id"]),
                 "in_sweden": row["in_kemi_sweden_register"] == "True",
                 "crops": crop_list,
+                # Published beside the rank on purpose. Approval age is the
+                # baseline hazard in this model, and a reader who can see both
+                # can judge for themselves how much of a given rank is the
+                # calendar and how much is the evidence.
+                "approval_years": float(row["years_since_eu_approval"])
+                if row.get("years_since_eu_approval")
+                else None,
                 "expiry": expiry_of.get(name) or None,
                 "outcome": outcome_of.get(name) or "untracked",
                 "tonnes": round(tonnes[row["substance_id"]], 1)

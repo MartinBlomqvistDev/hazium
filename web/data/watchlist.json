@@ -224,12 +224,15 @@
   {
    "rank": 1,
    "name": "Pirimicarb",
+   "cas": "23103-98-2",
+   "eu_id": 997,
    "in_sweden": true,
    "crops": [
     "pepper",
     "strawberry",
     "tomato"
    ],
+   "approval_years": 19.0,
    "expiry": "2026-10-31",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -238,6 +241,8 @@
   {
    "rank": 2,
    "name": "Cyantraniliprole",
+   "cas": "736994-63-1",
+   "eu_id": 1083,
    "in_sweden": true,
    "crops": [
     "beans",
@@ -247,6 +252,7 @@
     "strawberry",
     "tomato"
    ],
+   "approval_years": 10.0,
    "expiry": "2026-09-14",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -255,8 +261,11 @@
   {
    "rank": 3,
    "name": "Mecoprop-P",
+   "cas": "16484-77-8",
+   "eu_id": 282,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 22.0,
    "expiry": "2027-10-15",
    "outcome": "pending",
    "tonnes": null,
@@ -265,8 +274,11 @@
   {
    "rank": 4,
    "name": "Ametoctradin",
+   "cas": "865318-97-4",
+   "eu_id": 705,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 13.0,
    "expiry": "2028-05-31",
    "outcome": "pending",
    "tonnes": null,
@@ -275,8 +287,11 @@
   {
    "rank": 5,
    "name": "Sulcotrione",
+   "cas": "99105-77-8",
+   "eu_id": 1177,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 17.0,
    "expiry": "2026-11-30",
    "outcome": "pending",
    "tonnes": null,
@@ -285,8 +300,11 @@
   {
    "rank": 6,
    "name": "Chlormequat",
+   "cas": "7003-89-6",
+   "eu_id": 539,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 17.0,
    "expiry": "2027-02-28",
    "outcome": "pending",
    "tonnes": null,
@@ -295,6 +313,8 @@
   {
    "rank": 7,
    "name": "Amidosulfuron",
+   "cas": "120923-37-7",
+   "eu_id": 330,
    "in_sweden": true,
    "crops": [
     "barley",
@@ -305,6 +325,7 @@
     "triticale",
     "wheat"
    ],
+   "approval_years": 17.0,
    "expiry": "2026-11-30",
    "outcome": "pending",
    "tonnes": 1.4,
@@ -313,6 +334,8 @@
   {
    "rank": 8,
    "name": "Spiroxamin",
+   "cas": "118134-30-8",
+   "eu_id": 1171,
    "in_sweden": true,
    "crops": [
     "barley",
@@ -320,6 +343,7 @@
     "triticale",
     "wheat"
    ],
+   "approval_years": 14.0,
    "expiry": "2029-11-30",
    "outcome": "pending",
    "tonnes": null,
@@ -328,8 +352,11 @@
   {
    "rank": 9,
    "name": "Acequinocyl",
+   "cas": "57960-19-7",
+   "eu_id": 1209,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 12.0,
    "expiry": "2026-11-15",
    "outcome": "pending",
    "tonnes": null,
@@ -338,10 +365,13 @@
   {
    "rank": 10,
    "name": "Laminarin",
+   "cas": "9008-22-4",
+   "eu_id": 260,
    "in_sweden": true,
    "crops": [
     "strawberry"
    ],
+   "approval_years": 8.0,
    "expiry": "2033-02-28",
    "outcome": "pending",
    "tonnes": null,
@@ -350,8 +380,11 @@
   {
    "rank": 11,
    "name": "Iprovalicarb",
+   "cas": "140923-17-7",
+   "eu_id": 235,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 10.0,
    "expiry": "2031-03-31",
    "outcome": "pending",
    "tonnes": null,
@@ -360,8 +393,11 @@
   {
    "rank": 12,
    "name": "Formetanate hydrochloride",
+   "cas": "23422-53-9",
+   "eu_id": 748,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 19.0,
    "expiry": "2026-09-30",
    "outcome": "pending",
    "tonnes": null,
@@ -370,8 +406,11 @@
   {
    "rank": 13,
    "name": "Emamectin",
+   "cas": "119791-41-2",
+   "eu_id": 838,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 12.0,
    "expiry": "2026-11-15",
    "outcome": "pending",
    "tonnes": null,
@@ -380,8 +419,11 @@
   {
    "rank": 14,
    "name": "Halosulfuron methyl",
+   "cas": "100784-20-1",
+   "eu_id": 83,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 13.0,
    "expiry": "2026-11-15",
    "outcome": "pending",
    "tonnes": null,
@@ -390,8 +432,11 @@
   {
    "rank": 15,
    "name": "Dichlorprop-p",
+   "cas": "15165-67-0",
+   "eu_id": 619,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 19.0,
    "expiry": "2026-10-31",
    "outcome": "pending",
    "tonnes": null,
@@ -400,8 +445,11 @@
   {
    "rank": 16,
    "name": "Valifenalate",
+   "cas": "283159-90-0",
+   "eu_id": 189,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 12.0,
    "expiry": "2027-03-01",
    "outcome": "pending",
    "tonnes": null,
@@ -410,8 +458,11 @@
   {
    "rank": 17,
    "name": "Propoxycarbazone",
+   "cas": "145026-81-9",
+   "eu_id": 708,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 9.0,
    "expiry": "2032-08-31",
    "outcome": "pending",
    "tonnes": null,
@@ -420,8 +471,11 @@
   {
    "rank": 18,
    "name": "Mandestrobin",
+   "cas": "173662-97-0",
+   "eu_id": 1200,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 11.0,
    "expiry": "2029-06-09",
    "outcome": "pending",
    "tonnes": null,
@@ -430,8 +484,11 @@
   {
    "rank": 19,
    "name": "Oxyfluorfen",
+   "cas": "42874-03-3",
+   "eu_id": 935,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 14.0,
    "expiry": "2027-05-31",
    "outcome": "pending",
    "tonnes": null,
@@ -440,8 +497,11 @@
   {
    "rank": 20,
    "name": "Daminozide",
+   "cas": "1596-84-5",
+   "eu_id": 599,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 20.0,
    "expiry": "2026-09-15",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -450,10 +510,13 @@
   {
    "rank": 21,
    "name": "Pyraflufen-ethyl",
+   "cas": "129630-19-9",
+   "eu_id": 1088,
    "in_sweden": true,
    "crops": [
     "potato"
    ],
+   "approval_years": 10.0,
    "expiry": "2031-03-31",
    "outcome": "pending",
    "tonnes": 0.2,
@@ -462,10 +525,13 @@
   {
    "rank": 22,
    "name": "Tefluthrin",
+   "cas": "79538-32-2",
+   "eu_id": 784,
    "in_sweden": true,
    "crops": [
     "sugar beet"
    ],
+   "approval_years": 14.0,
    "expiry": "2027-05-31",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -474,8 +540,11 @@
   {
    "rank": 23,
    "name": "Tri-allate",
+   "cas": "2303-17-5",
+   "eu_id": 154,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 16.0,
    "expiry": "2027-03-31",
    "outcome": "pending",
    "tonnes": null,
@@ -484,8 +553,11 @@
   {
    "rank": 24,
    "name": "Malathion",
+   "cas": "121-75-5",
+   "eu_id": 273,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 16.0,
    "expiry": "2028-07-15",
    "outcome": "pending",
    "tonnes": null,
@@ -494,6 +566,8 @@
   {
    "rank": 25,
    "name": "Proquinazid",
+   "cas": "189278-12-4",
+   "eu_id": 710,
    "in_sweden": true,
    "crops": [
     "barley",
@@ -502,6 +576,7 @@
     "triticale",
     "wheat"
    ],
+   "approval_years": 16.0,
    "expiry": "2027-12-31",
    "outcome": "pending",
    "tonnes": null,
@@ -510,8 +585,11 @@
   {
    "rank": 26,
    "name": "Thiabendazole",
+   "cas": "148-79-8",
+   "eu_id": 795,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 9.0,
    "expiry": "2032-03-31",
    "outcome": "pending",
    "tonnes": null,
@@ -520,6 +598,8 @@
   {
    "rank": 27,
    "name": "Fettsyror    C7–C18   och C18 omättade kaliumsalter",
+   "cas": "67701-09-1",
+   "eu_id": 846,
    "in_sweden": true,
    "crops": [
     "barley",
@@ -533,6 +613,7 @@
     "vegetables",
     "wheat"
    ],
+   "approval_years": 17.0,
    "expiry": "2026-12-01",
    "outcome": "pending",
    "tonnes": null,
@@ -541,8 +622,11 @@
   {
    "rank": 28,
    "name": "Zinc phosphide",
+   "cas": "1314-84-7",
+   "eu_id": 199,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 15.0,
    "expiry": "2026-12-31",
    "outcome": "pending",
    "tonnes": null,
@@ -551,8 +635,11 @@
   {
    "rank": 29,
    "name": "Disodium phosphonate",
+   "cas": "13708-85-5",
+   "eu_id": 690,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 12.0,
    "expiry": "2029-07-31",
    "outcome": "pending",
    "tonnes": null,
@@ -561,8 +648,11 @@
   {
    "rank": 30,
    "name": "Dimethachlor",
+   "cas": "50563-36-5",
+   "eu_id": 639,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 16.0,
    "expiry": "2026-10-15",
    "outcome": "pending",
    "tonnes": null,
@@ -571,8 +661,11 @@
   {
    "rank": 31,
    "name": "Etofenprox",
+   "cas": "80844-07-1",
+   "eu_id": 101,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 16.0,
    "expiry": "2027-03-31",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -581,6 +674,8 @@
   {
    "rank": 32,
    "name": "Picolinafen",
+   "cas": "137641-05-5",
+   "eu_id": 291,
    "in_sweden": true,
    "crops": [
     "barley",
@@ -588,6 +683,7 @@
     "triticale",
     "wheat"
    ],
+   "approval_years": 10.0,
    "expiry": "2031-06-30",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -596,8 +692,11 @@
   {
    "rank": 33,
    "name": "Forchlorfenuron",
+   "cas": "68157-60-8",
+   "eu_id": 746,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 8.0,
    "expiry": "2033-05-31",
    "outcome": "pending",
    "tonnes": null,
@@ -606,8 +705,11 @@
   {
    "rank": 34,
    "name": "Tebufenozide",
+   "cas": "112410-23-8",
+   "eu_id": 780,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 15.0,
    "expiry": "2027-01-31",
    "outcome": "pending",
    "tonnes": null,
@@ -616,8 +718,11 @@
   {
    "rank": 35,
    "name": "Magnesium phosphide",
+   "cas": "12057-74-8",
+   "eu_id": 272,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 17.0,
    "expiry": "2026-11-30",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -626,8 +731,11 @@
   {
    "rank": 36,
    "name": "Cyhalofop-butyl",
+   "cas": "122008-85-9",
+   "eu_id": 590,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 9.0,
    "expiry": "2032-06-30",
    "outcome": "pending",
    "tonnes": null,
@@ -636,8 +744,11 @@
   {
    "rank": 37,
    "name": "Flutianil",
+   "cas": "958647-10-4",
+   "eu_id": 1059,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 7.0,
    "expiry": "2029-04-14",
    "outcome": "pending",
    "tonnes": null,
@@ -646,8 +757,11 @@
   {
    "rank": 38,
    "name": "Cyflumetofen",
+   "cas": "400882-07-7",
+   "eu_id": 978,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 13.0,
    "expiry": "2027-10-15",
    "outcome": "pending",
    "tonnes": null,
@@ -656,8 +770,11 @@
   {
    "rank": 39,
    "name": "Ziram",
+   "cas": "137-30-4",
+   "eu_id": 1008,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 22.0,
    "expiry": "2027-01-31",
    "outcome": "pending",
    "tonnes": null,
@@ -666,8 +783,11 @@
   {
    "rank": 40,
    "name": "Pyridaben",
+   "cas": "96489-71-3",
+   "eu_id": 1093,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 15.0,
    "expiry": "2030-01-31",
    "outcome": "pending",
    "tonnes": null,
@@ -676,8 +796,11 @@
   {
    "rank": 41,
    "name": "Triclopyr",
+   "cas": "55335-06-3",
+   "eu_id": 170,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 19.0,
    "expiry": "2027-03-31",
    "outcome": "pending",
    "tonnes": null,
@@ -686,8 +809,11 @@
   {
    "rank": 42,
    "name": "Rescalure",
+   "cas": "67601-06-3",
+   "eu_id": 1188,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 11.0,
    "expiry": "2028-05-18",
    "outcome": "pending",
    "tonnes": null,
@@ -696,8 +822,11 @@
   {
    "rank": 43,
    "name": "Dazomet",
+   "cas": "533-74-4",
+   "eu_id": 835,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 15.0,
    "expiry": "2026-08-31",
    "outcome": "pending",
    "tonnes": null,
@@ -706,8 +835,11 @@
   {
    "rank": 44,
    "name": "MCPB",
+   "cas": "94-81-5",
+   "eu_id": 279,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 20.0,
    "expiry": "2026-08-15",
    "outcome": "pending",
    "tonnes": null,
@@ -716,8 +848,11 @@
   {
    "rank": 45,
    "name": "Lime sulphur",
+   "cas": "1344-81-6",
+   "eu_id": 269,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 15.0,
    "expiry": "2027-01-31",
    "outcome": "pending",
    "tonnes": null,
@@ -726,8 +861,11 @@
   {
    "rank": 46,
    "name": "Fenazaquin",
+   "cas": "120928-09-8",
+   "eu_id": 124,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 15.0,
    "expiry": "2026-08-31",
    "outcome": "pending",
    "tonnes": null,
@@ -736,8 +874,11 @@
   {
    "rank": 47,
    "name": "geraniol",
+   "cas": "106-24-1",
+   "eu_id": 1036,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 13.0,
    "expiry": "2028-04-15",
    "outcome": "pending",
    "tonnes": null,
@@ -746,6 +887,8 @@
   {
    "rank": 48,
    "name": "Hexythiazox",
+   "cas": "78587-05-0",
+   "eu_id": 130,
    "in_sweden": true,
    "crops": [
     "apple",
@@ -755,6 +898,7 @@
     "raspberry",
     "strawberry"
    ],
+   "approval_years": 15.0,
    "expiry": "2027-01-31",
    "outcome": "pending",
    "tonnes": null,
@@ -763,6 +907,8 @@
   {
    "rank": 49,
    "name": "Fludioxonil",
+   "cas": "131341-86-1",
+   "eu_id": 37,
    "in_sweden": true,
    "crops": [
     "apple",
@@ -779,6 +925,7 @@
     "triticale",
     "wheat"
    ],
+   "approval_years": 18.0,
    "expiry": "2026-09-30",
    "outcome": "pending",
    "tonnes": 8.0,
@@ -787,8 +934,11 @@
   {
    "rank": 52,
    "name": "2,5-Dichlorobenzoic acid methylester",
+   "cas": "2905-69-3",
+   "eu_id": 617,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 17.0,
    "expiry": "2026-11-30",
    "outcome": "pending",
    "tonnes": null,
@@ -797,8 +947,11 @@
   {
    "rank": 53,
    "name": "Buprofezin",
+   "cas": "69327-76-0",
+   "eu_id": 486,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 15.0,
    "expiry": "2026-12-15",
    "outcome": "pending",
    "tonnes": null,
@@ -807,8 +960,11 @@
   {
    "rank": 54,
    "name": "Isoxaflutole",
+   "cas": "141112-29-0",
+   "eu_id": 249,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 7.0,
    "expiry": "2034-07-31",
    "outcome": "pending",
    "tonnes": null,
@@ -817,8 +973,11 @@
   {
    "rank": 55,
    "name": "Tebufenpyrad",
+   "cas": "119168-77-3",
+   "eu_id": 1374,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 17.0,
    "expiry": "2027-01-31",
    "outcome": "pending",
    "tonnes": null,
@@ -827,11 +986,14 @@
   {
    "rank": 56,
    "name": "Silthiofam",
+   "cas": "175217-20-6",
+   "eu_id": 859,
    "in_sweden": true,
    "crops": [
     "triticale",
     "wheat"
    ],
+   "approval_years": 8.0,
    "expiry": "2033-06-30",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -840,8 +1002,11 @@
   {
    "rank": 57,
    "name": "Bupirimate",
+   "cas": "41483-43-6",
+   "eu_id": 485,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 15.0,
    "expiry": "2027-01-31",
    "outcome": "pending",
    "tonnes": null,
@@ -850,8 +1015,11 @@
   {
    "rank": 58,
    "name": "Eugenol",
+   "cas": "97-53-0",
+   "eu_id": 301,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 13.0,
    "expiry": "2028-04-15",
    "outcome": "pending",
    "tonnes": null,
@@ -860,10 +1028,13 @@
   {
    "rank": 59,
    "name": "Metobromuron",
+   "cas": "3060-89-7",
+   "eu_id": 1212,
    "in_sweden": true,
    "crops": [
     "potato"
    ],
+   "approval_years": 11.0,
    "expiry": "2027-05-31",
    "outcome": "pending",
    "tonnes": 4.4,
@@ -872,8 +1043,11 @@
   {
    "rank": 60,
    "name": "Bentazone",
+   "cas": "25057-89-0",
+   "eu_id": 451,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 8.0,
    "expiry": "2027-10-31",
    "outcome": "pending",
    "tonnes": null,
@@ -882,8 +1056,11 @@
   {
    "rank": 61,
    "name": "Fluometuron",
+   "cas": "2164-17-2",
+   "eu_id": 721,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 15.0,
    "expiry": "2030-01-15",
    "outcome": "pending",
    "tonnes": null,
@@ -892,8 +1069,11 @@
   {
    "rank": 62,
    "name": "Flumioxazin",
+   "cas": "103361-09-7",
+   "eu_id": 720,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 4.0,
    "expiry": "2037-02-28",
    "outcome": "pending",
    "tonnes": null,
@@ -902,10 +1082,13 @@
   {
    "rank": 63,
    "name": "Flupyradifurone",
+   "cas": "951659-40-8",
+   "eu_id": 1186,
    "in_sweden": true,
    "crops": [
     "sugar beet"
    ],
+   "approval_years": 11.0,
    "expiry": "2029-06-09",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -914,12 +1097,15 @@
   {
    "rank": 64,
    "name": "Fenpicoxamid",
+   "cas": "517875-34-2",
+   "eu_id": 1286,
    "in_sweden": true,
    "crops": [
     "rye",
     "triticale",
     "wheat"
    ],
+   "approval_years": 8.0,
    "expiry": "2028-10-11",
    "outcome": "pending",
    "tonnes": null,
@@ -928,6 +1114,8 @@
   {
    "rank": 65,
    "name": "Beflubutamid",
+   "cas": "113614-08-7",
+   "eu_id": 440,
    "in_sweden": true,
    "crops": [
     "barley",
@@ -935,6 +1123,7 @@
     "triticale",
     "wheat"
    ],
+   "approval_years": 19.0,
    "expiry": "2026-10-31",
    "outcome": "pending",
    "tonnes": 6.6,
@@ -943,6 +1132,8 @@
   {
    "rank": 66,
    "name": "Halauxifen-methyl",
+   "cas": "943831-98-9",
+   "eu_id": 1413,
    "in_sweden": true,
    "crops": [
     "barley",
@@ -952,6 +1143,7 @@
     "triticale",
     "wheat"
    ],
+   "approval_years": 11.0,
    "expiry": "2028-01-05",
    "outcome": "pending",
    "tonnes": null,
@@ -960,8 +1152,11 @@
   {
    "rank": 67,
    "name": "Thymol",
+   "cas": "89-83-8",
+   "eu_id": 1082,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 13.0,
    "expiry": "2028-04-15",
    "outcome": "pending",
    "tonnes": null,
@@ -970,6 +1165,8 @@
   {
    "rank": 68,
    "name": "Propamocarb",
+   "cas": "24579-73-5",
+   "eu_id": 67,
    "in_sweden": true,
    "crops": [
     "cabbage",
@@ -977,6 +1174,7 @@
     "lettuce",
     "tomato"
    ],
+   "approval_years": 19.0,
    "expiry": "2027-01-31",
    "outcome": "pending",
    "tonnes": 48.2,
@@ -985,6 +1183,8 @@
   {
    "rank": 69,
    "name": "Aclonifen",
+   "cas": "74070-46-5",
+   "eu_id": 1054,
    "in_sweden": true,
    "crops": [
     "barley",
@@ -997,6 +1197,7 @@
     "triticale",
     "wheat"
    ],
+   "approval_years": 17.0,
    "expiry": "2026-10-31",
    "outcome": "pending",
    "tonnes": 26.7,
@@ -1005,8 +1206,11 @@
   {
    "rank": 70,
    "name": "Diclofop",
+   "cas": "40843-25-2",
+   "eu_id": 622,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 15.0,
    "expiry": "2026-08-31",
    "outcome": "pending",
    "tonnes": null,
@@ -1015,6 +1219,8 @@
   {
    "rank": 71,
    "name": "Azadirachtin",
+   "cas": "11141-17-6",
+   "eu_id": 420,
    "in_sweden": true,
    "crops": [
     "apple",
@@ -1028,6 +1234,7 @@
     "strawberry",
     "tomato"
    ],
+   "approval_years": 15.0,
    "expiry": "2027-01-31",
    "outcome": "pending",
    "tonnes": null,
@@ -1036,8 +1243,11 @@
   {
    "rank": 72,
    "name": "Tetraconazole",
+   "cas": "112281-77-3",
+   "eu_id": 790,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 16.0,
    "expiry": "2027-03-31",
    "outcome": "pending",
    "tonnes": null,
@@ -1046,10 +1256,13 @@
   {
    "rank": 73,
    "name": "Florpyrauxifen-benzyl",
+   "cas": "1390661-72-9",
+   "eu_id": 1414,
    "in_sweden": true,
    "crops": [
     "sugar beet"
    ],
+   "approval_years": 7.0,
    "expiry": "2029-07-24",
    "outcome": "pending",
    "tonnes": null,
@@ -1058,6 +1271,8 @@
   {
    "rank": 74,
    "name": "Cyprodinil",
+   "cas": "121552-61-2",
+   "eu_id": 1023,
    "in_sweden": true,
    "crops": [
     "barley",
@@ -1070,6 +1285,7 @@
     "triticale",
     "wheat"
    ],
+   "approval_years": 19.0,
    "expiry": "2026-10-31",
    "outcome": "pending",
    "tonnes": 0.6,
@@ -1078,10 +1294,13 @@
   {
    "rank": 75,
    "name": "Ethofumesate",
+   "cas": "26225-79-6",
+   "eu_id": 94,
    "in_sweden": true,
    "crops": [
     "sugar beet"
    ],
+   "approval_years": 10.0,
    "expiry": "2031-10-31",
    "outcome": "pending",
    "tonnes": 2.7,
@@ -1090,8 +1309,11 @@
   {
    "rank": 76,
    "name": "Bensulfuron-Methyl",
+   "cas": "83055-99-6",
+   "eu_id": 1019,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 17.0,
    "expiry": "2026-08-15",
    "outcome": "pending",
    "tonnes": null,
@@ -1100,8 +1322,11 @@
   {
    "rank": 77,
    "name": "Clodinafop-Propargyl",
+   "cas": "105512-06-9",
+   "eu_id": 562,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 19.0,
    "expiry": "2027-07-31",
    "outcome": "pending",
    "tonnes": null,
@@ -1110,8 +1335,11 @@
   {
    "rank": 78,
    "name": "1-Decanol",
+   "cas": "112-30-1",
+   "eu_id": 826,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 15.0,
    "expiry": "2028-06-30",
    "outcome": "pending",
    "tonnes": null,
@@ -1120,8 +1348,11 @@
   {
    "rank": 79,
    "name": "Pirimiphos-methyl",
+   "cas": "29232-93-7",
+   "eu_id": 294,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 19.0,
    "expiry": "2027-01-31",
    "outcome": "pending",
    "tonnes": null,
@@ -1130,12 +1361,15 @@
   {
    "rank": 80,
    "name": "Pyroxsulam",
+   "cas": "422556-08-9",
+   "eu_id": 1101,
    "in_sweden": true,
    "crops": [
     "rye",
     "triticale",
     "wheat"
    ],
+   "approval_years": 12.0,
    "expiry": "2027-09-30",
    "outcome": "pending",
    "tonnes": null,
@@ -1144,10 +1378,13 @@
   {
    "rank": 81,
    "name": "Metalaxyl",
+   "cas": "57837-19-1",
+   "eu_id": 1318,
    "in_sweden": true,
    "crops": [
     "maize"
    ],
+   "approval_years": 16.0,
    "expiry": "2026-09-30",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -1156,8 +1393,11 @@
   {
    "rank": 82,
    "name": "Dicopper chloride trihydroxide",
+   "cas": "1332-65-6",
+   "eu_id": 572,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 7.0,
    "expiry": "2029-06-30",
    "outcome": "pending",
    "tonnes": null,
@@ -1166,8 +1406,11 @@
   {
    "rank": 83,
    "name": "Tembotrione",
+   "cas": "335104-84-2",
+   "eu_id": 1218,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 12.0,
    "expiry": "2026-12-31",
    "outcome": "pending",
    "tonnes": null,
@@ -1176,8 +1419,11 @@
   {
    "rank": 84,
    "name": "Dicamba",
+   "cas": "1918-00-9",
+   "eu_id": 613,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 17.0,
    "expiry": "2027-03-31",
    "outcome": "pending",
    "tonnes": null,
@@ -1186,8 +1432,11 @@
   {
    "rank": 85,
    "name": "Chlorantraniliprole",
+   "cas": "500008-45-7",
+   "eu_id": 526,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 12.0,
    "expiry": "2027-05-31",
    "outcome": "pending",
    "tonnes": null,
@@ -1196,10 +1445,13 @@
   {
    "rank": 86,
    "name": "Hymexazol",
+   "cas": "10004-44-1",
+   "eu_id": 135,
    "in_sweden": true,
    "crops": [
     "sugar beet"
    ],
+   "approval_years": 15.0,
    "expiry": "2026-08-31",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -1208,8 +1460,11 @@
   {
    "rank": 87,
    "name": "Flutolanil",
+   "cas": "66332-96-5",
+   "eu_id": 739,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 17.0,
    "expiry": "2027-06-15",
    "outcome": "pending",
    "tonnes": null,
@@ -1218,6 +1473,8 @@
   {
    "rank": 88,
    "name": "Pyriofenone",
+   "cas": "688046-61-9",
+   "eu_id": 862,
    "in_sweden": true,
    "crops": [
     "barley",
@@ -1226,6 +1483,7 @@
     "triticale",
     "wheat"
    ],
+   "approval_years": 12.0,
    "expiry": "2027-06-30",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -1234,8 +1492,11 @@
   {
    "rank": 89,
    "name": "Penoxsulam",
+   "cas": "219714-96-2",
+   "eu_id": 962,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 16.0,
    "expiry": "2027-05-15",
    "outcome": "pending",
    "tonnes": null,
@@ -1244,10 +1505,13 @@
   {
    "rank": 90,
    "name": "Oxathiapiprolin",
+   "cas": "1003318-67-9",
+   "eu_id": 1290,
    "in_sweden": true,
    "crops": [
     "potato"
    ],
+   "approval_years": 9.0,
    "expiry": "2027-03-03",
    "outcome": "pending",
    "tonnes": null,
@@ -1256,12 +1520,15 @@
   {
    "rank": 91,
    "name": "Mandipropamid",
+   "cas": "374726-62-2",
+   "eu_id": 996,
    "in_sweden": true,
    "crops": [
     "lettuce",
     "potato",
     "tomato"
    ],
+   "approval_years": 13.0,
    "expiry": "2029-06-30",
    "outcome": "pending",
    "tonnes": 7.3,
@@ -1270,10 +1537,13 @@
   {
    "rank": 92,
    "name": "Imazalil",
+   "cas": "35554-44-0",
+   "eu_id": 1315,
    "in_sweden": true,
    "crops": [
     "potato"
    ],
+   "approval_years": 14.0,
    "expiry": "2027-05-31",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -1282,11 +1552,14 @@
   {
    "rank": 93,
    "name": "Metamitron",
+   "cas": "41394-05-2",
+   "eu_id": 209,
    "in_sweden": true,
    "crops": [
     "strawberry",
     "sugar beet"
    ],
+   "approval_years": 17.0,
    "expiry": "2026-11-30",
    "outcome": "pending",
    "tonnes": 25.6,
@@ -1295,8 +1568,11 @@
   {
    "rank": 94,
    "name": "Aluminium phosphide",
+   "cas": "20859-73-8",
+   "eu_id": 1015,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 17.0,
    "expiry": "2026-11-30",
    "outcome": "pending",
    "tonnes": 0.6,
@@ -1305,8 +1581,11 @@
   {
    "rank": 95,
    "name": "Sintofen",
+   "cas": "130561-48-7",
+   "eu_id": 1027,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 15.0,
    "expiry": "2030-01-15",
    "outcome": "pending",
    "tonnes": null,
@@ -1315,11 +1594,14 @@
   {
    "rank": 96,
    "name": "Fluazinam",
+   "cas": "79622-59-6",
+   "eu_id": 32,
    "in_sweden": true,
    "crops": [
     "onion",
     "potato"
    ],
+   "approval_years": 17.0,
    "expiry": "2027-11-30",
    "outcome": "pending",
    "tonnes": 12.1,
@@ -1328,8 +1610,11 @@
   {
    "rank": 97,
    "name": "Fluazifop-P",
+   "cas": "83066-88-0",
+   "eu_id": 31,
    "in_sweden": false,
    "crops": [],
+   "approval_years": 14.0,
    "expiry": "2029-11-30",
    "outcome": "pending",
    "tonnes": null,
@@ -1338,6 +1623,8 @@
   {
    "rank": 98,
    "name": "Fenpyroximate",
+   "cas": "134098-61-6",
+   "eu_id": 14,
    "in_sweden": true,
    "crops": [
     "apple",
@@ -1349,6 +1636,7 @@
     "strawberry",
     "tomato"
    ],
+   "approval_years": 17.0,
    "expiry": "2028-01-31",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -1357,6 +1645,8 @@
   {
    "rank": 99,
    "name": "Kresoxim-methyl",
+   "cas": "143390-89-0",
+   "eu_id": 257,
    "in_sweden": true,
    "crops": [
     "apple",
@@ -1370,6 +1660,7 @@
     "triticale",
     "wheat"
    ],
+   "approval_years": 14.0,
    "expiry": "2027-05-31",
    "outcome": "pending",
    "tonnes": 0.0,
@@ -1378,8 +1669,11 @@
   {
    "rank": 100,
    "name": "Spearmint oil",
+   "cas": "8008-79-5",
+   "eu_id": 44,
    "in_sweden": true,
    "crops": [],
+   "approval_years": 17.0,
    "expiry": "2028-01-15",
    "outcome": "pending",
    "tonnes": null,

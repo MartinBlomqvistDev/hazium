@@ -163,8 +163,13 @@ export interface EvidenceMeshData {
 export interface WatchlistEntry {
   rank: number;
   name: string;
+  cas: string;
+  /** the EU register's own Active Substance ID, the handle on its public record */
+  eu_id: number | null;
   in_sweden: boolean;
   crops: string[];
+  /** years of held EU approval: the baseline hazard, shown beside the rank */
+  approval_years: number | null;
   /** approval expiry: the date the Commission is forced to decide */
   expiry: string | null;
   outcome: string;

@@ -1,7 +1,15 @@
-import type { WatchlistData } from "@/lib/types";
+"use client";
+
+import { useState } from "react";
+import type { WatchlistData, WatchlistEntry } from "@/lib/types";
 
 const ACCENT = "#d95926";
 const INK_MUTED = "#898781";
+
+/** The Commission's own record for an active substance, keyed by its register id. */
+function euRecordUrl(id: number): string {
+  return `https://ec.europa.eu/food/plant/pesticides/eu-pesticides-database/start/screen/active-substances/details/${id}`;
+}
 
 /**
  * The one forward-looking surface on the site.
@@ -15,6 +23,7 @@ const INK_MUTED = "#898781";
  * because a large share of any list this length is never actioned.
  */
 export default function Watchlist({ data }: { data: WatchlistData }) {
+  const [open, setOpen] = useState<string | null>(null);
   const soon = data.calendar.filter((row) => row.year <= 2028);
   const decidedBy2027 = data.calendar.find((row) => row.year === 2027)?.cumulative ?? 0;
   const maxCount = Math.max(...data.calendar.map((r) => r.count), 1);
@@ -80,8 +89,9 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
             Which crops they are approved for
           </h3>
           <p className="mt-2 text-sm text-text-secondary">
-            {data.on_market} of the top {data.top} are in plant protection products currently
-            approved in Sweden. The bars show the share of each crop&apos;s{" "}
+            {data.on_market} of the top {data.top}{" "}
+            are in plant protection products currently approved in Sweden. The bars show the
+            share of each crop&apos;s{" "}
             <strong className="text-text-primary">approved products</strong> carrying at least
             one of them.
           </p>
@@ -96,8 +106,13 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
                   {crop.crop}
                 </span>
                 <span className="relative h-3 w-[34%] shrink-0 rounded-sm bg-hairline/40 sm:w-[45%]">
+                  {/* A measured zero gets a stub rather than an empty track, so it
+                      reads as none of them rather than as a bar that failed to draw. */}
                   <span className="absolute inset-y-0 left-0 rounded-sm" aria-hidden
-                    style={{ width: `${(crop.percent / maxPercent) * 100}%`, backgroundColor: ACCENT }} />
+                    style={{
+                      width: crop.percent === 0 ? "2px" : `${(crop.percent / maxPercent) * 100}%`,
+                      backgroundColor: crop.percent === 0 ? INK_MUTED : ACCENT,
+                    }} />
                   <span className="absolute inset-y-[-3px] w-px" aria-hidden
                     style={{
                       left: `${(data.base_rate_percent / maxPercent) * 100}%`,
@@ -107,7 +122,7 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
                 <span className="tabular-nums font-mono text-xs text-text-secondary">
                   {crop.percent}%
                 </span>
-                <span className="hidden tabular-nums font-mono text-xs text-text-muted sm:inline">
+                <span className="tabular-nums font-mono text-xs text-text-muted">
                   {crop.flagged}/{crop.products}
                 </span>
               </div>
@@ -116,9 +131,11 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
           <p className="mt-4 text-xs leading-relaxed text-text-muted">
             The grey line marks {data.base_rate_percent}%, the share across every approved
             product that names a crop. Read the bars against it rather than against each other.
-            The cereals sit a little above it and most other crops below, but the whole range is
-            roughly two thirds to one and a sixth of that rate, so the finding is that these
-            substances are spread across Swedish agriculture rather than concentrated anywhere.
+            The spread runs from turnip rape, where none of its 45 approved products carries one
+            of these substances, to sugar beet at about one and a half times the overall rate.
+            Most crops sit inside a factor of two either side of the line, so the finding is that
+            these substances are spread across Swedish agriculture rather than concentrated in
+            any one crop.
           </p>
         </div>
 
@@ -130,22 +147,21 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
             largest sells 783, so each is shown with its rank among the {data.sales_ranked}{" "}
             actives sold in {data.sales_year}.
           </p>
-          <div className="mt-5 space-y-1.5">
+          <p className="mt-2 text-xs text-text-muted">
+            Click a substance for its deadline, its full crop list and the Commission&apos;s own
+            record.
+          </p>
+          <div className="mt-4 space-y-1">
             {byVolume.map((entry) => (
-              <div key={entry.name} className="flex items-center gap-2 text-sm sm:gap-3">
-                <span className="w-32 shrink-0 truncate text-text-secondary sm:w-44">
-                  {entry.name}
-                </span>
-                <span className="w-16 shrink-0 tabular-nums text-right font-mono text-xs text-text-secondary">
-                  {entry.tonnes} t
-                </span>
-                <span className="tabular-nums font-mono text-xs text-text-muted">
-                  #{entry.sales_rank}
-                </span>
-                <span className="hidden truncate text-xs text-text-muted sm:inline">
-                  {entry.crops.slice(0, 3).join(", ")}
-                </span>
-              </div>
+              <SalesRow
+                key={entry.name}
+                entry={entry}
+                top={data.top}
+                salesRanked={data.sales_ranked}
+                salesYear={data.sales_year}
+                open={open === entry.name}
+                onToggle={() => setOpen(open === entry.name ? null : entry.name)}
+              />
             ))}
           </div>
           <p className="mt-4 text-xs leading-relaxed text-text-muted">
@@ -165,5 +181,122 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
         </p>
       </div>
     </section>
+  );
+}
+
+/**
+ * A sales row that opens into what the reader would otherwise have to go and
+ * look up: the deadline, the full crop list, and a link to the Commission's own
+ * record. Approval age is shown next to the model rank deliberately, because
+ * approval age is the baseline hazard this model is measured against, and a
+ * reader entitled to the rank is entitled to the number it has to beat.
+ */
+function SalesRow({
+  entry,
+  top,
+  salesRanked,
+  salesYear,
+  open,
+  onToggle,
+}: {
+  entry: WatchlistEntry;
+  top: number;
+  salesRanked: number;
+  salesYear: number;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div className={`rounded-md ${open ? "bg-surface-raised/50" : ""}`}>
+      <div
+        role="button"
+        tabIndex={0}
+        aria-expanded={open}
+        className="flex cursor-pointer items-center gap-2 rounded-md px-1 py-1.5 text-sm transition-colors hover:bg-surface-raised/60 sm:gap-3"
+        onClick={onToggle}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onToggle();
+          }
+        }}
+      >
+        <span className="min-w-0 flex-1 truncate text-text-secondary">
+          {entry.name}{" "}
+          <span className="text-text-muted" aria-hidden>
+            {open ? "▾" : "▸"}
+          </span>
+        </span>
+        <span className="w-16 shrink-0 text-right font-mono text-xs tabular-nums text-text-secondary">
+          {entry.tonnes} t
+        </span>
+        <span className="w-8 shrink-0 font-mono text-xs tabular-nums text-text-muted">
+          #{entry.sales_rank}
+        </span>
+        <span className="hidden w-40 shrink-0 truncate text-xs text-text-muted sm:inline">
+          {entry.crops.slice(0, 3).join(", ")}
+        </span>
+      </div>
+
+      {open && (
+        <div className="mx-1 mb-2 rounded-md border border-hairline bg-page/60 px-4 py-4 text-xs">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="text-sm font-medium text-text-primary">{entry.name}</span>
+            <span className="text-text-muted">CAS {entry.cas}</span>
+          </div>
+
+          <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5">
+            <dt className="text-text-muted">Model rank</dt>
+            <dd className="text-text-secondary">
+              {entry.rank} of {top}, by modelled three-year hazard
+            </dd>
+
+            <dt className="text-text-muted">EU approval held</dt>
+            <dd className="text-text-secondary">
+              {entry.approval_years === null
+                ? "not recorded"
+                : `${entry.approval_years} years, the baseline this rank has to beat`}
+            </dd>
+
+            <dt className="text-text-muted">Decision due</dt>
+            <dd className="text-text-secondary">
+              {entry.expiry ?? "no dated expiry, approval is open-ended"}
+              {entry.expiry && entry.outcome === "pending" ? ", still open" : ""}
+            </dd>
+
+            <dt className="text-text-muted">Sold in Sweden</dt>
+            <dd className="text-text-secondary">
+              {entry.tonnes} tonnes in {salesYear}, ranked {entry.sales_rank} of {salesRanked}{" "}
+              plant protection actives
+            </dd>
+
+            <dt className="text-text-muted">Approved for</dt>
+            <dd className="text-text-secondary">
+              {entry.crops.length ? entry.crops.join(", ") : "no Swedish crop use recorded"}
+            </dd>
+          </dl>
+
+          {entry.eu_id !== null && (
+            <p className="mt-3 border-t border-hairline pt-3">
+              <a
+                href={euRecordUrl(entry.eu_id)}
+                target="_blank"
+                rel="noreferrer"
+                className="text-accent hover:underline"
+              >
+                Commission record for this substance
+              </a>
+              <span className="text-text-muted"> (EU Pesticides Database)</span>
+            </p>
+          )}
+
+          <p className="mt-3 leading-relaxed text-text-muted">
+            Being here is a modelled expectation, not a finding. Most of a band this size is
+            never actioned, and this substance is on the list because a model ranked it, not
+            because a regulator has said anything about it.
+          </p>
+        </div>
+      )}
+    </div>
   );
 }
