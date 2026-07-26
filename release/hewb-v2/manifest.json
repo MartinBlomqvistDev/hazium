@@ -1,6 +1,6 @@
 {
   "benchmark": "HEWB",
-  "version": "2.0",
+  "version": "2.1",
   "released": "2026-07-26",
   "supersedes": "1.4",
   "why": "v1.4's target mixes whether a withdrawal happened with when. Ranking on approval age alone reaches 98% of its average precision and reproduces its headline lead times exactly, so the binary formulation could not separate timing from merit. v2 changes the unit of analysis, not the data.",
@@ -18,35 +18,56 @@
       "lift": 3.5595
     },
     "evidence only": {
-      "average_precision": 0.179097,
-      "auc": 0.75067,
-      "lift": 6.2578
+      "average_precision": 0.179906,
+      "auc": 0.753235,
+      "lift": 6.2861
     },
     "age + evidence": {
-      "average_precision": 0.253255,
-      "auc": 0.87669,
-      "lift": 8.849
+      "average_precision": 0.241757,
+      "auc": 0.87994,
+      "lift": 8.4473
     }
   },
   "verification": {
-    "age_recoverable_from_evidence_r2": -0.009,
-    "block_permutation_p": 0.024,
-    "feature_lag_years_to_delta": {
-      "0": 0.141,
-      "1": 0.056,
-      "2": 0.045,
-      "3": 0.029
+    "age_recoverable_from_evidence_r2": {
+      "grouped_by_substance": 0.4731,
+      "naive_unshuffled_kfold": -0.0136
     },
-    "forward_splits_positive_h3": "9 of 9 with >=16 training events"
+    "block_permutation": {
+      "real_ap": 0.2219,
+      "best_shuffled": 0.0726,
+      "p": 0.0244
+    },
+    "feature_lag_years_to_delta": {
+      "0": 0.1236,
+      "1": 0.0576,
+      "2": 0.0526,
+      "3": 0.0255
+    },
+    "forward_splits_positive_h3": "9 of 9",
+    "forward_splits_positive_h1": "7 of 9; negative fitted through 2014 and 2015"
+  },
+  "anchor_case": {
+    "cohort": "the six TFA-forming substances KEMI opened for reevaluation 2025-11-20",
+    "in_published_top_100": 0,
+    "expected_by_chance": 2.3076923076923075,
+    "median_percentile": 0.6461538461538462,
+    "detected": false,
+    "note": "No detection. Groundwater and residue monitoring are not among the ingested sources, so the hazard that motivated the project remains outside what the model can see."
   },
   "limits": {
-    "training_events_floor": 16,
-    "linear_model_recovers": "about a fifth of the boosted-tree gain",
-    "event_concentration": "75 of 102 one-year events fall in 2017-2021"
+    "linear_model_recovers": 0.1967,
+    "event_concentration": "75 of 102 one-year events fall in 2017-2021",
+    "binding_constraint": "era transfer, not sample size: a model fitted before the 2017-2021 renewal wave does not transfer into it",
+    "calibration": {
+      "raw_brier": 0.05876,
+      "isotonic_brier": 0.02402
+    }
   },
   "tables": {
     "survival_h1.csv": "arms, per-group contributions and forward splits at a one-year horizon",
     "survival_h3.csv": "the same at three years, the horizon the watchlist uses",
-    "v2_survival_retest.csv": "node embeddings re-tested on the panel, where they lose by more"
+    "v2_survival_retest.csv": "node embeddings re-tested on the panel, where they lose by more",
+    "survival_verification_h1.json": "every check the card cites, as written by pipeline/32"
   }
 }

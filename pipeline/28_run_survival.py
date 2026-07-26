@@ -27,6 +27,7 @@ from sklearn.model_selection import StratifiedGroupKFold
 from hazium.benchmark.survival import (
     EVENT,
     EVIDENCE_GROUPS,
+    IN_FUNNEL_GROUPS,
     SUBJECT,
     PanelSpec,
     baseline_hazard,
@@ -38,9 +39,14 @@ from hazium.graph.build import load_graph
 from hazium.ml.baseline import make_model
 from hazium.models import LiteratureVolumeRecord, RegulatoryEvent, SalesRecord, Substance
 from hazium.resolve.names import SubstanceResolver, resolve_sales_records
+from hazium.sources.echa_clh import clh_intention_records, earliest_intention_year
 
 ROOT = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"
+#: ECHA intentions to submit a harmonised classification. Read from the raw
+#: snapshot like `pipeline/12` does, so the panel carries the same feature
+#: groups the v1.4 benchmark did rather than a silently empty one.
+CLH_SNAPSHOT = ROOT / "data" / "raw" / "clh_intentions_ppp.jsonl"
 
 #: Folds for the grouped evaluation. Five keeps at least a few events per fold
 #: at the observed event count without leaving any fold empty.
@@ -89,8 +95,16 @@ def main() -> int:
     )
     events = _load(PROCESSED / "eu_ppdb_events.jsonl", RegulatoryEvent)
     lit = _load(PROCESSED / "literature_volume.jsonl", LiteratureVolumeRecord)
+    clh = (
+        clh_intention_records(earliest_intention_year(CLH_SNAPSHOT))
+        if CLH_SNAPSHOT.exists()
+        else []
+    )
+    print(f"CLH-intention records: {len(clh)}")
 
-    panel = build_panel(graph, sales, events, lit, PanelSpec(horizon_years=args.horizon))
+    panel = build_panel(
+        graph, sales, events, lit, PanelSpec(horizon_years=args.horizon), clh_records=clh
+    )
     y = panel[EVENT].to_numpy()
     base = y.mean()
     print(
@@ -131,6 +145,20 @@ def main() -> int:
         print(f"  age + {name:<12} AP {ap:.4f}  delta {ap - ap_age:+.4f}")
     print()
 
+    # EFSA activity and ECHA CLH intentions read the regulator's own pipeline.
+    # If the whole gain came from those, the model would be reporting regulatory
+    # intent rather than anticipating it, so the two blocks are measured apart.
+    print("in-funnel (efsa, clh) against out-of-funnel (clp, sales, graph, literature)")
+    block_rows = []
+    for label, names in (
+        ("in_funnel", tuple(sorted(IN_FUNNEL_GROUPS))),
+        ("out_of_funnel", tuple(n for n in EVIDENCE_GROUPS if n not in IN_FUNNEL_GROUPS)),
+    ):
+        ap, _sd, _auc = arm(panel, feature_columns(age=True, groups=names), seeds)
+        block_rows.append((label, ap, ap - ap_age))
+        print(f"  age + {label:<14} AP {ap:.4f}  delta {ap - ap_age:+.4f}")
+    print()
+
     print("forward splits: fit on <=Y, score every later year")
     forward_rows = []
     for cut in range(2014, 2023):
@@ -154,15 +182,24 @@ def main() -> int:
             f"age {ap_a:.4f}  both {ap_b:.4f}  delta {ap_b - ap_a:+.4f}  "
             f"hits@50 {top50['age']} vs {top50['both']}"
         )
-    trainable = [r for r in forward_rows if r[1] >= 16]
-    if trainable:
-        mean_delta = float(np.mean([r[4] - r[3] for r in trainable]))
+    if forward_rows:
+        mean_delta = float(np.mean([r[4] - r[3] for r in forward_rows]))
+        positive = sum(1 for r in forward_rows if r[4] > r[3])
         print(
-            f"\n  with >=16 training events: positive in "
-            f"{sum(1 for r in trainable if r[4] > r[3])} of {len(trainable)} splits, "
+            f"\n  all splits: positive in {positive} of {len(forward_rows)}, "
             f"mean delta {mean_delta:+.4f}"
         )
-        print("  below that the evidence hurts, which is a sample-size floor, not a result.")
+        # The early splits used to be reported as failing below a sixteen-event
+        # floor. A subsampling test disproved that: holding the test set fixed
+        # and varying only the training events, the delta stays positive down to
+        # four. What the early splits fail at is transfer between regulatory
+        # eras, so they are named by era here rather than by sample size.
+        negative = [r[0] for r in forward_rows if r[4] <= r[3]]
+        if negative:
+            print(
+                f"  negative or flat when fitted through {', '.join(str(c) for c in negative)}: "
+                "training before the 2017-2021 renewal wave does not transfer into it."
+            )
 
     out = PROCESSED / f"survival_h{args.horizon}.csv"
     with out.open("w", encoding="utf-8", newline="") as f:
@@ -173,6 +210,10 @@ def main() -> int:
         writer.writerow([])
         writer.writerow(["group_added_to_age", "average_precision", "delta"])
         for name, ap, d in group_rows:
+            writer.writerow([name, f"{ap:.6f}", f"{d:+.6f}"])
+        writer.writerow([])
+        writer.writerow(["evidence_block_added_to_age", "average_precision", "delta"])
+        for name, ap, d in block_rows:
             writer.writerow([name, f"{ap:.6f}", f"{d:+.6f}"])
         writer.writerow([])
         writer.writerow(

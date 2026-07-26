@@ -99,8 +99,8 @@ reported, and they are not in tension: they answer slightly different questions.
 > v1.4's target could not separate *whether* a substance was withdrawn from
 > *when*, so approval age answers most of it. **HEWB v2**, under `v2/` in this
 > repository, changes only the unit of analysis: one approved substance in one
-> year at risk. On that panel the evidence adds +0.151 average precision over
-> approval age alone (p = 0.024), and a forward split finds 15 real withdrawals
+> year at risk. On that panel the evidence adds +0.140 average precision over
+> approval age alone (p = 0.024), and a forward split finds 11 real withdrawals
 > in the top 50 against age's 4. v1.4 is not retracted; read them together.
 
 ## The approval-age baseline beats the model

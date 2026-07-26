@@ -18,12 +18,15 @@ const BUILT = [
     note: "24,784 edges, every one dated with when it became public",
   },
   {
-    figure: "6",
-    label: "independent public sources",
-    note: "EU Pesticides DB, ECHA CLP, EFSA, KemI, Europe PMC, SGU",
+    // Five sources reach the model. SGU's groundwater survey is cited in the
+    // origin story and is deliberately not counted here, because it is not an
+    // input: it is after-the-fact confirmation of a hazard the model misses.
+    figure: "5",
+    label: "public sources feeding the model",
+    note: "EU Pesticides DB, ECHA (CLP and CLH), EFSA OpenFoodTox, KemI, Europe PMC",
   },
   {
-    figure: "374",
+    figure: "395",
     label: "tests, green on every push",
     note: "GitHub Actions, ruff, pytest, pinned toolchain",
   },
@@ -61,12 +64,13 @@ export default function WhatWasBuilt() {
           >
             open on GitHub
           </a>{" "}
-          under AGPL-3.0. The benchmark is published separately as{" "}
+          under AGPL-3.0. Both benchmark versions, the one that failed and the one that
+          replaced it, are published as{" "}
           <a
             href="https://huggingface.co/datasets/MartinBlomqvist/hewb"
             className="text-accent underline underline-offset-2"
           >
-            a citable dataset
+            citable datasets
           </a>{" "}
           under CC-BY-4.0.
         </p>

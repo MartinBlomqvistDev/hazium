@@ -8,7 +8,7 @@
 
 Hazium is an explainable machine learning platform. It builds a temporally-aware knowledge graph of environmental and public-health evidence from heterogeneous public data: regulatory decisions, hazard classifications, national sales statistics, residue monitoring, and scientific conclusions. Machine learning over that graph ranks substances for future regulatory risk, and every signal traces back to the source evidence behind it.
 
-The most useful thing in here is a negative that was then repaired. The original headline turned out to be reproducible by ranking on approval age alone, which is a date subtraction; the cause was the question rather than the data; and reframing it as a survival problem recovered a real, independently-checked contribution from the evidence. All three steps are published below, in that order.
+The most useful thing in here is a negative that was then repaired. The original headline turned out to be reproducible by ranking on approval age alone, which is a date subtraction; the cause was the question rather than the data; and reframing it as a survival problem recovered a real, independently-checked contribution from the evidence. All three steps are published below, in that order, along with two later corrections to the repair itself and the case the finished system still does not solve.
 
 The first domain is pesticides, with a Nordic focus. The intelligence is in the ML; large language models are used for presentation only.
 
@@ -17,6 +17,8 @@ The first domain is pesticides, with a Nordic focus. The intelligence is in the 
 > Using only data known before 2023-01-01, does Hazium rank fluazinam, the fungicide at the centre of Sweden's 2026 pesticide controversy, among the highest-concern substances approved in Sweden?
 
 Every version of the system is measured against this retrodetection question under strict temporal discipline. Every fact and every edge carries a `known_at` timestamp, and a model evaluated at a given cutoff never sees evidence dated on or after it.
+
+**The current answer is no.** Asked properly, of all six substances the Swedish regulator named rather than of fluazinam alone, none of them reaches the published band and the cohort sits slightly worse than a random draw. [The measurement and the reason are below](#the-anchor-case-and-why-it-is-still-a-miss). It is the first thing in this README because it is the thing a reader should be least able to miss.
 
 ## Architecture
 
@@ -59,8 +61,8 @@ The V-ladder is the capability ladder. HEWB, the Hazium Early Warning Benchmark,
 |---|---|---|
 | V0 | Knowledge graph: ingestion, entity resolution, evidence-path queries | Done |
 | V1 | ML tasks, tabular baselines, SHAP, time-split retrodetection eval | Done |
-| V1.5 | Discrete-time survival panel: one approved substance per year at risk, so approval age becomes the baseline hazard rather than a competing feature. Evidence adds +0.151 AP over age alone (p = 0.024) | Done, and the current basis of the watchlist |
-| V2 | Node embeddings on the same tasks | Documented negative, re-tested on the survival panel where coverage doubles to 65.3%. They lose by more there: 0.253 to 0.173 |
+| V1.5 | Discrete-time survival panel: one approved substance per year at risk, so approval age becomes the baseline hazard rather than a competing feature. Evidence adds +0.140 AP over age alone (p = 0.024) | Done, and the current basis of the watchlist |
+| V2 | Node embeddings on the same tasks | Documented negative, re-tested on the survival panel where coverage doubles to 65.3%. They lose by more there: 0.242 to 0.176 |
 | V3 | GNNs with evidence-path explanations | Not entered, per the V2 gate |
 | V4 | Second domain. Four candidate EU regimes gated against the method's three preconditions, each failing differently: PFAS (unbounded population, circular hazard-defined labels), biocides (42% dual-use with pesticides, 15 independent positives), food additives (~4 clean safety withdrawals, calendar-driven review), feed additives (309 positives but 61% are commercial non-reapplications). No second domain claimed; the boundary is the result | Gated, not entered |
 | HEWB v1.4 | Versioned early-warning benchmark, released with a robustness capstone: annual rolling-origin eval, per-case lead-time, and a label-shuffle kill-criterion | Released |
@@ -147,25 +149,78 @@ is left to explain the rest. On that panel, with folds grouped by substance:
 | arm | average precision | lift over base rate | AUC |
 |---|---|---|---|
 | approval age alone | 0.102 | 3.6x | 0.836 |
-| evidence alone | 0.179 | 6.3x | 0.751 |
-| **age + evidence** | **0.253** | **8.9x** | **0.877** |
+| evidence alone | 0.180 | 6.3x | 0.753 |
+| **age + evidence** | **0.242** | **8.4x** | **0.880** |
 
-The gain is +0.151 against a seed spread of ±0.032. Five independent checks back
-it: approval age is **not** recoverable from the evidence features (R² = −0.009),
-so the two are genuinely separate; the signal survives lagging every feature by
-three years, decaying from +0.141 to +0.029 rather than collapsing, so it is not
-an artefact of activity immediately before a decision; a block permutation over
-substances puts it at **p = 0.024**; it is positive in six of nine
-leave-one-year-out folds; and in a genuine forward split, fit on 2019 and
-earlier and scored on 2020 onward, the top 50 contains **15 real withdrawals
-against approval age's 4**.
+The gain is +0.140 against a seed spread of ±0.029. Three checks back it: the
+signal survives lagging every feature by three years, decaying from +0.124 to
++0.026 rather than collapsing, so it is not an artefact of activity immediately
+before a decision; a block permutation over whole substance histories puts it at
+**p = 0.024**; and in a genuine forward split, fit on 2019 and earlier and scored
+on 2020 onward, the top 50 contains **11 real withdrawals against approval age's
+4**. At the three-year horizon every one of the nine forward splits is positive.
 
-The limits are equally measurable and equally published. The benefit needs
-roughly sixteen training events before it appears at all, and below that adding
-evidence actively hurts. A linear model recovers about a fifth of what gradient
-boosting does, so the effect lives in interactions. And 75 of the 102 events fall
-in the 2017-2021 renewal wave, so this is substantially one regulatory era's
-behaviour. Run it with `pipeline/28_run_survival.py`.
+A fourth check was published here and was wrong. Approval age was reported as
+*not* recoverable from the evidence (R² = −0.009), which would have made the two
+arms independent. That R² came from an unshuffled `KFold` on a panel built year
+by year and concatenated, so it split on time and tested on years whose approval
+ages lay outside the training range. Grouped by substance the real answer is
+**+0.47**: the evidence encodes roughly half of approval age, and "evidence only"
+is not an age-free arm. The headline comparison is unaffected, because both arms
+are given the age features explicitly, so the +0.140 is measured over and above
+age either way.
+
+The limits are equally measurable and equally published. A linear model recovers
+about a fifth of what gradient boosting does, so the effect lives in
+interactions. 75 of the 102 events fall in the 2017-2021 renewal wave, and that
+is the binding constraint: a model fitted before the wave does not transfer into
+it. Raw scores are badly calibrated and must not be read as probabilities. Run
+the result with `pipeline/28_run_survival.py` and every check above with
+`pipeline/32_verify_survival.py`.
+
+## The anchor case, and why it is still a miss
+
+The north-star question above has a measurable answer now, and the answer is no.
+
+Asked of fluazinam alone it is not answerable. Any ranking puts some substance
+somewhere, and at an earlier stage of this work fluazinam sat at 96 of 260 and
+inside the published band, which reads as a hit. It is 117 today, and neither
+number means anything on its own.
+
+Kemikalieinspektionen named **six** TFA-forming substances in the same
+reevaluation on 2025-11-20. That cohort is dated, externally defined, and chosen
+by a regulator rather than by this project, which makes it a test. Their
+positions in the v2 three-year ranking of the 260 substances still at risk:
+
+| substance | rank of 260 |
+|---|---|
+| Fluazinam | 117 |
+| Flonicamid | 128 |
+| Diflufenican | 146 |
+| Fluopyram | 190 |
+| Mefentrifluconazole | 213 |
+| tau-fluvalinate | 225 |
+
+**None of the six reaches the published top 100, where chance alone would put
+2.3 of them.** The cohort median sits at the 65th percentile, slightly worse
+than a random draw. There is no reading of this in which the model anticipated
+the reevaluation.
+
+The cause is the input set, not the target. TFA is a degradation product, and
+the hazard appears in groundwater monitoring, which is not among the ingested
+sources. An approval record, a hazard classification and a sales table do not
+say that a substance becomes something persistent after it leaves the field, so
+no reformulation of the target can recover a signal that is not in the features.
+Folding groundwater and residue monitoring in is the next data source on the
+roadmap, and this cohort is the test it has to pass.
+
+The announcement itself is in the graph and is *not* visible to the model:
+`pipeline/03` merges KEMI announcements as `SUBJECT_OF` edges, which no feature
+group reads. Rebuilding the feature matrix with those six nodes removed changes
+nothing for any of the 8,734 substances, so the ranking above is not circular.
+
+Reported by `pipeline/32_verify_survival.py` via `benchmark/anchor.py`, which
+exists so that the cohort rather than the convenient member is what gets quoted.
 
 ## The forward watchlist
 
@@ -175,12 +230,12 @@ scores today's approved substances with the survival model, and `pipeline/25`
 through `27` turn that ranking into something that can be marked. It replaced
 `pipeline/13`, which used the binary target and therefore mostly returned old
 approvals: moving to the survival ranking drops the two most obvious false
-positives, a fatty-acid soap and acetic acid, from 5th and 62nd to 27th and
-192nd.
+positives, a fatty-acid soap and acetic acid, from 5th and 62nd to 30th and
+147th.
 
 Two things make it falsifiable rather than an assertion. Every EU approval
 carries an expiry date on which the Commission is forced to decide, so each
-entry has a deadline: 58 of the 93 tracked substances reach theirs by the end of
+entry has a deadline: 64 of the 98 tracked substances reach theirs by the end of
 2027. And `pipeline/26_track_resolution.py` records what the register said when
 the prediction was made, then classifies each outcome afterwards as a lapse, a
 full-term renewal (which confirms a false positive) or a short procedural
@@ -188,7 +243,7 @@ extension (which settles nothing and is counted as still open). Collapsing the
 third into the second is what makes an early-warning model look worse than it is.
 
 The ranking is also mapped onto the crops it reaches, through KemI's Swedish
-product register: 48 of the top 100 are in currently approved plant protection
+product register: 32 of the top 100 are in currently approved plant protection
 products. No product or brand is named. A large share of any list this length is
 never actioned, so naming commercial products against it would put specific
 companies on a list carrying that error.

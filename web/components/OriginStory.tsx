@@ -11,15 +11,19 @@ export default function OriginStory() {
           national news?
         </p>
         <p className="mt-4 leading-relaxed text-text-secondary">
-          The answer was no, and the reason is precise. Fluazinam&apos;s actual
-          concern is groundwater: it breaks down into the PFAS substance
-          trifluoroacetic acid (TFA), which spreads to groundwater.
-          Kemikalieinspektionen opened a formal reevaluation in November 2025,
-          and an SVT investigation made it national news in July 2026. The
-          sources ingested so far, EU regulatory
-          history, EU hazard classifications, and Swedish sales, do not cover
-          groundwater or residue monitoring, so that specific signal sits outside
-          the current data.
+          The answer was no, it is still no two model versions later, and the
+          reason is precise. Fluazinam&apos;s actual concern is groundwater: it
+          breaks down into the PFAS substance trifluoroacetic acid (TFA), which
+          spreads to groundwater. Kemikalieinspektionen opened a formal
+          reevaluation in November 2025, and an SVT investigation made it
+          national news in July 2026. The sources ingested so far, EU regulatory
+          history, EU hazard classifications, scientific literature and Swedish
+          sales, do not cover groundwater or residue monitoring, so that specific
+          signal sits outside the current data.{" "}
+          <a href="#anchor" className="text-accent underline underline-offset-2">
+            The miss is measured further down
+          </a>
+          , against the whole cohort the regulator named rather than fluazinam alone.
         </p>
         <p className="mt-4 leading-relaxed text-text-secondary">
           The concern itself is not in doubt. A national SGU groundwater

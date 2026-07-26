@@ -49,9 +49,12 @@ from hazium.ml.baseline import make_model
 from hazium.ml.embed import embedding_dataframe, fit_metapath2vec
 from hazium.models import LiteratureVolumeRecord, RegulatoryEvent, SalesRecord, Substance
 from hazium.resolve.names import SubstanceResolver, resolve_sales_records
+from hazium.sources.echa_clh import clh_intention_records, earliest_intention_year
 
 ROOT = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"
+#: See `pipeline/28`: the panel needs this or the CLH group sits empty.
+CLH_SNAPSHOT = ROOT / "data" / "raw" / "clh_intentions_ppp.jsonl"
 N_SPLITS = 5
 
 
@@ -116,7 +119,12 @@ def main() -> int:
     events = _load(PROCESSED / "eu_ppdb_events.jsonl", RegulatoryEvent)
     lit = _load(PROCESSED / "literature_volume.jsonl", LiteratureVolumeRecord)
 
-    panel = build_panel(graph, sales, events, lit, PanelSpec())
+    clh = (
+        clh_intention_records(earliest_intention_year(CLH_SNAPSHOT))
+        if CLH_SNAPSHOT.exists()
+        else []
+    )
+    panel = build_panel(graph, sales, events, lit, PanelSpec(), clh_records=clh)
     base = panel[EVENT].mean()
     print(f"panel: {len(panel):,} rows, {int(panel[EVENT].sum())} events, base {base:.2%}")
     print(f"\nfitting metapath2vec per year, dim={args.dim} (never once over the whole graph)")

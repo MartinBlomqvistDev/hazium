@@ -9,7 +9,11 @@ const PRINCIPLES = [
   },
   {
     title: "Honesty over novelty",
-    body: "HEWB publishes the misses next to the hits. Every version records which landmarks it fails to flag before their real regulatory action.",
+    body: "HEWB publishes the misses next to the hits, including the case the project was built for and still does not find. Every version records which landmarks it fails to flag, and the version whose headline turned out to be reproducible by a date subtraction stays up, unretracted, next to the one that replaced it.",
+  },
+  {
+    title: "Cohorts, not anecdotes",
+    body: "A single substance in a favourable position is not evidence. Where a claim can be tested against a group someone else defined, on a date they published, that is the group reported, whichever way it comes out.",
   },
   {
     title: "Evidence paths",

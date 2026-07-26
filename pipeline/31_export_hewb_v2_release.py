@@ -36,7 +36,13 @@ TABLES = {
     "survival_h1.csv": "arms, per-group contributions and forward splits at a one-year horizon",
     "survival_h3.csv": "the same at three years, the horizon the watchlist uses",
     "v2_survival_retest.csv": "node embeddings re-tested on the panel, where they lose by more",
+    "survival_verification_h1.json": "every check the card cites, as written by pipeline/32",
 }
+
+#: Verification numbers used to be typed into this manifest by hand, which is
+#: how a retracted R-squared survived three rewrites of the card. They are read
+#: from `pipeline/32`'s output now, so a stale claim cannot outlive its rerun.
+VERIFICATION = "survival_verification_h1.json"
 
 
 def main() -> int:
@@ -45,9 +51,7 @@ def main() -> int:
 
     missing = [name for name in TABLES if not (PROCESSED / name).exists()]
     if missing:
-        raise SystemExit(
-            f"missing {missing}; run pipeline/28 (both horizons) and pipeline/29 first"
-        )
+        raise SystemExit(f"missing {missing}; run pipeline/28 (both horizons), 29 and 32 first")
     for name in TABLES:
         shutil.copy2(PROCESSED / name, RELEASE / "data" / name)
 
@@ -61,9 +65,11 @@ def main() -> int:
             return [r for r in csv.DictReader(f) if r.get("arm") in ARMS]
 
     arms = {r["arm"]: r for r in read("survival_h1.csv")}
+    checks = json.loads((PROCESSED / VERIFICATION).read_text(encoding="utf-8"))
+    cohort = checks["anchor_cohort"]
     manifest = {
         "benchmark": "HEWB",
-        "version": "2.0",
+        "version": "2.1",
         "released": date.today().isoformat(),
         "supersedes": "1.4",
         "why": (
@@ -85,15 +91,32 @@ def main() -> int:
             for arm, row in arms.items()
         },
         "verification": {
-            "age_recoverable_from_evidence_r2": -0.009,
-            "block_permutation_p": 0.024,
-            "feature_lag_years_to_delta": {"0": 0.141, "1": 0.056, "2": 0.045, "3": 0.029},
-            "forward_splits_positive_h3": "9 of 9 with >=16 training events",
+            "age_recoverable_from_evidence_r2": checks["age_from_evidence_r2"],
+            "block_permutation": checks["permutation"],
+            "feature_lag_years_to_delta": checks["lag_deltas"],
+            "forward_splits_positive_h3": "9 of 9",
+            "forward_splits_positive_h1": "7 of 9; negative fitted through 2014 and 2015",
+        },
+        "anchor_case": {
+            "cohort": "the six TFA-forming substances KEMI opened for reevaluation 2025-11-20",
+            "in_published_top_100": cohort["hits_in_top_k"],
+            "expected_by_chance": cohort["expected_in_top_k"],
+            "median_percentile": cohort["median_percentile"],
+            "detected": cohort["hits_in_top_k"] > cohort["expected_in_top_k"],
+            "note": (
+                "No detection. Groundwater and residue monitoring are not among the "
+                "ingested sources, so the hazard that motivated the project remains "
+                "outside what the model can see."
+            ),
         },
         "limits": {
-            "training_events_floor": 16,
-            "linear_model_recovers": "about a fifth of the boosted-tree gain",
+            "linear_model_recovers": checks["linear"]["share_recovered"],
             "event_concentration": "75 of 102 one-year events fall in 2017-2021",
+            "binding_constraint": (
+                "era transfer, not sample size: a model fitted before the 2017-2021 "
+                "renewal wave does not transfer into it"
+            ),
+            "calibration": checks["calibration"],
         },
         "tables": TABLES,
     }

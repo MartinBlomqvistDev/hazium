@@ -1,0 +1,44 @@
+{
+ "horizon": 1,
+ "age_from_evidence_r2": {
+  "grouped_by_substance": 0.4731,
+  "naive_unshuffled_kfold": -0.0136
+ },
+ "lag_deltas": {
+  "0": 0.1236,
+  "1": 0.0576,
+  "2": 0.0526,
+  "3": 0.0255
+ },
+ "permutation": {
+  "real_ap": 0.2219,
+  "best_shuffled": 0.0726,
+  "p": 0.0244
+ },
+ "linear": {
+  "boosted_gain": 0.1236,
+  "linear_gain": 0.0243,
+  "share_recovered": 0.1967
+ },
+ "calibration": {
+  "raw_brier": 0.05876,
+  "isotonic_brier": 0.02402
+ },
+ "anchor_cohort": {
+  "population": 260,
+  "ranks": {
+   "substance:cas:102851-06-9": 225,
+   "substance:cas:1417782-03-6": 213,
+   "substance:cas:158062-67-0": 128,
+   "substance:cas:658066-35-4": 190,
+   "substance:cas:79622-59-6": 117,
+   "substance:cas:83164-33-4": 146
+  },
+  "missing": [],
+  "top_k": 100,
+  "hits_in_top_k": 0,
+  "expected_in_top_k": 2.3076923076923075,
+  "median_rank": 168.0,
+  "median_percentile": 0.6461538461538462
+ }
+}

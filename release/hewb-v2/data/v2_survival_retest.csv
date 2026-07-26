@@ -2,5 +2,5 @@ arm,average_precision,seed_sd,auc,lift
 age only,0.101871,0.002672,0.836175,3.5595
 embeddings only,0.043822,0.007531,0.547574,1.5312
 age + embeddings,0.108867,0.006827,0.772337,3.8039
-age + evidence,0.253255,0.016157,0.876690,8.8490
-age + evidence + embeddings,0.173038,0.012580,0.846119,6.0461
+age + evidence,0.241757,0.014392,0.879940,8.4473
+age + evidence + embeddings,0.175520,0.012489,0.853318,6.1329

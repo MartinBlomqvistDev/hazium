@@ -11,11 +11,11 @@ export default function Nav() {
         <nav className="flex items-center gap-3 text-sm text-text-secondary sm:gap-6">
           {/* Hidden below 400px: the four items plus the wordmark overflow a 360px
               phone by a few pixels, which puts the whole page into sideways scroll. */}
-          <Link href="/#result" className="hidden hover:text-text-primary min-[400px]:inline">
-            The result
-          </Link>
-          <Link href="/#how" className="hover:text-text-primary">
+          <Link href="/#how" className="hidden hover:text-text-primary min-[400px]:inline">
             How it works
+          </Link>
+          <Link href="/#anchor" className="hover:text-text-primary">
+            What it misses
           </Link>
           <Link href="/explorer" className="hover:text-text-primary">
             Explorer

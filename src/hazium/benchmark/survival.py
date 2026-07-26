@@ -18,16 +18,20 @@ which is what it is, and the evidence is left to explain the rest.
 Measured on that panel, with folds grouped by substance so no substance straddles
 a split, the evidence adds a real and independently-verified amount:
 
-* age alone reaches AP 0.098, the evidence alone 0.161, and the two together
-  0.256, against a seed spread of +/-0.013,
-* approval age is *not* recoverable from the evidence features (R^2 = -0.009),
-  so the two are genuinely separate rather than one restating the other,
-* the signal survives lagging every feature by three years, decaying from +0.141
-  to +0.029 rather than collapsing, so it is not an artefact of activity
+* age alone reaches AP 0.102, the evidence alone 0.180, and the two together
+  0.242, against a seed spread of +/-0.014,
+* the signal survives lagging every feature by three years, decaying from +0.124
+  to +0.026 rather than collapsing, so it is not an artefact of activity
   immediately before a decision,
-* a block permutation test over substances puts it at p = 0.024,
+* a block permutation test over whole substance histories puts it at p = 0.024,
 * and in a genuine forward split (fit on 2019 and earlier, score 2020 onward)
-  the top 50 contains 15 real withdrawals against approval age's 4.
+  the top 50 contains 11 real withdrawals against approval age's 4.
+
+Approval age is about 47% recoverable from the evidence features (R^2 = 0.473,
+grouped by substance), so "evidence only" is not an age-free arm. This once read
+as R^2 = -0.009 and "genuinely separate", measured with an unshuffled KFold that
+split this year-ordered panel on time; see `pipeline/32` for both figures. The
+comparison above is unaffected, since both arms carry the age features.
 
 The honest limits are equally measurable. A linear model recovers only a fifth of what
 gradient boosting does, so the effect lives in interactions. And 75 of the 102
@@ -49,6 +53,7 @@ from pydantic import BaseModel, ConfigDict
 from hazium.graph.store import TemporalGraph
 from hazium.ml.dataset import build_dataset
 from hazium.models import (
+    CLHIntentionRecord,
     LiteratureVolumeRecord,
     RegulatoryEvent,
     RegulatoryEventKind,
@@ -70,7 +75,7 @@ AGE_FEATURES: tuple[str, ...] = ("eu_has_approval", "eu_years_since_first_approv
 
 #: Evidence feature groups, kept named so each can be added to age on its own.
 #: EFSA activity and ECHA CLH intentions read the regulator's own pipeline; the
-#: rest do not. Measured separately they contribute +0.072 and +0.062, so the
+#: rest do not. Measured as blocks they contribute +0.085 and +0.067, so the
 #: result does not rest on reading regulatory intent.
 EVIDENCE_GROUPS: dict[str, tuple[str, ...]] = {
     "clp": (
@@ -141,6 +146,7 @@ def build_panel(
     events: list[RegulatoryEvent],
     lit_records: list[LiteratureVolumeRecord] = (),
     spec: PanelSpec | None = None,
+    clh_records: list[CLHIntentionRecord] = (),
 ) -> pd.DataFrame:
     """One row per approved substance per year at risk.
 
@@ -155,6 +161,10 @@ def build_panel(
         events: Regulatory events, used both for features and for the outcome.
         lit_records: Optional literature-volume records.
         spec: Panel configuration; defaults are the reported ones.
+        clh_records: Optional ECHA CLH-intention records. Passing none leaves
+            that whole feature group at zero, which silently turns the
+            in-funnel contribution into EFSA alone; the callers pass the
+            snapshot for that reason.
 
     Returns:
         A frame of feature columns plus ``_substance``, ``_year`` and ``_event``.
@@ -165,7 +175,9 @@ def build_panel(
 
     for year in range(spec.first_year, spec.last_year + 1):
         cutoff = date(year, 1, 1)
-        features, _label, ids = build_dataset(graph, sales, events, cutoff, lit_records=lit_records)
+        features, _label, ids = build_dataset(
+            graph, sales, events, cutoff, lit_records=lit_records, clh_records=clh_records
+        )
         approved = features["eu_has_approval"].to_numpy() > 0
         rows = features[approved].copy()
         subject_ids = [sid for sid, keep in zip(ids, approved) if keep]

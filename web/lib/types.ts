@@ -208,3 +208,65 @@ export interface WatchlistData {
   sales_ranked: number;
   with_sales: number;
 }
+
+/** One arm of the survival comparison. */
+export interface SurvivalArm {
+  average_precision: number;
+  seed_sd: number;
+  auc: number;
+  lift: number;
+}
+
+export interface ForwardSplit {
+  train_through: number;
+  train_events: number;
+  test_events: number;
+  age_ap: number;
+  both_ap: number;
+  age_hits_at_50: number;
+  both_hits_at_50: number;
+}
+
+export interface SurvivalHorizon {
+  arms: Record<string, SurvivalArm>;
+  groups: Record<string, number>;
+  blocks: Record<string, number>;
+  forward?: ForwardSplit[];
+  quoted_split?: ForwardSplit;
+  positive_splits: number;
+  total_splits: number;
+}
+
+/**
+ * Where KEMI's six TFA-forming substances land in the forward ranking.
+ *
+ * The chance baseline is the point of this block. One cohort member high in a
+ * band reads as a hit until the others are put beside it, so nothing here is
+ * reported without `expected_in_top_k` next to it.
+ */
+export interface AnchorCohort {
+  population: number;
+  size: number;
+  ranks: Record<string, number>;
+  top_k: number;
+  hits_in_top_k: number;
+  expected_in_top_k: number;
+  median_rank: number;
+  median_percentile: number;
+  detected: boolean;
+}
+
+export interface SurvivalData {
+  generated: string;
+  version: string;
+  horizon_1: SurvivalHorizon;
+  horizon_3: SurvivalHorizon;
+  verification: {
+    age_from_evidence_r2: number;
+    permutation_p: number;
+    lag_deltas: Record<string, number>;
+    linear_share_recovered: number;
+    calibration: { raw_brier: number; isotonic_brier: number };
+  };
+  anchor_cohort: AnchorCohort;
+}
