@@ -248,6 +248,8 @@ export interface AnchorCohort {
   population: number;
   size: number;
   ranks: Record<string, number>;
+  /** display labels, carried with the ranks so no component keeps its own map */
+  names: Record<string, string>;
   top_k: number;
   hits_in_top_k: number;
   expected_in_top_k: number;

@@ -44,7 +44,7 @@ export default function AnchorCase({ cohort }: { cohort: AnchorCohort }) {
             {ranked.map(([sid, rank]) => (
               <div key={sid} className="flex items-center gap-2 text-sm sm:gap-3">
                 <span className="w-28 shrink-0 truncate text-text-secondary sm:w-40">
-                  {NAMES[sid] ?? sid}
+                  {cohort.names[sid] ?? sid}
                 </span>
                 <span className="relative h-3 flex-1 rounded-sm bg-hairline/40">
                   {/* The published band, drawn so the gap to it is the message. */}
@@ -114,16 +114,6 @@ export default function AnchorCase({ cohort }: { cohort: AnchorCohort }) {
     </section>
   );
 }
-
-/** CAS-keyed display names for the cohort, which the ranking file keys by id. */
-const NAMES: Record<string, string> = {
-  "substance:cas:79622-59-6": "Fluazinam",
-  "substance:cas:158062-67-0": "Flonicamid",
-  "substance:cas:83164-33-4": "Diflufenican",
-  "substance:cas:658066-35-4": "Fluopyram",
-  "substance:cas:1417782-03-6": "Mefentrifluconazole",
-  "substance:cas:102851-06-9": "tau-fluvalinate",
-};
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (

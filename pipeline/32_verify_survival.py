@@ -353,7 +353,13 @@ def main() -> int:
         )
         + "\n"
     )
-    summary["anchor_cohort"] = result.model_dump()
+    # Names travel with the ranks so that no downstream surface has to keep its
+    # own CAS-to-label mapping. The site had one for a day and it was already a
+    # thing that could silently drift out of date.
+    summary["anchor_cohort"] = {
+        **result.model_dump(),
+        "names": {sid: names.get(sid, sid) for sid in result.ranks},
+    }
 
     out = PROCESSED / f"survival_verification_h{args.horizon}.json"
     out.write_text(json.dumps(summary, indent=1) + "\n", encoding="utf-8")

@@ -39,6 +39,14 @@
   "hits_in_top_k": 0,
   "expected_in_top_k": 2.3076923076923075,
   "median_rank": 168.0,
-  "median_percentile": 0.6461538461538462
+  "median_percentile": 0.6461538461538462,
+  "names": {
+   "substance:cas:102851-06-9": "tau-fluvalinate",
+   "substance:cas:1417782-03-6": "Mefentrifluconazole",
+   "substance:cas:158062-67-0": "Flonicamid",
+   "substance:cas:658066-35-4": "Fluopyram",
+   "substance:cas:79622-59-6": "Fluazinam",
+   "substance:cas:83164-33-4": "Diflufenican"
+  }
  }
 }

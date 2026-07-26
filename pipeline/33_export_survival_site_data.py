@@ -127,6 +127,7 @@ def main() -> int:
             "population": cohort["population"],
             "size": len(cohort["ranks"]),
             "ranks": cohort["ranks"],
+            "names": cohort["names"],
             "top_k": cohort["top_k"],
             "hits_in_top_k": cohort["hits_in_top_k"],
             "expected_in_top_k": round(cohort["expected_in_top_k"], 1),
