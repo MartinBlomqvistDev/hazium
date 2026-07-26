@@ -8,6 +8,8 @@
 
 Hazium is an explainable machine learning platform. It builds a temporally-aware knowledge graph of environmental and public-health evidence from heterogeneous public data: regulatory decisions, hazard classifications, national sales statistics, residue monitoring, and scientific conclusions. Machine learning over that graph ranks substances for future regulatory risk, and every signal traces back to the source evidence behind it.
 
+The most useful thing in here is a negative that was then repaired. The original headline turned out to be reproducible by ranking on approval age alone, which is a date subtraction; the cause was the question rather than the data; and reframing it as a survival problem recovered a real, independently-checked contribution from the evidence. All three steps are published below, in that order.
+
 The first domain is pesticides, with a Nordic focus. The intelligence is in the ML; large language models are used for presentation only.
 
 ## The north-star question
@@ -57,7 +59,8 @@ The V-ladder is the capability ladder. HEWB, the Hazium Early Warning Benchmark,
 |---|---|---|
 | V0 | Knowledge graph: ingestion, entity resolution, evidence-path queries | Done |
 | V1 | ML tasks, tabular baselines, SHAP, time-split retrodetection eval | Done |
-| V2 | Node embeddings on the same tasks | Documented negative |
+| V1.5 | Discrete-time survival panel: one approved substance per year at risk, so approval age becomes the baseline hazard rather than a competing feature. Evidence adds +0.151 AP over age alone (p = 0.024) | Done, and the current basis of the watchlist |
+| V2 | Node embeddings on the same tasks | Documented negative, re-tested on the survival panel where coverage doubles to 65.3%. They lose by more there: 0.253 to 0.173 |
 | V3 | GNNs with evidence-path explanations | Not entered, per the V2 gate |
 | V4 | Second domain. Four candidate EU regimes gated against the method's three preconditions, each failing differently: PFAS (unbounded population, circular hazard-defined labels), biocides (42% dual-use with pesticides, 15 independent positives), food additives (~4 clean safety withdrawals, calendar-driven review), feed additives (309 positives but 61% are commercial non-reapplications). No second domain claimed; the boundary is the result | Gated, not entered |
 | HEWB v1.4 | Versioned early-warning benchmark, released with a robustness capstone: annual rolling-origin eval, per-case lead-time, and a label-shuffle kill-criterion | Released |
@@ -124,12 +127,56 @@ The concern has since been confirmed independently, after the fact. A national S
 
 **V2, node embeddings.** metapath2vec embeddings, run alone and concatenated with the tabular features on the identical split, lose at every cutoff. Only 29.2% of the population has any walkable graph structure, so the embedding is a constant zero vector for the rest and dilutes the signal. V3 (GNN) is not entered: message-passing would hit the same coverage ceiling.
 
+## The question was wrong, and fixing it recovered the model
+
+The approval-age result above says the binary target was doing very little work.
+It does not follow that the evidence is worthless, and testing that properly is
+what produced the main result of the project.
+
+"Was this substance ever withdrawn" is asked over a population that is 96%
+substances never approved in the EU, which therefore could never be withdrawn at
+all. Answering it is mostly an eligibility test, and approval age performs that
+test. The target mixes *whether* a withdrawal happened with *when*, and time
+wins.
+
+The separable question is asked on a discrete-time survival panel: one approved
+substance in one year at risk, outcome inside a horizon starting that year.
+Approval age becomes the baseline hazard, which is what it is, and the evidence
+is left to explain the rest. On that panel, with folds grouped by substance:
+
+| arm | average precision | lift over base rate | AUC |
+|---|---|---|---|
+| approval age alone | 0.102 | 3.6x | 0.836 |
+| evidence alone | 0.179 | 6.3x | 0.751 |
+| **age + evidence** | **0.253** | **8.9x** | **0.877** |
+
+The gain is +0.151 against a seed spread of ±0.032. Five independent checks back
+it: approval age is **not** recoverable from the evidence features (R² = −0.009),
+so the two are genuinely separate; the signal survives lagging every feature by
+three years, decaying from +0.141 to +0.029 rather than collapsing, so it is not
+an artefact of activity immediately before a decision; a block permutation over
+substances puts it at **p = 0.024**; it is positive in six of nine
+leave-one-year-out folds; and in a genuine forward split, fit on 2019 and
+earlier and scored on 2020 onward, the top 50 contains **15 real withdrawals
+against approval age's 4**.
+
+The limits are equally measurable and equally published. The benefit needs
+roughly sixteen training events before it appears at all, and below that adding
+evidence actively hurts. A linear model recovers about a fifth of what gradient
+boosting does, so the effect lives in interactions. And 75 of the 102 events fall
+in the 2017-2021 renewal wave, so this is substantially one regulatory era's
+behaviour. Run it with `pipeline/28_run_survival.py`.
+
 ## The forward watchlist
 
 Every result above is retrospective: the model is graded against regulatory
-actions that already happened. One surface on the site is not. `pipeline/13`
-scores today's population, and `pipeline/25` through `27` turn that ranking into
-something that can be marked.
+actions that already happened. One surface on the site is not. `pipeline/30`
+scores today's approved substances with the survival model, and `pipeline/25`
+through `27` turn that ranking into something that can be marked. It replaced
+`pipeline/13`, which used the binary target and therefore mostly returned old
+approvals: moving to the survival ranking drops the two most obvious false
+positives, a fatty-acid soap and acetic acid, from 5th and 62nd to 27th and
+192nd.
 
 Two things make it falsifiable rather than an assertion. Every EU approval
 carries an expiry date on which the Commission is forced to decide, so each
