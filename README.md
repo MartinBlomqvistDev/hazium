@@ -88,6 +88,28 @@ The concern has since been confirmed independently, after the fact. A national S
 
 **V2, node embeddings.** metapath2vec embeddings, run alone and concatenated with the tabular features on the identical split, lose at every cutoff. Only 29.2% of the population has any walkable graph structure, so the embedding is a constant zero vector for the rest and dilutes the signal. V3 (GNN) is not entered: message-passing would hit the same coverage ceiling.
 
+## The forward watchlist
+
+Every result above is retrospective: the model is graded against regulatory
+actions that already happened. One surface on the site is not. `pipeline/13`
+scores today's population, and `pipeline/25` through `27` turn that ranking into
+something that can be marked.
+
+Two things make it falsifiable rather than an assertion. Every EU approval
+carries an expiry date on which the Commission is forced to decide, so each
+entry has a deadline: 58 of the 93 tracked substances reach theirs by the end of
+2027. And `pipeline/26_track_resolution.py` records what the register said when
+the prediction was made, then classifies each outcome afterwards as a lapse, a
+full-term renewal (which confirms a false positive) or a short procedural
+extension (which settles nothing and is counted as still open). Collapsing the
+third into the second is what makes an early-warning model look worse than it is.
+
+The ranking is also mapped onto the crops it reaches, through KemI's Swedish
+product register: 48 of the top 100 are in currently approved plant protection
+products. No product or brand is named. A large share of any list this length is
+never actioned, so naming commercial products against it would put specific
+companies on a list carrying that error.
+
 ## Provenance archive
 
 Several sources publish current state and keep no history, so a fact read today

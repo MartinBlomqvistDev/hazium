@@ -56,6 +56,8 @@ HEWB v1.4 measures lead time against ten landmark EU non-renewals over an annual
 
 Every version of the system is measured against HEWB. Ambition without falsifiability is decoration.
 
+The same rule binds the forward watchlist, which is the only claim here about a future that has not happened. It is published with each substance's approval expiry attached, because that date is when the Commission must decide and therefore when the claim becomes checkable. A prediction without a deadline cannot be marked, and an unmarkable prediction is decoration too.
+
 ## 5. Position among prior work
 
 Hazium is not the first system to reason over chemical hazard knowledge graphs, and pretending otherwise would be a credibility failure.
