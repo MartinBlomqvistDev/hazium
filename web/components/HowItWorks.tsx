@@ -52,7 +52,7 @@ export default function HowItWorks() {
         </p>
         <div className="mt-6 rounded-lg border border-status-critical/40 bg-page p-5">
           <h3 className="font-medium text-text-primary">
-            One of those baselines beat it
+            One of those baselines beat it, and fixing that is the result
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-text-secondary">
             For a long time the baselines here were hazard count, sales tonnage and assessment
@@ -60,25 +60,38 @@ export default function HowItWorks() {
             never tested on its own, because it sat inside the model as a feature.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            Ranking substances by nothing but how long they have held EU approval reaches{" "}
-            <strong className="text-text-primary">98% of the full model&apos;s average
-            precision</strong>, wins outright at 11 of the 16 cutoffs, and reproduces the
-            headline lead times exactly: chlorpyrifos at 132 months, thiacloprid at 133,
-            clothianidin at 120. Removing the two approval-age features leaves the model at 37%
-            of its performance.
+            Ranking on nothing but how long a substance has held EU approval reaches{" "}
+            <strong className="text-text-primary">98% of the full model</strong> and reproduces
+            the lead times above exactly: chlorpyrifos at 132 months, thiacloprid at 133,
+            clothianidin at 120. A date subtraction, no model at all.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            The reason is structural. A substance can only be non-renewed when its approval comes
-            up for renewal, and approval age proxies proximity to that decision. So the ranking
-            is substantially answering <em>whose turn it is</em> rather than <em>who fails</em>.
-            That is knowable at the cutoff, so it is not leakage, but it is not the question this
-            benchmark was built to ask.
+            The cause turned out to be the question rather than the data. &ldquo;Was this ever
+            withdrawn&rdquo; is asked over a population that is 96% substances never approved in
+            the EU, which could never be withdrawn at all. Answering it is mostly an eligibility
+            test, and approval age performs that test.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            The six evidence groups above are therefore worth, over a date subtraction, one extra
-            landmark out of ten and 0.008 average precision. That is the honest measure of what
-            the graph adds today, and it is why approval age is now reported as a baseline rather
-            than hidden inside the model.
+            Asked separably, one approved substance in one year at risk, approval age becomes the
+            background rate and the evidence has something left to explain. It does:{" "}
+            <strong className="text-text-primary">0.102 for age alone against 0.253 for age plus
+            evidence</strong>, a gain of +0.151 against a seed spread of 0.032. Approval age is
+            not recoverable from the evidence (R&sup2; = &minus;0.009), the signal survives
+            lagging every feature three years, a block permutation puts it at p = 0.024, and in a
+            forward split fit on 2019 the top 50 holds 15 real withdrawals against age&apos;s 4.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+            The limits are measured too. The benefit needs about sixteen training events before
+            it appears at all; a linear model recovers a fifth of it, so it lives in
+            interactions; and 75 of 102 events fall in the 2017&ndash;2021 renewal wave. Both
+            benchmark versions are published:{" "}
+            <a
+              href="https://github.com/MartinBlomqvistDev/hazium/tree/main/release/hewb-v2"
+              className="text-accent underline underline-offset-2"
+            >
+              HEWB v2
+            </a>{" "}
+            alongside the frozen v1.4, because reading them together is the point.
           </p>
         </div>
       </div>

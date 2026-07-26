@@ -95,6 +95,14 @@ uses a stricter frame, "flagged ahead of the EU's own first action" (7 of 10),
 which measures against the EU's first move rather than the final ban. Both are
 reported, and they are not in tension: they answer slightly different questions.
 
+> **A second version exists, and it repairs this.** The finding below is that
+> v1.4's target could not separate *whether* a substance was withdrawn from
+> *when*, so approval age answers most of it. **HEWB v2**, under `v2/` in this
+> repository, changes only the unit of analysis: one approved substance in one
+> year at risk. On that panel the evidence adds +0.151 average precision over
+> approval age alone (p = 0.024), and a forward split finds 15 real withdrawals
+> in the top 50 against age's 4. v1.4 is not retracted; read them together.
+
 ## The approval-age baseline beats the model
 
 The trivial baselines in this release were severe-hazard count, sales tonnage and
