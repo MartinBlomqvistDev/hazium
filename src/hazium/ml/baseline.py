@@ -27,12 +27,29 @@ from hazium.models import (
     SalesRecord,
 )
 
+#: Single-feature rankers the learned model must beat to be worth reporting.
+#:
+#: ``approval_age`` was added after an ablation showed it is not a weak
+#: baseline at all. Ranking on approval age alone reaches about 98% of the full
+#: model's average precision across cutoffs, and beats it outright at four of
+#: six, while dropping the two approval-age features leaves the model at 37% of
+#: its performance. The three hazard, sales and assessment baselines that
+#: preceded it are all comfortably beaten, which made the learned model look
+#: far stronger than a fair comparison supports.
+#:
+#: The mechanism is that a non-renewal can only occur when an approval comes up
+#: for renewal, so approval age proxies proximity to that decision. The model
+#: is substantially ranking *whose turn it is* rather than *who fails*. That is
+#: knowable at the cutoff and so is not leakage, but it is a different question
+#: from the one the benchmark is meant to ask, and reporting it as a baseline is
+#: the honest way to keep the distinction visible.
 TRIVIAL_BASELINES = {
     "severe_hazard_count": lambda X: (
         X["clp_has_cmr"] + X["clp_has_aquatic_chronic_1"] + X["clp_has_stot"]
     ),
     "latest_sales_tonnage": lambda X: X["sales_latest_tonnage"],
     "efsa_assessment_count": lambda X: X["efsa_n_assessments"],
+    "approval_age": lambda X: X["eu_years_since_first_approval"],
 }
 
 K_VALUES = (10, 20, 50)

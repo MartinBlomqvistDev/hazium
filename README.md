@@ -68,7 +68,7 @@ The frozen v1.4 benchmark, its result tables, and the full robustness evidence a
 
 HEWB fixes ten historical EU pesticide bans and asks, at each annual cutoff from 2009, where Hazium would have ranked each substance using only evidence dated before that cutoff. Lead time is measured in months between the earliest cutoff a substance enters the top-k and the real regulatory action.
 
-Using only pre-cutoff data across **2009-2024**, XGBoost beats every trivial baseline at every cutoff (2023-01-01: average precision 0.254 against 0.016 for the best trivial ranker, on 25 positives in 5,933 substances). It ranked the real EU-banned substances years before the ban:
+Using only pre-cutoff data across **2009-2024**, XGBoost reaches average precision 0.254 at the 2023-01-01 cutoff, on 25 positives in 5,933 substances. It ranked the real EU-banned substances years before the ban:
 
 - **Chlorpyrifos**: flagged 132 months (11 years) before its 2020 EU ban, at k=10.
 - **Mancozeb**: in the top-20 from 2010, about nine years before its 2021 non-renewal.
@@ -80,7 +80,43 @@ The feature set spans six groups, each grounded in a dated public source: EU haz
 
 SHAP puts the independent scientific-literature feature second overall. It carries as much weight as the in-funnel regulatory-concern signals rather than more. The single largest driver is an approval-age prior, reported and mitigated separately with cohort-relative ranking.
 
-**Robustness.** Four tests harden the headline (raw outputs in `release/hewb-v1.4/`). A label-shuffle placebo, the project's kill-criterion, collapses to the base rate on permuted labels: real average precision 0.230 against a shuffled maximum of 0.013 over 50 permutations, p = 0.020. The signal is real rather than small-class overfitting. The lead over baseline holds at every cutoff from 2020 to 2024, so 2023 is not a selected result. Substances that went through EU review and stayed approved rank well below the true positives, and hazardous-but-never-actioned substances put zero cases in the top 10. The model is specific rather than flagging whatever looks dangerous.
+## The approval-age baseline beats the model
+
+The headline above is real but it is not the interesting number, and the
+comparison that produced it was against the wrong baselines.
+
+For a long time the trivial baselines here were severe-hazard count, sales
+tonnage and assessment count. All three are weak, and the learned model beat
+them by roughly an order of magnitude. Approval age was never tested on its own,
+because it sat inside the model as a feature.
+
+Ranking substances on nothing but how long they have held EU approval reaches
+**98% of the full model's mean average precision** across the sixteen cutoffs,
+wins outright at **11 of 16**, and reproduces the headline lead times exactly:
+chlorpyrifos at 132 months, thiacloprid at 133, clothianidin at 120, propikonazol
+at 119. On chlorpyrifos-methyl and mancozeb it does better than the model.
+Dropping the two approval-age features leaves the model at **37%** of its
+performance.
+
+| | XGBoost | approval age (1 feature) |
+|---|---|---|
+| landmarks flagged, k=50 | 9 of 10 | 8 of 10 |
+| mean AP across 16 cutoffs | 0.467 | 0.459 |
+| cutoffs won | 5 of 16 | 11 of 16 |
+
+The mechanism is structural rather than a bug. A substance can only be
+non-renewed when its approval comes up for renewal, and approval age proxies
+proximity to that decision, so the ranking substantially answers *whose turn it
+is* rather than *who fails*. Approval date is knowable at every cutoff, so this
+is not leakage; it is a different question from the one the benchmark was built
+to ask.
+
+The six evidence groups are therefore worth, over a date subtraction, one extra
+landmark out of ten and 0.008 average precision. `approval_age` is now reported
+as a trivial baseline rather than hidden inside the model, and by this project's
+own baseline rule it is the published result until a learned model beats it.
+
+**Robustness.** Four tests harden the headline (raw outputs in `release/hewb-v1.4/`). A label-shuffle placebo, the project's kill-criterion, collapses to the base rate on permuted labels: real average precision 0.230 against a shuffled maximum of 0.013 over 50 permutations, p = 0.020. The signal is real rather than small-class overfitting. The lead over the hazard, sales and assessment baselines holds at every cutoff from 2020 to 2024, so 2023 is not a selected result; the lead over approval age does not, as above. Substances that went through EU review and stayed approved rank well below the true positives, and hazardous-but-never-actioned substances put zero cases in the top 10. The model is specific rather than flagging whatever looks dangerous.
 
 **The anchor case, fluazinam.** Under the headline EU-non-renewal label it ranks in the top 5% (269th of 5,933) on its general hazard and sales profile but stays outside the strict top-50 bar. Its actual concern is groundwater: fluazinam breaks down into the PFAS substance trifluoroacetic acid (TFA), which spreads to groundwater. Kemikalieinspektionen opened a formal reevaluation of the TFA-forming actives on 2025-11-20 (decision due by April 2028), and an SVT Granskning investigation brought it to national attention in July 2026. The EU-regulatory, hazard, and sales sources do not cover groundwater or residue monitoring, so that signal sits outside the current data. Under a second label variant that also counts that Swedish national reevaluation, fluazinam becomes a positive and ranks in the top 4% (206th of 5,933) out-of-fold, the closest result yet to the north-star question.
 

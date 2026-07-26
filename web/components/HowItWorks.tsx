@@ -46,11 +46,41 @@ export default function HowItWorks() {
           ))}
         </div>
         <p className="mt-8 text-sm text-text-secondary">
-          The model is always compared against trivial baselines:
-          severe-hazard count alone, latest sales tonnage alone, assessment
-          count alone, on the identical task and split. If it doesn&apos;t
-          beat them, the baseline becomes the published result.
+          The model is always compared against trivial baselines, single features ranked on
+          their own, on the identical task and split. If it doesn&apos;t beat them, the baseline
+          becomes the published result.
         </p>
+        <div className="mt-6 rounded-lg border border-status-critical/40 bg-page p-5">
+          <h3 className="font-medium text-text-primary">
+            One of those baselines beat it
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+            For a long time the baselines here were hazard count, sales tonnage and assessment
+            count. All three are weak, and the model beat them comfortably. Approval age was
+            never tested on its own, because it sat inside the model as a feature.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+            Ranking substances by nothing but how long they have held EU approval reaches{" "}
+            <strong className="text-text-primary">98% of the full model&apos;s average
+            precision</strong>, wins outright at 11 of the 16 cutoffs, and reproduces the
+            headline lead times exactly: chlorpyrifos at 132 months, thiacloprid at 133,
+            clothianidin at 120. Removing the two approval-age features leaves the model at 37%
+            of its performance.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+            The reason is structural. A substance can only be non-renewed when its approval comes
+            up for renewal, and approval age proxies proximity to that decision. So the ranking
+            is substantially answering <em>whose turn it is</em> rather than <em>who fails</em>.
+            That is knowable at the cutoff, so it is not leakage, but it is not the question this
+            benchmark was built to ask.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+            The six evidence groups above are therefore worth, over a date subtraction, one extra
+            landmark out of ten and 0.008 average precision. That is the honest measure of what
+            the graph adds today, and it is why approval age is now reported as a baseline rather
+            than hidden inside the model.
+          </p>
+        </div>
       </div>
     </section>
   );

@@ -85,9 +85,8 @@ their real EU action**, with lead times up to **133 months** (about 11 years):
 | Epoxiconazole | 2020-04 | not flagged (the one miss) |
 
 At the 2023-01-01 cutoff the learned model reaches average precision **0.254**
-against a best trivial baseline of **0.016**, a roughly 16x lead over the
-strongest dead-simple ranker on the identical population and split. It beats
-every trivial baseline at every cutoff. Full per-cutoff numbers are in
+on the identical population and split. Read alongside the approval-age
+result below, which is the number that matters. Full per-cutoff numbers are in
 `data/aggregate.csv`; per-landmark trajectories in `data/rank_trajectories.csv`.
 
 A note on counting, because two honest numbers appear in this project. HEWB
@@ -95,6 +94,42 @@ measures "flagged within top-50 before the action" (9 of 10). The public site
 uses a stricter frame, "flagged ahead of the EU's own first action" (7 of 10),
 which measures against the EU's first move rather than the final ban. Both are
 reported, and they are not in tension: they answer slightly different questions.
+
+## The approval-age baseline beats the model
+
+The trivial baselines in this release were severe-hazard count, sales tonnage and
+assessment count. All three are weak, and the learned model beat them by roughly
+an order of magnitude, which is how the headline was long reported. Approval age
+was never tested as a baseline, because it sat inside the model as a feature.
+
+Ranking on approval age alone reaches **98% of the model's mean average
+precision** across the sixteen cutoffs, wins outright at **11 of 16**, and
+reproduces the headline lead times exactly: chlorpyrifos at 132 months,
+thiacloprid at 133, clothianidin at 120, propikonazol at 119. On
+chlorpyrifos-methyl and mancozeb it beats the model. Dropping the two
+approval-age features leaves the model at **37%** of its performance.
+
+| | XGBoost | approval age (1 feature) |
+|---|---|---|
+| landmarks flagged, k=50 | 9 of 10 | 8 of 10 |
+| mean AP across 16 cutoffs | 0.467 | 0.459 |
+| cutoffs won | 5 of 16 | 11 of 16 |
+
+The mechanism is structural. A substance can only be non-renewed when its
+approval comes up for renewal, and approval age proxies proximity to that
+decision, so the ranking substantially answers *whose turn it is* rather than
+*who fails*. Approval date is knowable at every cutoff, so this is not leakage,
+but it is a different question from the one this benchmark was built to ask.
+
+The six evidence groups are therefore worth, over a date subtraction, one extra
+landmark out of ten and 0.008 average precision. `approval_age` is reported as a
+trivial baseline from this point on, and by the project's own baseline rule it is
+the published result until a learned model beats it.
+
+Note that the label-shuffle placebo below is unaffected and still passes. It asks
+whether the signal is real rather than noise, and approval age is a real signal.
+It never asked whether the signal was interesting, which is why the existing
+robustness suite could not have caught this.
 
 ## Robustness (v1.4 capstone)
 
@@ -108,9 +143,7 @@ Four tests, so the headline survives a skeptical reader. All raw outputs are in
    over 50 permutations is 0.013 and 0.016. Permutation p = 0.020, the floor for
    50 permutations. The signal is real.
 
-2. **Cutoff sensitivity.** The learned model beats the best trivial baseline at
-   every cutoff 2020-2024 (6.8x to 15.8x under the headline label), so the
-   result is not a single-cutoff accident. The anchor case, fluazinam, ranks
+2. **Cutoff sensitivity.** The learned model beats the hazard, sales and assessment baselines at every cutoff 2020-2024, so the result is not a single-cutoff accident. It does not beat approval age: see the section above. The anchor case, fluazinam, ranks
    between 111th and 250th of about 5,900 substances (top 2 to 4 percent) at
    every cutoff under the `early_warning` label. The 2023 number is
    representative, not selected.

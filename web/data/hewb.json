@@ -134,82 +134,82 @@
     {
       "cutoff": "2009-01-01",
       "xgboost_ap": 0.6343325364659191,
-      "best_trivial_ap": 0.026355996944232237
+      "best_trivial_ap": 0.6139936766902538
     },
     {
       "cutoff": "2010-01-01",
       "xgboost_ap": 0.6556044613856723,
-      "best_trivial_ap": 0.02545793231915554
+      "best_trivial_ap": 0.6227806553159152
     },
     {
       "cutoff": "2011-01-01",
       "xgboost_ap": 0.5864865772288942,
-      "best_trivial_ap": 0.09761182161034086
+      "best_trivial_ap": 0.5384083967932398
     },
     {
       "cutoff": "2012-01-01",
       "xgboost_ap": 0.6001372862759585,
-      "best_trivial_ap": 0.09615557630271847
+      "best_trivial_ap": 0.606423215224421
     },
     {
       "cutoff": "2013-01-01",
       "xgboost_ap": 0.5950418330191407,
-      "best_trivial_ap": 0.09348277523990932
+      "best_trivial_ap": 0.609852775338956
     },
     {
       "cutoff": "2014-01-01",
       "xgboost_ap": 0.5613811129523384,
-      "best_trivial_ap": 0.09003909914237608
+      "best_trivial_ap": 0.5953092749432789
     },
     {
       "cutoff": "2015-01-01",
       "xgboost_ap": 0.5542599443242274,
-      "best_trivial_ap": 0.08248538592926348
+      "best_trivial_ap": 0.5943078470065599
     },
     {
       "cutoff": "2016-01-01",
       "xgboost_ap": 0.583527375758218,
-      "best_trivial_ap": 0.08413904695722783
+      "best_trivial_ap": 0.6023326640994786
     },
     {
       "cutoff": "2017-01-01",
       "xgboost_ap": 0.5672859745141424,
-      "best_trivial_ap": 0.08005969685914949
+      "best_trivial_ap": 0.5773615927911291
     },
     {
       "cutoff": "2018-01-01",
       "xgboost_ap": 0.47408659704269474,
-      "best_trivial_ap": 0.07688746201787655
+      "best_trivial_ap": 0.5348492659572174
     },
     {
       "cutoff": "2019-01-01",
       "xgboost_ap": 0.4493736695438602,
-      "best_trivial_ap": 0.0730149681022753
+      "best_trivial_ap": 0.4532465710013467
     },
     {
       "cutoff": "2020-01-01",
       "xgboost_ap": 0.3840594370811862,
-      "best_trivial_ap": 0.05652680652680652
+      "best_trivial_ap": 0.396032934161353
     },
     {
       "cutoff": "2021-01-01",
       "xgboost_ap": 0.24258805648136,
-      "best_trivial_ap": 0.034908568439112456
+      "best_trivial_ap": 0.28998463060353075
     },
     {
       "cutoff": "2022-01-01",
       "xgboost_ap": 0.18579550969360922,
-      "best_trivial_ap": 0.01498535010457086
+      "best_trivial_ap": 0.2100975767730947
     },
     {
       "cutoff": "2023-01-01",
       "xgboost_ap": 0.25419020517618257,
-      "best_trivial_ap": 0.016109683128265634
+      "best_trivial_ap": 0.2006604056730523
     },
     {
       "cutoff": "2024-01-01",
       "xgboost_ap": 0.18752613297035206,
-      "best_trivial_ap": 0.018406271340283806
+      "best_trivial_ap": 0.14094006752726224
     }
   ]
 }
