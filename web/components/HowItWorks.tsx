@@ -150,7 +150,8 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
             , a gain of +{(both - age).toFixed(3)} against a seed spread of{" "}
             {h1.arms["age + evidence"].seed_sd.toFixed(3)}. The signal survives lagging every
             feature three years, decaying from +{v.lag_deltas["0"].toFixed(3)} to +
-            {v.lag_deltas["3"].toFixed(3)} rather than collapsing; a block permutation over whole
+            {v.lag_deltas["3"].toFixed(3)}{" "}
+            rather than collapsing; a block permutation over whole
             substance histories puts it at p&nbsp;=&nbsp;{v.permutation_p.toFixed(3)}; and in a
             forward split fit on {split?.train_through} the top 50 holds{" "}
             {split?.both_hits_at_50} real withdrawals against approval age&apos;s{" "}

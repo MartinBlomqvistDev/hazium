@@ -1,5 +1,5 @@
 {
- "generated": "2026-07-26",
+ "generated": "2026-07-27",
  "population": 242,
  "unresolved": 18,
  "flagged": 26,
@@ -9,6 +9,7 @@
  "efsa_found": 1,
  "efsa_total": 1,
  "exposure_cap_tonnes": 50.0,
+ "fluorine_without_cf3": 6,
  "entries": [
   {
    "rank": 1,
@@ -18,7 +19,10 @@
    "fluorine_count": 6,
    "cf3_groups": 2,
    "tonnes": 12.1,
-   "crops": [],
+   "crops": [
+    "onion",
+    "potato"
+   ],
    "score": 1.242,
    "in_kemi_cohort": true,
    "efsa_confirmed": false
@@ -31,7 +35,14 @@
    "fluorine_count": 6,
    "cf3_groups": 2,
    "tonnes": 7.7,
-   "crops": [],
+   "crops": [
+    "barley",
+    "oats",
+    "potato",
+    "rye",
+    "triticale",
+    "wheat"
+   ],
    "score": 1.154,
    "in_kemi_cohort": true,
    "efsa_confirmed": false
@@ -44,7 +55,14 @@
    "fluorine_count": 5,
    "cf3_groups": 1,
    "tonnes": 16.7,
-   "crops": [],
+   "crops": [
+    "barley",
+    "oats",
+    "potato",
+    "rye",
+    "triticale",
+    "wheat"
+   ],
    "score": 0.834,
    "in_kemi_cohort": true,
    "efsa_confirmed": false
@@ -57,7 +75,24 @@
    "fluorine_count": 3,
    "cf3_groups": 1,
    "tonnes": 11.9,
-   "crops": [],
+   "crops": [
+    "apple",
+    "barley",
+    "beans",
+    "cabbage",
+    "carrot",
+    "flax",
+    "oats",
+    "oilseed rape",
+    "pear",
+    "peas",
+    "potato",
+    "rye",
+    "sugar beet",
+    "triticale",
+    "turnip rape",
+    "wheat"
+   ],
    "score": 0.738,
    "in_kemi_cohort": true,
    "efsa_confirmed": false
@@ -70,7 +105,20 @@
    "fluorine_count": 3,
    "cf3_groups": 1,
    "tonnes": 9.9,
-   "crops": [],
+   "crops": [
+    "apple",
+    "barley",
+    "maize",
+    "oats",
+    "oilseed rape",
+    "pear",
+    "potato",
+    "rye",
+    "sugar beet",
+    "triticale",
+    "turnip rape",
+    "wheat"
+   ],
    "score": 0.698,
    "in_kemi_cohort": true,
    "efsa_confirmed": false
@@ -101,7 +149,9 @@
    "fluorine_count": 3,
    "cf3_groups": 1,
    "tonnes": 4.5,
-   "crops": [],
+   "crops": [
+    "potato"
+   ],
    "score": 0.59,
    "in_kemi_cohort": false,
    "efsa_confirmed": false
@@ -114,7 +164,19 @@
    "fluorine_count": 3,
    "cf3_groups": 1,
    "tonnes": 3.8,
-   "crops": [],
+   "crops": [
+    "apple",
+    "barley",
+    "beans",
+    "oats",
+    "pear",
+    "peas",
+    "potato",
+    "rye",
+    "sugar beet",
+    "triticale",
+    "wheat"
+   ],
    "score": 0.576,
    "in_kemi_cohort": true,
    "efsa_confirmed": false
@@ -127,7 +189,13 @@
    "fluorine_count": 5,
    "cf3_groups": 1,
    "tonnes": 0.1,
-   "crops": [],
+   "crops": [
+    "barley",
+    "oats",
+    "rye",
+    "triticale",
+    "wheat"
+   ],
    "score": 0.502,
    "in_kemi_cohort": false,
    "efsa_confirmed": false
@@ -361,7 +429,13 @@
    "fluorine_count": 3,
    "cf3_groups": 1,
    "tonnes": null,
-   "crops": [],
+   "crops": [
+    "barley",
+    "oats",
+    "rye",
+    "triticale",
+    "wheat"
+   ],
    "score": 0.5,
    "in_kemi_cohort": false,
    "efsa_confirmed": false

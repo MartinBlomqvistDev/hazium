@@ -5,6 +5,7 @@ import WhatWasBuilt from "@/components/WhatWasBuilt";
 import ResultSection from "@/components/ResultSection";
 import HowItWorks from "@/components/HowItWorks";
 import AnchorCase from "@/components/AnchorCase";
+import PrecursorScreen from "@/components/PrecursorScreen";
 import Principles from "@/components/Principles";
 import Footer from "@/components/Footer";
 import EvidenceMesh from "@/components/EvidenceMesh";
@@ -45,6 +46,7 @@ export default function Home() {
         <HowItWorks survival={survival} />
         <ResultSection data={data} capability={capability} detail={detail} />
         <AnchorCase cohort={survival.anchor_cohort} screen={tfaScreen} />
+        <PrecursorScreen data={tfaScreen} />
         <EvidenceMesh data={evidenceMesh} />
         <Watchlist data={watchlist} />
         <Principles />

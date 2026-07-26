@@ -306,5 +306,7 @@ export interface TfaScreenData {
   efsa_found: number;
   efsa_total: number;
   exposure_cap_tonnes: number;
+  /** fluorine-bearing but not CF3, almost all difluoromethyl */
+  fluorine_without_cf3: number;
   entries: ScreenEntry[];
 }

@@ -118,11 +118,8 @@ export default function AnchorCase({
           </strong>
           . That is chemistry rather than machine learning, which is the finding: the right
           tool followed from asking what the hazard actually was.{" "}
-          <a
-            href="https://github.com/MartinBlomqvistDev/hazium/blob/main/src/hazium/screen/tfa.py"
-            className="text-accent underline underline-offset-2"
-          >
-            The screen is in the repository
+          <a href="#screen" className="text-accent underline underline-offset-2">
+            The whole shortlist is below
           </a>
           , with the cohort held out as its check.
         </p>

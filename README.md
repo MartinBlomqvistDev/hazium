@@ -222,6 +222,42 @@ nothing for any of the 8,734 substances, so the ranking above is not circular.
 Reported by `pipeline/32_verify_survival.py` via `benchmark/anchor.py`, which
 exists so that the cohort rather than the convenient member is what gets quoted.
 
+## The screen that finds it
+
+The model predicts a committee decision. TFA formation is a chemical property.
+Those come apart, and the anchor cohort is where they come apart visibly, so the
+second artifact is not a model at all.
+
+TFA comes from trifluoromethyl groups. A molecular formula is public, free from
+PubChem, and identical at every cutoff, so it cannot leak and it is not the
+regulator's opinion. Screening the 242 approved substances with a resolved
+structure on that one rule:
+
+| | |
+|---|---|
+| flagged as TFA precursors | **26 of 242** (10.7%) |
+| of KEMI's six | **6 of 6**, where chance places 0.6 |
+| hypergeometric p | **8.8e-7**, one in 1.1 million |
+| fluazinam's rank | **1** |
+
+Two checks, neither an input. KEMI named six on 2025-11-20 and all six are in
+the shortlist. Separately, EFSA's own degradation records already list TFA as a
+metabolite for flutolanil, which the rule flags without being told.
+
+The weights are written down in `screen/tfa.py` rather than fitted. Six confirmed
+substances can check a rule and cannot train one, so fitting on them and then
+reporting how well the fit ranks them would measure nothing.
+
+It is a screen, so it is deliberately wide: 20 of the 26 carry no published TFA
+finding from any regulator. Six more substances carry difluoromethyl rather than
+trifluoromethyl and are excluded, since those degrade toward difluoroacetic acid,
+a related concern and a different compound. Eighteen have no PubChem structure
+and are left out of the population rather than counted as clean.
+
+Run it with `pipeline/34_ingest_structures.py` then `pipeline/35_run_tfa_screen.py`.
+Structures are committed under `data/raw/`, so the screen runs offline and scores
+the same molecules a reviewer can read.
+
 ## The forward watchlist
 
 Every result above is retrospective: the model is graded against regulatory

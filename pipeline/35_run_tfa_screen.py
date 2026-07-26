@@ -30,12 +30,17 @@ from hazium.screen.tfa import (
     screen,
 )
 from hazium.models import SalesRecord, Substance
+from hazium.sources.kemi_uses import crops_grown
 from hazium.resolve.names import SubstanceResolver, resolve_sales_records
 from hazium.sources.pubchem_structure import load_structures
 
 ROOT = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"
 STRUCTURES = ROOT / "data" / "raw" / "pubchem_structures.jsonl"
+
+#: KEMI register codes, matching `pipeline/25`.
+PLANT_PROTECTION = "Växtskyddsmedel"
+ACTUAL_PRODUCT = 1
 OUT_CSV = PROCESSED / "tfa_screen.csv"
 SITE_DATA = ROOT / "web" / "data" / "tfa_screen.json"
 
@@ -83,12 +88,36 @@ def main() -> int:
             tonnes.get(record.substance_id, 0.0) + record.tonnes_active_substance
         )
 
-    by_substance = _read_csv(PROCESSED / "crop_exposure_headline_by_substance.csv")
-    crops_by_name = {r["substance"]: r["crops"] for r in by_substance}
-    crops = {
-        sid: [c.strip() for c in (crops_by_name.get(name) or "").split(";") if c.strip()]
-        for sid, name in names.items()
-    }
+    # Crops are read from KEMI's product register for the whole population, for
+    # the same reason as tonnage: `crop_exposure_*_by_substance.csv` only covers
+    # the watchlist's top 100, and most substances this screen flags are not in
+    # it, so joining there left real crop uses looking like absent ones.
+    products = [
+        json.loads(line)
+        for line in (PROCESSED / "kemi_register_products.jsonl").open(encoding="utf-8")
+    ]
+    crops: dict[str, list[str]] = {}
+    for product in products:
+        if not (
+            product.get("main_group") == PLANT_PROTECTION
+            and product.get("object_type") == ACTUAL_PRODUCT
+            and product.get("approved")
+        ):
+            continue
+        grown = crops_grown(product.get("usage_areas") or [])
+        if not grown:
+            continue
+        for ingredient in product.get("ingredients") or []:
+            cas = (ingredient.get("cas_number") or "").strip()
+            if not cas:
+                continue
+            sid = f"substance:cas:{cas}"
+            crops.setdefault(sid, [])
+            for crop in grown:
+                if crop not in crops[sid]:
+                    crops[sid].append(crop)
+    for value in crops.values():
+        value.sort()
 
     result = screen(structures, names, tonnes=tonnes, crops=crops)
 
@@ -194,6 +223,9 @@ def main() -> int:
         "efsa_found": result.efsa_found,
         "efsa_total": len(EFSA_CONFIRMED_TFA_PARENTS & set(structures)),
         "exposure_cap_tonnes": EXPOSURE_CAP_TONNES,
+        # Fluorine-bearing but not CF3, almost all difluoromethyl. Published so
+        # the site states the exclusion from the run rather than from memory.
+        "fluorine_without_cf3": len(result.unexplained_fluorine),
         "entries": [
             {
                 "rank": rank,
