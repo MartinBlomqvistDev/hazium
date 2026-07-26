@@ -159,3 +159,39 @@ export interface EvidenceMeshData {
   type_order: string[];
   cases: EvidenceMeshCase[];
 }
+
+export interface WatchlistEntry {
+  rank: number;
+  name: string;
+  in_sweden: boolean;
+  crops: string[];
+  /** approval expiry: the date the Commission is forced to decide */
+  expiry: string | null;
+  outcome: string;
+}
+
+export interface WatchlistCrop {
+  crop: string;
+  products: number;
+  flagged: number;
+  percent: number;
+}
+
+export interface WatchlistCalendarRow {
+  year: number;
+  count: number;
+  cumulative: number;
+}
+
+export interface WatchlistData {
+  variant: string;
+  generated: string;
+  top: number;
+  tracked: number;
+  on_market: number;
+  calendar: WatchlistCalendarRow[];
+  crops: WatchlistCrop[];
+  entries: WatchlistEntry[];
+  /** share of all approved products carrying any watchlist substance */
+  base_rate_percent: number;
+}
