@@ -169,7 +169,8 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
             that joins to a substance ranking. Sweden&apos;s per-crop survey reports by pesticide
             type rather than by substance and was last run for 2021; Eurostat states it has never
             been able to publish comparable EU use statistics at all. A fix was legislated in
-            2025, with publication from 2030. Until then the honest unit is the country.
+            2025, with publication from 2030. Until then the country is the finest unit
+            available.
           </p>
         </div>
 

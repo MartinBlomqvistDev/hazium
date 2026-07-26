@@ -1,22 +1,25 @@
-import type { SurvivalData } from "@/lib/types";
+import type { SurvivalData, TfaScreenData } from "@/lib/types";
 
 /**
- * The hero used to lead with 7/10 landmark bans and a 132-month lead time.
- * Both are real, and both are reproducible by subtracting two dates, which the
- * page went on to admit five screens later. Opening with the strong version of
- * a claim and retracting it further down is not honesty, it is a page arguing
- * with itself.
+ * The hero once led with 7/10 landmark bans and a 132-month lead time. Both are
+ * real and both are reproducible by subtracting two dates, which the page went
+ * on to say five screens later, so it opened with a claim it then argued against.
  *
- * These three numbers are what survives scrutiny: what the evidence adds over
- * that date subtraction, what that is worth in a forward test, and the case the
- * project was built for and still misses.
+ * These three numbers hold on their own: what the evidence adds over that date
+ * subtraction, what that is worth in a forward test, and where the project's own
+ * anchor case lands.
  */
-export default function Hero({ survival }: { survival: SurvivalData }) {
+export default function Hero({
+  survival,
+  screen,
+}: {
+  survival: SurvivalData;
+  screen: TfaScreenData;
+}) {
   const h1 = survival.horizon_1;
   const age = h1.arms["age only"].average_precision;
   const both = h1.arms["age + evidence"].average_precision;
   const split = h1.quoted_split;
-  const cohort = survival.anchor_cohort;
 
   return (
     <section id="top" className="border-b border-hairline">
@@ -40,10 +43,9 @@ export default function Hero({ survival }: { survival: SurvivalData }) {
           that existed at the time.
         </p>
         <p className="mt-4 max-w-2xl text-text-secondary">
-          The answer is partly, and by less than the first version of this page
-          claimed. The honest measure is how far the evidence gets past the one
-          thing that predicts a withdrawal with no model at all: how long the
-          substance has held approval.
+          Partly. One thing predicts a withdrawal with no model at all: how long
+          a substance has held approval. What counts is how far the evidence gets
+          past that.
         </p>
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
@@ -58,9 +60,8 @@ export default function Hero({ survival }: { survival: SurvivalData }) {
             />
           )}
           <Stat
-            value={`${cohort.hits_in_top_k} of ${cohort.size}`}
-            label={`substances found from the reevaluation that prompted this project, where chance gives ${cohort.expected_in_top_k}`}
-            tone="critical"
+            value={`${screen.flagged} of ${screen.population}`}
+            label={`approved substances that can form PFAS, on molecular structure alone, holding all ${screen.kemi_total} now under Swedish reevaluation`}
           />
         </div>
       </div>
@@ -68,23 +69,10 @@ export default function Hero({ survival }: { survival: SurvivalData }) {
   );
 }
 
-function Stat({
-  value,
-  label,
-  tone,
-}: {
-  value: string;
-  label: string;
-  tone?: "critical";
-}) {
+function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div className="rounded-lg border border-hairline bg-surface p-5">
-      <div
-        className="tabular-nums text-3xl font-semibold"
-        style={{ color: tone === "critical" ? "var(--status-critical)" : "var(--text-primary)" }}
-      >
-        {value}
-      </div>
+      <div className="tabular-nums text-3xl font-semibold text-text-primary">{value}</div>
       <div className="mt-1 text-sm text-text-secondary">{label}</div>
     </div>
   );

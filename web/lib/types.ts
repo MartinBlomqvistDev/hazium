@@ -272,3 +272,39 @@ export interface SurvivalData {
   };
   anchor_cohort: AnchorCohort;
 }
+
+/** One flagged substance in the TFA-precursor screen. */
+export interface ScreenEntry {
+  rank: number;
+  name: string;
+  cas: string;
+  formula: string | null;
+  fluorine_count: number;
+  cf3_groups: number;
+  tonnes: number | null;
+  crops: string[];
+  score: number;
+  in_kemi_cohort: boolean;
+  efsa_confirmed: boolean;
+}
+
+/**
+ * The structural screen for TFA-forming pesticides.
+ *
+ * Not a model: a molecular formula is the same at every cutoff, so there is
+ * nothing here to train, leak or overfit. `expected_by_chance` travels with
+ * `kemi_found` because a hit count means nothing without it.
+ */
+export interface TfaScreenData {
+  generated: string;
+  population: number;
+  unresolved: number;
+  flagged: number;
+  kemi_found: number;
+  kemi_total: number;
+  expected_by_chance: number;
+  efsa_found: number;
+  efsa_total: number;
+  exposure_cap_tonnes: number;
+  entries: ScreenEntry[];
+}

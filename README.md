@@ -8,7 +8,7 @@
 
 Hazium is an explainable machine learning platform. It builds a temporally-aware knowledge graph of environmental and public-health evidence from heterogeneous public data: regulatory decisions, hazard classifications, national sales statistics, residue monitoring, and scientific conclusions. Machine learning over that graph ranks substances for future regulatory risk, and every signal traces back to the source evidence behind it.
 
-The most useful thing in here is a negative that was then repaired. The original headline turned out to be reproducible by ranking on approval age alone, which is a date subtraction; the cause was the question rather than the data; and reframing it as a survival problem recovered a real, independently-checked contribution from the evidence. All three steps are published below, in that order, along with two later corrections to the repair itself and the case the finished system still does not solve.
+Every model here is reported against the simplest thing that could replace it. One of those baselines, ranking on approval age alone, matched the original headline: a date subtraction. The cause was the question rather than the data, and reframing it as a survival problem recovered a measurable contribution from the evidence. All three steps are below in that order, with two later corrections to the repair and the hazard the finished system does not find.
 
 The first domain is pesticides, with a Nordic focus. The intelligence is in the ML; large language models are used for presentation only.
 
@@ -18,7 +18,7 @@ The first domain is pesticides, with a Nordic focus. The intelligence is in the 
 
 Every version of the system is measured against this retrodetection question under strict temporal discipline. Every fact and every edge carries a `known_at` timestamp, and a model evaluated at a given cutoff never sees evidence dated on or after it.
 
-**The current answer is no.** Asked properly, of all six substances the Swedish regulator named rather than of fluazinam alone, none of them reaches the published band and the cohort sits slightly worse than a random draw. [The measurement and the reason are below](#the-anchor-case-and-why-it-is-still-a-miss). It is the first thing in this README because it is the thing a reader should be least able to miss.
+**The current answer is no.** Asked of all six substances the Swedish regulator named rather than of fluazinam alone, none reaches the published band and the cohort sits slightly worse than a random draw. A structural screen over molecular data does find them, all six from a shortlist of 26. [Both measurements are below](#the-anchor-case-and-why-it-is-still-a-miss).
 
 ## Architecture
 

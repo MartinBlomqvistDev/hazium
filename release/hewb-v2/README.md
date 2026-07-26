@@ -20,8 +20,8 @@ size_categories:
 v2 changes one thing about v1.4: the unit of analysis. Every feature, every
 source and every temporal rule is carried over unchanged.
 
-It exists because v1.4 could not answer the question it was asked, and finding
-that out is the most useful thing this benchmark has produced.
+It exists because v1.4's target could not separate whether a substance was
+withdrawn from when, and approval age answers most of that on its own.
 
 ## What was wrong with v1.4
 
@@ -39,8 +39,8 @@ times exactly. Chlorpyrifos at 132 months, thiacloprid at 133, clothianidin at
 That is not leakage. Approval date is knowable at every cutoff. It is a target
 that mixes *whether* a withdrawal happened with *when*, and time wins.
 
-v1.4 remains published and is not retracted. Its results are correct for the
-question it asked. Read the two together.
+v1.4 remains published, with results correct for the question it asked. Read the
+two together.
 
 ## What v2 does instead
 
@@ -115,8 +115,8 @@ onward: the top 50 contains **11 real withdrawals against approval age's 4**.
 
 ## The anchor case, which it fails
 
-Hazium was built because of fluazinam. The honest report is that v2 does not
-find it, and this is measured rather than asserted.
+Hazium was built because of fluazinam. v2 does not find it, and the miss is
+measured rather than asserted.
 
 Kemikalieinspektionen opened a reevaluation of six TFA-forming plant protection
 substances on 2025-11-20. That cohort is dated, externally defined and chosen by
@@ -139,10 +139,18 @@ not a detection.
 
 The reason is not a modelling failure. Groundwater and residue monitoring are not
 among the ingested sources, and TFA is a degradation product that the parent
-substance's own regulatory record never mentions. The signal is absent from the
-inputs, so no reformulation of the target can recover it.
+substance's own regulatory record never mentions. A model over the regulatory
+record cannot find what the regulatory record does not carry.
 
-Reading a single member of that cohort would have told the opposite story. At an
+The molecule carries it. TFA comes from trifluoromethyl groups, and a molecular
+formula is public, unchanging and knowable at every cutoff. Screening the same
+242 approved substances on structure alone flags **26, holding all six**, where
+chance would place 2.3 (hypergeometric p = 8.8e-7). Run it with
+`python pipeline/35_run_tfa_screen.py`. That result is chemistry rather than
+machine learning, which is the point: this benchmark's target is a committee
+decision, and the hazard is a chemical property, so the two come apart.
+
+Reading a single member of the cohort would have told the opposite story. At an
 earlier stage of this work fluazinam sat at 96 and inside the published band,
 which reads as a hit until the other five are put beside it. `benchmark/anchor.py`
 exists so that the cohort, and not the convenient member, is what gets reported.
@@ -169,7 +177,7 @@ exists so that the cohort, and not the convenient member, is what gets reported.
   objection.
 - The outcome is EU non-renewal, a committee decision. It correlates with harm
   loosely and is not a measure of it. The anchor case above is the clearest
-  illustration: a real groundwater hazard, and no rank to show for it.
+  illustration: a real groundwater hazard that this target cannot express.
 
 ## Corrections
 

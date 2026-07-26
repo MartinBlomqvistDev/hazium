@@ -1,4 +1,4 @@
-import type { AnchorCohort } from "@/lib/types";
+import type { AnchorCohort, TfaScreenData } from "@/lib/types";
 
 /**
  * The result the project would most like to have gone the other way.
@@ -14,7 +14,13 @@ import type { AnchorCohort } from "@/lib/types";
  * this project, so it can be used as a test. It is reported here whatever it
  * says, and it says the model does not find them.
  */
-export default function AnchorCase({ cohort }: { cohort: AnchorCohort }) {
+export default function AnchorCase({
+  cohort,
+  screen,
+}: {
+  cohort: AnchorCohort;
+  screen: TfaScreenData;
+}) {
   const ranked = Object.entries(cohort.ranks).sort((a, b) => a[1] - b[1]);
   const worst = Math.max(...ranked.map(([, r]) => r), cohort.population);
 
@@ -26,7 +32,7 @@ export default function AnchorCase({ cohort }: { cohort: AnchorCohort }) {
         </h2>
         <p className="mt-4 text-text-secondary">
           Everything above is measured against EU withdrawals. This is measured against the
-          thing the project was built for, and it fails.
+          hazard the project was built for, and the model does not find it.
         </p>
         <p className="mt-4 text-text-secondary">
           On 20 November 2025 Kemikalieinspektionen opened a reevaluation of six plant
@@ -95,20 +101,30 @@ export default function AnchorCase({ cohort }: { cohort: AnchorCohort }) {
         <p className="mt-8 text-sm leading-relaxed text-text-secondary">
           Not one of them reaches the band, where a random draw would put{" "}
           {cohort.expected_in_top_k.toFixed(1)}. The cohort sits slightly worse than chance.
-          There is no reading of this in which the model anticipated the reevaluation.
         </p>
         <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-          The reason is not the model. TFA is a degradation product, and the hazard shows up in
-          groundwater monitoring, which is not among the sources feeding Hazium. Nothing in an
-          approval record, a hazard classification or a sales table says that a substance
-          becomes something persistent after it leaves the field. A signal absent from the
-          inputs cannot be recovered by any reformulation of the target, and this one is
-          absent.
+          TFA is a degradation product, and the hazard shows up in groundwater monitoring,
+          which is not among the sources feeding Hazium. Nothing in an approval record, a
+          hazard classification or a sales table says that a substance becomes something
+          persistent after it leaves the field. The regulatory record cannot carry this
+          signal, so a model over the regulatory record cannot find it.
         </p>
         <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-          It is on this page because a benchmark that only reports the cases it passes is not a
-          benchmark. Folding groundwater and residue monitoring in is the next data source on
-          the roadmap, and this cohort is the test it will have to pass.
+          The molecule carries it instead. TFA comes from trifluoromethyl groups, and a
+          formula is public, unchanging and knowable at every cutoff. Screening the same{" "}
+          {screen.population} approved substances on structure alone narrows them to{" "}
+          <strong className="text-text-primary">
+            {screen.flagged}, and all six are among them
+          </strong>
+          . That is chemistry rather than machine learning, which is the finding: the right
+          tool followed from asking what the hazard actually was.{" "}
+          <a
+            href="https://github.com/MartinBlomqvistDev/hazium/blob/main/src/hazium/screen/tfa.py"
+            className="text-accent underline underline-offset-2"
+          >
+            The screen is in the repository
+          </a>
+          , with the cohort held out as its check.
         </p>
       </div>
     </section>

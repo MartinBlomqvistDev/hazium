@@ -15,12 +15,14 @@ import substanceDetail from "@/data/substance_detail.json";
 import evidenceMeshData from "@/data/evidence_mesh.json";
 import watchlistData from "@/data/watchlist.json";
 import survivalData from "@/data/survival.json";
+import tfaScreenData from "@/data/tfa_screen.json";
 import type {
   CapabilityData,
   EvidenceMeshData,
   HewbData,
   SubstanceDetailMap,
   SurvivalData,
+  TfaScreenData,
   WatchlistData,
 } from "@/lib/types";
 
@@ -30,18 +32,19 @@ const detail = substanceDetail as SubstanceDetailMap;
 const evidenceMesh = evidenceMeshData as EvidenceMeshData;
 const watchlist = watchlistData as WatchlistData;
 const survival = survivalData as SurvivalData;
+const tfaScreen = tfaScreenData as TfaScreenData;
 
 export default function Home() {
   return (
     <div className="flex min-h-full flex-col">
       <Nav />
       <main className="flex-1">
-        <Hero survival={survival} />
+        <Hero survival={survival} screen={tfaScreen} />
         <WhatWasBuilt />
         <OriginStory />
         <HowItWorks survival={survival} />
         <ResultSection data={data} capability={capability} detail={detail} />
-        <AnchorCase cohort={survival.anchor_cohort} />
+        <AnchorCase cohort={survival.anchor_cohort} screen={tfaScreen} />
         <EvidenceMesh data={evidenceMesh} />
         <Watchlist data={watchlist} />
         <Principles />

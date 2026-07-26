@@ -122,12 +122,12 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
         </p>
         <div className="mt-6 rounded-lg border border-status-critical/40 bg-page p-5">
           <h3 className="font-medium text-text-primary">
-            One of those baselines beat it, and fixing that is the result
+            The baseline that beat the model, and the question it exposed
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-            For a long time the baselines here were hazard count, sales tonnage and assessment
-            count. All three are weak, and the model beat them comfortably. Approval age was
-            never tested on its own, because it sat inside the model as a feature.
+            The baselines here were hazard count, sales tonnage and assessment count. All three
+            are weak, and the model beat them comfortably. Approval age sat inside the model as a
+            feature, so it had never been run on its own.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
             Ranking on nothing but how long a substance has held EU approval reaches{" "}
@@ -136,10 +136,10 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
             clothianidin at 120. A date subtraction, no model at all.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            The cause turned out to be the question rather than the data. &ldquo;Was this ever
-            withdrawn&rdquo; is asked over a population that is 96% substances never approved in
-            the EU, which could never be withdrawn at all. Answering it is mostly an eligibility
-            test, and approval age performs that test.
+            The cause is the question rather than the data. &ldquo;Was this ever withdrawn&rdquo;
+            is asked over a population that is 96% substances never approved in the EU, which
+            could never be withdrawn at all. Answering it is mostly an eligibility test, and
+            approval age performs that test.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
             Asked separably, one approved substance in one year at risk, approval age becomes the
@@ -162,10 +162,9 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
             the raw scores are overconfident and need calibrating before they can be read as
             probabilities; 75 of 102 events fall in the 2017&ndash;2021 renewal wave, which is
             the real constraint, since a model fitted before that wave does not transfer into it;
-            and approval age turns out to be about{" "}
-            {(v.age_from_evidence_r2 * 100).toFixed(0)}% recoverable from the evidence features,
-            so the evidence-only arm is not age-free and is not presented as such. Both benchmark
-            versions are published:{" "}
+            and approval age is about {(v.age_from_evidence_r2 * 100).toFixed(0)}% recoverable
+            from the evidence features, so the evidence-only arm carries some of the calendar
+            with it. Both benchmark versions are published:{" "}
             <a
               href="https://github.com/MartinBlomqvistDev/hazium/tree/main/release/hewb-v2"
               className="text-accent underline underline-offset-2"

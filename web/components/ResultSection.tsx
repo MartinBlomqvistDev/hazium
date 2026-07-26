@@ -32,16 +32,14 @@ export default function ResultSection({
           milestones the model never sees.
         </p>
         <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-          Before reading the chart, read what it is not. These lead times are
-          real, and they are also{" "}
-          <strong className="text-text-primary">reproducible without a model</strong>. Ranking on
-          approval age alone puts chlorpyrifos in the danger band at the same 132 months. The
-          timeline records <em>when</em> a substance entered the riskiest band. It is not evidence
-          that the evidence put it there, and that distinction is{" "}
+          These lead times are real, and they are also{" "}
+          <strong className="text-text-primary">reproducible without a model</strong>: ranking on
+          approval age alone puts chlorpyrifos in the danger band at the same 132 months. So the
+          chart records <em>when</em> a substance entered the riskiest band, and{" "}
           <a href="#how" className="text-accent underline underline-offset-2">
-            what the previous section is about
-          </a>
-          .
+            the section above
+          </a>{" "}
+          measures what the evidence adds beyond the calendar.
         </p>
 
         <div className="mt-10 rounded-xl border border-hairline bg-surface p-5 sm:p-7">
@@ -64,7 +62,7 @@ export default function ResultSection({
 
         <div className="mt-8 rounded-lg border border-hairline bg-page p-5">
           <h3 className="font-medium text-text-primary">
-            The test that passed, and the thing it could not see
+            What a permutation test can and cannot rule out
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-text-secondary">
             A ranking model with 25 positives in 5,933 substances can look good by accident. So
@@ -73,13 +71,13 @@ export default function ResultSection({
             result is not noise.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            That test asks one question: can the model beat chance. It cannot ask whether
-            something simpler beats the model. Nothing in a permutation test would ever have
-            surfaced approval age, and nothing did. Only running the baseline did.
+            That answers one question: can the model beat chance. It cannot answer whether
+            something simpler beats the model. No permutation test would surface approval age,
+            because only running the baseline does.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            This version stays published and is not retracted, because its numbers are correct
-            for the question it asked. Both are citable datasets:{" "}
+            Both versions stay published, each correct for the question it asked, and both are
+            citable datasets:{" "}
             <a
               href="https://huggingface.co/datasets/MartinBlomqvist/hewb"
               className="text-accent underline underline-offset-2"

@@ -8,8 +8,8 @@ const PRINCIPLES = [
     body: "No learned model is reported without a trivial baseline on the identical task and split. When the baseline wins, it becomes the published result.",
   },
   {
-    title: "Honesty over novelty",
-    body: "HEWB publishes the misses next to the hits, including the case the project was built for and still does not find. Every version records which landmarks it fails to flag, and the version whose headline turned out to be reproducible by a date subtraction stays up, unretracted, next to the one that replaced it.",
+    title: "The misses are published too",
+    body: "Every version of HEWB records which landmarks it fails to flag, and every superseded version stays online with the results that led to it. Both are on this page, including the hazard the project was built for and does not find.",
   },
   {
     title: "Cohorts, not anecdotes",
