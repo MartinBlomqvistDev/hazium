@@ -81,9 +81,11 @@ export default function HowItWorks() {
             forward split fit on 2019 the top 50 holds 15 real withdrawals against age&apos;s 4.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            The limits are measured too. The benefit needs about sixteen training events before
-            it appears at all; a linear model recovers a fifth of it, so it lives in
-            interactions; and 75 of 102 events fall in the 2017&ndash;2021 renewal wave. Both
+            The limits are measured too. A linear model recovers a fifth of it, so it lives in
+            interactions; the raw scores are overconfident and need calibrating before they can
+            be read as probabilities; and 75 of 102 events fall in the 2017&ndash;2021 renewal
+            wave, which is the real constraint: a model fitted before that wave does not
+            transfer into it. Both
             benchmark versions are published:{" "}
             <a
               href="https://github.com/MartinBlomqvistDev/hazium/tree/main/release/hewb-v2"

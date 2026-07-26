@@ -95,20 +95,29 @@ immediately before a decision.
 whole substance histories so the panel structure survives.
 
 **Forward splits, fit on year Y and scored on everything after.** At the
-three-year horizon, positive in **9 of 9** splits with at least 16 training
-events, mean +0.092. At one year, 6 of 6. Below roughly sixteen events the
-evidence actively hurts, which is a sample-size floor rather than a result.
+three-year horizon, positive in **9 of 9** splits, mean +0.092. At one year, 6 of
+6 from 2017 onward. The two earliest one-year splits, fit on 2014 and 2015, are
+negative; see Limits for why that is an era-transfer problem rather than a
+sample-size one.
 
 **Decision utility.** Fit on 2019 and earlier, scored on 2020 onward: the top 50
 contains **15 real withdrawals against approval age's 4**.
 
 ## Limits
 
-- The benefit needs roughly **sixteen training events** before it appears at all.
 - A **linear model recovers about a fifth** of the boosted-tree gain, so the
   effect lives in interactions rather than in any single feature.
-- **75 of the 102 one-year events fall in 2017-2021**, the EU renewal wave, so
-  this is substantially one regulatory era's behaviour and may not transfer.
+- **75 of the 102 one-year events fall in 2017-2021**, the EU renewal wave, and
+  this is the binding limit. Forward splits fit on 2014 or 2015 give a *negative*
+  delta. That was first reported here as a sample-size floor of about sixteen
+  events; a subsampling test has since shown that reading to be wrong. Holding
+  the test set fixed and varying only how many training events are kept, the
+  delta stays positive down to four events. What fails is transfer between
+  regulatory eras, not learning from few examples.
+- **Raw scores are badly calibrated** and must not be read as probabilities. The
+  top out-of-fold bin predicts 0.566 against an observed 0.128. Isotonic
+  regression on out-of-fold predictions more than halves the Brier score, from
+  0.061 to 0.024, and leaves the ranking intact.
 - Node embeddings were re-tested on this panel, where coverage roughly doubles
   from the 29.2% that closed the V2 gate to **65.3%**, refit per year against
   that year's `as_of` view. They lose by more here: adding them moves average

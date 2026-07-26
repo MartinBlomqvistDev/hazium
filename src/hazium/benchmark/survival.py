@@ -29,11 +29,13 @@ a split, the evidence adds a real and independently-verified amount:
 * and in a genuine forward split (fit on 2019 and earlier, score 2020 onward)
   the top 50 contains 15 real withdrawals against approval age's 4.
 
-The honest limits are equally measurable. The benefit needs roughly sixteen
-training events before it appears at all, below which adding evidence actively
-hurts; a linear model recovers only a fifth of what gradient boosting does, so
-the effect lives in interactions; and 75 of the 102 events fall in the
-2017-2021 renewal wave, so this is substantially one regulatory era's behaviour.
+The honest limits are equally measurable. A linear model recovers only a fifth of what
+gradient boosting does, so the effect lives in interactions. And 75 of the 102
+events fall in the 2017-2021 renewal wave, which is the binding limit: forward
+splits fit on 2014 or 2015 give a *negative* delta, and subsampling shows this is
+not a sample-size floor. Holding the test set fixed and varying only how many
+training events are kept, the delta stays positive down to four events. What
+fails is transfer between regulatory eras, not learning from few examples.
 """
 
 from __future__ import annotations
