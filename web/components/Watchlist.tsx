@@ -19,6 +19,10 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
   const decidedBy2027 = data.calendar.find((row) => row.year === 2027)?.cumulative ?? 0;
   const maxCount = Math.max(...data.calendar.map((r) => r.count), 1);
   const maxPercent = Math.max(...data.crops.map((c) => c.percent), 1);
+  const byVolume = data.entries
+    .filter((e) => e.tonnes !== null)
+    .sort((a, b) => (b.tonnes ?? 0) - (a.tonnes ?? 0))
+    .slice(0, 10);
 
   return (
     <section id="watchlist" className="border-b border-hairline bg-surface/40">
@@ -67,11 +71,19 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
         </div>
 
         <div className="mt-12">
-          <h3 className="font-medium text-text-primary">Where these substances are used</h3>
+          <h3 className="font-medium text-text-primary">
+            Which crops they are approved for
+          </h3>
           <p className="mt-2 text-sm text-text-secondary">
             {data.on_market} of the top {data.top} are in plant protection products currently
-            approved in Sweden. The bars show the share of each crop&apos;s approved products
-            carrying at least one of them.
+            approved in Sweden. The bars show the share of each crop&apos;s{" "}
+            <strong className="text-text-primary">approved products</strong> carrying at least
+            one of them.
+          </p>
+          <p className="mt-2 text-sm text-text-secondary">
+            This is the catalogue, not the fields. It says what a grower could legally buy, not
+            how much of anything was sprayed or on what area. Sweden reports application volumes
+            per crop separately, and that is not joined here yet.
           </p>
           <div className="mt-5 space-y-1.5">
             {data.crops.slice(0, 14).map((crop) => (
@@ -103,6 +115,42 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
             The cereals sit a little above it and most other crops below, but the whole range is
             roughly two thirds to one and a sixth of that rate, so the finding is that these
             substances are spread across Swedish agriculture rather than concentrated anywhere.
+          </p>
+        </div>
+
+        <div className="mt-12">
+          <h3 className="font-medium text-text-primary">How much is actually sold</h3>
+          <p className="mt-2 text-sm text-text-secondary">
+            {data.with_sales} of them have recorded Swedish sales. Tonnage alone is unreadable,
+            because the median plant protection active sells 0.2 tonnes a year here while the
+            largest sells 783, so each is shown with its rank among the {data.sales_ranked}{" "}
+            actives sold in {data.sales_year}.
+          </p>
+          <div className="mt-5 space-y-1.5">
+            {byVolume.map((entry) => (
+              <div key={entry.name} className="flex items-center gap-2 text-sm sm:gap-3">
+                <span className="w-32 shrink-0 truncate text-text-secondary sm:w-44">
+                  {entry.name}
+                </span>
+                <span className="w-16 shrink-0 tabular-nums text-right font-mono text-xs text-text-secondary">
+                  {entry.tonnes} t
+                </span>
+                <span className="tabular-nums font-mono text-xs text-text-muted">
+                  #{entry.sales_rank}
+                </span>
+                <span className="hidden truncate text-xs text-text-muted sm:inline">
+                  {entry.crops.slice(0, 3).join(", ")}
+                </span>
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-xs leading-relaxed text-text-muted">
+            This is national tonnage, not tonnage per crop. Nobody publishes the second in a form
+            that joins to a substance ranking: Sweden&apos;s per-crop survey reports by pesticide
+            type rather than by active substance and was last run for 2021, and Eurostat states
+            it has never been able to publish comparable EU use statistics at all. The EU
+            legislated a fix in 2025, with annual per-crop collection from 2028 and publication
+            from 2030. Until then the honest unit is the country.
           </p>
         </div>
 

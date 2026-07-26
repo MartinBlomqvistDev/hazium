@@ -29,9 +29,19 @@ import json
 from datetime import date
 from pathlib import Path
 
+from openpyxl import load_workbook
+
+from hazium.models import SalesRecord, Substance
+from hazium.resolve.names import SubstanceResolver, resolve_sales_records
+
 ROOT = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"
+RAW = ROOT / "data" / "raw"
 SITE_DATA = ROOT / "web" / "data" / "watchlist.json"
+
+#: The EU active-substances export, used to keep the sales denominator to plant
+#: protection actives.
+PPP_EXPORT = RAW / "ActiveSubstanceExport_12-07-2026.xlsx"
 
 VARIANT = "headline"
 
@@ -50,6 +60,59 @@ CROP_EXCLUDE = frozenset({"fruit (unspecified)", "berries (unspecified)", "cerea
 MIN_PRODUCTS = 10
 
 
+def _plant_protection_ids() -> set[str]:
+    """CAS ids of substances the EU register lists as plant protection actives."""
+    workbook = load_workbook(PPP_EXPORT, read_only=True)
+    ids: set[str] = set()
+    for row in workbook.active.iter_rows(min_row=4, values_only=True):
+        if row and row[0] and row[2] and "No CAS" not in str(row[2]):
+            ids.add(f"substance:cas:{str(row[2]).strip()}")
+    return ids
+
+
+def swedish_sales() -> tuple[dict[str, float], dict[str, int], int, int]:
+    """Latest-year Swedish tonnage per substance, and its rank among peers.
+
+    Raw tonnage says nothing on its own: the median plant protection active
+    sells 0.2 tonnes a year in Sweden while the largest sells 783, so a number
+    without a rank beside it is unreadable.
+
+    The denominator is restricted to plant protection actives on purpose. KemI's
+    sales file covers biocides too, and they dominate it: creosote alone is
+    2,761 tonnes, against 1,992 tonnes for every plant protection active
+    combined. Ranking a fungicide inside that total would be comparing it
+    against wood preservative.
+
+    Returns:
+        ``(tonnes_by_id, rank_by_id, n_ranked, year)``.
+    """
+
+    def _load(path: Path, model):
+        with path.open(encoding="utf-8") as f:
+            return [model.model_validate_json(line) for line in f]
+
+    # The sales file keys substances by Swedish name, so it has to go through
+    # the same resolver the model uses before it can join to anything.
+    sales = resolve_sales_records(
+        _load(PROCESSED / "kemi_sales.jsonl", SalesRecord),
+        SubstanceResolver(_load(PROCESSED / "kemi_register_substances.jsonl", Substance)),
+    )
+    ppp = _plant_protection_ids()
+    year = max(s.year for s in sales)
+    tonnes: dict[str, float] = {}
+    for record in sales:
+        if record.year != year or record.tonnes_active_substance is None:
+            continue
+        if record.substance_id not in ppp:
+            continue
+        tonnes[record.substance_id] = (
+            tonnes.get(record.substance_id, 0.0) + record.tonnes_active_substance
+        )
+    ordered = sorted(tonnes.items(), key=lambda kv: -kv[1])
+    ranks = {sid: i + 1 for i, (sid, _t) in enumerate(ordered)}
+    return tonnes, ranks, len(ordered), year
+
+
 def _read_csv(path: Path) -> list[dict[str, str]]:
     if not path.exists():
         raise SystemExit(f"missing {path}; run the pipeline that writes it first")
@@ -63,6 +126,7 @@ def main() -> int:
     by_substance = _read_csv(PROCESSED / f"crop_exposure_{VARIANT}_by_substance.csv")
     resolution = _read_csv(PROCESSED / f"resolution_{VARIANT}.csv")
 
+    tonnes, sales_rank, n_ranked, sales_year = swedish_sales()
     crops_of = {r["substance"]: r["crops"] for r in by_substance}
     expiry_of = {r["substance"]: r["baseline_expiry"] for r in resolution}
     outcome_of = {r["substance"]: r["outcome"] for r in resolution}
@@ -79,6 +143,10 @@ def main() -> int:
                 "crops": crop_list,
                 "expiry": expiry_of.get(name) or None,
                 "outcome": outcome_of.get(name) or "untracked",
+                "tonnes": round(tonnes[row["substance_id"]], 1)
+                if row["substance_id"] in tonnes
+                else None,
+                "sales_rank": sales_rank.get(row["substance_id"]),
             }
         )
 
@@ -120,8 +188,16 @@ def main() -> int:
         "on_market": sum(1 for e in entries if e["crops"]),
         "calendar": calendar,
         "crops": crop_rows,
-        "entries": [e for e in entries if e["crops"] or e["expiry"]],
+        # Keep anything with a crop, a deadline or a sales volume. Dropping the
+        # volume-only rows would have hidden acetic acid, the third largest
+        # plant protection seller in Sweden and rank 62 here, which is exactly
+        # the kind of entry a reader should see: a basic substance the model
+        # rates highly, carrying no expiry because its approval is open-ended.
+        "entries": [e for e in entries if e["crops"] or e["expiry"] or e["tonnes"]],
+        "with_sales": sum(1 for e in entries if e["tonnes"] is not None),
         "base_rate_percent": round(flagged / with_crop * 100) if with_crop else 0,
+        "sales_year": sales_year,
+        "sales_ranked": n_ranked,
     }
 
     SITE_DATA.parent.mkdir(parents=True, exist_ok=True)

@@ -168,6 +168,10 @@ export interface WatchlistEntry {
   /** approval expiry: the date the Commission is forced to decide */
   expiry: string | null;
   outcome: string;
+  /** tonnes of active substance sold in Sweden, latest reported year */
+  tonnes: number | null;
+  /** rank by tonnage among plant protection actives sold in Sweden */
+  sales_rank: number | null;
 }
 
 export interface WatchlistCrop {
@@ -194,4 +198,8 @@ export interface WatchlistData {
   entries: WatchlistEntry[];
   /** share of all approved products carrying any watchlist substance */
   base_rate_percent: number;
+  sales_year: number;
+  /** how many plant protection actives the sales rank is out of */
+  sales_ranked: number;
+  with_sales: number;
 }
