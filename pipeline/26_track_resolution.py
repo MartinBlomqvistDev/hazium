@@ -44,6 +44,9 @@ from hazium.benchmark.resolution import (
 
 ROOT = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"
+
+#: Set by --watchlist so the survival ranking can be used in place of pipeline/13.
+WATCHLIST_PATH: Path | None = None
 RAW = ROOT / "data" / "raw"
 
 #: Column offsets in the Active Substances export, which opens with a title
@@ -107,9 +110,9 @@ def write_baseline(path: Path, states: dict[str, ApprovalState]) -> None:
 
 def load_watchlist(variant: str, top: int) -> list[tuple[int, str, str]]:
     """Top-N watchlist rows as ``(rank, substance_id, name)``."""
-    path = PROCESSED / f"current_watchlist_{variant}.csv"
+    path = WATCHLIST_PATH or PROCESSED / f"current_watchlist_{variant}.csv"
     if not path.exists():
-        raise SystemExit(f"missing {path}; run pipeline/13_current_watchlist.py first")
+        raise SystemExit(f"missing {path}; run pipeline/13 or pipeline/30 first")
     rows: list[tuple[int, str, str]] = []
     with path.open(encoding="utf-8", newline="") as f:
         for row in csv.DictReader(f):
@@ -130,7 +133,15 @@ def main() -> int:
         default=RAW / "ActiveSubstanceExport_12-07-2026.xlsx",
         help="EU Pesticides Database Active Substances export to read",
     )
+    parser.add_argument(
+        "--watchlist",
+        type=Path,
+        default=None,
+        help="watchlist CSV to read; defaults to pipeline/13's output",
+    )
     args = parser.parse_args()
+    global WATCHLIST_PATH
+    WATCHLIST_PATH = args.watchlist
 
     today = date.today()
     current = read_register(args.export, today)

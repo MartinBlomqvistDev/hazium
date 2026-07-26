@@ -24,6 +24,7 @@ Usage:
 
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 from datetime import date
@@ -121,7 +122,16 @@ def _read_csv(path: Path) -> list[dict[str, str]]:
 
 
 def main() -> int:
-    watchlist = _read_csv(PROCESSED / f"current_watchlist_{VARIANT}.csv")[:TOP]
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument(
+        "--watchlist",
+        type=Path,
+        default=None,
+        help="watchlist CSV to read; must be the same one pipelines 25 and 26 used",
+    )
+    args = parser.parse_args()
+    source = args.watchlist or PROCESSED / f"current_watchlist_{VARIANT}.csv"
+    watchlist = _read_csv(source)[:TOP]
     crops = _read_csv(PROCESSED / f"crop_exposure_{VARIANT}.csv")
     by_substance = _read_csv(PROCESSED / f"crop_exposure_{VARIANT}_by_substance.csv")
     resolution = _read_csv(PROCESSED / f"resolution_{VARIANT}.csv")
@@ -203,6 +213,7 @@ def main() -> int:
     SITE_DATA.parent.mkdir(parents=True, exist_ok=True)
     SITE_DATA.write_text(json.dumps(payload, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
 
+    print(f"read {source.name}")
     print(f"watchlist entries published: {len(payload['entries'])} of top {TOP}")
     print(f"with a Swedish crop use:     {payload['on_market']}")
     print(f"with a dated expiry:         {payload['tracked']}")

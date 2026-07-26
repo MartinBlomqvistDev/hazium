@@ -2,143 +2,138 @@
  "variant": "headline",
  "generated": "2026-07-26",
  "top": 100,
- "tracked": 93,
- "on_market": 48,
+ "tracked": 98,
+ "on_market": 35,
  "calendar": [
   {
    "year": 2026,
-   "count": 27,
-   "cumulative": 27
+   "count": 30,
+   "cumulative": 30
   },
   {
    "year": 2027,
-   "count": 31,
-   "cumulative": 58
+   "count": 33,
+   "cumulative": 63
   },
   {
    "year": 2028,
-   "count": 8,
-   "cumulative": 66
+   "count": 11,
+   "cumulative": 74
   },
   {
    "year": 2029,
-   "count": 5,
-   "cumulative": 71
-  },
-  {
-   "year": 2030,
-   "count": 2,
-   "cumulative": 73
-  },
-  {
-   "year": 2031,
-   "count": 5,
-   "cumulative": 78
-  },
-  {
-   "year": 2032,
-   "count": 5,
+   "count": 9,
    "cumulative": 83
   },
   {
-   "year": 2033,
+   "year": 2030,
    "count": 3,
    "cumulative": 86
   },
   {
-   "year": 2034,
-   "count": 2,
-   "cumulative": 88
-  },
-  {
-   "year": 2035,
+   "year": 2031,
    "count": 4,
-   "cumulative": 92
+   "cumulative": 90
   },
   {
-   "year": 2036,
-   "count": 1,
+   "year": 2032,
+   "count": 3,
    "cumulative": 93
+  },
+  {
+   "year": 2033,
+   "count": 3,
+   "cumulative": 96
+  },
+  {
+   "year": 2034,
+   "count": 1,
+   "cumulative": 97
+  },
+  {
+   "year": 2037,
+   "count": 1,
+   "cumulative": 98
   }
  ],
  "crops": [
   {
    "crop": "wheat",
    "products": 205,
-   "flagged": 83,
-   "percent": 40
+   "flagged": 38,
+   "percent": 19
   },
   {
    "crop": "triticale",
    "products": 190,
-   "flagged": 80,
-   "percent": 42
+   "flagged": 37,
+   "percent": 19
   },
   {
    "crop": "rye",
    "products": 186,
-   "flagged": 80,
-   "percent": 43
+   "flagged": 36,
+   "percent": 19
   },
   {
    "crop": "barley",
    "products": 184,
-   "flagged": 75,
-   "percent": 41
+   "flagged": 31,
+   "percent": 17
   },
   {
    "crop": "oats",
    "products": 126,
-   "flagged": 50,
-   "percent": 40
+   "flagged": 17,
+   "percent": 13
   },
   {
    "crop": "potato",
    "products": 72,
-   "flagged": 17,
-   "percent": 24
+   "flagged": 20,
+   "percent": 28
   },
   {
    "crop": "oilseed rape",
    "products": 70,
-   "flagged": 21,
-   "percent": 30
+   "flagged": 3,
+   "percent": 4
   },
   {
    "crop": "turnip rape",
    "products": 45,
-   "flagged": 11,
-   "percent": 24
+   "flagged": 0,
+   "percent": 0
   },
   {
    "crop": "sugar beet",
    "products": 42,
-   "flagged": 12,
-   "percent": 29
+   "flagged": 15,
+   "percent": 36
   },
   {
    "crop": "strawberry",
    "products": 36,
-   "flagged": 13,
-   "percent": 36
+   "flagged": 12,
+   "percent": 33
   },
   {
    "crop": "ornamentals",
    "products": 33,
-   "flagged": 8,
-   "percent": 24
+   "flagged": 7,
+   "percent": 21
   },
   {
    "crop": "peas",
    "products": 29,
-   "flagged": 8,
-   "percent": 28
+   "flagged": 2,
+   "percent": 7
   },
   {
    "crop": "beans",
    "products": 26,
-   "flagged": 7,
-   "percent": 27
+   "flagged": 4,
+   "percent": 15
   },
   {
    "crop": "tomato",
@@ -149,20 +144,20 @@
   {
    "crop": "apple",
    "products": 25,
-   "flagged": 6,
-   "percent": 24
+   "flagged": 5,
+   "percent": 20
   },
   {
    "crop": "pear",
    "products": 24,
-   "flagged": 6,
-   "percent": 25
+   "flagged": 5,
+   "percent": 21
   },
   {
    "crop": "carrot",
    "products": 18,
-   "flagged": 4,
-   "percent": 22
+   "flagged": 1,
+   "percent": 6
   },
   {
    "crop": "cucumber",
@@ -173,44 +168,44 @@
   {
    "crop": "fodder maize",
    "products": 18,
-   "flagged": 2,
-   "percent": 11
+   "flagged": 0,
+   "percent": 0
   },
   {
    "crop": "flax",
    "products": 17,
-   "flagged": 2,
-   "percent": 12
+   "flagged": 1,
+   "percent": 6
   },
   {
    "crop": "pepper",
    "products": 15,
-   "flagged": 6,
-   "percent": 40
+   "flagged": 5,
+   "percent": 33
   },
   {
    "crop": "onion",
    "products": 14,
-   "flagged": 2,
-   "percent": 14
+   "flagged": 4,
+   "percent": 29
   },
   {
    "crop": "lettuce",
    "products": 13,
-   "flagged": 3,
-   "percent": 23
+   "flagged": 4,
+   "percent": 31
   },
   {
    "crop": "grass ley",
    "products": 13,
-   "flagged": 6,
-   "percent": 46
+   "flagged": 1,
+   "percent": 8
   },
   {
    "crop": "vegetables",
    "products": 12,
-   "flagged": 2,
-   "percent": 17
+   "flagged": 1,
+   "percent": 8
   },
   {
    "crop": "cabbage",
@@ -221,13 +216,199 @@
   {
    "crop": "maize",
    "products": 10,
-   "flagged": 2,
-   "percent": 20
+   "flagged": 1,
+   "percent": 10
   }
  ],
  "entries": [
   {
    "rank": 1,
+   "name": "Pirimicarb",
+   "in_sweden": true,
+   "crops": [
+    "pepper",
+    "strawberry",
+    "tomato"
+   ],
+   "expiry": "2026-10-31",
+   "outcome": "pending",
+   "tonnes": 0.0,
+   "sales_rank": 160
+  },
+  {
+   "rank": 2,
+   "name": "Cyantraniliprole",
+   "in_sweden": true,
+   "crops": [
+    "beans",
+    "lettuce",
+    "ornamentals",
+    "pepper",
+    "strawberry",
+    "tomato"
+   ],
+   "expiry": "2026-09-14",
+   "outcome": "pending",
+   "tonnes": 0.0,
+   "sales_rank": 114
+  },
+  {
+   "rank": 3,
+   "name": "Mecoprop-P",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-10-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 4,
+   "name": "Ametoctradin",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2028-05-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 5,
+   "name": "Sulcotrione",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2026-11-30",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 6,
+   "name": "Chlormequat",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-02-28",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 7,
+   "name": "Amidosulfuron",
+   "in_sweden": true,
+   "crops": [
+    "barley",
+    "flax",
+    "grass ley",
+    "oats",
+    "rye",
+    "triticale",
+    "wheat"
+   ],
+   "expiry": "2026-11-30",
+   "outcome": "pending",
+   "tonnes": 1.4,
+   "sales_rank": 57
+  },
+  {
+   "rank": 8,
+   "name": "Spiroxamin",
+   "in_sweden": true,
+   "crops": [
+    "barley",
+    "rye",
+    "triticale",
+    "wheat"
+   ],
+   "expiry": "2029-11-30",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 9,
+   "name": "Acequinocyl",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2026-11-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 10,
+   "name": "Laminarin",
+   "in_sweden": true,
+   "crops": [
+    "strawberry"
+   ],
+   "expiry": "2033-02-28",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 11,
+   "name": "Iprovalicarb",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2031-03-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 12,
+   "name": "Formetanate hydrochloride",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2026-09-30",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 13,
+   "name": "Emamectin",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2026-11-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 14,
+   "name": "Halosulfuron methyl",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2026-11-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 15,
+   "name": "Dichlorprop-p",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2026-10-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 16,
+   "name": "Valifenalate",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-03-01",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 17,
    "name": "Propoxycarbazone",
    "in_sweden": false,
    "crops": [],
@@ -237,32 +418,37 @@
    "sales_rank": null
   },
   {
-   "rank": 2,
-   "name": "Cyhalofop-butyl",
+   "rank": 18,
+   "name": "Mandestrobin",
    "in_sweden": false,
    "crops": [],
-   "expiry": "2032-06-30",
+   "expiry": "2029-06-09",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
-   "rank": 3,
-   "name": "Picolinafen",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2031-06-30",
+   "rank": 19,
+   "name": "Oxyfluorfen",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-05-31",
    "outcome": "pending",
-   "tonnes": 0.0,
-   "sales_rank": 159
+   "tonnes": null,
+   "sales_rank": null
   },
   {
-   "rank": 4,
+   "rank": 20,
+   "name": "Daminozide",
+   "in_sweden": true,
+   "crops": [],
+   "expiry": "2026-09-15",
+   "outcome": "pending",
+   "tonnes": 0.0,
+   "sales_rank": 119
+  },
+  {
+   "rank": 21,
    "name": "Pyraflufen-ethyl",
    "in_sweden": true,
    "crops": [
@@ -274,7 +460,65 @@
    "sales_rank": 93
   },
   {
-   "rank": 5,
+   "rank": 22,
+   "name": "Tefluthrin",
+   "in_sweden": true,
+   "crops": [
+    "sugar beet"
+   ],
+   "expiry": "2027-05-31",
+   "outcome": "pending",
+   "tonnes": 0.0,
+   "sales_rank": 168
+  },
+  {
+   "rank": 23,
+   "name": "Tri-allate",
+   "in_sweden": true,
+   "crops": [],
+   "expiry": "2027-03-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 24,
+   "name": "Malathion",
+   "in_sweden": true,
+   "crops": [],
+   "expiry": "2028-07-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 25,
+   "name": "Proquinazid",
+   "in_sweden": true,
+   "crops": [
+    "barley",
+    "oats",
+    "rye",
+    "triticale",
+    "wheat"
+   ],
+   "expiry": "2027-12-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 26,
+   "name": "Thiabendazole",
+   "in_sweden": true,
+   "crops": [],
+   "expiry": "2032-03-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 27,
    "name": "Fettsyror    C7–C18   och C18 omättade kaliumsalter",
    "in_sweden": true,
    "crops": [
@@ -295,118 +539,122 @@
    "sales_rank": null
   },
   {
-   "rank": 6,
-   "name": "Chlormequat",
+   "rank": 28,
+   "name": "Zinc phosphide",
    "in_sweden": false,
    "crops": [],
-   "expiry": "2027-02-28",
+   "expiry": "2026-12-31",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
-   "rank": 7,
-   "name": "Ethofumesate",
-   "in_sweden": true,
-   "crops": [
-    "sugar beet"
-   ],
-   "expiry": "2031-10-31",
+   "rank": 29,
+   "name": "Disodium phosphonate",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2029-07-31",
    "outcome": "pending",
-   "tonnes": 2.7,
-   "sales_rank": 48
+   "tonnes": null,
+   "sales_rank": null
   },
   {
-   "rank": 8,
-   "name": "Proquinazid",
+   "rank": 30,
+   "name": "Dimethachlor",
+   "in_sweden": true,
+   "crops": [],
+   "expiry": "2026-10-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 31,
+   "name": "Etofenprox",
+   "in_sweden": true,
+   "crops": [],
+   "expiry": "2027-03-31",
+   "outcome": "pending",
+   "tonnes": 0.0,
+   "sales_rank": 129
+  },
+  {
+   "rank": 32,
+   "name": "Picolinafen",
    "in_sweden": true,
    "crops": [
     "barley",
-    "oats",
     "rye",
     "triticale",
     "wheat"
    ],
-   "expiry": "2027-12-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 9,
-   "name": "Cyantraniliprole",
-   "in_sweden": true,
-   "crops": [
-    "beans",
-    "lettuce",
-    "ornamentals",
-    "pepper",
-    "strawberry",
-    "tomato"
-   ],
-   "expiry": "2026-09-14",
+   "expiry": "2031-06-30",
    "outcome": "pending",
    "tonnes": 0.0,
-   "sales_rank": 114
+   "sales_rank": 159
   },
   {
-   "rank": 12,
-   "name": "Lambda-Cyhalothrin",
-   "in_sweden": true,
-   "crops": [],
-   "expiry": "2026-08-31",
-   "outcome": "pending",
-   "tonnes": 0.0,
-   "sales_rank": 148
-  },
-  {
-   "rank": 13,
-   "name": "Rescalure",
+   "rank": 33,
+   "name": "Forchlorfenuron",
    "in_sweden": false,
    "crops": [],
-   "expiry": "2028-05-18",
+   "expiry": "2033-05-31",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
-   "rank": 14,
-   "name": "Pendimethalin",
+   "rank": 34,
+   "name": "Tebufenozide",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-01-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 35,
+   "name": "Magnesium phosphide",
    "in_sweden": true,
    "crops": [],
-   "expiry": "2027-01-15",
+   "expiry": "2026-11-30",
+   "outcome": "pending",
+   "tonnes": 0.0,
+   "sales_rank": 149
+  },
+  {
+   "rank": 36,
+   "name": "Cyhalofop-butyl",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2032-06-30",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
-   "rank": 15,
-   "name": "Azoxystrobin",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "beans",
-    "carrot",
-    "oats",
-    "oilseed rape",
-    "onion",
-    "peas",
-    "potato",
-    "raspberry",
-    "rye",
-    "strawberry",
-    "sugar beet",
-    "triticale",
-    "turnip rape",
-    "wheat"
-   ],
-   "expiry": "2027-05-31",
+   "rank": 37,
+   "name": "Flutianil",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2029-04-14",
    "outcome": "pending",
-   "tonnes": 2.6,
-   "sales_rank": 50
+   "tonnes": null,
+   "sales_rank": null
   },
   {
-   "rank": 16,
+   "rank": 38,
+   "name": "Cyflumetofen",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-10-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 39,
    "name": "Ziram",
    "in_sweden": true,
    "crops": [],
@@ -416,182 +664,104 @@
    "sales_rank": null
   },
   {
-   "rank": 17,
-   "name": "Flazasulfuron",
+   "rank": 40,
+   "name": "Pyridaben",
    "in_sweden": false,
    "crops": [],
-   "expiry": "2032-07-31",
+   "expiry": "2030-01-31",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
-   "rank": 18,
-   "name": "Propamocarb",
+   "rank": 41,
+   "name": "Triclopyr",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-03-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 42,
+   "name": "Rescalure",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2028-05-18",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 43,
+   "name": "Dazomet",
    "in_sweden": true,
-   "crops": [
-    "cabbage",
-    "cucumber",
-    "lettuce",
-    "tomato"
-   ],
+   "crops": [],
+   "expiry": "2026-08-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 44,
+   "name": "MCPB",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2026-08-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 45,
+   "name": "Lime sulphur",
+   "in_sweden": true,
+   "crops": [],
    "expiry": "2027-01-31",
    "outcome": "pending",
-   "tonnes": 48.2,
-   "sales_rank": 6
+   "tonnes": null,
+   "sales_rank": null
   },
   {
-   "rank": 19,
-   "name": "Cyflufenamid",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "oats",
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2027-06-30",
+   "rank": 46,
+   "name": "Fenazaquin",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2026-08-31",
    "outcome": "pending",
-   "tonnes": 0.1,
-   "sales_rank": 94
+   "tonnes": null,
+   "sales_rank": null
   },
   {
-   "rank": 20,
-   "name": "Penkonazol",
+   "rank": 47,
+   "name": "geraniol",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2028-04-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 48,
+   "name": "Hexythiazox",
    "in_sweden": true,
    "crops": [
     "apple",
     "cucumber",
     "currant",
-    "ornamentals",
     "pear",
-    "pepper",
-    "strawberry",
-    "tomato"
+    "raspberry",
+    "strawberry"
    ],
-   "expiry": "2026-10-15",
-   "outcome": "pending",
-   "tonnes": 0.0,
-   "sales_rank": 157
-  },
-  {
-   "rank": 21,
-   "name": "Iprovalicarb",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2031-03-31",
+   "expiry": "2027-01-31",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
-   "rank": 22,
-   "name": "Tolclofos-methyl",
-   "in_sweden": true,
-   "crops": [
-    "potato"
-   ],
-   "expiry": "2034-08-31",
-   "outcome": "pending",
-   "tonnes": 0.0,
-   "sales_rank": 172
-  },
-  {
-   "rank": 23,
-   "name": "Cyprodinil",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "oats",
-    "ornamentals",
-    "pepper",
-    "rye",
-    "strawberry",
-    "tomato",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2026-10-31",
-   "outcome": "pending",
-   "tonnes": 0.6,
-   "sales_rank": 77
-  },
-  {
-   "rank": 24,
-   "name": "Amidosulfuron",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "flax",
-    "grass ley",
-    "oats",
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2026-11-30",
-   "outcome": "pending",
-   "tonnes": 1.4,
-   "sales_rank": 57
-  },
-  {
-   "rank": 25,
-   "name": "Beflubutamid",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2026-10-31",
-   "outcome": "pending",
-   "tonnes": 6.6,
-   "sales_rank": 32
-  },
-  {
-   "rank": 26,
-   "name": "Paraffin oils with carbon chain lengths of C15-C30",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-03-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 27,
-   "name": "Paraffin oils with carbon chain lengths of C11-C30",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-03-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 28,
-   "name": "Paraffin oils with carbon chain lengths of C11-C25",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-03-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 29,
-   "name": "Benalaxyl-M",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-09-30",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 30,
+   "rank": 49,
    "name": "Fludioxonil",
    "in_sweden": true,
    "crops": [
@@ -615,118 +785,163 @@
    "sales_rank": 26
   },
   {
-   "rank": 31,
-   "name": "Benzoic acid",
-   "in_sweden": true,
-   "crops": [],
-   "expiry": "2032-08-31",
-   "outcome": "pending",
-   "tonnes": 0.2,
-   "sales_rank": 85
-  },
-  {
-   "rank": 32,
-   "name": "Thiabendazole",
-   "in_sweden": true,
-   "crops": [],
-   "expiry": "2032-03-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 33,
-   "name": "Formetanate hydrochloride",
+   "rank": 52,
+   "name": "2,5-Dichlorobenzoic acid methylester",
    "in_sweden": false,
    "crops": [],
-   "expiry": "2026-09-30",
+   "expiry": "2026-11-30",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
-   "rank": 34,
-   "name": "Imazamox",
+   "rank": 53,
+   "name": "Buprofezin",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2026-12-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 54,
+   "name": "Isoxaflutole",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2034-07-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 55,
+   "name": "Tebufenpyrad",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-01-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 56,
+   "name": "Silthiofam",
    "in_sweden": true,
    "crops": [
-    "beans",
-    "oilseed rape",
-    "peas",
-    "turnip rape"
+    "triticale",
+    "wheat"
    ],
-   "expiry": "2027-06-30",
+   "expiry": "2033-06-30",
    "outcome": "pending",
-   "tonnes": 1.1,
-   "sales_rank": 67
+   "tonnes": 0.0,
+   "sales_rank": 166
   },
   {
-   "rank": 35,
-   "name": "Zoxamide",
-   "in_sweden": true,
+   "rank": 57,
+   "name": "Bupirimate",
+   "in_sweden": false,
    "crops": [],
-   "expiry": "2033-06-30",
+   "expiry": "2027-01-31",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
-   "rank": 36,
-   "name": "Oxathiapiprolin",
+   "rank": 58,
+   "name": "Eugenol",
+   "in_sweden": true,
+   "crops": [],
+   "expiry": "2028-04-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 59,
+   "name": "Metobromuron",
    "in_sweden": true,
    "crops": [
     "potato"
    ],
-   "expiry": "2027-03-03",
+   "expiry": "2027-05-31",
+   "outcome": "pending",
+   "tonnes": 4.4,
+   "sales_rank": 40
+  },
+  {
+   "rank": 60,
+   "name": "Bentazone",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-10-31",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
-   "rank": 37,
-   "name": "Pyriproxyfen",
-   "in_sweden": true,
+   "rank": 61,
+   "name": "Fluometuron",
+   "in_sweden": false,
    "crops": [],
-   "expiry": "2035-07-31",
+   "expiry": "2030-01-15",
    "outcome": "pending",
-   "tonnes": 0.0,
-   "sales_rank": 164
+   "tonnes": null,
+   "sales_rank": null
   },
   {
-   "rank": 38,
-   "name": "Phenmedipham",
+   "rank": 62,
+   "name": "Flumioxazin",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2037-02-28",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 63,
+   "name": "Flupyradifurone",
    "in_sweden": true,
    "crops": [
     "sugar beet"
    ],
-   "expiry": "2026-09-30",
-   "outcome": "pending",
-   "tonnes": 19.7,
-   "sales_rank": 15
-  },
-  {
-   "rank": 39,
-   "name": "Metalaxyl",
-   "in_sweden": true,
-   "crops": [
-    "maize"
-   ],
-   "expiry": "2026-09-30",
+   "expiry": "2029-06-09",
    "outcome": "pending",
    "tonnes": 0.0,
-   "sales_rank": 152
+   "sales_rank": 133
   },
   {
-   "rank": 40,
-   "name": "Clodinafop-Propargyl",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-07-31",
+   "rank": 64,
+   "name": "Fenpicoxamid",
+   "in_sweden": true,
+   "crops": [
+    "rye",
+    "triticale",
+    "wheat"
+   ],
+   "expiry": "2028-10-11",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
-   "rank": 41,
+   "rank": 65,
+   "name": "Beflubutamid",
+   "in_sweden": true,
+   "crops": [
+    "barley",
+    "rye",
+    "triticale",
+    "wheat"
+   ],
+   "expiry": "2026-10-31",
+   "outcome": "pending",
+   "tonnes": 6.6,
+   "sales_rank": 32
+  },
+  {
+   "rank": 66,
    "name": "Halauxifen-methyl",
    "in_sweden": true,
    "crops": [
@@ -743,374 +958,8 @@
    "sales_rank": null
   },
   {
-   "rank": 42,
-   "name": "Buprofezin",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2026-12-15",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 43,
-   "name": "Boscalid",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "fruit (unspecified)",
-    "oilseed rape",
-    "potato",
-    "strawberry",
-    "turnip rape",
-    "vegetables",
-    "wheat"
-   ],
-   "expiry": "2028-03-31",
-   "outcome": "pending",
-   "tonnes": 5.1,
-   "sales_rank": 37
-  },
-  {
-   "rank": 44,
-   "name": "Mandestrobin",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2029-06-09",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 45,
-   "name": "Clopyralid",
-   "in_sweden": true,
-   "crops": [
-    "oilseed rape"
-   ],
-   "expiry": "2036-09-30",
-   "outcome": "pending",
-   "tonnes": 11.9,
-   "sales_rank": 21
-  },
-  {
-   "rank": 46,
-   "name": "Fenpicoxamid",
-   "in_sweden": true,
-   "crops": [
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2028-10-11",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 47,
-   "name": "Dimethenamid-p",
-   "in_sweden": true,
-   "crops": [
-    "oilseed rape",
-    "peas",
-    "sugar beet"
-   ],
-   "expiry": "2034-08-31",
-   "outcome": "pending",
-   "tonnes": 0.5,
-   "sales_rank": 80
-  },
-  {
-   "rank": 48,
-   "name": "Mecoprop-P",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-10-15",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 49,
-   "name": "Thifensulfuron-methyl",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "oats",
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2031-10-31",
-   "outcome": "pending",
-   "tonnes": 0.7,
-   "sales_rank": 75
-  },
-  {
-   "rank": 50,
-   "name": "Pinoxaden",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2029-12-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 51,
-   "name": "Fenpyroximate",
-   "in_sweden": true,
-   "crops": [
-    "apple",
-    "beans",
-    "cucumber",
-    "ornamentals",
-    "pear",
-    "pepper",
-    "strawberry",
-    "tomato"
-   ],
-   "expiry": "2028-01-31",
-   "outcome": "pending",
-   "tonnes": 0.0,
-   "sales_rank": 131
-  },
-  {
-   "rank": 52,
-   "name": "Metsulfuron-methyl",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "oats",
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2026-08-31",
-   "outcome": "pending",
-   "tonnes": 0.1,
-   "sales_rank": 97
-  },
-  {
-   "rank": 53,
-   "name": "Dithianon",
-   "in_sweden": true,
-   "crops": [
-    "apple",
-    "pear"
-   ],
-   "expiry": "2027-01-31",
-   "outcome": "pending",
-   "tonnes": 0.8,
-   "sales_rank": 70
-  },
-  {
-   "rank": 54,
-   "name": "Triclopyr",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-03-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 55,
-   "name": "Pyraclostrobin",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "fruit (unspecified)",
-    "maize",
-    "oats",
-    "oilseed rape",
-    "potato",
-    "rye",
-    "strawberry",
-    "triticale",
-    "turnip rape",
-    "vegetables",
-    "wheat"
-   ],
-   "expiry": "2026-09-15",
-   "outcome": "pending",
-   "tonnes": 14.9,
-   "sales_rank": 18
-  },
-  {
-   "rank": 56,
-   "name": "Sulfosulfuron",
-   "in_sweden": true,
-   "crops": [],
-   "expiry": "2030-12-31",
-   "outcome": "pending",
-   "tonnes": 0.0,
-   "sales_rank": 167
-  },
-  {
-   "rank": 57,
-   "name": "Spiroxamin",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2029-11-30",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 58,
-   "name": "Diflufenican",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "oats",
-    "potato",
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2027-08-31",
-   "outcome": "pending",
-   "tonnes": 16.7,
-   "sales_rank": 16
-  },
-  {
-   "rank": 59,
-   "name": "Pirimicarb",
-   "in_sweden": true,
-   "crops": [
-    "pepper",
-    "strawberry",
-    "tomato"
-   ],
-   "expiry": "2026-10-31",
-   "outcome": "pending",
-   "tonnes": 0.0,
-   "sales_rank": 160
-  },
-  {
-   "rank": 60,
-   "name": "Pethoxamid",
-   "in_sweden": true,
-   "crops": [
-    "oilseed rape"
-   ],
-   "expiry": "2033-11-30",
-   "outcome": "pending",
-   "tonnes": 27.4,
-   "sales_rank": 9
-  },
-  {
-   "rank": 61,
-   "name": "Nicosulfuron",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-03-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 62,
-   "name": "Acetic acid",
-   "in_sweden": true,
-   "crops": [],
-   "expiry": null,
-   "outcome": "unknown",
-   "tonnes": 242.8,
-   "sales_rank": 3
-  },
-  {
-   "rank": 64,
-   "name": "Ferric pyrophosphate",
-   "in_sweden": true,
-   "crops": [],
-   "expiry": "2035-08-03",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 65,
-   "name": "Laminarin",
-   "in_sweden": true,
-   "crops": [
-    "strawberry"
-   ],
-   "expiry": "2033-02-28",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 66,
-   "name": "Florpyrauxifen-benzyl",
-   "in_sweden": true,
-   "crops": [
-    "sugar beet"
-   ],
-   "expiry": "2029-07-24",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
    "rank": 67,
-   "name": "Lavandulyl senecioate",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2035-06-03",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 68,
-   "name": "Foramsulfuron",
-   "in_sweden": true,
-   "crops": [
-    "fodder maize",
-    "ornamentals",
-    "sugar beet"
-   ],
-   "expiry": "2035-05-31",
-   "outcome": "pending",
-   "tonnes": 2.0,
-   "sales_rank": 53
-  },
-  {
-   "rank": 69,
-   "name": "Benzovindiflupyr",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "beans",
-    "flax",
-    "oats",
-    "peas",
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2026-08-02",
-   "outcome": "pending",
-   "tonnes": 1.4,
-   "sales_rank": 58
-  },
-  {
-   "rank": 70,
-   "name": "Eugenol",
+   "name": "Thymol",
    "in_sweden": true,
    "crops": [],
    "expiry": "2028-04-15",
@@ -1119,83 +968,8 @@
    "sales_rank": null
   },
   {
-   "rank": 71,
-   "name": "Metazachlor",
-   "in_sweden": true,
-   "crops": [],
-   "expiry": "2026-10-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 72,
-   "name": "Dichlorprop-p",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2026-10-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 73,
-   "name": "Fenoxaprop-P-Ethyl",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2026-11-30",
-   "outcome": "pending",
-   "tonnes": 0.1,
-   "sales_rank": 95
-  },
-  {
-   "rank": 74,
-   "name": "Rimsulfuron",
-   "in_sweden": true,
-   "crops": [
-    "fodder maize",
-    "potato"
-   ],
-   "expiry": "2028-08-15",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 75,
-   "name": "Pirimiphos-methyl",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-01-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 76,
-   "name": "Florasulam",
-   "in_sweden": true,
-   "crops": [
-    "barley",
-    "grass ley",
-    "oats",
-    "rye",
-    "triticale",
-    "wheat"
-   ],
-   "expiry": "2030-12-31",
-   "outcome": "pending",
-   "tonnes": 1.3,
-   "sales_rank": 62
-  },
-  {
-   "rank": 77,
-   "name": "Fosetyl",
+   "rank": 68,
+   "name": "Propamocarb",
    "in_sweden": true,
    "crops": [
     "cabbage",
@@ -1203,133 +977,43 @@
     "lettuce",
     "tomato"
    ],
-   "expiry": "2026-10-31",
-   "outcome": "pending",
-   "tonnes": 4.2,
-   "sales_rank": 41
-  },
-  {
-   "rank": 78,
-   "name": "Spearmint oil",
-   "in_sweden": true,
-   "crops": [],
-   "expiry": "2028-01-15",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 79,
-   "name": "Sodium p-nitrophenolate",
-   "in_sweden": false,
-   "crops": [],
    "expiry": "2027-01-31",
    "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
+   "tonnes": 48.2,
+   "sales_rank": 6
   },
   {
-   "rank": 80,
-   "name": "Aluminium silicate (Kaolin)",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-03-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 81,
-   "name": "Sodium 5-nitroguaiacolate",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-01-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 82,
-   "name": "Sodium o-nitrophenolate",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-01-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 83,
-   "name": "Oxyfluorfen",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2027-05-31",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 84,
-   "name": "Flupyradifurone",
-   "in_sweden": true,
-   "crops": [
-    "sugar beet"
-   ],
-   "expiry": "2029-06-09",
-   "outcome": "pending",
-   "tonnes": 0.0,
-   "sales_rank": 133
-  },
-  {
-   "rank": 85,
-   "name": "Cymoxanil",
-   "in_sweden": true,
-   "crops": [
-    "potato"
-   ],
-   "expiry": "2026-08-15",
-   "outcome": "pending",
-   "tonnes": 1.1,
-   "sales_rank": 66
-  },
-  {
-   "rank": 87,
-   "name": "Tritikonazol",
+   "rank": 69,
+   "name": "Aclonifen",
    "in_sweden": true,
    "crops": [
     "barley",
-    "oats",
+    "beans",
+    "carrot",
+    "onion",
+    "peas",
+    "potato",
     "rye",
     "triticale",
     "wheat"
    ],
-   "expiry": "2027-01-31",
+   "expiry": "2026-10-31",
    "outcome": "pending",
-   "tonnes": 0.5,
-   "sales_rank": 82
+   "tonnes": 26.7,
+   "sales_rank": 10
   },
   {
-   "rank": 88,
-   "name": "Terbuthylazine",
-   "in_sweden": true,
+   "rank": 70,
+   "name": "Diclofop",
+   "in_sweden": false,
    "crops": [],
-   "expiry": "2027-05-31",
+   "expiry": "2026-08-31",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
-   "rank": 89,
-   "name": "Sulfuryl fluoride",
-   "in_sweden": true,
-   "crops": [],
-   "expiry": "2027-01-31",
-   "outcome": "pending",
-   "tonnes": 0.7,
-   "sales_rank": 74
-  },
-  {
-   "rank": 90,
+   "rank": 71,
    "name": "Azadirachtin",
    "in_sweden": true,
    "crops": [
@@ -1350,17 +1034,7 @@
    "sales_rank": null
   },
   {
-   "rank": 92,
-   "name": "Bensulfuron-Methyl",
-   "in_sweden": false,
-   "crops": [],
-   "expiry": "2026-08-15",
-   "outcome": "pending",
-   "tonnes": null,
-   "sales_rank": null
-  },
-  {
-   "rank": 94,
+   "rank": 72,
    "name": "Tetraconazole",
    "in_sweden": false,
    "crops": [],
@@ -1370,76 +1044,350 @@
    "sales_rank": null
   },
   {
-   "rank": 95,
-   "name": "Halosulfuron methyl",
+   "rank": 73,
+   "name": "Florpyrauxifen-benzyl",
+   "in_sweden": true,
+   "crops": [
+    "sugar beet"
+   ],
+   "expiry": "2029-07-24",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 74,
+   "name": "Cyprodinil",
+   "in_sweden": true,
+   "crops": [
+    "barley",
+    "oats",
+    "ornamentals",
+    "pepper",
+    "rye",
+    "strawberry",
+    "tomato",
+    "triticale",
+    "wheat"
+   ],
+   "expiry": "2026-10-31",
+   "outcome": "pending",
+   "tonnes": 0.6,
+   "sales_rank": 77
+  },
+  {
+   "rank": 75,
+   "name": "Ethofumesate",
+   "in_sweden": true,
+   "crops": [
+    "sugar beet"
+   ],
+   "expiry": "2031-10-31",
+   "outcome": "pending",
+   "tonnes": 2.7,
+   "sales_rank": 48
+  },
+  {
+   "rank": 76,
+   "name": "Bensulfuron-Methyl",
    "in_sweden": false,
    "crops": [],
-   "expiry": "2026-11-15",
+   "expiry": "2026-08-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 77,
+   "name": "Clodinafop-Propargyl",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-07-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 78,
+   "name": "1-Decanol",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2028-06-30",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 79,
+   "name": "Pirimiphos-methyl",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-01-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 80,
+   "name": "Pyroxsulam",
+   "in_sweden": true,
+   "crops": [
+    "rye",
+    "triticale",
+    "wheat"
+   ],
+   "expiry": "2027-09-30",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 81,
+   "name": "Metalaxyl",
+   "in_sweden": true,
+   "crops": [
+    "maize"
+   ],
+   "expiry": "2026-09-30",
+   "outcome": "pending",
+   "tonnes": 0.0,
+   "sales_rank": 152
+  },
+  {
+   "rank": 82,
+   "name": "Dicopper chloride trihydroxide",
+   "in_sweden": true,
+   "crops": [],
+   "expiry": "2029-06-30",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 83,
+   "name": "Tembotrione",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2026-12-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 84,
+   "name": "Dicamba",
+   "in_sweden": true,
+   "crops": [],
+   "expiry": "2027-03-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 85,
+   "name": "Chlorantraniliprole",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-05-31",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 86,
+   "name": "Hymexazol",
+   "in_sweden": true,
+   "crops": [
+    "sugar beet"
+   ],
+   "expiry": "2026-08-31",
+   "outcome": "pending",
+   "tonnes": 0.0,
+   "sales_rank": 135
+  },
+  {
+   "rank": 87,
+   "name": "Flutolanil",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-06-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 88,
+   "name": "Pyriofenone",
+   "in_sweden": true,
+   "crops": [
+    "barley",
+    "oats",
+    "rye",
+    "triticale",
+    "wheat"
+   ],
+   "expiry": "2027-06-30",
+   "outcome": "pending",
+   "tonnes": 0.0,
+   "sales_rank": 163
+  },
+  {
+   "rank": 89,
+   "name": "Penoxsulam",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2027-05-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 90,
+   "name": "Oxathiapiprolin",
+   "in_sweden": true,
+   "crops": [
+    "potato"
+   ],
+   "expiry": "2027-03-03",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
+  },
+  {
+   "rank": 91,
+   "name": "Mandipropamid",
+   "in_sweden": true,
+   "crops": [
+    "lettuce",
+    "potato",
+    "tomato"
+   ],
+   "expiry": "2029-06-30",
+   "outcome": "pending",
+   "tonnes": 7.3,
+   "sales_rank": 29
+  },
+  {
+   "rank": 92,
+   "name": "Imazalil",
+   "in_sweden": true,
+   "crops": [
+    "potato"
+   ],
+   "expiry": "2027-05-31",
+   "outcome": "pending",
+   "tonnes": 0.0,
+   "sales_rank": 136
+  },
+  {
+   "rank": 93,
+   "name": "Metamitron",
+   "in_sweden": true,
+   "crops": [
+    "strawberry",
+    "sugar beet"
+   ],
+   "expiry": "2026-11-30",
+   "outcome": "pending",
+   "tonnes": 25.6,
+   "sales_rank": 12
+  },
+  {
+   "rank": 94,
+   "name": "Aluminium phosphide",
+   "in_sweden": true,
+   "crops": [],
+   "expiry": "2026-11-30",
+   "outcome": "pending",
+   "tonnes": 0.6,
+   "sales_rank": 76
+  },
+  {
+   "rank": 95,
+   "name": "Sintofen",
+   "in_sweden": false,
+   "crops": [],
+   "expiry": "2030-01-15",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
    "rank": 96,
-   "name": "Fluopicolide",
+   "name": "Fluazinam",
    "in_sweden": true,
    "crops": [
+    "onion",
     "potato"
    ],
-   "expiry": "2026-08-31",
+   "expiry": "2027-11-30",
    "outcome": "pending",
-   "tonnes": 4.5,
-   "sales_rank": 39
+   "tonnes": 12.1,
+   "sales_rank": 20
   },
   {
    "rank": 97,
-   "name": "Clomazone",
-   "in_sweden": true,
-   "crops": [
-    "carrot",
-    "oilseed rape",
-    "peas",
-    "potato",
-    "sugar beet"
-   ],
-   "expiry": "2026-09-30",
-   "outcome": "pending",
-   "tonnes": 3.4,
-   "sales_rank": 44
-  },
-  {
-   "rank": 98,
-   "name": "Daminozide",
-   "in_sweden": true,
+   "name": "Fluazifop-P",
+   "in_sweden": false,
    "crops": [],
-   "expiry": "2026-09-15",
-   "outcome": "pending",
-   "tonnes": 0.0,
-   "sales_rank": 119
-  },
-  {
-   "rank": 99,
-   "name": "2-phenylphenol",
-   "in_sweden": true,
-   "crops": [],
-   "expiry": "2027-11-15",
+   "expiry": "2029-11-30",
    "outcome": "pending",
    "tonnes": null,
    "sales_rank": null
   },
   {
-   "rank": 100,
-   "name": "Deltamethrin (cis-deltamethrin)",
+   "rank": 98,
+   "name": "Fenpyroximate",
    "in_sweden": true,
-   "crops": [],
-   "expiry": "2026-08-15",
+   "crops": [
+    "apple",
+    "beans",
+    "cucumber",
+    "ornamentals",
+    "pear",
+    "pepper",
+    "strawberry",
+    "tomato"
+   ],
+   "expiry": "2028-01-31",
    "outcome": "pending",
    "tonnes": 0.0,
-   "sales_rank": 120
+   "sales_rank": 131
+  },
+  {
+   "rank": 99,
+   "name": "Kresoxim-methyl",
+   "in_sweden": true,
+   "crops": [
+    "apple",
+    "barley",
+    "currant",
+    "nursery stock",
+    "ornamentals",
+    "pear",
+    "rye",
+    "strawberry",
+    "triticale",
+    "wheat"
+   ],
+   "expiry": "2027-05-31",
+   "outcome": "pending",
+   "tonnes": 0.0,
+   "sales_rank": 145
+  },
+  {
+   "rank": 100,
+   "name": "Spearmint oil",
+   "in_sweden": true,
+   "crops": [],
+   "expiry": "2028-01-15",
+   "outcome": "pending",
+   "tonnes": null,
+   "sales_rank": null
   }
  ],
- "with_sales": 45,
- "base_rate_percent": 37,
+ "with_sales": 28,
+ "base_rate_percent": 24,
  "sales_year": 2024,
  "sales_ranked": 174
 }

@@ -42,6 +42,9 @@ from hazium.sources.kemi_uses import crops_grown
 ROOT = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"
 
+#: Set by --watchlist so the survival ranking can be used in place of pipeline/13.
+WATCHLIST_PATH: Path | None = None
+
 #: KemI's own grouping for plant protection products, as printed in the register.
 PLANT_PROTECTION = "Växtskyddsmedel"
 
@@ -61,9 +64,9 @@ def load_watchlist(variant: str, top: int) -> dict[str, tuple[int, str]]:
     Returns:
         Substance id -> (rank, name).
     """
-    path = PROCESSED / f"current_watchlist_{variant}.csv"
+    path = WATCHLIST_PATH or PROCESSED / f"current_watchlist_{variant}.csv"
     if not path.exists():
-        raise SystemExit(f"missing {path}; run pipeline/13_current_watchlist.py first")
+        raise SystemExit(f"missing {path}; run pipeline/13 or pipeline/30 first")
     out: dict[str, tuple[int, str]] = {}
     with path.open(encoding="utf-8", newline="") as f:
         for row in csv.DictReader(f):
@@ -109,7 +112,15 @@ def main() -> int:
             "doubles. An exposure map wants the coverage."
         ),
     )
+    parser.add_argument(
+        "--watchlist",
+        type=Path,
+        default=None,
+        help="watchlist CSV to read; defaults to pipeline/13's output",
+    )
     args = parser.parse_args()
+    global WATCHLIST_PATH
+    WATCHLIST_PATH = args.watchlist
 
     watchlist = load_watchlist(args.variant, args.top)
     products = load_approved_products()

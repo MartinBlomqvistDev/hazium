@@ -39,6 +39,14 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
           falsifiable anyway is that every EU approval carries an expiry date, and on that date
           the Commission has to decide. Each entry comes with its own deadline.
         </p>
+        <p className="mt-4 text-sm text-text-secondary">
+          The ranking is a modelled three-year hazard among substances currently approved and not
+          yet withdrawn, not the &ldquo;will this ever be withdrawn&rdquo; score used earlier. That
+          older target was answered largely by approval age, so it mostly returned old approvals.
+          Under this one, approval age is the baseline rate and the evidence does the
+          discriminating: the two substances that most obviously did not belong near the top, a
+          fatty-acid soap and acetic acid, fall from 5th and 62nd to 27th and 192nd.
+        </p>
 
         <div className="mt-10">
           <h3 className="font-medium text-text-primary">When this gets marked</h3>
