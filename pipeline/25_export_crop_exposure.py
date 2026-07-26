@@ -98,7 +98,17 @@ def _write_csv(path: Path, header: list[str], rows: list[list]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--variant", default="headline", choices=("headline", "early_warning"))
-    parser.add_argument("--top", type=int, default=50, help="watchlist ranks to include")
+    parser.add_argument(
+        "--top",
+        type=int,
+        default=100,
+        help=(
+            "watchlist ranks to include. 100 rather than 50: at cutoffs old "
+            "enough to have resolved, precision holds a plateau to about k=50 "
+            "(0.68-0.78) and is still 0.57-0.62 at k=100, while recall roughly "
+            "doubles. An exposure map wants the coverage."
+        ),
+    )
     args = parser.parse_args()
 
     watchlist = load_watchlist(args.variant, args.top)
