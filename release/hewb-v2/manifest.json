@@ -1,0 +1,52 @@
+{
+  "benchmark": "HEWB",
+  "version": "2.0",
+  "released": "2026-07-26",
+  "supersedes": "1.4",
+  "why": "v1.4's target mixes whether a withdrawal happened with when. Ranking on approval age alone reaches 98% of its average precision and reproduces its headline lead times exactly, so the binary formulation could not separate timing from merit. v2 changes the unit of analysis, not the data.",
+  "unit": "one EU-approved substance in one year at risk",
+  "outcome": "EU non-renewal inside a horizon starting that year",
+  "horizons_years": [
+    1,
+    3
+  ],
+  "evaluation": "folds grouped by substance; forward splits reported separately",
+  "headline_horizon_1": {
+    "age only": {
+      "average_precision": 0.101871,
+      "auc": 0.836175,
+      "lift": 3.5595
+    },
+    "evidence only": {
+      "average_precision": 0.179097,
+      "auc": 0.75067,
+      "lift": 6.2578
+    },
+    "age + evidence": {
+      "average_precision": 0.253255,
+      "auc": 0.87669,
+      "lift": 8.849
+    }
+  },
+  "verification": {
+    "age_recoverable_from_evidence_r2": -0.009,
+    "block_permutation_p": 0.024,
+    "feature_lag_years_to_delta": {
+      "0": 0.141,
+      "1": 0.056,
+      "2": 0.045,
+      "3": 0.029
+    },
+    "forward_splits_positive_h3": "9 of 9 with >=16 training events"
+  },
+  "limits": {
+    "training_events_floor": 16,
+    "linear_model_recovers": "about a fifth of the boosted-tree gain",
+    "event_concentration": "75 of 102 one-year events fall in 2017-2021"
+  },
+  "tables": {
+    "survival_h1.csv": "arms, per-group contributions and forward splits at a one-year horizon",
+    "survival_h3.csv": "the same at three years, the horizon the watchlist uses",
+    "v2_survival_retest.csv": "node embeddings re-tested on the panel, where they lose by more"
+  }
+}
