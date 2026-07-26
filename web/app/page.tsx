@@ -1,6 +1,7 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import OriginStory from "@/components/OriginStory";
+import WhatWasBuilt from "@/components/WhatWasBuilt";
 import ResultSection from "@/components/ResultSection";
 import HowItWorks from "@/components/HowItWorks";
 import Principles from "@/components/Principles";
@@ -40,6 +41,7 @@ export default function Home() {
       <Nav />
       <main className="flex-1">
         <Hero data={data} flaggedAhead={flaggedAhead} banTotal={benchmarkBans.length} />
+        <WhatWasBuilt />
         <OriginStory />
         <HowItWorks />
         <ResultSection data={data} capability={capability} detail={detail} />

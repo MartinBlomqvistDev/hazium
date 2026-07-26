@@ -35,12 +35,9 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
           happened. This is the opposite, and it carries a different status. These are
           substances the model ranks as concerning today, and{" "}
           <strong className="text-text-primary">none of them has been checked against
-          anything</strong>, because the future they concern has not happened.
-        </p>
-        <p className="mt-4 text-text-secondary">
-          What makes it falsifiable rather than a claim is that every EU approval carries an
-          expiry date, and on that date the Commission has to decide. So each entry comes with
-          the deadline by which it will be right or wrong.
+          anything</strong>, because the future they concern has not happened. What makes it
+          falsifiable anyway is that every EU approval carries an expiry date, and on that date
+          the Commission has to decide. Each entry comes with its own deadline.
         </p>
 
         <div className="mt-10">
@@ -64,9 +61,9 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
             ))}
           </div>
           <p className="mt-4 text-xs leading-relaxed text-text-muted">
-            An expiry passing is not automatically a verdict. The Commission often extends an
-            approval by a short procedural step while an assessment finishes, which settles
-            nothing. Those are recorded as still open rather than counted either way.
+            An expiry passing is not automatically a verdict: the Commission often extends an
+            approval by a short procedural step while an assessment finishes. Those are recorded
+            as still open rather than counted either way.
           </p>
         </div>
 
@@ -81,9 +78,8 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
             one of them.
           </p>
           <p className="mt-2 text-sm text-text-secondary">
-            This is the catalogue, not the fields. It says what a grower could legally buy, not
-            how much of anything was sprayed or on what area. Sweden reports application volumes
-            per crop separately, and that is not joined here yet.
+            This is the catalogue, not the fields: what a grower could legally buy, not what was
+            sprayed or on what area.
           </p>
           <div className="mt-5 space-y-1.5">
             {data.crops.slice(0, 14).map((crop) => (
@@ -145,22 +141,19 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
             ))}
           </div>
           <p className="mt-4 text-xs leading-relaxed text-text-muted">
-            This is national tonnage, not tonnage per crop. Nobody publishes the second in a form
-            that joins to a substance ranking: Sweden&apos;s per-crop survey reports by pesticide
-            type rather than by active substance and was last run for 2021, and Eurostat states
-            it has never been able to publish comparable EU use statistics at all. The EU
-            legislated a fix in 2025, with annual per-crop collection from 2028 and publication
-            from 2030. Until then the honest unit is the country.
+            National tonnage, not tonnage per crop, because nobody publishes the second in a form
+            that joins to a substance ranking. Sweden&apos;s per-crop survey reports by pesticide
+            type rather than by substance and was last run for 2021; Eurostat states it has never
+            been able to publish comparable EU use statistics at all. A fix was legislated in
+            2025, with publication from 2030. Until then the honest unit is the country.
           </p>
         </div>
 
         <p className="mt-10 text-xs leading-relaxed text-text-muted">
-          No product or brand is named, and none will be. At the benchmark cutoffs old enough
-          to have resolved, a little under half of a top-100 band was never actioned, and that
-          rate is itself a reflection of one intensive period of EU re-evaluation rather than a
-          promise about the next one. Naming commercial products against a list carrying that
-          much error would put specific companies on it wrongly. Crop is the finest granularity
-          published. Generated {data.generated} from the {data.variant} variant.
+          No product or brand is named, and none will be. At the cutoffs old enough to have
+          resolved, a little under half of a top-100 band was never actioned, so naming
+          commercial products against it would put specific companies on a list carrying that
+          much error. Crop is the finest granularity published. Generated {data.generated}.
         </p>
       </div>
     </section>

@@ -51,6 +51,30 @@ export default function ResultSection({
           landmarks had no public profile at all when Hazium flagged them.
         </p>
 
+        <div className="mt-8 rounded-lg border border-hairline bg-page p-5">
+          <h3 className="font-medium text-text-primary">
+            The test that could have ended the project
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+            A ranking model with 25 positives in 5,933 substances can look good by accident. So
+            the labels were permuted and the whole thing refitted, fifty times. If the shuffled
+            runs had come close to the real one, the result was an artefact and would have been
+            retracted. Real average precision is 0.230 against a shuffled maximum of 0.013,
+            p&nbsp;=&nbsp;0.020.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+            The benchmark, its result tables and the raw robustness outputs are published as a
+            citable dataset:{" "}
+            <a
+              href="https://huggingface.co/datasets/MartinBlomqvist/hewb"
+              className="text-accent underline underline-offset-2"
+            >
+              HEWB v1.4 on HuggingFace
+            </a>
+            , CC-BY-4.0.
+          </p>
+        </div>
+
         <p className="mt-6 text-xs text-text-muted">
           HEWB v{data.hewb_version}. Flag dates come from the frozen benchmark
           run under strict pre-cutoff evidence discipline; out-of-fold scores are
