@@ -191,6 +191,38 @@ python pipeline/20_run_robustness.py      # the capstone
 python pipeline/21_export_hewb_release.py # assemble this release
 ```
 
+## Recent cutoffs are censored, not weak
+
+Precision falls steadily across the cutoff schedule: `precision@50` runs
+0.58 to 0.78 for cutoffs from 2009 to 2017, then 0.18 to 0.26 for 2021 to 2024.
+Read as a time series that looks like a model getting worse. It is not.
+
+A cutoff can only be graded against outcomes that have already happened. The
+2009 cutoff has had seventeen years for its predictions to resolve; the 2024
+cutoff has had two. A substance flagged in 2024 and withdrawn in 2031 counts
+today as a false positive, and will count as a true positive later, without
+anything about the model changing.
+
+The relationship is almost perfectly linear. Across the sixteen cutoffs,
+`precision@50` correlates with the number of years of future available at
+**r = 0.957**, and with the number of positives that have materialised at
+r = 0.832. Degradation would not produce that; right-censoring does.
+
+Two consequences for anyone reading these tables:
+
+- **The mature cutoffs carry the honest estimate of the method.** Around 0.7
+  precision at k=50, not the 0.22 the most recent row shows.
+- **A forward watchlist cannot be graded early.** Scored two years out it will
+  look poor whatever its quality, which is why `pipeline/26_track_resolution.py`
+  scores only entries whose approval expiry has actually forced a decision, and
+  reports no precision at all while nothing has settled.
+
+Precision is also flat across k on the mature cutoffs, holding a plateau from
+k=10 to about k=50 (0.68 to 0.78) before declining: 0.57 to 0.62 at k=100, 0.41
+to 0.45 at k=200, 0.18 to 0.20 at k=500. So k=50 is not an arbitrary round
+number, it sits at the end of the plateau. Top-50 captures 32 to 38 percent of
+all positives, which is the recall that precision buys.
+
 ## Limitations
 
 - The `early_warning` label's extra positives trace to a single Swedish
