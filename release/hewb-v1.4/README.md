@@ -35,10 +35,11 @@ configs:
     data_files: data/robustness_negative_controls.csv
   - config_name: v1.4_robustness_shap_funnel
     data_files: data/robustness_shap_funnel.csv
-  - config_name: v2_survival_h1
-    data_files: v2/data/survival_h1.csv
-  - config_name: v2_survival_h3
-    data_files: v2/data/survival_h3.csv
+  # survival_h1.csv and survival_h3.csv are deliberately absent. Each stacks
+  # four tables with different headers (arms, then per-group deltas, then
+  # evidence blocks, then the forward splits) separated by blank lines, so no
+  # parser reads them as one table and the viewer reports a failed job. They
+  # are documented in v2/README.md and are read directly from the repo.
   - config_name: v2_survival_retest
     data_files: v2/data/v2_survival_retest.csv
 ---
