@@ -13,22 +13,68 @@ tags:
   - explainable-ml
 size_categories:
   - n<1K
+# Declared explicitly because this repo holds two benchmark versions whose
+# tables share no schema. Left to infer, the Dataset Viewer builds a single
+# `default` config from every CSV, tries to concatenate `aggregate.csv`
+# (variant, cutoff, model, ...) with `survival_h1.csv` (arm, average_precision,
+# ...), and fails with a cast error, so the viewer showed nothing at all.
+configs:
+  - config_name: v1.4_aggregate
+    data_files: data/aggregate.csv
+  - config_name: v1.4_lead_times
+    data_files: data/lead_times.csv
+  - config_name: v1.4_rank_trajectories
+    data_files: data/rank_trajectories.csv
+  - config_name: v1.4_robustness_cutoff_sweep_aggregate
+    data_files: data/robustness_cutoff_sweep_aggregate.csv
+  - config_name: v1.4_robustness_cutoff_sweep_ranks
+    data_files: data/robustness_cutoff_sweep_ranks.csv
+  - config_name: v1.4_robustness_label_shuffle_placebo
+    data_files: data/robustness_label_shuffle_placebo.csv
+  - config_name: v1.4_robustness_negative_controls
+    data_files: data/robustness_negative_controls.csv
+  - config_name: v1.4_robustness_shap_funnel
+    data_files: data/robustness_shap_funnel.csv
+  - config_name: v2_survival_h1
+    data_files: v2/data/survival_h1.csv
+  - config_name: v2_survival_h3
+    data_files: v2/data/survival_h3.csv
+  - config_name: v2_survival_retest
+    data_files: v2/data/v2_survival_retest.csv
 ---
 
-# HEWB: the Hazium Early Warning Benchmark (v1.4)
+# HEWB: the Hazium Early Warning Benchmark
 
-HEWB measures one thing, precisely: using only evidence that was public before a
-given date, how many months ahead of a real EU pesticide regulatory action would
-a model have flagged the substance?
-
-It is a retrodetection benchmark over a fixed set of individually-verified
-historical EU actions, evaluated under strict temporal discipline, with a
-lead-time metric rather than a single accuracy score. It exists to make an
-early-warning claim falsifiable instead of anecdotal.
-
-This dataset is the frozen v1.4 release: the benchmark definition, the result
-tables, and the robustness evidence. It is the measuring stick behind the
+Two frozen benchmark versions for EU pesticide regulatory risk, published
+together because reading them against each other is the point. Both are the
+measuring stick behind the
 [Hazium](https://github.com/MartinBlomqvistDev/hazium) project.
+
+| | Question | Status |
+|---|---|---|
+| **v1.4** (`data/`) | How many months ahead of a real EU action would a model have flagged the substance? | **Superseded.** Kept published with the results that led to it. |
+| **v2** (`v2/`) | Among substances approved right now, which are at risk in the next year, over and above how long they have held approval? | Current. |
+
+## Why v1.4 was superseded
+
+v1.4 asked whether a substance was *ever* withdrawn, over a population that is
+96% substances never approved in the EU at all and therefore never eligible for
+withdrawal. That makes the question mostly an eligibility test, and one date
+subtraction performs it: ranking on approval age alone reached a **higher mean
+average precision than the full model** across the sixteen cutoffs, 0.474
+against 0.470, and reproduced the lead times below to the month.
+
+The lead-time metric has a second bound. Seven of the ten landmarks entered the
+top twenty within two years of the first cutoff tested, so the headline figure
+was constrained by the start of the window rather than by foresight.
+
+Neither finding makes v1.4 wrong on its own terms, and nothing here has been
+retracted or edited after the fact. It measured what it said it measured; that
+turned out not to be what the project wanted to know. v2 reformulates the
+question as discrete-time survival so approval age becomes the baseline hazard
+and the evidence has to explain the rest. See `v2/README.md`.
+
+Everything from here down describes **v1.4**.
 
 ## The question, stated as a rule
 
