@@ -26,7 +26,8 @@ from hazium.benchmark.hewb import ANNUAL_CUTOFFS, LANDMARK_CASES
 from hazium.graph.build import load_graph
 from hazium.graph.layout3d import force_layout_3d, layout_quality
 from hazium.graph.timeline import build_evidence_mesh
-from hazium.sources.clp import CLP_REGULATION_URL, hazard_class_by_code, load as load_clp
+from hazium.sources.clp import CLP_REGULATION_URL, hazard_class_by_code
+from hazium.sources.clp import load as load_clp
 
 ROOT = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"
@@ -139,7 +140,7 @@ def main() -> int:
                 ],
                 "via": [n.via for n in mesh.nodes],
                 "clp_url": CLP_REGULATION_URL,
-                "xyz": [int(round(v)) for row in positions for v in row],
+                "xyz": [round(v) for row in positions for v in row],
                 "edges": [
                     v
                     for (a, b), e in zip(pairs, mesh.edges, strict=True)

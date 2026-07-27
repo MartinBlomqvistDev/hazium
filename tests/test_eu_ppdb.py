@@ -162,14 +162,14 @@ class TestParseDate:
 
 
 def _row(**overrides) -> _ASRow:
-    base = dict(
-        as_id="32",
-        name="Fluazinam",
-        cas_number="79622-59-6",
-        status="Approved",
-        approval_date=date(2009, 3, 1),
-        expiry_date=date(2027, 11, 30),
-    )
+    base = {
+        "as_id": "32",
+        "name": "Fluazinam",
+        "cas_number": "79622-59-6",
+        "status": "Approved",
+        "approval_date": date(2009, 3, 1),
+        "expiry_date": date(2027, 11, 30),
+    }
     base.update(overrides)
     return _ASRow(**base)
 

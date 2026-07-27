@@ -1,6 +1,6 @@
-"""Imbalanced-ranking metrics. Never accuracy or ROC-AUC — with a 1-4% base
+"""Imbalanced-ranking metrics. Never accuracy or ROC-AUC: with a 1-4% base
 rate, both are dominated by the negative class and hide exactly the signal
-this project cares about (see ``V1_SCOPE.md``'s evaluation protocol).
+this project cares about: ranking quality at the top of a long tail.
 """
 
 from __future__ import annotations
@@ -79,7 +79,7 @@ def bootstrap_ci(
     return (float(np.percentile(values, lo)), float(np.percentile(values, hi)))
 
 
-def summarize(result: "CutoffResult") -> list[dict]:
+def summarize(result: CutoffResult) -> list[dict]:
     """One row per model for a cutoff: AP (with bootstrap CI) + P@k/R@k/lift@k.
 
     This is the published eval table's raw material (``V1_SCOPE.md``'s

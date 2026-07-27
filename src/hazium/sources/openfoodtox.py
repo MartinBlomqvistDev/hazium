@@ -5,14 +5,14 @@ toxicological knowledge base, published to Zenodo. Unlike the two KEMI
 sources, it gives genuinely dated evidence: each scientific dossier carries
 ``LiteratureReference.DateOfEvaluation``, the date the underlying EFSA
 opinion became public. This is the source that makes the temporal ``as_of``
-cutoff meaningful rather than vacuous — a pre-2023 view can now contain real
+cutoff meaningful rather than vacuous, a pre-2023 view can now contain real
 EFSA conclusions, not just a frozen snapshot.
 
 Three surfaces are extracted from the 18-sheet document graph:
 
-* ``REF_SUB`` — substance identity (CAS, EC, PubChem). Used to enrich the
+* ``REF_SUB``: substance identity (CAS, EC, PubChem). Used to enrich the
   identity spine with an authoritative source, not to invent identifiers.
-* ``FLEX_SUM.Metabolites`` — parent-substance -> metabolite links, becoming
+* ``FLEX_SUM.Metabolites``: parent-substance -> metabolite links, becoming
   ``DEGRADES_TO`` edges. This sheet carries no per-row date (a metabolic
   pathway is a property of the substance record, not a dated observation), so
   a link's ``known_at`` is the parent substance's *earliest dated EFSA
@@ -22,7 +22,7 @@ Three surfaces are extracted from the 18-sheet document graph:
   the parent has no dated assessment does the link fall back to the export's
   own publication date, the same snapshot honesty as the KEMI register
   structure.
-* ``DOSSIER`` — one row per EFSA scientific opinion/conclusion, dated and
+* ``DOSSIER``: one row per EFSA scientific opinion/conclusion, dated and
   DOI-linked. Becomes ``SourceDocument`` facts with real ``known_at``.
 
 The IUCLID export links tables through UUID ``Parent UUID`` chains rather

@@ -7,6 +7,7 @@ downloaded (pipeline/01_ingest_kemi_sales.py puts it in data/raw/kemi/).
 
 from datetime import date
 from pathlib import Path
+from typing import ClassVar
 
 import pytest
 
@@ -40,7 +41,7 @@ class TestCellSemantics:
 
 
 class TestRowReconstruction:
-    HEADER = [_word("2023", 200, 10), _word("2024", 260, 10)]
+    HEADER: ClassVar = [_word("2023", 200, 10), _word("2024", 260, 10)]
 
     def test_values_map_to_nearest_year_column(self) -> None:
         words = [

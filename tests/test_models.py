@@ -5,7 +5,7 @@ from datetime import date
 import pytest
 from pydantic import ValidationError
 
-from hazium.models import NodeType, Node
+from hazium.models import Node, NodeType
 from hazium.resolve.ids import is_valid_cas, safe_substance_node_id, substance_node_id
 
 

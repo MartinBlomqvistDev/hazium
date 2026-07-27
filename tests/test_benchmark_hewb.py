@@ -1,6 +1,6 @@
 """HEWB benchmark logic: pure functions over hand-built CutoffResults.
 
-No XGBoost or graph build is needed to test the lead-time logic — it operates
+No XGBoost or graph build is needed to test the lead-time logic, it operates
 over already-computed per-cutoff results, so tests construct those directly
 (fast, deterministic). The underlying ``as_of`` temporal cleanliness that
 feeds those results is covered by ``test_graph_*`` and ``test_ml_baseline``'s
@@ -124,7 +124,7 @@ class TestComputeCaseResult:
         # action, so it is not "early warning". Lead time stays measured from
         # the pre-action crossings only.
         events = [_non_renewal(date(2021, 7, 1))]
-        results = self._results() + [_result(date(2022, 1, 1), [SUB], population=200)]
+        results = [*self._results(), _result(date(2022, 1, 1), [SUB], population=200)]
         cr = compute_case_result(self._CASE, "headline", results, events, DEFAULT_POSITIVE_KINDS)
         assert all(cutoff <= date(2021, 7, 1) for cutoff, _, _ in cr.trajectory)
         assert cr.lead_times[10] == (date(2021, 1, 1), 6)  # unchanged by the post-action rank-1
@@ -223,7 +223,7 @@ class TestVerifyLandmarkCas:
 
 
 class TestEmbeddingComparisonRows:
-    """Reshaping the frozen V2b JSON -- a real, if small, integration point:
+    """Reshaping the frozen V2b JSON, a real, if small, integration point:
     the keys here must match V2b's actual output schema exactly, or this
     silently returns an empty comparison instead of failing loudly.
     """

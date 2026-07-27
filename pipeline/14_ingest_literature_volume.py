@@ -1,7 +1,7 @@
 """Fetch per-substance, per-year scientific-literature volume from Europe PMC.
 
 Population is deliberately the EU PPDB export's substance list, not the full
-graph -- see `SOURCE_ENHANCEMENT_SCOPE.md` and the 2026-07-18 DEV_LOG entry:
+graph, see `SOURCE_ENHANCEMENT_SCOPE.md` and the 2026-07-18 DEV_LOG entry:
 a substance can only ever receive the `NON_RENEWAL` positive label if it was
 once EU-approved (the label comes from EU PPDB's own expiry date), so
 literature signal for a substance outside that population is structurally
@@ -11,7 +11,7 @@ Long-running (worst case low tens of minutes for ~1,100-1,482 substances,
 each needing 2 paginated Europe PMC queries) and resumable by construction:
 output is JSONL, already-fetched substance ids are read back from any
 existing file and skipped, and each substance's records are flushed as soon
-as they're fetched rather than held in memory until the end -- an
+as they're fetched rather than held in memory until the end, an
 interruption partway through loses no completed work.
 
 Usage:
@@ -36,7 +36,7 @@ ROOT = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"
 OUT_FILE = "literature_volume.jsonl"
 #: Tracks every substance *attempted*, independent of whether it produced any
-#: records -- a substance with genuinely zero hits everywhere writes no JSONL
+#: records, a substance with genuinely zero hits everywhere writes no JSONL
 #: line, so resumability can't be derived from the JSONL alone or a
 #: zero-hit substance would be re-fetched on every resume.
 ATTEMPTED_FILE = "literature_volume_attempted.json"
@@ -114,7 +114,7 @@ def main() -> int:
                 total_hits = sum(t for _h, t in year_counts.values())
                 print(
                     f"  [{i}/{len(todo)}] {name!r}: {len(records)} years, "
-                    f"{total_hits} total hits -- {rate:.2f}/s, ETA {eta_min:.1f} min"
+                    f"{total_hits} total hits: {rate:.2f}/s, ETA {eta_min:.1f} min"
                 )
 
     print(f"wrote/updated {out_path}")

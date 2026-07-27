@@ -41,17 +41,17 @@ from hazium.benchmark.robustness import (
     label_shuffle_placebo,
     negative_controls,
 )
+from hazium.explain.shap_baseline import (
+    fit_and_explain,
+    global_importance,
+    grouped_importance,
+)
 from hazium.graph.build import load_graph
 from hazium.ml.baseline import evaluate_cutoff
 from hazium.ml.dataset import (
     DEFAULT_POSITIVE_KINDS,
     EARLY_WARNING_POSITIVE_KINDS,
     build_dataset,
-)
-from hazium.explain.shap_baseline import (
-    fit_and_explain,
-    global_importance,
-    grouped_importance,
 )
 from hazium.models import (
     LiteratureVolumeRecord,
@@ -67,7 +67,7 @@ ROOT = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"
 
 #: The headline cutoff the placebo and the negative-control specificity test run
-#: at — the same 2023-01-01 the public site and README lead with.
+#: at, the same 2023-01-01 the public site and README lead with.
 HEADLINE_CUTOFF = date(2023, 1, 1)
 
 #: The cutoff-sweep answers "is 2023 cherry-picked?" directly: five recent
@@ -129,7 +129,7 @@ def _hazardous_ids(
 ) -> set[str]:
     """Population members carrying >=1 severe hazard flag at the cutoff.
 
-    The design matrix, not scoring — cheap. Used to intersect with the survivor
+    The design matrix, not scoring, cheap. Used to intersect with the survivor
     set to build the sharpest control: substances that *look* dangerous (CMR /
     aquatic-chronic-1 / STOT) yet were never actioned. If the model just flagged
     hazardous chemicals, these would sit at the top.
@@ -138,11 +138,11 @@ def _hazardous_ids(
         graph, sales, regevents, cutoff, positive_kinds, lit_records, clh_records
     )
     mask = (X[list(SEVERE_HAZARD_COLUMNS)].to_numpy() > 0).any(axis=1)
-    return {sid for sid, hazardous in zip(X.index, mask) if hazardous}
+    return {sid for sid, hazardous in zip(X.index, mask, strict=True) if hazardous}
 
 
 def _print_placebo(results) -> None:
-    print("\n=== Robustness 1/4 -- label-shuffle placebo (the kill-criterion) ===")
+    print("\n=== Robustness 1/4: label-shuffle placebo (the kill-criterion) ===")
     print("  Null keeps class balance, breaks feature<->label link. Real AP must")
     print("  tower over the shuffled null; a shuffled AP reaching it retracts the result.\n")
     print(
@@ -159,7 +159,7 @@ def _print_placebo(results) -> None:
 
 
 def _print_sweep(aggregate, ranks) -> None:
-    print("\n=== Robustness 2/4 -- cutoff-sweep (is 2023 cherry-picked?) ===")
+    print("\n=== Robustness 2/4: cutoff-sweep (is 2023 cherry-picked?) ===")
     cutoffs = sorted({r.cutoff for r in aggregate})
 
     print("  (a) Aggregate lead over baseline at each cutoff. XGBoost AP should")
@@ -204,7 +204,7 @@ def _print_sweep(aggregate, ranks) -> None:
 
 
 def _print_controls(results) -> None:
-    print("\n=== Robustness 3/4 -- negative controls (does it just flag hazard?) ===")
+    print("\n=== Robustness 3/4: negative controls (does it just flag hazard?) ===")
     print("  Reviewed-but-not-banned substances should NOT concentrate at the top.")
     print("  Low top-k counts + a deep median percentile => the model is specific.\n")
     print(
@@ -222,7 +222,7 @@ def _print_controls(results) -> None:
 
 
 def _print_shap(shap_results) -> None:
-    print("\n=== Robustness 4/4 -- SHAP funnel split (is the edge outside the funnel?) ===")
+    print("\n=== Robustness 4/4: SHAP funnel split (is the edge outside the funnel?) ===")
     print("  Inside-funnel = reading the regulator's pipeline (proves little); outside-funnel")
     print("  = independent literature (the differentiation). A meaningful outside share means")
     print("  the model saw signal the paperwork had not yet shown.\n")
@@ -349,7 +349,9 @@ def main() -> int:
         # what must hold is that they rank well below the substances actually
         # actioned.
         positive_ids = {
-            sid for sid, y in zip(headline_result.ids, headline_result.y_true) if y == 1
+            sid
+            for sid, y in zip(headline_result.ids, headline_result.y_true, strict=True)
+            if y == 1
         }
         control_results.extend(
             negative_controls(

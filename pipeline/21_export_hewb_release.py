@@ -1,8 +1,8 @@
 """Assemble the public HEWB v1.4 release package.
 
 Move 2 of ``STRATEGY_SCOPE.md`` (ship): turn the private benchmark result into a
-citable, reproducible public artifact — the frozen manifest, the result tables,
-and the robustness evidence — laid out as a HuggingFace-ready dataset directory
+citable, reproducible public artifact, the frozen manifest, the result tables,
+and the robustness evidence: laid out as a HuggingFace-ready dataset directory
 under ``release/hewb-v{version}/``.
 
 This is a packaging step, not a compute step: it reads the already-generated
@@ -10,12 +10,12 @@ This is a packaging step, not a compute step: it reads the already-generated
 ``pipeline/20_run_robustness.py`` (the capstone), plus the frozen benchmark
 definition from ``benchmark/hewb.py``, and writes a clean, self-describing
 release. It never re-scores anything, so the published numbers are exactly the
-ones the pipeline produced and the DEV_LOG recorded — no second code path that
+ones the pipeline produced and the DEV_LOG recorded, no second code path that
 could disagree.
 
 The release directory is committed (not gitignored like ``data/``): it *is* the
 public deliverable. The prose dataset card (``README.md``) is written by hand,
-not generated here — honest framing is not a template.
+not generated here, honest framing is not a template.
 
 Usage:
     python pipeline/21_export_hewb_release.py
@@ -139,7 +139,7 @@ def _copy_tables() -> list[str]:
         src = PROCESSED / src_name
         if not src.exists():
             raise FileNotFoundError(
-                f"missing {src} — run pipeline/12 (HEWB) and pipeline/20 (robustness) first"
+                f"missing {src}: run pipeline/12 (HEWB) and pipeline/20 (robustness) first"
             )
         shutil.copyfile(src, DATA_OUT / dst_name)
         copied.append(dst_name)

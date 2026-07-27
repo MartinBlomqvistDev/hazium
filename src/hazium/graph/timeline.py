@@ -24,6 +24,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from datetime import date
+from itertools import pairwise
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -138,7 +139,7 @@ def build_evidence_mesh(
         raise KeyError(f"unknown node: {center_id!r}")
     if not cutoffs:
         raise ValueError("cutoffs must not be empty")
-    if any(b <= a for a, b in zip(cutoffs, cutoffs[1:], strict=False)):
+    if any(b <= a for a, b in pairwise(cutoffs)):
         raise ValueError("cutoffs must be strictly ascending")
 
     centre = graph.node(center_id)
@@ -201,7 +202,7 @@ def build_evidence_mesh(
         via_base = direct_frame[node_id]
         for edge in graph.edges_of(node_id):
             other = edge.object if edge.subject == node_id else edge.subject
-            if other == node_id or other == center_id:
+            if other in (node_id, center_id):
                 continue
             frame = edge_frame(edge)
             if frame is None:

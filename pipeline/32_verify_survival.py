@@ -177,7 +177,7 @@ def check_permutation(panel, shuffles: int) -> tuple[float, float, float]:
     for _ in range(shuffles):
         permuted = list(order)
         rng.shuffle(permuted)
-        mapping = dict(zip(order, permuted))
+        mapping = dict(zip(order, permuted, strict=True))
         fake = panel.copy()
         # Reassign each substance's outcome history to another substance whose
         # history is the same length, so row counts stay valid.
@@ -232,7 +232,9 @@ def check_calibration(panel) -> tuple[float, float, list[tuple[float, float, int
     iso = IsotonicRegression(out_of_bounds="clip").fit(raw, y)
     observed, predicted = calibration_curve(y, raw, n_bins=6, strategy="quantile")
     counts = np.histogram(raw, bins=np.quantile(raw, np.linspace(0, 1, 7)))[0]
-    table = [(float(p), float(o), int(n)) for p, o, n in zip(predicted, observed, counts)]
+    table = [
+        (float(p), float(o), int(n)) for p, o, n in zip(predicted, observed, counts, strict=True)
+    ]
     return (
         float(brier_score_loss(y, raw)),
         float(brier_score_loss(y, iso.predict(raw))),

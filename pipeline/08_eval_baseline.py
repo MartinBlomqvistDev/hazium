@@ -4,19 +4,19 @@ fluazinam case-study readout.
 
 Runs **two label variants**, always reported side by side, never merged:
 
-* **headline** -- the published V1 gate result (`V1_SCOPE.md`): positive =
+* **headline**: the published V1 gate result (`V1_SCOPE.md`): positive =
   EU non-renewal only.
-* **early_warning** -- a secondary variant that also counts a Swedish
+* **early_warning**: a secondary variant that also counts a Swedish
   national reevaluation as a positive (`ml/dataset.py`'s
   ``EARLY_WARNING_POSITIVE_KINDS``). A materially weaker, earlier signal
   than a completed non-renewal, and every additional positive it contributes
   beyond the headline currently traces to a single KEMI announcement
-  (2025-11-20, six substances) -- not independent evidence. Reported for
+  (2025-11-20, six substances), not independent evidence. Reported for
   what it shows (fluazinam becomes a positive under it), not folded into the
   headline table.
 
 If XGBoost does not beat the trivial baselines on either variant, that is
-the honest result to report, per the manifesto's baseline rule -- not a
+the honest result to report, per the manifesto's baseline rule, not a
 reason to keep tuning until it wins.
 
 Usage:
@@ -73,7 +73,7 @@ def _load_literature(path: Path) -> list[LiteratureVolumeRecord]:
 
 
 def _pesticide_ids(register_substances: list[Substance]) -> set[str]:
-    """Substance ids the KEMI register knows -- the pesticide-domain subset."""
+    """Substance ids the KEMI register knows, the pesticide-domain subset."""
     return {
         safe_substance_node_id(cas_number=s.cas_number, name=s.name) for s in register_substances
     }

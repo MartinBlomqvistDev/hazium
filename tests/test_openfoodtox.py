@@ -11,8 +11,8 @@ from datetime import date
 
 from hazium.sources.openfoodtox import (
     OpenFoodToxIndex,
-    _SubstanceIdentity,
     _parse_date,
+    _SubstanceIdentity,
     assessments_from,
     degradation_links_from,
     substances_from,
@@ -27,14 +27,14 @@ GHOST_UUID = "sub-not-in-index"
 
 
 def _index(**overrides) -> OpenFoodToxIndex:
-    base = dict(
-        substances={
+    base = {
+        "substances": {
             FLUAZINAM_UUID: _SubstanceIdentity("Fluazinam", "79622-59-6", "616-712-5", None),
             TFA_UUID: _SubstanceIdentity("Trifluoroacetic acid", "76-05-1", "200-929-3", None),
             FLUFENACET_UUID: _SubstanceIdentity("Flufenacet", "142459-58-3", None, None),
         },
-        degradation_pairs=[(FLUFENACET_UUID, TFA_UUID)],
-        assessments=[
+        "degradation_pairs": [(FLUFENACET_UUID, TFA_UUID)],
+        "assessments": [
             {
                 "dossier_uuid": "dossier-1",
                 "subject_uuid": FLUAZINAM_UUID,
@@ -43,7 +43,7 @@ def _index(**overrides) -> OpenFoodToxIndex:
                 "doi": "doi:10.2903/j.efsa.2008.137r",
             }
         ],
-    )
+    }
     base.update(overrides)
     return OpenFoodToxIndex(**base)
 

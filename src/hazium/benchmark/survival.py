@@ -3,8 +3,9 @@
 HEWB asks whether a substance was ever withdrawn, over a population where most
 substances were never approved and so could never be withdrawn at all. That
 question is answered largely by identifying the eligible minority, and approval
-age does that on its own: ranking on age alone reaches 98% of the full model's
-average precision and reproduces its headline lead times exactly.
+age does that on its own: ranking on age alone reaches a higher mean average
+precision than the full model across the sixteen cutoffs (0.474 against 0.470)
+and reproduces its headline lead times exactly.
 
 The failure is in the question, not the data. A withdrawal can only happen when
 an approval comes up for renewal, so any target of the form "was it ever
@@ -45,6 +46,7 @@ fails is transfer between regulatory eras, not learning from few examples.
 from __future__ import annotations
 
 from datetime import date
+from itertools import pairwise
 
 import numpy as np
 import pandas as pd
@@ -180,7 +182,7 @@ def build_panel(
         )
         approved = features["eu_has_approval"].to_numpy() > 0
         rows = features[approved].copy()
-        subject_ids = [sid for sid, keep in zip(ids, approved) if keep]
+        subject_ids = [sid for sid, keep in zip(ids, approved, strict=True) if keep]
 
         at_risk: list[bool] = []
         outcome: list[int] = []
@@ -197,8 +199,8 @@ def build_panel(
             )
 
         rows = rows[at_risk]
-        rows[EVENT] = [o for o, keep in zip(outcome, at_risk) if keep]
-        rows[SUBJECT] = [s for s, keep in zip(subject_ids, at_risk) if keep]
+        rows[EVENT] = [o for o, keep in zip(outcome, at_risk, strict=True) if keep]
+        rows[SUBJECT] = [s for s, keep in zip(subject_ids, at_risk, strict=True) if keep]
         rows[YEAR] = year
         frames.append(rows)
 
@@ -218,7 +220,7 @@ def baseline_hazard(
     ages = panel["eu_years_since_first_approval"].to_numpy()
     y = panel[EVENT].to_numpy()
     rows = []
-    for low, high in zip(edges, edges[1:]):
+    for low, high in pairwise(edges):
         mask = (ages >= low) & (ages < high)
         if mask.sum():
             rows.append(

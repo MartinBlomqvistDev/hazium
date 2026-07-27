@@ -14,7 +14,7 @@ obvious questions:
 
 * **Is 2023 a cherry-picked cutoff?** → ``cutoff_sweep``. Report each
   landmark's rank at several annual cutoffs; a stable rank across 2022/2023/2024
-  shows the result is not a single-cutoff accident. Mostly reporting — it reuses
+  shows the result is not a single-cutoff accident. Mostly reporting, it reuses
   ``evaluate_cutoff``/``rank_of`` unchanged.
 
 * **Does the model just flag anything hazardous?** → ``negative_controls``. A
@@ -52,7 +52,7 @@ from hazium.models import (
 #: The placebo scores real and permuted labels identically at this many CV
 #: repeats. Lower than HEWB's ``N_SCORING_REPEATS`` (10) on purpose: the
 #: permutation test needs dozens of full refits, and the null-vs-real
-#: separation is enormous (real AP is ~15x the base rate) — fold-assignment
+#: separation is enormous (real AP is ~15x the base rate), fold-assignment
 #: variance, the reason HEWB averages 10 repeats, is irrelevant to a test whose
 #: whole point is a gross collapse, not a rank near a k threshold. Applied to
 #: both the real and the shuffled fits so the comparison stays fair.
@@ -117,7 +117,7 @@ def label_shuffle_placebo(
     shuffled: list[float] = []
     for i in range(n_permutations):
         permuted = rng.permutation(y_values)
-        # score_xgboost stratifies via ``y.iloc`` — the permuted labels must be a
+        # score_xgboost stratifies via ``y.iloc``: the permuted labels must be a
         # Series aligned to X, not a bare array.
         permuted_series = pd.Series(permuted, index=index, name="label")
         # A distinct scoring seed per permutation so the CV split is not shared
@@ -145,7 +145,7 @@ def label_shuffle_placebo(
 
 @dataclass(frozen=True)
 class SweepAggregateRow:
-    """The whole-ranking headline at one cutoff — the cherry-pick test proper.
+    """The whole-ranking headline at one cutoff, the cherry-pick test proper.
 
     The "is 2023 special?" question is about the *aggregate* result, not any one
     substance: does XGBoost beat the trivial baselines at every recent cutoff, or
@@ -168,7 +168,7 @@ class SweepRankRow:
 
     A ``None`` rank means the substance was not in the population at that cutoff
     (no pre-cutoff dated fact, or its label-defining action was already realized
-    and censored out — as most landmark bans are at recent cutoffs).
+    and censored out, as most landmark bans are at recent cutoffs).
     ``is_positive`` records whether the substance is a future-action positive
     under this variant at this cutoff, which is what makes its rank meaningful.
     """
@@ -206,15 +206,15 @@ def cutoff_sweep(
 
     Two outputs from one pass over the cutoffs:
 
-    * ``aggregate`` — XGBoost AP vs the best trivial baseline at each cutoff. This
+    * ``aggregate``: XGBoost AP vs the best trivial baseline at each cutoff. This
       is the real answer to "is 2023 cherry-picked?": a stable lead across cutoffs
       shows the headline result is not a single-cutoff artifact.
-    * ``ranks`` — each target's rank at each cutoff (``targets`` is a list of
+    * ``ranks``: each target's rank at each cutoff (``targets`` is a list of
       ``(name, cas)``; the id is ``substance:cas:{cas}``). This is the north-star
       trajectory (fluazinam) and any landmark still in-population; a landmark
       censored out post-action correctly reads ``None``.
 
-    Reuses ``evaluate_cutoff``/``rank_of`` so every number matches HEWB's — a
+    Reuses ``evaluate_cutoff``/``rank_of`` so every number matches HEWB's, a
     re-view of the existing machinery, not a second scoring path.
     """
     aggregate: list[SweepAggregateRow] = []
@@ -246,7 +246,7 @@ def cutoff_sweep(
                 best_trivial_ap=max(trivial_aps) if trivial_aps else 0.0,
             )
         )
-        pos_by_id = dict(zip(result.ids, result.y_true))
+        pos_by_id = dict(zip(result.ids, result.y_true, strict=True))
         for name, cas in targets:
             sid = f"substance:cas:{cas}"
             ranks.append(
@@ -297,7 +297,7 @@ def negative_controls(
     median deep in the ranking: the model is not merely flagging "is an approved
     pesticide" or "carries a severe hazard flag".
 
-    Pure over an already-built ``CutoffResult`` — no scoring happens here.
+    Pure over an already-built ``CutoffResult``: no scoring happens here.
     """
     population = result.population
     out: list[ControlGroupResult] = []

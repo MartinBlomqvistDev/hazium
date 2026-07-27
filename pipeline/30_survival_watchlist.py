@@ -114,9 +114,11 @@ def main() -> int:
     )
     approved = features["eu_has_approval"].to_numpy() > 0
     withdrawal = first_event_dates(events, RegulatoryEventKind.NON_RENEWAL)
-    at_risk = [keep and withdrawal.get(sid) is None for sid, keep in zip(ids, approved)]
+    at_risk = [
+        keep and withdrawal.get(sid) is None for sid, keep in zip(ids, approved, strict=True)
+    ]
     scoring = features[at_risk]
-    scoring_ids = [sid for sid, keep in zip(ids, at_risk) if keep]
+    scoring_ids = [sid for sid, keep in zip(ids, at_risk, strict=True) if keep]
     scores = model.predict_proba(scoring[columns])[:, 1]
     print(f"scoring {len(scoring_ids)} approved substances still at risk")
 

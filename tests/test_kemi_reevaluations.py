@@ -1,4 +1,4 @@
-"""KEMI reevaluation announcements: hand-curated facts, not a parser -- tests
+"""KEMI reevaluation announcements: hand-curated facts, not a parser: tests
 check the emitted RegulatoryEvent shape, not any parsing logic.
 """
 

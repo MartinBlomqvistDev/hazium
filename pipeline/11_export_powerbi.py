@@ -3,13 +3,13 @@
 Power BI is pointed at these tables, never at raw `data/processed/*.jsonl`
 directly: those are pipeline-internal formats (one predicate per line, ids
 not names, no risk scores). This script is the one place that joins graph,
-sales, hazard, and eval data into tables shaped for a BI tool -- a substance
+sales, hazard, and eval data into tables shaped for a BI tool, a substance
 dimension with names and risk scores, a sales fact table, an events/timeline
 fact table, and a flattened eval-results table for the methodology page.
 
 Risk scores are the out-of-fold scores `ml/baseline.py` already computes
 (`evaluate_cutoff`, the same headline/early-warning tabular model reported
-in `V1_SCOPE.md`) -- not an in-sample refit. Presenting in-sample scores as
+in `V1_SCOPE.md`), not an in-sample refit. Presenting in-sample scores as
 "predicted risk" would be optimistic in exactly the way the manifesto's
 baseline rule exists to prevent; out-of-fold is the honest number.
 
@@ -81,7 +81,7 @@ def export_dim_substance(
     pesticide_ids: set[str],
 ) -> None:
     """One row per substance in the 2023 population, with both variants'
-    out-of-fold risk scores and rank -- the Risk Explorer's backing table.
+    out-of-fold risk scores and rank, the Risk Explorer's backing table.
     """
     X, _y, ids = build_dataset(graph, sales, regevents, HEADLINE_CUTOFF)
     scores_by_variant: dict[str, dict[str, float]] = {}
@@ -143,7 +143,7 @@ def export_fact_sales(graph: TemporalGraph, sales: list[SalesRecord]) -> None:
 
     KEMI's annual sales reports each republish several trailing historical
     years, so the raw ``sales`` list legitimately contains the same
-    (substance, country, year) more than once -- different report vintages
+    (substance, country, year) more than once: different report vintages
     restating the same figure, not conflicting values. ``ml/features.py``'s
     mean/latest-tonnage features are duplicate-invariant so this was never a
     problem there, but a BI tool's default ``SUM`` aggregation is not: it
@@ -215,7 +215,7 @@ def export_fact_eval_results(
     graph: TemporalGraph, sales: list[SalesRecord], regevents: list[RegulatoryEvent]
 ) -> None:
     """Flattened model-vs-trivial-baseline table, all cutoffs, both
-    variants -- the Methodology page's backing table.
+    variants, the Methodology page's backing table.
     """
     header = [
         "variant",

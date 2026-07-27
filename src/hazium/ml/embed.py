@@ -3,17 +3,17 @@
 **Temporal discipline is the whole point of this module existing separately
 from ``ml/baseline.py``'s call site.** An embedding fit on the full graph and
 scored on a temporal split is the classic leakage that makes graph papers
-irreproducible (see ``V2_SCOPE.md``): the walk could traverse an edge dated
+irreproducible: the walk could traverse an edge dated
 after the cutoff, encoding future knowledge into a "pre-cutoff" feature. Every
 function here takes a ``view`` (an already-``as_of``-filtered ``TemporalGraph``)
 as its only source of graph structure, never the full graph, so the caller
-cannot accidentally leak by passing the wrong thing -- there is no "fit once,
+cannot accidentally leak by passing the wrong thing, there is no "fit once,
 reuse across cutoffs" path available to get wrong.
 
 **Method.** Not vanilla Node2Vec: this graph is heterogeneous (substance,
 hazard, document, regulatory_event, product, country node types), and an
 untyped walk collapses everything through whichever node type happens to have
-the highest degree (hazard codes, here) -- exactly the redundant-with-existing-
+the highest degree (hazard codes, here): exactly the redundant-with-existing-
 columns failure mode ``V2_SCOPE.md`` measured before proposing a method. The
 walk is restricted to the two edge types with genuine substance-substance
 reach: ``DEGRADES_TO`` (the recovered metabolite bridge, walked as
@@ -22,7 +22,7 @@ substance -> hazard -> substance, i.e. shared-hazard community). ``EVIDENCED_BY`
 and ``SUBJECT_OF`` are excluded: their target nodes (document,
 regulatory_event) are effectively 1:1 with a single substance in this graph
 (a dossier UUID and a regulatory-event node id are both minted per-substance),
-so walking through them produces no cross-substance paths -- only noise.
+so walking through them produces no cross-substance paths: only noise.
 
 Word2Vec's skip-gram (via ``gensim``, the one library dependency here: hand-
 rolling a correct, fast negative-sampling skip-gram trainer would not be a
@@ -34,7 +34,7 @@ used in practice (Dong et al. 2017).
 Substances with no informative-relation edges in a given ``as_of(T)`` view
 (no ``DEGRADES_TO``/``CLASSIFIED_AS`` neighbour at all, even if they have
 ``EVIDENCED_BY`` elsewhere) never enter a walk and get an all-zero vector:
-this is honest information -- "no walkable graph structure" -- not a missing
+this is honest information: "no walkable graph structure", not a missing
 value to impute.
 """
 
@@ -94,7 +94,7 @@ def generate_walks(
     ``random.Random`` makes this reproducible: fitting twice on the identical
     ``as_of(T)`` view yields byte-identical walks. This determinism is what
     the temporal-refit correctness test in ``tests/test_ml_embed.py`` relies
-    on -- perturbing a post-cutoff edge must leave every walk unchanged.
+    on: perturbing a post-cutoff edge must leave every walk unchanged.
     """
     rng = random.Random(seed)
     walks = []
@@ -120,7 +120,7 @@ def fit_metapath2vec(
     are returned; ``embedding_dataframe`` fills the rest with zero vectors.
     ``workers=1`` is required, not incidental: gensim's default multi-threaded
     training is order-dependent (Hogwild-style async SGD) and not
-    reproducible run-to-run even with a fixed ``seed`` -- the temporal-refit
+    reproducible run-to-run even with a fixed ``seed``, the temporal-refit
     test would be flaky without this.
     """
     walks = generate_walks(view, substance_ids, walk_length, num_walks, seed)

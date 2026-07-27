@@ -2,7 +2,7 @@
 
 Loads the merged graph plus sales and EU regulatory-event facts, then reports
 the exact (not rough-estimated) population/positive counts per rolling-origin
-cutoff -- the number `V1_SCOPE.md` flagged as needing confirmation once the
+cutoff, the number `V1_SCOPE.md` flagged as needing confirmation once the
 feature matrix exists. Also writes the headline-cutoff (2023-01-01) dataset
 to CSV for inspection.
 
@@ -36,7 +36,7 @@ def _load(path: Path, model: type[BaseModel]) -> list:
 
 def _load_literature(path: Path) -> list[LiteratureVolumeRecord]:
     """Optional: the literature-volume fetch (`pipeline/14`) is long-running
-    and may not have been run yet, or may still be in progress -- in either
+    and may not have been run yet, or may still be in progress, in either
     case an empty/partial file degrades gracefully to the feature's own
     documented no-signal default, never an error.
     """
@@ -59,7 +59,7 @@ def main() -> int:
     print(f"regulatory events: {len(regevents)}")
     print(
         f"literature-volume records: {len(lit_records)}"
-        f"{' (pipeline/14 not run yet -- feature will read as no-signal)' if not lit_records else ''}"
+        f"{' (pipeline/14 not run yet: feature will read as no-signal)' if not lit_records else ''}"
     )
     print()
 

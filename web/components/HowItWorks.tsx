@@ -131,7 +131,8 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
             Ranking on nothing but how long a substance has held EU approval reaches{" "}
-            <strong className="text-text-primary">98% of the full model</strong> and reproduces
+            <strong className="text-text-primary">a higher mean average precision than the full
+            model</strong> across the sixteen cutoffs, 0.474 against 0.470, and reproduces
             the lead times below exactly: chlorpyrifos at 132 months, thiacloprid at 133,
             clothianidin at 120. A date subtraction, no model at all.
           </p>

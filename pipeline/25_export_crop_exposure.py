@@ -200,7 +200,7 @@ def main() -> int:
         [[len(products), with_crop, len(flagged_products)]],
     )
 
-    on_market = len({n for n in substance_crops})
+    on_market = len(set(substance_crops))
     print(f"\nwatchlist substances found in an approved Swedish product: {on_market}")
     print(f"products carrying one: {len(flagged_products)}")
     print(f"\n{'crop':<24} {'products':>9} {'flagged':>8} {'share':>7}")

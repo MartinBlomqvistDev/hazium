@@ -110,8 +110,9 @@ assessment count. All three are weak, and the learned model beat them by roughly
 an order of magnitude, which is how the headline was long reported. Approval age
 was never tested as a baseline, because it sat inside the model as a feature.
 
-Ranking on approval age alone reaches **98% of the model's mean average
-precision** across the sixteen cutoffs, wins outright at **11 of 16**, and
+Ranking on approval age alone reaches **a higher mean average precision than the
+model** across the sixteen cutoffs, 0.474 against 0.470, wins outright at
+**11 of 16**, and
 reproduces the headline lead times exactly: chlorpyrifos at 132 months,
 thiacloprid at 133, clothianidin at 120, propikonazol at 119. On
 chlorpyrifos-methyl and mancozeb it beats the model. Dropping the two

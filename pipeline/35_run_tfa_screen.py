@@ -23,15 +23,15 @@ from datetime import date
 from math import comb
 from pathlib import Path
 
+from hazium.models import SalesRecord, Substance
+from hazium.resolve.names import SubstanceResolver, resolve_sales_records
 from hazium.screen.tfa import (
     EFSA_CONFIRMED_TFA_PARENTS,
     EXPOSURE_CAP_TONNES,
     KEMI_TFA_COHORT,
     screen,
 )
-from hazium.models import SalesRecord, Substance
 from hazium.sources.kemi_uses import crops_grown
-from hazium.resolve.names import SubstanceResolver, resolve_sales_records
 from hazium.sources.pubchem_structure import load_structures
 
 ROOT = Path(__file__).parent.parent

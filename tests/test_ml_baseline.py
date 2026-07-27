@@ -1,11 +1,12 @@
 """XGBoost scoring wiring: out-of-fold vs. fallback, and evaluate_cutoff shape.
 
 Keeps XGBoost fits small (few estimators via make_model's own default is
-already cheap at this row count) -- these tests care about wiring, not model
+already cheap at this row count): these tests care about wiring, not model
 quality.
 """
 
 from datetime import date
+from typing import ClassVar
 
 import numpy as np
 import pandas as pd
@@ -133,7 +134,7 @@ class TestEvaluateCutoffWithEmbeddings:
     requirement: the embedding must be blind to anything dated `>= cutoff`.
     """
 
-    _SUBSTANCES = [
+    _SUBSTANCES: ClassVar = [
         ("substance:cas:79622-59-6", date(2015, 1, 1)),  # fluazinam
         ("substance:cas:142459-58-3", date(2004, 1, 1)),  # flufenacet
         ("substance:cas:76-05-1", date(2008, 1, 1)),  # TFA
@@ -217,7 +218,7 @@ class TestEvaluateCutoffWithEmbeddings:
         # The temporal-refit correctness test V2_SCOPE.md calls for: perturb
         # the graph with a *post-cutoff* degrades_to edge between two
         # population members, and confirm every score (embedding included)
-        # is byte-identical to the unperturbed run -- proof the embedding
+        # is byte-identical to the unperturbed run: proof the embedding
         # never saw it, because evaluate_cutoff_with_embeddings refits on
         # graph.as_of(cutoff) fresh, every call.
         baseline_graph = self._graph()

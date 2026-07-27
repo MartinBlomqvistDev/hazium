@@ -6,7 +6,7 @@ each cutoff's `as_of(T)` view (`ml/embed.py`, `ml/baseline.py`'s
 `evaluate_cutoff_with_embeddings`), never on the full graph. If neither
 `xgboost_embed_only` nor `xgboost_tabular_plus_embed` beats `xgboost_tabular`
 by more than the bootstrap CI, the tabular baseline remains the published
-result and this is a documented negative -- a valid, gate-passing outcome
+result and this is a documented negative, a valid, gate-passing outcome
 per the manifesto's baseline rule, not a failure to fix.
 
 Usage:
@@ -81,7 +81,7 @@ def _verdict(result: CutoffResult) -> str:
     """Does either embedding condition beat tabular-alone, CI included?
 
     "Beats" means the challenger's AP exceeds tabular's AP *and* the
-    challenger's own lower CI bound clears tabular's point estimate -- a
+    challenger's own lower CI bound clears tabular's point estimate, a
     stricter bar than a bare point-estimate comparison, matching the gate's
     "beats ... by more than the bootstrap CI" wording.
     """

@@ -31,9 +31,9 @@ therefore could never be withdrawn at all. Answering that is mostly an
 eligibility test, and approval age performs it.
 
 Measured directly: ranking on approval age alone, a single date subtraction with
-no model, reaches **98% of the full model's mean average precision** across the
-sixteen cutoffs, wins outright at **11 of 16**, and reproduces the headline lead
-times exactly. Chlorpyrifos at 132 months, thiacloprid at 133, clothianidin at
+no model, reaches a **higher mean average precision than the full model** across
+the sixteen cutoffs, 0.474 against 0.470, wins outright at **11 of 16**, and
+reproduces the headline lead times exactly. Chlorpyrifos at 132 months, thiacloprid at 133, clothianidin at
 120, propikonazol at 119. On chlorpyrifos-methyl and mancozeb it does better.
 
 That is not leakage. Approval date is knowable at every cutoff. It is a target

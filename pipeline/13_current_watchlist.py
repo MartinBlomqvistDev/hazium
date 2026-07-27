@@ -1,21 +1,21 @@
 """Score the *current* population: what does the model think is concerning
 right now, among substances that have not (yet) faced a regulatory action?
 
-Everything else in this repo is retrospective -- V1, V2, and HEWB all ask
+Everything else in this repo is retrospective: V1, V2, and HEWB all ask
 "would the model have flagged a *known, already-realized* outcome." This
 script asks a genuinely different, forward-looking question, and the answer
 carries a different epistemic status: **these are unverified until the
 future actually happens.** Nothing here has been checked against reality yet,
-because it can't be -- that is the whole point of a watchlist. Report it as
+because it can't be: that is the whole point of a watchlist. Report it as
 "the model currently ranks these as concerning," never as "Hazium predicts
 X will be banned."
 
 Method: train on the most recent cutoff with real, materialised outcomes
-(2024-01-01 -- everything that has happened since is now known, so its
+(2024-01-01: everything that has happened since is now known, so its
 labels are complete, not still pending), fit *in-sample* on the full training
-population (this is a deploy step, not an evaluation -- out-of-fold exists to
+population (this is a deploy step, not an evaluation: out-of-fold exists to
 report honest metrics, and there is no metric to report here, only a score to
-act on). Then score today's population using today's features -- built the
+act on). Then score today's population using today's features: built the
 same way, but at a cutoff of "tomorrow" so every currently-known fact is
 included. Substances already realized (already banned) by today are excluded
 from the scoring population by `build_dataset`'s own censoring rule, exactly
@@ -23,30 +23,29 @@ as intended.
 
 Explanation reuses the *training*-fitted model's SHAP explainer against
 *today's* feature values (not `explain/shap_baseline.py`'s `fit_and_explain`,
-which fits and explains the same data -- here training data and scoring data
+which fits and explains the same data: here training data and scoring data
 are deliberately different populations, so the explainer is built once from
 the trained model and applied to the current data directly).
 
 Two corrections over the first pass, both real bugs, not polish:
 
 1. **Pesticide labelling.** `is_pesticide` was wrongly defined as "in KEMI's
-   Swedish register" -- several genuine EU-approved pesticide active
+   Swedish register": several genuine EU-approved pesticide active
    substances (Propoxycarbazone, Cyhalofop-butyl) were mislabelled `False`
    just because they aren't marketed in Sweden specifically. Fixed: a
-   substance is flagged a pesticide if it has ``eu_has_approval`` set --
-   membership in the EU *Pesticides* Database's approval events is a direct,
+   substance is flagged a pesticide if it has ``eu_has_approval`` set: membership in the EU *Pesticides* Database's approval events is a direct,
    correct test, not a proxy. `in_kemi_sweden_register` is kept as a
    separate, honestly-named column for readers who specifically want
    Swedish-market presence.
 2. **Time dominance.** `eu_years_since_first_approval` swamped every other
    feature in the global ranking (5-10x the next-largest SHAP contribution),
    making the list read as "oldest first" rather than a differentiated risk
-   read -- true, and not very informative on its own. Mitigated by
+   read: true, and not very informative on its own. Mitigated by
    **cohort-relative ranking**: bucket substances by approval-age band, then
    rank within each band. This does not discard the age signal (HEWB
    repeatedly showed it is genuinely predictive) or require retraining; it
-   answers a sharper question -- "of substances that have been around
-   roughly this long, which one looks worst" -- which is what actually
+   answers a sharper question: "of substances that have been around
+   roughly this long, which one looks worst", which is what actually
    surfaces something non-obvious.
 
 Usage:
@@ -84,7 +83,7 @@ EXPLAIN_TOP = 3
 
 #: Approval-age bands in years, half-open [lo, hi). Chosen to split the
 #: observed range (roughly 0-30+ years) into a handful of readable groups,
-#: not derived from any statistical criterion -- revisit if the population's
+#: not derived from any statistical criterion: revisit if the population's
 #: age distribution shifts materially.
 AGE_COHORTS: tuple[tuple[str, float, float], ...] = (
     ("0-9 years approved", 0, 10),
@@ -119,7 +118,7 @@ def _write_csv(path: Path, header: list[str], rows: list[list]) -> None:
 
 
 def _kemi_register_ids(register_substances: list[Substance]) -> set[str]:
-    """Swedish-market presence only -- NOT a general pesticide test.
+    """Swedish-market presence only: NOT a general pesticide test.
 
     Kept distinct from ``eu_has_approval`` deliberately: a substance can be a
     real, EU-approved pesticide without being marketed in Sweden, and this
@@ -140,7 +139,7 @@ def build_watchlist(graph, sales, regevents, positive_kinds):
 
     Returns ``None`` if there are too few training positives. Otherwise
     ``(ranked, explainer, X_now)`` where ``ranked`` is the *full* population,
-    sorted best-first, as ``(substance_id, score)`` pairs -- not truncated
+    sorted best-first, as ``(substance_id, score)`` pairs, not truncated
     here, so callers can build both the global top-N and cohort-relative
     views from the same scoring pass.
     """
@@ -203,7 +202,7 @@ def main() -> int:
     print(f"Trained on {TRAIN_CUTOFF} (complete, materialised outcomes as of today).")
     print(f"Scored on today's features ({date.today()}).")
     print(
-        "\nThese are UNVERIFIED forward-looking scores, not a validated result -- "
+        "\nThese are UNVERIFIED forward-looking scores, not a validated result: "
         "nothing here has been checked against reality, because it can't be yet.\n"
     )
 
@@ -212,7 +211,7 @@ def main() -> int:
         "Read this BEFORE the cohort breakdown below: an empty/thin band there means\n"
         "'no substances that old exist in the data' (the EU approval framework itself\n"
         "only dates to the early-to-mid 1990s), NOT 'everything that old was banned'.\n"
-        "'Non-renewed' also isn't a synonym for 'deemed toxic' -- EU PPDB records that\n"
+        "'Non-renewed' also isn't a synonym for 'deemed toxic': EU PPDB records that\n"
         "a non-renewal happened and when, not why; this data can't rule out\n"
         "commercial or administrative reasons.\n"
     )
@@ -251,7 +250,7 @@ def main() -> int:
         for r in top_rows:
             print(
                 f"{r['rank']:>4d}  {r['score']:>8.4f}  "
-                f"{str(r['eu_approved_pesticide']):>13s}  {r['name']}"
+                f"{r['eu_approved_pesticide']!s:>13s}  {r['name']}"
             )
 
         _write_csv(
@@ -283,7 +282,7 @@ def main() -> int:
             f"\n=== [{variant}] COHORT-RELATIVE: top {TOP_N_PER_COHORT} per approval-age band ==="
         )
         print(
-            "(counts below are the STILL-ACTIVE population only -- see the unfiltered "
+            "(counts below are the STILL-ACTIVE population only, see the unfiltered "
             "approval-age table printed above for the true total including non-renewed "
             "substances; an empty band here does not mean '0 substances ever approved that "
             "old', it can also mean 'all of them were already non-renewed'.)"

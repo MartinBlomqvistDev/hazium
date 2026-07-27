@@ -4,7 +4,7 @@ The ECHA "Registry of CLH intentions until outcome" records every substance for
 which a harmonised classification proposal has been made, with the dates of
 each step. The *intention* date is an in-funnel regulatory signal that precedes
 the Annex VI classification (already ingested by `clp.py`) by one to three
-years. See `SOURCE_ENHANCEMENT_SCOPE.md` Tier 2.
+years.
 
 **This adapter parses a committed snapshot, it does not fetch live**, and the
 reason is a hard access fact verified 2026-07-19: ECHA's registry

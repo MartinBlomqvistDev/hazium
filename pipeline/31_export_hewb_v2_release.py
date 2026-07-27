@@ -74,7 +74,8 @@ def main() -> int:
         "supersedes": "1.4",
         "why": (
             "v1.4's target mixes whether a withdrawal happened with when. Ranking on "
-            "approval age alone reaches 98% of its average precision and reproduces its "
+            "approval age alone reaches a higher mean average precision than the model "
+            "across the sixteen cutoffs, and reproduces its "
             "headline lead times exactly, so the binary formulation could not separate "
             "timing from merit. v2 changes the unit of analysis, not the data."
         ),

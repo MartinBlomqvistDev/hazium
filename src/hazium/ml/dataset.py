@@ -2,8 +2,8 @@
 
 ``build_dataset`` is the single seam between the graph/facts and the model:
 everything upstream is Pydantic facts and a ``TemporalGraph``; everything
-downstream is a plain ``pandas.DataFrame``. Pure given its inputs — no I/O,
-no randomness — so it is fully unit-testable against hand-built graphs.
+downstream is a plain ``pandas.DataFrame``. Pure given its inputs, no I/O,
+no randomness, so it is fully unit-testable against hand-built graphs.
 """
 
 from __future__ import annotations
@@ -79,7 +79,7 @@ def _literature_fractions_at_reference_year(
     lit_records: list[LiteratureVolumeRecord], cutoff: date
 ) -> dict[str, float]:
     """Every population member's hazard-fraction at ONE shared reference
-    year -- the most recent calendar year fully knowable before ``cutoff``.
+    year, the most recent calendar year fully knowable before ``cutoff``.
 
     A single shared year across the whole population, not each substance's
     own latest available year, is the load-bearing choice: ranking
@@ -119,7 +119,7 @@ def build_dataset(
     pre-cutoff fact), **excluding** any substance that already has a
     label-defining event (``positive_kinds``) dated before the cutoff. A
     substance whose fate is already decided as of T is not a member of the
-    "at risk of a future event" population going forward — including it
+    "at risk of a future event" population going forward: including it
     would either double-count an already-realized event or degenerate into a
     permanent, uninformative negative. This censoring rule is not explicit in
     ``V1_SCOPE.md``'s task section but follows directly from what "future
@@ -197,7 +197,7 @@ def approval_age_non_renewal_rates(
     already-non-renewed substances by construction) can show an empty or
     thin oldest age band, which looks like "everything that old was banned."
     This function counts from the raw approval/non-renewal events
-    themselves, so ``total`` is the true denominator — non-renewed
+    themselves, so ``total`` is the true denominator: non-renewed
     substances included, not just the survivors.
 
     Verified 2026-07-18: with ``today`` in 2026, the oldest band (30+ years
@@ -206,7 +206,7 @@ def approval_age_non_renewal_rates(
     approval framework itself (Directive 91/414/EEC, early-to-mid 1990s): no
     approval event *can* be dated further back than the framework's own
     start. It is not evidence that "all 30+-year-old substances were deemed
-    toxic" — there are none in the data to judge either way.
+    toxic", there are none in the data to judge either way.
 
     Also worth stating plainly, and not something this function can fix:
     "non-renewed" is not a synonym for "deemed toxic". EU PPDB records that

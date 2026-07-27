@@ -203,8 +203,8 @@ def merge_openfoodtox(
     builder's), matching how ``SalesRecord``/``HazardClassification`` work.
 
     Degradation links now carry a real per-link ``known_at`` (the parent
-    substance's earliest dated EFSA assessment, not the export snapshot date
-    -- see ``sources/openfoodtox.py``), so both endpoints get
+    substance's earliest dated EFSA assessment, not the export snapshot date, see
+    ``sources/openfoodtox.py``), so both endpoints get
     ``_pull_known_at_earlier`` the same way ``merge_clp`` and
     ``merge_regulatory_events`` already do: a metabolite relationship dated
     2008 is proof both substances were knowable in 2008, and without this the
@@ -270,7 +270,7 @@ def merge_clp(graph: TemporalGraph, classifications: list[HazardClassification])
 
     No dedup on repeat (substance, hazard) pairs across ATPs: each row is a
     distinct dated fact (a reclassification), matching the "corrections are
-    new facts, never mutations" rule -- multiple ``CLASSIFIED_AS`` edges for
+    new facts, never mutations" rule: multiple ``CLASSIFIED_AS`` edges for
     the same pair, at different ``known_at``, is the correct representation
     of a substance being reclassified over time.
     """

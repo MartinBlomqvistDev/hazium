@@ -7,8 +7,8 @@ from datetime import date
 import openpyxl
 
 from hazium.sources.clp import (
-    _HistoryRow,
     _clean_cas,
+    _HistoryRow,
     _parse_date,
     _split,
     classifications_from,
@@ -140,16 +140,16 @@ class TestParseDate:
 
 
 def _row(**overrides) -> _HistoryRow:
-    base = dict(
-        index_no="612-287-00-5",
-        atp="ATP06",
-        celex="32014R0605",
-        name="fluazinam (ISO)",
-        cas_number="79622-59-6",
-        hazard_classes=("Repr. 2", "Aquatic Chronic 1"),
-        hazard_codes=("H361d", "H410"),
-        known_at=date(2015, 4, 1),
-    )
+    base = {
+        "index_no": "612-287-00-5",
+        "atp": "ATP06",
+        "celex": "32014R0605",
+        "name": "fluazinam (ISO)",
+        "cas_number": "79622-59-6",
+        "hazard_classes": ("Repr. 2", "Aquatic Chronic 1"),
+        "hazard_codes": ("H361d", "H410"),
+        "known_at": date(2015, 4, 1),
+    }
     base.update(overrides)
     return _HistoryRow(**base)
 

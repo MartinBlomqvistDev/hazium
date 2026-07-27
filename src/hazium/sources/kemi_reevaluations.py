@@ -12,7 +12,7 @@ This is a real, dated *Swedish national* regulatory signal that EU PPDB
 cannot see (it operates at EU level only). It is what actually connects the
 graph to fluazinam's real 2026 controversy: a formal review is a real event,
 distinct from and earlier than an actual withdrawal, and should not be
-conflated with one -- see ``models.RegulatoryEventKind.REEVALUATION_STARTED``
+conflated with one, see ``models.RegulatoryEventKind.REEVALUATION_STARTED``
 vs. ``NON_RENEWAL``/``WITHDRAWAL``. Whether and how to include this weaker,
 earlier signal in a supervised label is a framing decision made where the
 label is defined (``ml/dataset.py``), not here: this module only asserts
@@ -37,7 +37,7 @@ class _Announcement:
 
     event_date: date
     url: str
-    substances: tuple[tuple[str, str], ...]  # (name, CAS) -- CAS verified against the register
+    substances: tuple[tuple[str, str], ...]  # (name, CAS): CAS verified against the register
     product_count: int
     decision_deadline: date | None
 

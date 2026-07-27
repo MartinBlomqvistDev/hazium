@@ -3,10 +3,10 @@
 The benchmark itself is pure (``benchmark/hewb.py``); this is the I/O boundary:
 load the graph/sales/regulatory-events, run both label variants over annual
 cutoffs, and write three report tables plus a human-readable summary. See
-``BENCHMARK_SCOPE.md`` for the design and ``DEV_LOG.md`` for the published
+The repository README carries the design and the published
 result.
 
-Success is a rigorous, reproducible, honestly-reported benchmark — not a high
+Success is a rigorous, reproducible, honestly-reported benchmark, not a high
 lead-time number. Landmarks the model never flagged before their real action
 are printed in the miss list, not hidden.
 
@@ -135,7 +135,7 @@ def _write_embedding_comparison(report: HewbReport) -> None:
 
 
 def _print_summary(report: HewbReport) -> None:
-    print(f"\n=== HEWB v{report.version} -- aggregate (xgboost vs. best trivial, per cutoff) ===")
+    print(f"\n=== HEWB v{report.version}: aggregate (xgboost vs. best trivial, per cutoff) ===")
     # Compact: for each variant/cutoff, xgboost AP vs. the best trivial AP.
     for variant in ("headline", "early_warning"):
         print(f"\n  [{variant}]")
@@ -156,7 +156,7 @@ def _print_summary(report: HewbReport) -> None:
             )
             print(f"    {cutoff:12s} {xgb:>11.3f} {trivial:>13.3f} {pos:>10d}")
 
-    print("\n=== HEWB v{} -- lead times (months before real EU action) ===".format(report.version))
+    print(f"\n=== HEWB v{report.version}: lead times (months before real EU action) ===")
     for variant in ("headline", "early_warning"):
         measurable = [c for c in report.cases if c.variant == variant and c.action_date is not None]
         if not measurable:
@@ -181,8 +181,8 @@ def _print_summary(report: HewbReport) -> None:
 
     if report.embedding_comparison:
         print(
-            f"\n=== HEWB v{report.version} -- frozen V2 embedding comparison "
-            "(from V2b, 2-year cutoffs, NOT re-run at annual granularity -- see "
+            f"\n=== HEWB v{report.version}: frozen V2 embedding comparison "
+            "(from V2b, 2-year cutoffs, NOT re-run at annual granularity, see "
             "embedding_comparison_rows docstring for why) ==="
         )
         by_key: dict[tuple[str, str], dict[str, float]] = {}
@@ -205,7 +205,7 @@ def _print_summary(report: HewbReport) -> None:
                 )
     else:
         print(
-            f"\n=== HEWB v{report.version} -- embedding comparison: SKIPPED "
+            f"\n=== HEWB v{report.version}: embedding comparison: SKIPPED "
             "(no data/processed/embed_eval_results.json found; run pipeline/10 first) ==="
         )
 

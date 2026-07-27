@@ -57,7 +57,7 @@ def http_get(
     last: Exception | None = None
     for attempt in range(retries):
         try:
-            with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
                 return resp.read()
         except urllib.error.HTTPError as exc:
             last = exc

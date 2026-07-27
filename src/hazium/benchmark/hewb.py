@@ -1,7 +1,7 @@
-"""The Hazium Early Warning Benchmark (HEWB) — the north-star made a
+"""The Hazium Early Warning Benchmark (HEWB), the north-star made a
 first-class, versioned, reproducible evaluation artifact.
 
-See ``BENCHMARK_SCOPE.md`` for the full design. In short: the manifesto's
+The design in short: the manifesto's
 retrodetection question (``MANIFESTO.md`` §4) generalised from one case
 (fluazinam) to a fixed set of historical EU regulatory actions, evaluated
 under strict ``as_of`` temporal discipline, with a **lead-time** metric that
@@ -15,18 +15,18 @@ both ran the same frozen benchmark.
 
 Two layers:
 
-* **Aggregate** — the existing rolling-origin backtest (``ml/baseline.py``)
+* **Aggregate**: the existing rolling-origin backtest (``ml/baseline.py``)
   over the full non-renewal corpus, at *annual* cutoffs (finer than the V1
   eval's 2-year steps), against the trivial baselines and the tabular model.
   Reuses ``rolling_origin_eval``/``summarize`` unchanged; this module only
   fixes the cutoff schedule and pins the case set.
-* **Case-study + lead-time** — a curated, individually-verified set of
+* **Case-study + lead-time**: a curated, individually-verified set of
   landmark regulatory actions, each with a lead-time in months and a full
   per-cutoff rank trajectory (the honest supporting evidence: even a landmark
   that never enters the top-k still shows *where* it ranked).
 
-Everything here is pure over its inputs (a graph, sales, regulatory events) —
-no I/O, no fetching. ``pipeline/12_run_hewb.py`` is the I/O boundary.
+Everything here is pure over its inputs (a graph, sales, regulatory events),
+with no I/O and no fetching. ``pipeline/12_run_hewb.py`` is the I/O boundary.
 """
 
 from __future__ import annotations
@@ -78,13 +78,13 @@ HEWB_VERSION = "1.4"
 
 #: Annual cutoffs, 2009-2024. Extended backward from v1.0's 2016 floor after
 #: checking real coverage, not assuming it: hazard classifications reach back
-#: to 2010, EFSA assessments to 2000, regulatory events to 1996 -- 2016 was an
+#: to 2010, EFSA assessments to 2000, regulatory events to 1996: 2016 was an
 #: arbitrary-ish starting point carried over from an earlier viability check,
 #: not a real data floor. Verified before extending: population 2,617-4,928
 #: and 68-106 positives at every cutoff 2009-2015, comfortably above the
 #: stratified-CV floor. One real gap, disclosed rather than hidden: KEMI sales
 #: data starts in 2013, so sales_* features are zero for every substance
-#: before that -- the pre-2013 result rests entirely on EU-wide hazard/
+#: before that, the pre-2013 result rests entirely on EU-wide hazard/
 #: approval/graph features, not Swedish sales, which is itself informative
 #: (the signal isn't Sweden-dependent). Annual resolution throughout is what
 #: makes a lead-time metric meaningful rather than a "sometime in the last two
@@ -96,7 +96,7 @@ ANNUAL_CUTOFFS: tuple[date, ...] = tuple(date(y, 1, 1) for y in range(2009, 2025
 #: the value that flatters a case (that is the tuning-until-it-wins the
 #: baseline rule forbids). A strict bar throughout: top-50 is ~0.85% of the
 #: ~5,900-substance population at the latest cutoffs, ~1.9% of the
-#: ~2,600-substance population at the earliest (2009) -- population grows
+#: ~2,600-substance population at the earliest (2009): population grows
 #: over the schedule as more substances accumulate a pre-cutoff dated fact.
 K_VALUES: tuple[int, ...] = (10, 20, 50)
 
@@ -107,7 +107,7 @@ class LandmarkCase:
 
     ``cas`` is the identity of record. It is cross-checked against the graph
     by ``verify_landmark_cas`` before any run, so this table is never trusted
-    as typed — a mismatch fails loudly rather than silently benchmarking the
+    as typed, a mismatch fails loudly rather than silently benchmarking the
     wrong substance (the standing "never assert a CAS from memory" rule).
     """
 
@@ -189,7 +189,7 @@ def rank_of(result: CutoffResult, target_id: str, model: str = "xgboost") -> int
 
     ``None`` when the substance is not in the population at this cutoff (no
     pre-cutoff dated fact, or already-realized and censored out by
-    ``build_dataset``) — which is itself information, not a zero. Ties broken
+    ``build_dataset``), which is itself information, not a zero. Ties broken
     stably by original order, matching the reporting scripts.
     """
     if target_id not in result.ids:
@@ -212,7 +212,7 @@ class CaseResult:
     ``trajectory`` is the honest supporting evidence: (cutoff, rank,
     population) at every annual cutoff inside the case's measurable window
     ``[knowable, action]``. ``lead_times`` maps each k to (first_flagged
-    cutoff, months of lead) — ``(None, None)`` means "never entered the top-k
+    cutoff, months of lead): ``(None, None)`` means "never entered the top-k
     before the action landed", reported as such, never dropped.
     """
 
@@ -276,7 +276,7 @@ def compute_case_result(
 #: Not re-run at HEWB's annual cutoffs: V2b's mechanism finding (only 29.2% of
 #: the population has any walkable degrades_to/classified_as edge, so the
 #: embedding is a constant zero vector for 71% of substances) is a property of
-#: graph coverage, not cutoff granularity -- re-running at nine annual cutoffs
+#: graph coverage, not cutoff granularity: re-running at nine annual cutoffs
 #: instead of four would not change *why* embeddings lose, only cost ~2x the
 #: compute for no new conclusion. That is exactly the "squeezing another 0.01"
 #: the scope's non-scope section warns against. See DEV_LOG's "V2b shipped"
@@ -295,7 +295,7 @@ def embedding_comparison_rows(embed_eval_json: dict) -> list[dict]:
 
     Pure over its input (already-loaded JSON); the pipeline script does the
     file read. Silently returns ``[]`` for a variant/model missing from the
-    input rather than raising -- a stale or partial V2b file should degrade
+    input rather than raising, a stale or partial V2b file should degrade
     the report, not crash the whole HEWB run.
     """
     rows: list[dict] = []
@@ -346,12 +346,12 @@ def run_hewb(
     Verifies the landmark CAS set first (fails loudly on any mismatch), then
     for each variant runs the annual rolling-origin backtest once and derives
     both the aggregate table and every landmark's lead-time from those same
-    per-cutoff results — no substance is scored twice.
+    per-cutoff results, no substance is scored twice.
 
     ``v2b_embedding_json``, if given, is the already-loaded contents of
     ``embed_eval_results.json`` (the pipeline script reads the file; this
     function stays pure). Reshaped via ``embedding_comparison_rows`` into
-    ``HewbReport.embedding_comparison`` — the frozen graph-vs-tabular row the
+    ``HewbReport.embedding_comparison``: the frozen graph-vs-tabular row the
     scope calls for, not a fresh embedding fit at annual cutoffs (see
     ``embedding_comparison_rows``'s docstring for why).
 

@@ -15,13 +15,12 @@ Usage:
 
 from __future__ import annotations
 
+import json
 import re
 import subprocess
 import sys
 from datetime import date
 from pathlib import Path
-
-import json
 
 ROOT = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"

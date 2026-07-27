@@ -11,6 +11,7 @@ from datetime import date
 
 import pandas as pd
 import pytest
+from pydantic import ValidationError
 
 from hazium.benchmark.survival import (
     AGE_FEATURES,
@@ -82,7 +83,7 @@ def test_no_age_feature_leaks_into_the_evidence_set() -> None:
 
 
 def test_in_funnel_groups_are_real_groups() -> None:
-    assert IN_FUNNEL_GROUPS <= set(EVIDENCE_GROUPS)
+    assert set(EVIDENCE_GROUPS) >= IN_FUNNEL_GROUPS
 
 
 def test_forward_split_never_trains_on_the_future() -> None:
@@ -110,9 +111,9 @@ def test_baseline_hazard_rises_with_approval_age() -> None:
 
 def test_panel_spec_is_frozen_and_rejects_unknown_fields() -> None:
     spec = PanelSpec()
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError):
         spec.horizon_years = 5
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError):
         PanelSpec(horizen_years=2)
 
 

@@ -3,7 +3,7 @@ substance explorer.
 
 Unlike ``pipeline/11`` (Power BI, and predating Tier 1/2 so its scores are
 stale), this regenerates the out-of-fold ranking with the *current* feature
-set — literature (Tier 1) and CLH intentions (Tier 2) included — at the HEWB
+set: literature (Tier 1) and CLH intentions (Tier 2) included: at the HEWB
 headline cutoff, exactly as ``pipeline/12`` runs the benchmark. Both label
 variants are exported so the explorer can toggle between them.
 
@@ -48,7 +48,7 @@ ROOT = Path(__file__).parent.parent
 PROCESSED = ROOT / "data" / "processed"
 SITE_DATA = ROOT / "web" / "data" / "substances.json"
 
-#: The HEWB headline cutoff — the same fixed origin the aggregate AP is quoted
+#: The HEWB headline cutoff, the same fixed origin the aggregate AP is quoted
 #: at, so a reader who finds a landmark in the explorer sees the rank that the
 #: benchmark and the fluazinam story are told against.
 CUTOFF = date(2023, 1, 1)
@@ -79,7 +79,7 @@ def _cas_of(substance_id: str) -> str:
 
 
 def _ranks(scores: dict[str, float]) -> dict[str, int]:
-    """1-indexed ranks, highest score first, ties broken stably by id order —
+    """1-indexed ranks, highest score first, ties broken stably by id order,
     the same rule ``benchmark/hewb.rank_of`` uses, so ranks are consistent."""
     order = sorted(scores, key=lambda sid: (-scores[sid], sid))
     return {sid: i for i, sid in enumerate(order, start=1)}

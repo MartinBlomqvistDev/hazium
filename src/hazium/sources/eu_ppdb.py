@@ -17,9 +17,9 @@ documented future enrichment, not required for V1's labels.
 
 Two regulatory events are emitted per substance where dated:
 
-* ``APPROVAL`` — from the export's *Date of approval*, for any substance that
+* ``APPROVAL``: from the export's *Date of approval*, for any substance that
   was ever approved (feature: how long a substance has been on the EU market).
-* ``NON_RENEWAL`` — for a substance whose current status is *Not approved* and
+* ``NON_RENEWAL``: for a substance whose current status is *Not approved* and
   that carries an *Expiration of approval* date: it was approved, then its
   approval ended and was not renewed. The expiry date is the effective
   non-renewal date and the label's positive event.

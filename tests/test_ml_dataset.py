@@ -64,16 +64,16 @@ def _lit_record(sid: str, year: int, hazard: int, total: int) -> LiteratureVolum
 
 class TestPopulation:
     def test_only_substances_with_a_pre_cutoff_fact_are_included(self) -> None:
-        X, y, ids = build_dataset(_graph(), [], [], CUTOFF)
+        _X, _y, ids = build_dataset(_graph(), [], [], CUTOFF)
         assert TOO_NEW not in ids
 
     def test_substance_with_pre_cutoff_fact_is_included(self) -> None:
-        X, y, ids = build_dataset(_graph(), [], [], CUTOFF)
+        _X, _y, ids = build_dataset(_graph(), [], [], CUTOFF)
         assert FLUAZINAM in ids
 
     def test_already_non_renewed_before_cutoff_is_excluded(self) -> None:
         events = [_event(ALREADY_GONE, RegulatoryEventKind.NON_RENEWAL, date(2020, 1, 1))]
-        X, y, ids = build_dataset(_graph(), [], events, CUTOFF)
+        _X, _y, ids = build_dataset(_graph(), [], events, CUTOFF)
         assert ALREADY_GONE not in ids
 
     def test_non_substance_nodes_excluded(self) -> None:
@@ -87,55 +87,55 @@ class TestPopulation:
                 known_at=date(2010, 1, 1),
             )
         )
-        X, y, ids = build_dataset(g, [], [], CUTOFF)
+        _X, _y, ids = build_dataset(g, [], [], CUTOFF)
         assert "hazard:clp:H400" not in ids
 
 
 class TestLabel:
     def test_future_non_renewal_is_positive(self) -> None:
         events = [_event(FUTURE_LOSER, RegulatoryEventKind.NON_RENEWAL, date(2024, 1, 1))]
-        X, y, ids = build_dataset(_graph(), [], events, CUTOFF)
+        _X, y, _ids = build_dataset(_graph(), [], events, CUTOFF)
         assert y.loc[FUTURE_LOSER] == 1
 
     def test_exact_cutoff_date_counts_as_future(self) -> None:
         # event_date >= cutoff (not strictly after) is a positive
         events = [_event(FUTURE_LOSER, RegulatoryEventKind.NON_RENEWAL, CUTOFF)]
-        X, y, ids = build_dataset(_graph(), [], events, CUTOFF)
+        _X, y, _ids = build_dataset(_graph(), [], events, CUTOFF)
         assert y.loc[FUTURE_LOSER] == 1
 
     def test_no_event_is_negative(self) -> None:
-        X, y, ids = build_dataset(_graph(), [], [], CUTOFF)
+        _X, y, _ids = build_dataset(_graph(), [], [], CUTOFF)
         assert y.loc[FLUAZINAM] == 0
 
     def test_approval_event_alone_does_not_make_a_positive(self) -> None:
         events = [_event(FLUAZINAM, RegulatoryEventKind.APPROVAL, date(2009, 1, 1))]
-        X, y, ids = build_dataset(_graph(), [], events, CUTOFF)
+        _X, y, _ids = build_dataset(_graph(), [], events, CUTOFF)
         assert y.loc[FLUAZINAM] == 0
 
 
 class TestPositiveKinds:
     def test_default_kinds_ignore_reevaluation_started(self) -> None:
         events = [_event(FUTURE_LOSER, RegulatoryEventKind.REEVALUATION_STARTED, date(2024, 1, 1))]
-        X, y, ids = build_dataset(_graph(), [], events, CUTOFF)
+        _X, y, _ids = build_dataset(_graph(), [], events, CUTOFF)
         assert y.loc[FUTURE_LOSER] == 0
 
     def test_early_warning_kinds_count_reevaluation_started(self) -> None:
         events = [_event(FUTURE_LOSER, RegulatoryEventKind.REEVALUATION_STARTED, date(2024, 1, 1))]
-        X, y, ids = build_dataset(
+        _X, y, _ids = build_dataset(
             _graph(), [], events, CUTOFF, positive_kinds=EARLY_WARNING_POSITIVE_KINDS
         )
         assert y.loc[FUTURE_LOSER] == 1
 
     def test_early_warning_kinds_still_count_non_renewal(self) -> None:
         events = [_event(FUTURE_LOSER, RegulatoryEventKind.NON_RENEWAL, date(2024, 1, 1))]
-        X, y, ids = build_dataset(
+        _X, y, _ids = build_dataset(
             _graph(), [], events, CUTOFF, positive_kinds=EARLY_WARNING_POSITIVE_KINDS
         )
         assert y.loc[FUTURE_LOSER] == 1
 
     def test_pre_cutoff_reevaluation_excludes_from_population_under_broadened_kinds(self) -> None:
         events = [_event(ALREADY_GONE, RegulatoryEventKind.REEVALUATION_STARTED, date(2020, 1, 1))]
-        X, y, ids = build_dataset(
+        _X, _y, ids = build_dataset(
             _graph(), [], events, CUTOFF, positive_kinds=EARLY_WARNING_POSITIVE_KINDS
         )
         assert ALREADY_GONE not in ids
@@ -144,13 +144,13 @@ class TestPositiveKinds:
         # a REEVALUATION_STARTED event is irrelevant to the default label,
         # so it must not trigger the "already realized" censoring either
         events = [_event(ALREADY_GONE, RegulatoryEventKind.REEVALUATION_STARTED, date(2020, 1, 1))]
-        X, y, ids = build_dataset(_graph(), [], events, CUTOFF)
+        _X, _y, ids = build_dataset(_graph(), [], events, CUTOFF)
         assert ALREADY_GONE in ids
 
 
 class TestShape:
     def test_feature_matrix_has_expected_columns(self) -> None:
-        X, y, ids = build_dataset(_graph(), [], [], CUTOFF)
+        X, _y, _ids = build_dataset(_graph(), [], [], CUTOFF)
         assert list(X.columns) == FEATURE_COLUMNS
 
     def test_row_count_matches_population(self) -> None:
@@ -158,15 +158,15 @@ class TestShape:
         assert len(X) == len(y) == len(ids)
 
     def test_no_nans_in_feature_matrix(self) -> None:
-        X, y, ids = build_dataset(_graph(), [], [], CUTOFF)
+        X, _y, _ids = build_dataset(_graph(), [], [], CUTOFF)
         assert not X.isna().any().any()
 
 
 class TestApprovalAgeNonRenewalRates:
     """The specific correctness this exists for: an empty oldest band must
     read as "no substances that old exist in the data" (a ceiling of the EU
-    approval framework's own start date), never as "100% non-renewed" --
-    the two are easy to conflate if `total` isn't reported alongside the rate.
+    approval framework's own start date), never as "100% non-renewed":
+    the two are easy to conflate if `total` is not reported alongside the rate.
     """
 
     TODAY = date(2026, 1, 1)
@@ -215,7 +215,7 @@ class TestApprovalAgeNonRenewalRates:
         assert band["non_renewal_rate"] == 1.0
 
     def test_empty_band_has_none_rate_not_zero_division(self) -> None:
-        # nothing approved anywhere near 30+ years ago -- the exact real
+        # nothing approved anywhere near 30+ years ago, the exact real
         # situation this function was written to report honestly
         events = [self._approval("substance:cas:3-3-3", date(2021, 1, 1))]
         rows = approval_age_non_renewal_rates(events, self.TODAY)
@@ -256,21 +256,21 @@ class TestLiteratureFeatureWiring:
     REFERENCE_YEAR = CUTOFF.year - 2  # 2021: known_at = 2022-01-01 < 2023-01-01
 
     def test_default_empty_lit_records_yields_no_signal(self) -> None:
-        X, y, ids = build_dataset(_graph(), [], [], CUTOFF)
+        X, _y, _ids = build_dataset(_graph(), [], [], CUTOFF)
         assert X.loc[FLUAZINAM, "lit_has_literature_signal"] == 0.0
         assert X.loc[FLUAZINAM, "lit_hazard_percentile"] == 0.0
 
     def test_reference_year_records_produce_a_real_percentile(self) -> None:
         # ALREADY_GONE is excluded from the ML *population* (censored, see
-        # TestPopulation) but still contributes as a comparison point here --
-        # intentional: the literature comparison pool is a broad cross-
+        # TestPopulation) but still contributes as a comparison point here,
+        # intentionally: the literature comparison pool is a broad cross-
         # section, matching the validated pilot design, not the narrower
         # "still eligible for a future label" set.
         records = [
             _lit_record(FLUAZINAM, self.REFERENCE_YEAR, hazard=9, total=10),
             _lit_record(ALREADY_GONE, self.REFERENCE_YEAR, hazard=1, total=10),
         ]
-        X, y, ids = build_dataset(_graph(), [], [], CUTOFF, lit_records=records)
+        X, _y, _ids = build_dataset(_graph(), [], [], CUTOFF, lit_records=records)
         assert X.loc[FLUAZINAM, "lit_has_literature_signal"] == 1.0
         assert X.loc[FLUAZINAM, "lit_hazard_percentile"] == 100.0
 
@@ -278,11 +278,11 @@ class TestLiteratureFeatureWiring:
         records = [
             # not yet knowable at this cutoff
             _lit_record(FLUAZINAM, self.REFERENCE_YEAR + 1, hazard=9, total=10),
-            # knowable, but not the shared reference year -- ignored so every
+            # knowable, but not the shared reference year, ignored so every
             # substance is compared at the same point on the secular trend
             _lit_record(FLUAZINAM, self.REFERENCE_YEAR - 5, hazard=1, total=10),
         ]
-        X, y, ids = build_dataset(_graph(), [], [], CUTOFF, lit_records=records)
+        X, _y, _ids = build_dataset(_graph(), [], [], CUTOFF, lit_records=records)
         assert X.loc[FLUAZINAM, "lit_has_literature_signal"] == 0.0
 
     def test_records_below_minimum_mentions_are_excluded(self) -> None:
@@ -290,5 +290,5 @@ class TestLiteratureFeatureWiring:
             _lit_record(FLUAZINAM, self.REFERENCE_YEAR, hazard=1, total=2),  # below the floor
             _lit_record(ALREADY_GONE, self.REFERENCE_YEAR, hazard=1, total=10),
         ]
-        X, y, ids = build_dataset(_graph(), [], [], CUTOFF, lit_records=records)
+        X, _y, _ids = build_dataset(_graph(), [], [], CUTOFF, lit_records=records)
         assert X.loc[FLUAZINAM, "lit_has_literature_signal"] == 0.0

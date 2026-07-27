@@ -10,6 +10,7 @@ from __future__ import annotations
 import math
 
 import pytest
+from pydantic import ValidationError
 
 from hazium.benchmark.anchor import cohort_ranks
 
@@ -87,5 +88,5 @@ def test_band_cannot_exceed_the_population():
 
 def test_result_is_frozen():
     result = cohort_ranks(RANKED, [_sid(1)], top_k=10)
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError):
         result.population = 1

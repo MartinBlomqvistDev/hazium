@@ -276,7 +276,7 @@ class TestLiteratureFeatures:
 
     ``literature_features`` only ranks one substance within an already-built
     map (``ml/dataset.py``'s ``_literature_fractions_at_reference_year``
-    builds the map itself -- covered in ``test_ml_dataset.py``). These tests
+    builds the map itself: covered in ``test_ml_dataset.py``). These tests
     exercise the pure ranking logic and its two failure-safe defaults.
     """
 
@@ -307,7 +307,7 @@ class TestLiteratureFeatures:
 
     def test_self_excluded_from_its_own_comparison_population(self) -> None:
         # if self counted among "others", an identical middle value would
-        # never register as strictly greater than itself -- percentile must
+        # never register as strictly greater than itself: percentile must
         # still reflect where it sits among the *other* substances only
         fractions = {FLUAZINAM: 0.5, TFA: 0.5, "substance:cas:1-1-1": 0.1}
         f = literature_features(FLUAZINAM, fractions)

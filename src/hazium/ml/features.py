@@ -8,7 +8,7 @@ dated on or after the cutoff.
 
 The five feature groups in ``V1_SCOPE.md`` describe the full aspiration; what
 is implemented here is what is actually computable from ingested facts today.
-Deferred (need the ``/details`` EU PPDB enrichment, not yet ingested — see
+Deferred (need the ``/details`` EU PPDB enrichment, not yet ingested; see
 ``TODO.md``): CLP M-factor, EU pesticide category, member-state authorisation
 count, approval-extension count. Their absence is a scoping fact, not a bug:
 adding them later only strengthens the feature set, never invalidates results
@@ -19,12 +19,13 @@ from __future__ import annotations
 
 import math
 from datetime import date
+from itertools import pairwise
 
 from hazium.graph.store import TemporalGraph
 from hazium.models import EdgeType, RegulatoryEvent, SalesRecord
 
 #: Below this many total literature mentions in a year, a substance's
-#: hazard-fraction for that year is noise or a spurious 0/0 -- verified
+#: hazard-fraction for that year is noise or a spurious 0/0: verified
 #: 2026-07-18 (DEV_LOG): Epoxiconazole's 2004 fraction read a false 0.000
 #: from a year with essentially no literature on it at all, not genuine
 #: "no hazard concern".
@@ -129,7 +130,7 @@ def graph_structural_features(view: TemporalGraph, substance_id: str) -> dict[st
     and counts distinct other substances sharing it, all within the view.
 
     ``graph_metabolite_degree`` counts pre-cutoff ``DEGRADES_TO`` neighbours
-    in either direction (parent or metabolite) — the one genuine
+    in either direction (parent or metabolite), the one genuine
     substance-substance structure in the graph (see V2_SCOPE.md). Added in
     V2a as the honest first move the baseline rule demands: if this hand-built
     degree feature already captures the signal a graph embedding (V2b) would
@@ -192,14 +193,14 @@ def literature_features(
 
     ``fractions_at_reference_year`` (every population member's own
     hazard-fraction at one shared year) is a population-wide precomputation,
-    not a per-substance one -- see ``ml/dataset.py``'s
+    not a per-substance one, see ``ml/dataset.py``'s
     ``_literature_fractions_at_reference_year`` for how the year and the map
     are built. This function only ranks one substance within an
     already-built map.
 
     **Why one shared year, computed fresh at each cutoff, and never a trend
     across years:** raw hazard-hit counts and a substance's own trend over
-    time were both tried first and both failed -- Fluazinam (this project's
+    time were both tried first and both failed: Fluazinam (this project's
     anchor negative, never EU non-renewed) rose in lockstep with a genuine
     future non-renewal under both. Even *percentile* computed at two
     different years and then subtracted still failed: Fluazinam's raw
@@ -215,7 +216,7 @@ def literature_features(
     Two outputs, not one: ``lit_has_literature_signal`` is an explicit
     presence flag. Absence of data (no record at the reference year, or
     fewer than ``LITERATURE_MIN_TOTAL_MENTIONS``) must never read as a real
-    low percentile -- a substance simply outside Europe PMC's coverage is
+    low percentile, a substance simply outside Europe PMC's coverage is
     not the same claim as "the literature considers this unremarkable".
     """
     own_fraction = fractions_at_reference_year.get(substance_id)
@@ -256,7 +257,7 @@ def clh_intention_features(substance_id: str, clh_records: list, cutoff: date) -
 
 
 def _years_since(dates: list[date], cutoff: date) -> float:
-    """Years between the latest of ``dates`` and ``cutoff`` — never today's date.
+    """Years between the latest of ``dates`` and ``cutoff``: never today's date.
 
     Anchoring on ``cutoff`` (not ``date.today()``) keeps the feature
     reproducible and temporally honest: it must reflect what was knowable
@@ -291,7 +292,7 @@ def _max_yoy_jump(tonnages: list[float]) -> float:
     if len(tonnages) < 2:
         return 0.0
     jumps = []
-    for prev, curr in zip(tonnages, tonnages[1:], strict=False):
+    for prev, curr in pairwise(tonnages):
         if prev == 0:
             continue
         jumps.append(abs(curr - prev) / prev)

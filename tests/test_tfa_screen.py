@@ -9,6 +9,7 @@ unresolved structure, or the refusal to count a chance baseline as a hit.
 from __future__ import annotations
 
 import pytest
+from pydantic import ValidationError
 
 from hazium.screen.tfa import KEMI_TFA_COHORT, screen
 from hazium.sources.pubchem_structure import CF3_PATTERNS, StructureRecord
@@ -148,5 +149,5 @@ def test_the_cohort_constant_is_the_six_kemi_named():
 
 def test_result_is_frozen():
     result = screen({}, {})
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError):
         result.population = 5

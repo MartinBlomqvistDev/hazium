@@ -31,7 +31,7 @@ data/**
 !data/raw/clh_intentions_ppp.jsonl
 # ...and the browser-acquired ECHA SVHC Candidate List (V4/PFAS label source;
 # ECHA is WAF-gated, so this is a browser-scraped source of record). Committed
-# so V4 reproduces. See V4_SCOPE.md.
+# so V4 reproduces.
 !data/raw/echa_svhc_candidate_list.jsonl
 
 # Secrets & environment
@@ -50,7 +50,7 @@ desktop.ini
 # for reference, never committed to this portfolio-facing repo)
 ideation/
 
-# Internal planning/process docs -- not for the public portfolio repo
+# Internal planning and process docs, not for the public portfolio repo
 CLAUDE.md
 DEV_LOG.md
 TODO.md

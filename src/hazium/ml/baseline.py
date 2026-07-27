@@ -29,13 +29,14 @@ from hazium.models import (
 
 #: Single-feature rankers the learned model must beat to be worth reporting.
 #:
-#: ``approval_age`` was added after an ablation showed it is not a weak
-#: baseline at all. Ranking on approval age alone reaches about 98% of the full
-#: model's average precision across cutoffs, and beats it outright at four of
-#: six, while dropping the two approval-age features leaves the model at 37% of
-#: its performance. The three hazard, sales and assessment baselines that
-#: preceded it are all comfortably beaten, which made the learned model look
-#: far stronger than a fair comparison supports.
+#: ``approval_age`` was added after an ablation showed it is not a weak baseline
+#: at all. Across the sixteen HEWB cutoffs it reaches a mean average precision of
+#: 0.474 against the learned model's 0.470, wins outright at 11 of them, and
+#: reproduces the headline lead times to the month. Dropping the two
+#: approval-age features leaves the model at 37% of its performance. The hazard,
+#: sales and assessment baselines that preceded it are all beaten comfortably,
+#: which is what made the learned model look far stronger than a fair comparison
+#: supports.
 #:
 #: The mechanism is that a non-renewal can only occur when an approval comes up
 #: for renewal, so approval age proxies proximity to that decision. The model
@@ -108,7 +109,7 @@ def score_xgboost(
     """Predicted probabilities, out-of-fold via *repeated* stratified k-fold CV.
 
     Out-of-fold, not in-sample: fitting on the full (X, y) and scoring those
-    same rows would be optimistic — the model has seen the label it's being
+    same rows would be optimistic, the model has seen the label it's being
     graded on. Folds are capped so each still holds >=2 positives; below that
     (fewer than 2 positives total) CV can't stratify meaningfully, and this
     falls back to in-sample fit-and-predict, flagged via the returned bool so
@@ -117,7 +118,7 @@ def score_xgboost(
     The out-of-fold probability is averaged over ``repeats`` independent
     shuffles (seeds ``seed .. seed + repeats - 1``), each a full out-of-fold
     pass. This removes the fold-assignment variance that a single shuffle
-    leaves in a small-positive-class ranking problem — see ``N_SCORING_REPEATS``
+    leaves in a small-positive-class ranking problem; see ``N_SCORING_REPEATS``
     for the finding that motivated it. Deterministic given ``seed``:
     reproducible, just no longer hostage to one random split. ``repeats``
     defaults to ``N_SCORING_REPEATS`` (HEWB's setting); the robustness
@@ -197,7 +198,7 @@ def evaluate_cutoff_with_embeddings(
     embed_dim: int = 32,
     lit_records: list[LiteratureVolumeRecord] = (),
 ) -> CutoffResult:
-    """V2b: the baseline rule, literally -- tabular alone, embedding alone,
+    """V2b: the baseline rule, literally: tabular alone, embedding alone,
     and tabular+embedding concatenated, on the identical population/split/seed.
 
     The embedding is fit fresh on ``graph.as_of(cutoff)`` inside this one

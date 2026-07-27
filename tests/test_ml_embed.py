@@ -1,5 +1,5 @@
 """Metapath2vec: hand-built views (embed.py takes a view directly, like
-ml/features.py -- tests build the view exactly as as_of would).
+ml/features.py: tests build the view exactly as as_of would).
 """
 
 from datetime import date

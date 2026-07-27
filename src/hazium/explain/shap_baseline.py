@@ -39,7 +39,7 @@ def global_importance(shap_values: shap.Explanation) -> list[tuple[str, float]]:
 #: outside-funnel signal, or is the model just reading the regulator's own
 #: pipeline (which would score well on HEWB and prove little)?
 #:
-#: * ``approval_age`` — EU approval existence and years-since-first-approval.
+#: * ``approval_age``: EU approval existence and years-since-first-approval.
 #:   Held out as its own group on purpose, not folded into ``inside_funnel``:
 #:   it is a temporal *prior* (older approvals face more renewal cycles), not a
 #:   concern signal, and it dominates the model (~half of total mean|SHAP|). The
@@ -47,13 +47,13 @@ def global_importance(shap_values: shap.Explanation) -> list[tuple[str, float]]:
 #:   with cohort-relative ranking. Burying it inside ``inside_funnel`` would both
 #:   overstate reliance on genuine regulatory-concern signals and mask that,
 #:   among the *evidence* features, literature stands on par with EFSA/CLH.
-#: * ``inside_funnel`` — signals from the regulatory concern process itself:
+#: * ``inside_funnel``: signals from the regulatory concern process itself:
 #:   EFSA peer-review activity, ECHA CLH intentions. High precision, but a model
 #:   leaning only here "saw the paperwork move", not the hazard early.
-#: * ``outside_funnel`` — independent scientific-literature volume (Europe PMC).
+#: * ``outside_funnel``: independent scientific-literature volume (Europe PMC).
 #:   Longest lead, name-joined, noisy: this is where "saw it before regulators
 #:   acted" actually lives. The differentiation.
-#: * ``intrinsic`` — the substance's own hazard / exposure / graph profile (CLP
+#: * ``intrinsic``: the substance's own hazard / exposure / graph profile (CLP
 #:   harmonised hazard, KEMI sales, graph structure). Funnel-neutral: neither the
 #:   regulator's homework nor independent early-warning literature, but real
 #:   predictive properties. Reported apart rather than force-fit to either side.
@@ -133,7 +133,7 @@ def explain_row(
     """Per-feature SHAP contributions for one substance, most-positive first.
 
     Raises ``ValueError`` if ``substance_id`` isn't in ``ids`` (the same
-    population the SHAP values were computed over) — a silent empty result
+    population the SHAP values were computed over), a silent empty result
     would be easy to mistake for "no contribution" instead of "wrong id".
     """
     if substance_id not in ids:

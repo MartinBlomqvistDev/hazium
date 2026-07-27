@@ -39,5 +39,28 @@ packages = ["src/hazium"]
 line-length = 100
 target-version = "py312"
 
+[tool.ruff.lint]
+# Ruff's default is pyflakes plus a slice of pycodestyle, which is thin enough
+# that this repo carried six `# noqa: BLE001` directives against a rule that was
+# never switched on. Selecting explicitly means a suppression comment marks a
+# real, considered exception rather than decorating nothing.
+select = [
+    "E",    # pycodestyle errors, including line length
+    "F",    # pyflakes
+    "I",    # import ordering
+    "B",    # bugbear: likely bugs and rough edges
+    "BLE",  # blind except, which this codebase does use, deliberately and narrowly
+    "C4",   # comprehension clarity
+    "UP",   # syntax that a py312 floor makes obsolete
+    "SIM",  # simplifications that are genuinely simpler
+    "RET",  # return-path consistency
+    "RUF",  # ruff's own rules, including RUF100 for unused noqa
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Pipelines are scripts: they print wide tables, and a wrapped f-string is
+# harder to read than a long one.
+"pipeline/*" = ["E501"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

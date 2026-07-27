@@ -2,9 +2,9 @@
 tests (``benchmark/robustness.py`` and the SHAP funnel split in
 ``explain/shap_baseline.py``).
 
-These cover wiring and the load-bearing guarantees — the placebo collapses on a
+These cover wiring and the load-bearing guarantees, the placebo collapses on a
 separable toy, the sweep and controls count correctly, the funnel groups
-partition the features exactly — not model quality. XGBoost fits are kept tiny.
+partition the features exactly, not model quality. XGBoost fits are kept tiny.
 """
 
 from datetime import date
@@ -19,16 +19,16 @@ from hazium.benchmark.robustness import (
     negative_controls,
 )
 from hazium.explain.shap_baseline import FUNNEL_GROUPS, grouped_importance
+from hazium.graph.store import TemporalGraph
 from hazium.ml.baseline import CutoffResult
 from hazium.ml.dataset import FEATURE_COLUMNS
-from hazium.graph.store import TemporalGraph
 from hazium.models import Node, NodeType, RegulatoryEvent, RegulatoryEventKind
 
 CUTOFF = date(2023, 1, 1)
 
 
 def _separable_dataset(n: int, n_pos: int) -> tuple[pd.DataFrame, pd.Series]:
-    """A dataset where one feature *is* the label — real signal, cleanly
+    """A dataset where one feature *is* the label: real signal, cleanly
     separable, so the placebo has something real to collapse away from."""
     rng = np.random.default_rng(0)
     X = pd.DataFrame(
@@ -75,7 +75,7 @@ class TestLabelShufflePlacebo:
 
 
 def _cutoff_result(ids: list[str], y_true: list[int], scores: list[float]) -> CutoffResult:
-    """Hand-build a scored cutoff — no model, so control/rank logic is testable
+    """Hand-build a scored cutoff, no model, so control/rank logic is testable
     against a known ranking."""
     return CutoffResult(
         cutoff=CUTOFF,

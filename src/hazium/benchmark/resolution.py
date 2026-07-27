@@ -139,7 +139,7 @@ def classify(entry: TrackedEntry, today: date) -> Resolution:
 
 def summarise(entries: list[TrackedEntry], today: date) -> dict[Resolution, int]:
     """Count outcomes across a tracked watchlist."""
-    counts: dict[Resolution, int] = {r: 0 for r in Resolution}
+    counts: dict[Resolution, int] = dict.fromkeys(Resolution, 0)
     for entry in entries:
         counts[classify(entry, today)] += 1
     return counts

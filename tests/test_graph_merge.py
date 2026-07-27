@@ -1,5 +1,5 @@
 """Merging EFSA OpenFoodTox structure onto an existing graph, and round-tripping
-a graph through JSONL — the two things pipeline 03/04 depend on.
+a graph through JSONL, the two things pipeline 03/04 depend on.
 """
 
 from datetime import date
@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from hazium.graph.build import load_graph, merge_clp, merge_regulatory_events, merge_openfoodtox
+from hazium.graph.build import load_graph, merge_clp, merge_openfoodtox, merge_regulatory_events
 from hazium.graph.store import TemporalGraph
 from hazium.models import (
     DegradationLink,
@@ -111,7 +111,7 @@ class TestMergeOpenFoodTox:
         # Both nodes start at the register snapshot (2026-07-03); a
         # back-dated degradation link (V2a: dated to the parent's earliest
         # EFSA assessment, not the export snapshot) is evidence both
-        # substances were knowable much earlier -- mirrors how a dated
+        # substances were knowable much earlier: mirrors how a dated
         # document already pulls its subject's known_at earlier.
         graph = _register_graph()
         graph.add_node(

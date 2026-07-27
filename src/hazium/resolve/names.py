@@ -135,11 +135,11 @@ def resolve_sales_records(
     ``SalesRecord.substance_id`` is built directly from the report's
     substance name at ingestion (``sources/kemi.py``, via
     ``substance_node_id(name=...)``), with no register cross-reference at
-    that point -- entity resolution is this module's job, not the adapter's.
+    that point: entity resolution is this module's job, not the adapter's.
     Without this step, sales records never join to the graph's CAS-based
     substance ids and any feature or join keyed on ``substance_id`` silently
     sees zero sales for everyone. Records the resolver can't match keep their
-    name-based id (inert -- it will never coincide with a real graph node
+    name-based id (inert, it will never coincide with a real graph node
     id) rather than being dropped, matching the "provisional, not discarded"
     precedent set by ``Resolution`` itself.
     """

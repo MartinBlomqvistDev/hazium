@@ -45,6 +45,16 @@ pipeline/        numbered pipeline scripts (01_, 02_, ...)
 tests/
 ```
 
+### Scope and change-log documents
+
+Comments and docstrings sometimes cite `V1_SCOPE.md`, `BENCHMARK_SCOPE.md`,
+`DEV_LOG.md` and similar. Those are working documents: dated decision records
+and candid strategy notes, deliberately kept out of this repository. Where one
+is cited it is a provenance stamp, saying a number was checked on a date and
+written down, not a pointer to something a reader is expected to open. Every
+claim they support is either restated in full here or reproducible from a
+numbered pipeline.
+
 ## Principles
 
 The full set is in [MANIFESTO.md](MANIFESTO.md). The three that shape the code most:
@@ -96,7 +106,7 @@ them by roughly an order of magnitude. Approval age was never tested on its own,
 because it sat inside the model as a feature.
 
 Ranking substances on nothing but how long they have held EU approval reaches
-**98% of the full model's mean average precision** across the sixteen cutoffs,
+**a higher mean average precision than the full model** across the sixteen cutoffs,
 wins outright at **11 of 16**, and reproduces the headline lead times exactly:
 chlorpyrifos at 132 months, thiacloprid at 133, clothianidin at 120, propikonazol
 at 119. On chlorpyrifos-methyl and mancozeb it does better than the model.
@@ -106,7 +116,7 @@ performance.
 | | XGBoost | approval age (1 feature) |
 |---|---|---|
 | landmarks flagged, k=50 | 9 of 10 | 8 of 10 |
-| mean AP across 16 cutoffs | 0.467 | 0.459 |
+| mean AP across 16 cutoffs | 0.470 | **0.474** |
 | cutoffs won | 5 of 16 | 11 of 16 |
 
 The mechanism is structural rather than a bug. A substance can only be

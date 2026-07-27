@@ -5,7 +5,7 @@ The site (`web/`) is a static Next.js app with no backend and no access to
 the one deliberate bridge: a small, human-readable, committed JSON built from
 the same HEWB CSVs `pipeline/12_run_hewb.py` writes. Re-run this after any
 HEWB rerun (e.g. once the Tier-1 literature feature lands and HEWB moves to
-v1.2) and commit the updated `web/data/hewb.json` -- the site never reads
+v1.2) and commit the updated `web/data/hewb.json`, the site never reads
 `data/processed/` directly.
 
 Usage:
@@ -94,7 +94,7 @@ def main() -> int:
         "hewb_version": HEWB_VERSION,
         "provisional": False,
         "provisional_note": (
-            "HEWB v1.2 -- includes the Tier 1 literature-volume feature "
+            "HEWB v1.2: includes the Tier 1 literature-volume feature "
             "(Europe PMC, full population), settled result."
         ),
         "headline": {

@@ -24,7 +24,7 @@ pre-2023 ``as_of`` view as a real dated fact, not a frozen snapshot.
 Access constraint: echa.europa.eu sits behind an Azure WAF JS challenge, so
 an automated ``httpx``/``requests`` GET receives the challenge page, not the
 file. This adapter therefore reads a pinned local snapshot rather than
-fetching live -- the standard pattern for WAF-protected government sources,
+fetching live, the standard pattern for WAF-protected government sources,
 and arguably better for reproducibility regardless. Fetch it once manually
 from ``SOURCE_URL`` into ``DEFAULT_SNAPSHOT``.
 """
@@ -32,7 +32,6 @@ from ``SOURCE_URL`` into ``DEFAULT_SNAPSHOT``.
 from __future__ import annotations
 
 from collections import Counter, defaultdict
-
 from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
@@ -136,8 +135,8 @@ def classifications_from(rows: list[_HistoryRow]) -> list[HazardClassification]:
 
     Hazard class and H-code lists are positionally paired when their lengths
     match, which is the common case (one class per H-statement). When they
-    don't -- CLP notes and supplementary hazard statements can desync the two
-    lists -- codes are emitted without a paired ``hazard_class`` rather than
+    don't: CLP notes and supplementary hazard statements can desync the two
+    lists: codes are emitted without a paired ``hazard_class`` rather than
     guessing a wrong pairing.
     """
     classifications = []

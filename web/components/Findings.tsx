@@ -61,8 +61,8 @@ export default function Findings({
 
         <p className="mt-8 max-w-3xl text-sm leading-relaxed text-text-secondary">
           The first version of the withdrawal model reported a much larger number. Ranking on
-          approval age alone, a single date subtraction with no model, reproduced it: 98% of the
-          average precision and the headline lead times to the month. Both benchmark versions are
+          approval age alone, a single date subtraction with no model, matched it: a slightly higher
+          mean average precision, and the headline lead times to the month. Both benchmark versions are
           published.{" "}
           <Link href="/method" className="text-accent underline underline-offset-2">
             What that turned out to mean

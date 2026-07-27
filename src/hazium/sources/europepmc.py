@@ -5,18 +5,18 @@ independent scientific literature say about a substance *before* any
 regulator acted on it? Every other source in this repository is downstream
 of a regulatory or national process (EU PPDB approvals, ECHA CLP
 classifications, EFSA assessments, KEMI's Swedish register); literature
-volume is upstream of all of them -- see `SOURCE_ENHANCEMENT_SCOPE.md`'s
+volume is upstream of all of them, see `SOURCE_ENHANCEMENT_SCOPE.md`'s
 "governing idea" for why that ordering matters for early warning.
 
 Europe PMC's REST API (`ebi.ac.uk/europepmc/webservices/rest`) is open,
 unauthenticated, and unrestricted by any documented rate limit (verified
-2026-07-18). No server-side year-faceting exists -- confirmed by reading the
+2026-07-18). No server-side year-faceting exists: confirmed by reading the
 reference R client's source, which issues two calls per year, ruled out at
-population scale -- so this adapter instead issues one query per
+population scale, so this adapter instead issues one query per
 (substance, hazard-filter) pair, paginated via `cursorMark`, bucketing each
 hit's own `pubYear` client-side. Sorted newest-first so that if the page cap
 is ever hit, the truncation drops the oldest years, not an arbitrary mix; in
-practice this should not trigger -- even glyphosate (18,373 hits) and
+practice this should not trigger: even glyphosate (18,373 hits) and
 chlorpyrifos (16,594) fit inside `MAX_PAGES`.
 
 **The design this file implements was not the first one tried, and the
@@ -26,13 +26,13 @@ were both tested and both failed: Fluazinam, the project's anchor negative,
 rose in lockstep with a genuine future EU non-renewal under both designs.
 Population-relative *percentile* (a substance's hazard-fraction ranked
 against a same-year cross-section), computed fresh at each cutoff and never
-differenced across cutoffs, is what actually separates them -- and even that
+differenced across cutoffs, is what actually separates them, and even that
 took catching one more mistake: differencing the percentile itself across
 two years reintroduces the same confound, because the comparison population's
 own median drifts over time (a corpus-wide secular trend in how much
 hazard/toxicology language appears in the literature generally). Full
 numbers in the 2026-07-18 DEV_LOG entries; the percentile computation itself
-lives in `ml/features.py`, not here -- this module only fetches and dates the
+lives in `ml/features.py`, not here: this module only fetches and dates the
 raw counts.
 
 **Names must be canonical international names, never a source-specific
@@ -78,7 +78,7 @@ REQUEST_DELAY_SECONDS = 0.4
 def _get_json(url: str) -> dict:
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     last_error: Exception | None = None
-    for attempt in range(3):
+    for _attempt in range(3):
         try:
             with urllib.request.urlopen(req, timeout=30) as resp:
                 return json.load(resp)
@@ -90,7 +90,7 @@ def _get_json(url: str) -> dict:
 
 def _year_histogram(name: str, hazard_filter: bool, min_year: int = MIN_YEAR) -> dict[int, int]:
     """Every hit for ``name`` (optionally AND-filtered to hazard terms),
-    bucketed by publication year via pagination -- see module docstring for
+    bucketed by publication year via pagination, see module docstring for
     why this replaces a naive one-query-per-year loop.
     """
     query = f'"{name}"'
@@ -129,7 +129,7 @@ def _year_histogram(name: str, hazard_filter: bool, min_year: int = MIN_YEAR) ->
 def fetch_substance_year_counts(name: str) -> dict[int, tuple[int, int]]:
     """(hazard_count, total_count) per year for one substance's canonical name.
 
-    Two full paginated fetches (total, then hazard-filtered) -- see module
+    Two full paginated fetches (total, then hazard-filtered), see module
     docstring on why the ratio, not either count alone, is the usable signal.
     """
     total = _year_histogram(name, hazard_filter=False)
