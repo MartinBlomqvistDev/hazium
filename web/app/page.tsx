@@ -32,9 +32,13 @@ export default function Home() {
       <main className="flex-1">
         <Hero survival={survival} screen={tfaScreen} />
         <WhatWasBuilt facts={buildFacts} />
-        <Findings survival={survival} screen={tfaScreen} watchlist={watchlist} />
-        <EvidenceMesh data={evidenceMesh} />
+        <Findings screen={tfaScreen} watchlist={watchlist} />
+        {/* Origin before mesh: the mesh closes on "this is the gap the project
+            was built around", which only lands once the reader has been told
+            what that gap is. Reversed, it asked for a callback to a story the
+            page had not told yet. */}
         <OriginStory />
+        <EvidenceMesh data={evidenceMesh} />
         <Principles />
       </main>
       <Footer />

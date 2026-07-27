@@ -59,9 +59,9 @@ numbered pipeline.
 
 The full set is in [MANIFESTO.md](MANIFESTO.md). The three that shape the code most:
 
-- **The baseline rule.** Every graph or deep model is compared against a tabular gradient-boosting baseline on the identical task and split. If it does not win, the baseline is the published result.
-- **Explainability is mandatory.** The system never outputs "high risk" without a traceable evidence path to source documents.
-- **Temporal integrity.** Time-based splits only. A retrospective claim without `known_at` discipline is invalid.
+- **The baseline rule.** Every model is compared against something simpler on the identical task and split. If it does not win, the simpler thing is the published result. A feature sitting inside the model has not been tested as a baseline; rank on each one alone first.
+- **Cohorts, not anecdotes.** A single case in a favourable position is not evidence. Where a claim can be tested against a group someone else defined, that group is reported, with the chance baseline beside it.
+- **Temporal integrity.** Time-based splits only. Every fact carries the date it became knowable, and a retrospective claim without that discipline is invalid.
 
 ## Roadmap
 

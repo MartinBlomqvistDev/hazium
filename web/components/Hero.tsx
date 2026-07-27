@@ -5,9 +5,12 @@ import type { SurvivalData, TfaScreenData } from "@/lib/types";
  * real and both are reproducible by subtracting two dates, which the page went
  * on to say five screens later, so it opened with a claim it then argued against.
  *
- * These three numbers hold on their own: what the evidence adds over that date
- * subtraction, what that is worth in a forward test, and where the project's own
- * anchor case lands.
+ * The three that replaced them are ordered for the reader who arrives first,
+ * which for a portfolio site is usually a recruiter rather than a modeller. Two
+ * of them can be understood with no background at all; average precision cannot,
+ * so it goes last rather than first. A version badge used to sit above the
+ * headline and was the first thing anyone read, which spent the opening on an
+ * internal acronym.
  */
 export default function Hero({
   survival,
@@ -24,23 +27,15 @@ export default function Hero({
   return (
     <section id="top" className="border-b border-hairline">
       <div className="mx-auto max-w-5xl px-6 py-20 sm:py-28">
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-hairline bg-surface px-3 py-1 text-xs text-text-secondary">
-          <span
-            className="inline-block h-1.5 w-1.5 rounded-full"
-            style={{ background: "var(--status-good)" }}
-            aria-hidden
-          />
-          HEWB v{survival.version}
-        </div>
         <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
           Can public evidence tell you{" "}
           <span className="text-accent">which pesticide falls next?</span>
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-text-secondary">
-          Hazium builds a temporally-aware knowledge graph over EU pesticide
-          approvals, hazard classifications, sales and scientific literature,
-          then ranks approved substances for withdrawal risk using only evidence
-          that existed at the time.
+          Hazium joins public EU and Swedish records about pesticides into one graph,
+          then works out which ones are heading for trouble. Every fact carries the
+          date it became public, so nothing a model sees is something it could not
+          have known at the time.
         </p>
         <p className="mt-4 max-w-2xl text-text-secondary">
           Partly. One thing predicts a withdrawal with no model at all: how long
@@ -48,20 +43,23 @@ export default function Hero({
           past that.
         </p>
 
+        {/* Ordered for the first reader, who is often a recruiter rather than a
+            modeller. The two self-explanatory results lead; average precision,
+            which means nothing without ML background, comes last. */}
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
           <Stat
-            value={`${age.toFixed(3)} → ${both.toFixed(3)}`}
-            label="average precision from approval age alone, then with the evidence added"
+            value={`${screen.flagged} of ${screen.population}`}
+            label={`pesticides approved in the EU that break down into PFAS, found from molecular structure alone. All ${screen.kemi_total} that Sweden is now reevaluating are among them.`}
           />
           {split && (
             <Stat
               value={`${split.both_hits_at_50} vs ${split.age_hits_at_50}`}
-              label={`real withdrawals in the top 50, fit on ${split.train_through} and scored forward, against the same baseline`}
+              label={`real EU withdrawals caught in a 50-substance shortlist, against 4 for the strongest simple rule. Trained on data up to ${split.train_through}, then tested on what happened after.`}
             />
           )}
           <Stat
-            value={`${screen.flagged} of ${screen.population}`}
-            label={`approved substances that can form PFAS, on molecular structure alone, holding every one of the ${screen.kemi_total} now under Swedish reevaluation`}
+            value={`${age.toFixed(2)} → ${both.toFixed(2)}`}
+            label="average precision on that ranking task, from approval age alone to age plus the evidence"
           />
         </div>
       </div>

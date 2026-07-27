@@ -40,7 +40,9 @@ Its first domain is pesticides, with a Nordic focus. This choice is pragmatic: t
 
 **Technology follows purpose.** A technology is introduced only when it improves the system's ability to represent or reason about reality. Portfolio value is never sufficient justification. Every choice must be defensible against its alternatives, including the alternative of not using it.
 
-**Honesty over novelty.** Every learned model is evaluated against a simple baseline on the same task. A negative result, honestly reported, is a valid deliverable.
+**Honesty over novelty.** Every learned model is evaluated against a simple baseline on the same task. A negative result, honestly reported, is a valid deliverable. The misses are published beside the hits: every benchmark version records which cases it fails to flag, and a superseded version stays online with the results that led to it, rather than being replaced quietly.
+
+**Cohorts, not anecdotes.** A single case in a favourable position is not evidence. Where a claim can be tested against a group someone else defined, on a date they published, that group is what gets reported, and the chance baseline is reported beside it. This principle was learned the hard way: the project's anchor substance once sat inside a published band and read as a hit, until the five others the same regulator had named were placed next to it and the cohort turned out to be worse than a random draw.
 
 **Temporal integrity.** Every fact and every edge carries a `known_at` timestamp. Evaluation uses time-based splits only: a model claiming it could have detected a hazard in year T may see nothing dated after T. Without this discipline, every retrospective claim is invalid.
 
@@ -78,7 +80,9 @@ Hazium's differentiation is deliberate: it fuses **regulatory and market evidenc
 2. **Ranking / early warning**: rank substances by likelihood of future regulatory action. The positive class is small (tens of cases); this is few-label, ranking-oriented territory, and the methodology must respect that.
 3. **Anomaly detection**: changepoints and outliers in national sales and residue time series.
 
-**The baseline rule.** Every graph or deep model is compared against a tabular gradient-boosting baseline on the identical task and split. If it does not win, the baseline is the published result. Method ladders (Node2Vec, GraphSAGE, attention-based GNNs) are hypotheses to test, not milestones to check off.
+**The baseline rule.** Every model is compared against something simpler on the identical task and split. If it does not win, the simpler thing is the published result. Method ladders (Node2Vec, GraphSAGE, attention-based GNNs) are hypotheses to test, not milestones to check off.
+
+This originally read "every graph or deep model is compared against a tabular baseline", which guards only the top of the ladder. The tabular model went unguarded, and every one of its own baselines was chosen from features it was already beating. Ranking on approval age alone, a single date subtraction, turned out to match it. **A baseline that lives inside the model as a feature has not been tested. Rank on each feature alone before believing anything.**
 
 **LLMs are presentation.** Large language models generate summaries and translations of results the ML layer has already produced and the evidence layer can already justify. They contribute no intelligence to the platform.
 
@@ -113,6 +117,8 @@ Candidate future domains: endocrine disruptors, pharmaceuticals in waterways, an
 - The evidence paths produced are not, in the judgement of a domain-literate reader, genuine explanations.
 
 If these hold after honest effort, the correct output is a write-up saying so.
+
+**The second criterion has been met once, and the write-up is the site.** On the original binary target, ranking by approval age alone reached a higher mean average precision than the learned model across all sixteen cutoffs. That version stays published rather than retracted. The target was reformulated as a survival panel, where the same evidence does add a measurable amount over the same baseline, and both versions are released together so the two can be read against each other.
 
 ## 11. Roadmap
 

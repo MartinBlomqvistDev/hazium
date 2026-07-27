@@ -1,7 +1,16 @@
+/**
+ * The human reason the project exists, in two paragraphs.
+ *
+ * It ran to four. The one that went said that Europe's evidence is split across
+ * agencies with no shared schema or identifier, which is true and which every
+ * data-integration project on the internet also says. The fluazinam case makes
+ * the same point concretely, so the abstract version was costing a screen and
+ * earning nothing.
+ */
 export default function OriginStory() {
   return (
     <section className="border-b border-hairline bg-surface/40">
-      <div className="mx-auto max-w-3xl px-6 py-16">
+      <div className="mx-auto max-w-3xl px-6 py-14">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-accent">
           Why this exists
         </h2>
@@ -11,14 +20,11 @@ export default function OriginStory() {
           national news?
         </p>
         <p className="mt-4 leading-relaxed text-text-secondary">
-          No, and the reason is precise. Fluazinam&apos;s actual concern is groundwater: it
-          breaks down into the PFAS substance trifluoroacetic acid (TFA), which
-          spreads to groundwater. Kemikalieinspektionen opened a formal
-          reevaluation in November 2025, and an SVT investigation made it
-          national news in July 2026. The sources ingested so far, EU regulatory
-          history, EU hazard classifications, scientific literature and Swedish
-          sales, do not cover groundwater or residue monitoring, so that specific
-          signal sits outside the current data.{" "}
+          No, and the reason is precise. Fluazinam&apos;s real concern is groundwater: it
+          breaks down into the PFAS compound TFA. Kemikalieinspektionen opened a formal
+          reevaluation in November 2025 and an SVT investigation made it national news in
+          July 2026, but nothing in the EU approval records, hazard classifications,
+          literature or sales figures this project reads mentions any of that.{" "}
           <a href="/watchlist#anchor" className="text-accent underline underline-offset-2">
             The miss is measured
           </a>{" "}
@@ -26,26 +32,14 @@ export default function OriginStory() {
           screen over molecular structure does find them.
         </p>
         <p className="mt-4 leading-relaxed text-text-secondary">
-          The concern itself is not in doubt. A national SGU groundwater
-          investigation across 2023 to 2025 found TFA at{" "}
+          The concern is not in doubt. A national SGU groundwater investigation across 2023
+          to 2025 found TFA at{" "}
           <strong className="text-text-primary">91 percent of the sites it tested</strong>,
-          tied to fluorinated plant-protection products breaking down. Sweden&apos;s
-          historical pesticide monitoring meanwhile has never once detected
-          fluazinam in groundwater: the parent does not arrive, because by then it
-          is TFA. That monitoring is too recent to
-          have fed a pre-2023 ranking, so it is not a model input; it is
-          independent, after-the-fact confirmation of the concern the project set
-          out to anticipate. Folding groundwater and residue monitoring in as a
-          present-day signal is the next step on the roadmap.
-        </p>
-        <p className="mt-4 leading-relaxed text-text-secondary">
-          That gap is the real origin of the project. Europe does not lack
-          environmental and public health evidence: regulatory decisions,
-          hazard classifications, sales statistics, scientific
-          literature. It is split across agencies that do not share a
-          schema, a timeline, or even a common substance identifier. Hazium
-          joins that evidence into one temporally dated graph, so a ranking
-          can be checked against what was knowable at a real cutoff.
+          while Sweden&apos;s pesticide monitoring has never once detected fluazinam itself:
+          the parent does not arrive, because by then it is TFA. That monitoring is too
+          recent to have fed any historical ranking, so it is not a model input. It is
+          after-the-fact confirmation of exactly the thing the project set out to catch,
+          and folding it in is the next step.
         </p>
       </div>
     </section>
