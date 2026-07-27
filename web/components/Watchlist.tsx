@@ -55,7 +55,8 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
         </p>
         <p className="mt-4 text-sm text-text-secondary">
           The ranking is a modelled three-year hazard among substances currently approved and not
-          yet withdrawn, not the &ldquo;will this ever be withdrawn&rdquo; score used earlier. That
+          yet withdrawn, not the &ldquo;will this ever be withdrawn&rdquo; score the first benchmark
+          used. That
           older target was answered largely by approval age, so it mostly returned old approvals.
           Under this one, approval age is the baseline rate and the evidence does the
           discriminating: the two substances that most obviously did not belong near the top, a
@@ -141,9 +142,9 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
               const high = shown.reduce((a, b) => (b.percent > a.percent ? b : a));
               return (
                 <>
-                  The grey line sits at {data.base_rate_percent}%, which is the same share
-                  measured across every approved product in Sweden that names a crop. It is the
-                  level to read each bar against. They run from {low.percent}% for {low.crop} to{" "}
+                  The grey line sits at {data.base_rate_percent}%, which is what the figure
+                  becomes when every approved Swedish product is counted at once instead of
+                  crop by crop. It is the level to read each bar against. They run from {low.percent}% for {low.crop} to{" "}
                   {high.percent}% for {high.crop}, a narrow band around that line, so these
                   substances are spread across Swedish agriculture rather than concentrated in
                   any one crop.

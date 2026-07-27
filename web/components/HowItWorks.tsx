@@ -179,7 +179,7 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
           </dl>
 
           <p className="mt-5 text-sm leading-relaxed text-text-secondary">
-            The limits are measured the same way.
+            The limits were measured rather than estimated, by the same kind of check.
           </p>
           <dl className="mt-3 space-y-2 text-sm">
             {[
