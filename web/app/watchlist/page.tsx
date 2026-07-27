@@ -12,10 +12,16 @@ const watchlist = watchlistData as WatchlistData;
 const survival = survivalData as SurvivalData;
 const tfaScreen = tfaScreenData as TfaScreenData;
 
+const TITLE = "What it says about today";
+const DESCRIPTION =
+  "Substances approved in the EU right now: ranked for withdrawal risk with a decision deadline on each, and screened separately for the ability to form PFAS.";
+
 export const metadata = {
-  title: "What it says about today | Hazium",
-  description:
-    "Substances approved in the EU right now: ranked for withdrawal risk with a decision deadline on each, and screened separately for the ability to form PFAS.",
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: "/watchlist" },
+  openGraph: { title: `${TITLE} | Hazium`, description: DESCRIPTION, url: "/watchlist" },
+  twitter: { title: `${TITLE} | Hazium`, description: DESCRIPTION },
 };
 
 export default function WatchlistPage() {

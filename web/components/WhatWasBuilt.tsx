@@ -1,48 +1,50 @@
+import type { BuildFacts } from "@/lib/types";
+
 /**
  * A scannable statement of what exists, placed directly under the hero.
  *
  * The rest of the page argues a scientific case at length. A reader deciding in
  * thirty seconds whether to keep going needs the other half of the story first:
- * what was actually built, how it is checked, and what has been published. Those
- * facts were previously only in the repository, which is one click too far.
+ * what was actually built, how it is checked, and what has been published.
  *
- * The last item is the one that matters most and reads oddly at first glance. A
- * mapped boundary is a result, and four candidate domains examined and rejected
- * on the evidence is a stronger claim about the method than a fifth domain
- * claimed without one.
+ * Every figure here is read from `pipeline/36`. Three of them were typed into
+ * this file once and all three drifted: the graph grew, a source was added, and
+ * the test count moved twice while the page kept claiming an older one.
  */
-const BUILT = [
-  {
-    figure: "17,133",
-    label: "nodes in the temporal graph",
-    note: "24,784 edges, every one dated with when it became public",
-  },
-  {
-    // Five sources reach the model. SGU's groundwater survey is cited in the
-    // origin story and is deliberately not counted here, because it is not an
-    // input: it is after-the-fact confirmation of a hazard the model misses.
-    figure: "5",
-    label: "public sources feeding the model",
-    note: "EU Pesticides DB, ECHA (CLP and CLH), EFSA OpenFoodTox, KemI, Europe PMC",
-  },
-  {
-    figure: "395",
-    label: "tests, green on every push",
-    note: "GitHub Actions, ruff, pytest, pinned toolchain",
-  },
-  {
-    figure: "4",
-    label: "candidate domains gated and rejected",
-    note: "PFAS, biocides, food additives, feed additives. The boundary is the result",
-  },
-];
+export default function WhatWasBuilt({ facts }: { facts: BuildFacts }) {
+  const built = [
+    {
+      figure: facts.graph_nodes.toLocaleString("en-GB"),
+      label: "nodes in the temporal graph",
+      note: `${facts.graph_edges.toLocaleString("en-GB")} edges, every one dated with when it became public`,
+    },
+    {
+      figure: String(facts.model_sources.length),
+      label: "public sources feeding the model",
+      note: facts.model_sources.join(", "),
+    },
+    {
+      figure: String(facts.tests),
+      label: "tests, green on every push",
+      note: "GitHub Actions, ruff, pytest, pinned toolchain",
+    },
+    {
+      figure: String(facts.gated_domains.length),
+      label: "candidate domains examined and rejected",
+      // Named carefully: PFAS failed as a *domain* for the withdrawal model,
+      // because the population is unbounded and the label is defined by the
+      // hazard itself. The PFAS-formation screen elsewhere on this page is a
+      // different thing entirely, and a reader who spots both deserves to be
+      // told which is which rather than left to assume a contradiction.
+      note: `${facts.gated_domains.join(", ")}. None could carry a withdrawal model; the boundary is the result`,
+    },
+  ];
 
-export default function WhatWasBuilt() {
   return (
     <section className="border-b border-hairline">
       <div className="mx-auto max-w-3xl px-6 py-12">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-          {BUILT.map((item) => (
+          {built.map((item) => (
             <div key={item.label} className="flex gap-4">
               <span className="w-16 shrink-0 tabular-nums font-mono text-lg text-accent">
                 {item.figure}
@@ -64,7 +66,7 @@ export default function WhatWasBuilt() {
           >
             open on GitHub
           </a>{" "}
-          under AGPL-3.0. Both benchmark versions, the one that failed and the one that
+          under AGPL-3.0. Both benchmark versions, the superseded one and the one that
           replaced it, are published as{" "}
           <a
             href="https://huggingface.co/datasets/MartinBlomqvist/hewb"

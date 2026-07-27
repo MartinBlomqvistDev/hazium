@@ -1,0 +1,19 @@
+{
+ "generated": "2026-07-27",
+ "graph_nodes": 17133,
+ "graph_edges": 24784,
+ "model_sources": [
+  "EU Pesticides DB",
+  "ECHA (CLP and CLH)",
+  "EFSA OpenFoodTox",
+  "KemI",
+  "Europe PMC"
+ ],
+ "tests": 415,
+ "gated_domains": [
+  "PFAS",
+  "biocides",
+  "food additives",
+  "feed additives"
+ ]
+}

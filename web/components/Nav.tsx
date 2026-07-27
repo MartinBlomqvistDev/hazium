@@ -14,13 +14,13 @@ export default function Nav() {
           Hazium
         </Link>
         <nav className="flex items-center gap-3 text-sm text-text-secondary sm:gap-6">
-          <Link href="/method" className="hidden hover:text-text-primary min-[400px]:inline">
+          <Link href="/method" className="hidden py-1.5 hover:text-text-primary min-[400px]:inline">
             Method
           </Link>
-          <Link href="/watchlist" className="hover:text-text-primary">
+          <Link href="/watchlist" className="py-1.5 hover:text-text-primary">
             Watchlist
           </Link>
-          <Link href="/explorer" className="hover:text-text-primary">
+          <Link href="/explorer" prefetch={false} className="py-1.5 hover:text-text-primary">
             Explorer
           </Link>
           <a

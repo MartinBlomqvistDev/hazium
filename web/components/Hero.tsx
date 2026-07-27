@@ -61,7 +61,7 @@ export default function Hero({
           )}
           <Stat
             value={`${screen.flagged} of ${screen.population}`}
-            label={`approved substances that can form PFAS, on molecular structure alone, holding all ${screen.kemi_total} now under Swedish reevaluation`}
+            label={`approved substances that can form PFAS, on molecular structure alone, holding every one of the ${screen.kemi_total} now under Swedish reevaluation`}
           />
         </div>
       </div>

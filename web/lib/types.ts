@@ -310,3 +310,18 @@ export interface TfaScreenData {
   fluorine_without_cf3: number;
   entries: ScreenEntry[];
 }
+
+/**
+ * Figures the landing page states about the project itself.
+ *
+ * Written by `pipeline/36`, never by hand. The test count in particular has
+ * moved three times, and every time the page kept quoting the previous one.
+ */
+export interface BuildFacts {
+  generated: string;
+  graph_nodes: number;
+  graph_edges: number;
+  model_sources: string[];
+  tests: number;
+  gated_domains: string[];
+}

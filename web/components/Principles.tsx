@@ -9,7 +9,7 @@ const PRINCIPLES = [
   },
   {
     title: "The misses are published too",
-    body: "Every version of HEWB records which landmarks it fails to flag, and every superseded version stays online with the results that led to it. Both are on this page, including the hazard the project was built for and does not find.",
+    body: "Every version of HEWB records which landmarks it fails to flag, and every superseded version stays online with the results that led to it. The hazard the project was built for is one the model does not find, and that measurement has a section of its own.",
   },
   {
     title: "Cohorts, not anecdotes",

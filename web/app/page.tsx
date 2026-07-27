@@ -6,17 +6,20 @@ import EvidenceMesh from "@/components/EvidenceMesh";
 import OriginStory from "@/components/OriginStory";
 import Principles from "@/components/Principles";
 import Footer from "@/components/Footer";
+import buildFactsData from "@/data/build.json";
 import evidenceMeshData from "@/data/evidence_mesh.json";
 import watchlistData from "@/data/watchlist.json";
 import survivalData from "@/data/survival.json";
 import tfaScreenData from "@/data/tfa_screen.json";
 import type {
+  BuildFacts,
   EvidenceMeshData,
   SurvivalData,
   TfaScreenData,
   WatchlistData,
 } from "@/lib/types";
 
+const buildFacts = buildFactsData as BuildFacts;
 const evidenceMesh = evidenceMeshData as EvidenceMeshData;
 const watchlist = watchlistData as WatchlistData;
 const survival = survivalData as SurvivalData;
@@ -28,7 +31,7 @@ export default function Home() {
       <Nav />
       <main className="flex-1">
         <Hero survival={survival} screen={tfaScreen} />
-        <WhatWasBuilt />
+        <WhatWasBuilt facts={buildFacts} />
         <Findings survival={survival} screen={tfaScreen} watchlist={watchlist} />
         <EvidenceMesh data={evidenceMesh} />
         <OriginStory />

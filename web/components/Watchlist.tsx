@@ -4,6 +4,9 @@ import { useState } from "react";
 import type { WatchlistData, WatchlistEntry } from "@/lib/types";
 
 const ACCENT = "#d95926";
+
+/** Crops listed in the bar chart. The caption below it derives from the same slice. */
+const CROPS_SHOWN = 14;
 const INK_MUTED = "#898781";
 
 /** The Commission's own record for an active substance, keyed by its register id. */
@@ -16,11 +19,12 @@ function euRecordUrl(id: number): string {
  *
  * Two presentation decisions here are deliberate rather than stylistic. The
  * crop bars are drawn against a base-rate marker, because without it a reader
- * sees "wheat 40%" and concludes wheat is singled out. Measured against the
- * rate across all crop-bearing products, the cereals are about 1.1x and every
- * other crop sits below, a real gradient but a shallow one. And no product or
- * brand is named anywhere: the crop is the finest granularity published,
- * because a large share of any list this length is never actioned.
+ * sees "wheat 40%" and concludes wheat is singled out; measured against the
+ * rate across all crop-bearing products the whole range is shallow. The caption
+ * derives those extremes from the data rather than naming them, since the
+ * ranking changes and a hand-written extreme goes stale silently. And no
+ * product or brand is named anywhere: the crop is the finest granularity
+ * published, because a large share of any list this length is never actioned.
  */
 export default function Watchlist({ data }: { data: WatchlistData }) {
   const [open, setOpen] = useState<string | null>(null);
@@ -100,7 +104,7 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
             sprayed or on what area.
           </p>
           <div className="mt-5 space-y-1.5">
-            {data.crops.slice(0, 14).map((crop) => (
+            {data.crops.slice(0, CROPS_SHOWN).map((crop) => (
               <div key={crop.crop} className="flex items-center gap-2 text-sm sm:gap-3">
                 <span className="w-20 shrink-0 truncate text-text-secondary sm:w-28">
                   {crop.crop}
@@ -131,11 +135,28 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
           <p className="mt-4 text-xs leading-relaxed text-text-muted">
             The grey line marks {data.base_rate_percent}%, the share across every approved
             product that names a crop. Read the bars against it rather than against each other.
-            The spread runs from turnip rape, where none of its 45 approved products carries one
-            of these substances, to sugar beet at about one and a half times the overall rate.
-            Most crops sit inside a factor of two either side of the line, so the finding is that
-            these substances are spread across Swedish agriculture rather than concentrated in
-            any one crop.
+            {" "}
+            {(() => {
+              // Derived, not asserted. An earlier version of this sentence named
+              // the extremes by hand and kept naming them after the ranking moved,
+              // so it ended up describing a crop at 0% that the bar above showed
+              // at 13%.
+              const shown = data.crops.slice(0, CROPS_SHOWN);
+              const base = data.base_rate_percent || 1;
+              const low = shown.reduce((a, b) => (b.percent < a.percent ? b : a));
+              const high = shown.reduce((a, b) => (b.percent > a.percent ? b : a));
+              const widest = Math.max(high.percent / base, base / Math.max(low.percent, 1));
+              return (
+                <>
+                  Across the {shown.length} shown, the spread runs from {low.crop} at{" "}
+                  {low.percent}% to {high.crop} at {high.percent}%, which is{" "}
+                  {(high.percent / base).toFixed(1)} times the overall rate. Nothing reaches{" "}
+                  {widest < 2 ? "twice" : "three times"} the line in either direction, so these
+                  substances are spread across Swedish agriculture rather than concentrated in
+                  any one crop.
+                </>
+              );
+            })()}
           </p>
         </div>
 

@@ -11,10 +11,16 @@ const data = substancesData as SubstancesData;
 const rankRace = rankRaceData as RankRaceData;
 const detail = substanceDetail as SubstanceDetailMap;
 
+const TITLE = "Explore the rankings";
+const DESCRIPTION =
+  "Watch the model's top-ranked substances shift between 2009 and 2024, then browse the full ranked population at the 2023 cutoff.";
+
 export const metadata = {
-  title: "Explore the rankings | Hazium",
-  description:
-    "Watch the model's top-ranked substances shift between 2009 and 2024, then browse the full ranked population at the 2023 cutoff.",
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: "/explorer" },
+  openGraph: { title: `${TITLE} | Hazium`, description: DESCRIPTION, url: "/explorer" },
+  twitter: { title: `${TITLE} | Hazium`, description: DESCRIPTION },
 };
 
 export default function ExplorerPage() {

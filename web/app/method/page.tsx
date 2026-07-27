@@ -18,10 +18,18 @@ const capability = capabilityData as CapabilityData;
 const detail = substanceDetail as SubstanceDetailMap;
 const survival = survivalData as SurvivalData;
 
+const TITLE = "Method";
+const DESCRIPTION =
+  "The six feature groups, what each is worth, the trivial baseline that beat the model, and what the benchmark's lead times actually measure.";
+
 export const metadata = {
-  title: "Method | Hazium",
-  description:
-    "The six feature groups, what each is worth, the trivial baseline that beat the model, and the benchmark the result is measured against.",
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: "/method" },
+  // Set explicitly: without it every shared sub-page renders under the site
+  // title, so posting the watchlist and posting the method page look identical.
+  openGraph: { title: `${TITLE} | Hazium`, description: DESCRIPTION, url: "/method" },
+  twitter: { title: `${TITLE} | Hazium`, description: DESCRIPTION },
 };
 
 export default function MethodPage() {

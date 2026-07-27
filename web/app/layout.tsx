@@ -17,17 +17,28 @@ const geistMono = Geist_Mono({
 // with it, because a canonical URL that disagrees with where visitors actually
 // land is how link previews and search results drift apart.
 const SITE_URL = "https://hazium.org";
-const TITLE = "Hazium: early warning from public evidence";
+
+// "Early warning from public evidence" was the old framing and it outlived the
+// claim: the withdrawal model turned out to be measuring seniority as much as
+// foresight, and the site says so throughout. The title is what every shared
+// link renders as, so it was the last place the retired wording survived.
+const TITLE = "Hazium: public-data risk screening for EU pesticides";
 const DESCRIPTION =
-  "A temporally-aware knowledge graph over EU pesticide regulation, hazard classification, and scientific literature, evaluated against a versioned, falsifiable early-warning benchmark (HEWB).";
+  "A temporally-aware knowledge graph over EU pesticide regulation, hazard classification and scientific literature. Ranks approved substances for withdrawal risk against a versioned benchmark, and screens the same population for PFAS formation by molecular structure.";
 
 export const metadata: Metadata = {
   // metadataBase makes every relative asset URL absolute, which is what link
   // previews need: without it the generated Open Graph image resolves against
   // the deployment URL rather than the domain, and shared links render bare.
   metadataBase: new URL(SITE_URL),
-  title: TITLE,
+  title: {
+    default: TITLE,
+    // Sub-pages set only a plain string, so this keeps the brand on the end of
+    // every tab without each page having to repeat it.
+    template: "%s | Hazium",
+  },
   description: DESCRIPTION,
+  alternates: { canonical: "/" },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
