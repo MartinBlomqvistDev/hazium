@@ -78,6 +78,17 @@ export default function Home() {
               what was public in 2015 and nothing else, which is what stops a retrospective
               study from quietly scoring itself on the future.
             </P>
+            {/* The page referred to "the model" three times before it ever said
+                what one was, including in the mesh caption directly below. Naming
+                it here fixes the referent and is also what a keyword screen greps
+                for: XGBoost appeared nowhere on the site. */}
+            <P>
+              Over that graph, gradient-boosted trees (XGBoost) read six dated feature
+              groups: EFSA assessment history, hazard classifications under CLP, ECHA
+              classification intentions, sales trajectory, independent literature signal,
+              and graph links to substances already flagged. Scores are out-of-fold, folds
+              grouped by substance.
+            </P>
           </Section>
         </article>
 
@@ -155,6 +166,20 @@ export default function Home() {
               subtraction, and the one that replaced it.
             </P>
             <ul className="mt-5 space-y-2 text-text-secondary">
+              {/* First, because it is the only route to the modelling detail.
+                  Without it /method was reachable only through the nav on
+                  /watchlist, two hops from the front door, so the page carrying
+                  the feature contributions and the calibration finding was
+                  effectively orphaned. */}
+              <li>
+                <Link href="/method" className="text-accent underline underline-offset-2">
+                  What each evidence source is worth
+                </Link>{" "}
+                <span className="text-text-muted">
+                  &middot; the six feature groups measured one at a time, the checks the
+                  result survived, and where it is weakest
+                </span>
+              </li>
               <li>
                 <a
                   href="https://github.com/MartinBlomqvistDev/hazium"
