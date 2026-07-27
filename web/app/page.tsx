@@ -1,6 +1,7 @@
 import Link from "next/link";
 import EvidenceMesh from "@/components/EvidenceMesh";
 import Footer from "@/components/Footer";
+import Nav from "@/components/Nav";
 import buildFactsData from "@/data/build.json";
 import evidenceMeshData from "@/data/evidence_mesh.json";
 import survivalData from "@/data/survival.json";
@@ -42,7 +43,12 @@ export default function Home() {
 
   return (
     <div className="flex min-h-full flex-col">
-      <main className="flex-1 py-20 sm:py-28">
+      {/* The story page had no nav, so following a link to /watchlist made a
+          header appear out of nowhere and the site stopped feeling like one
+          site. The wordmark repeating under it is fine: it is the home page, and
+          the h1 is the only place the project is named at full size. */}
+      <Nav />
+      <main className="flex-1 py-16 sm:py-24">
         <article className="mx-auto max-w-2xl px-6">
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Hazium</h1>
           <p className="mt-3 text-lg text-text-secondary">
