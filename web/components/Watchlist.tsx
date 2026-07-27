@@ -64,8 +64,8 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
         <div className="mt-10">
           <h3 className="font-medium text-text-primary">When this gets marked</h3>
           <p className="mt-2 text-sm text-text-secondary">
-            {decidedBy2027} of {data.tracked} tracked substances reach their approval expiry by
-            the end of 2027.
+            {data.tracked} of the {data.top} carry a dated approval expiry, and{" "}
+            {decidedBy2027} of those reach it by the end of 2027.
           </p>
           <div className="mt-5 space-y-2">
             {soon.map((row) => (
@@ -93,7 +93,7 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
             Which crops they are approved for
           </h3>
           <p className="mt-2 text-sm text-text-secondary">
-            {data.on_market} of the top {data.top}{" "}
+            {data.on_market} of the same {data.top}{" "}
             are in plant protection products currently approved in Sweden. The bars show the
             share of each crop&apos;s{" "}
             <strong className="text-text-primary">approved products</strong> carrying at least

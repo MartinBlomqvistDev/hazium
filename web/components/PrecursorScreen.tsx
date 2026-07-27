@@ -36,7 +36,10 @@ export default function PrecursorScreen({ data }: { data: TfaScreenData }) {
         </p>
 
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <Stat value={`${data.flagged} of ${data.population}`} label="approved substances that can form TFA" />
+          <Stat
+            value={`${data.flagged} of ${data.population}`}
+            label="of the approved substances with a resolved structure, able to form TFA"
+          />
           <Stat
             value={`${data.kemi_found} of ${data.kemi_total}`}
             label={`substances Sweden is reevaluating, where chance would place ${data.expected_by_chance.toFixed(1)}`}
