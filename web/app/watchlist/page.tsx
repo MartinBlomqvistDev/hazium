@@ -41,49 +41,13 @@ export default function WatchlistPage() {
               molecular structure. Fourteen substances appear on both.
             </p>
 
-            {/* Every count below is a fraction of something, and the page used to
-                state four different denominators without ever connecting them. */}
-            <div className="mt-6 rounded-lg border border-hairline bg-surface p-5">
-              <h2 className="text-sm font-medium text-text-primary">
-                Where the numbers on this page come from
-              </h2>
-              <ol className="mt-3 space-y-2 text-sm text-text-secondary">
-                <li className="flex gap-3">
-                  <span className="w-14 shrink-0 text-right font-mono tabular-nums text-accent">
-                    {survival.anchor_cohort.population}
-                  </span>
-                  <span>
-                    substances hold an EU approval today and have not been withdrawn. This is
-                    the population, and everything below is a slice of it.
-                  </span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="w-14 shrink-0 text-right font-mono tabular-nums text-accent">
-                    {watchlist.top}
-                  </span>
-                  <span>
-                    of them are published as the watchlist, ranked by modelled withdrawal risk.
-                    Of those, {watchlist.tracked} carry a dated approval expiry and{" "}
-                    {watchlist.on_market} are in Swedish products on sale now.
-                  </span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="w-14 shrink-0 text-right font-mono tabular-nums text-accent">
-                    {tfaScreen.flagged}
-                  </span>
-                  <span>
-                    of the {tfaScreen.population} whose molecular structure PubChem could resolve
-                    can form PFAS. That is a separate question, so it is a separate list.
-                  </span>
-                </li>
-              </ol>
-              <p className="mt-3 text-xs leading-relaxed text-text-muted">
-                The roughly 5,900 substances quoted elsewhere are the historical benchmark
-                population, which includes thousands never approved in the EU. None of them
-                appear here.
-              </p>
-            </div>
-
+            <p className="mt-3 text-text-secondary">
+              Everything here is drawn from the same set: the{" "}
+              <strong className="text-text-primary">
+                {survival.anchor_cohort.population} substances
+              </strong>{" "}
+              that hold an EU approval today and have not been withdrawn.
+            </p>
             <p className="mt-4 text-sm text-text-muted">
               Nothing here has been checked against anything, because the future it describes has
               not happened. What makes it falsifiable is that every EU approval carries an expiry

@@ -64,8 +64,8 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
         <div className="mt-10">
           <h3 className="font-medium text-text-primary">When this gets marked</h3>
           <p className="mt-2 text-sm text-text-secondary">
-            {data.tracked} of the {data.top} carry a dated approval expiry, and{" "}
-            {decidedBy2027} of those reach it by the end of 2027.
+            {decidedBy2027} of them reach their approval expiry by the end of 2027, which is
+            when the Commission has to decide.
           </p>
           <div className="mt-5 space-y-2">
             {soon.map((row) => (
@@ -93,11 +93,10 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
             Which crops they are approved for
           </h3>
           <p className="mt-2 text-sm text-text-secondary">
-            {data.on_market} of the same {data.top}{" "}
-            are in plant protection products currently approved in Sweden. The bars show the
-            share of each crop&apos;s{" "}
+            {data.on_market} of them are in plant protection products currently approved in
+            Sweden. Each bar is the share of that crop&apos;s{" "}
             <strong className="text-text-primary">approved products</strong> carrying at least
-            one of them.
+            one.
           </p>
           <p className="mt-2 text-sm text-text-secondary">
             This is the catalogue, not the fields: what a grower could legally buy, not what was
@@ -123,24 +122,18 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
                       backgroundColor: INK_MUTED,
                     }} />
                 </span>
-                <span className="tabular-nums font-mono text-xs text-text-secondary">
+                <span className="w-10 shrink-0 text-right font-mono text-xs tabular-nums text-text-secondary">
                   {crop.percent}%
-                </span>
-                <span className="tabular-nums font-mono text-xs text-text-muted">
-                  {crop.flagged}/{crop.products}
                 </span>
               </div>
             ))}
           </div>
           <p className="mt-4 text-xs leading-relaxed text-text-muted">
-            The grey line marks {data.base_rate_percent}%, the share across every approved
-            product that names a crop. Read the bars against it rather than against each other.
-            {" "}
+            The grey line marks the rate across every approved product that names a crop. Read
+            the bars against it rather than against each other.{" "}
             {(() => {
-              // Derived, not asserted. An earlier version of this sentence named
-              // the extremes by hand and kept naming them after the ranking moved,
-              // so it ended up describing a crop at 0% that the bar above showed
-              // at 13%.
+              // Derived rather than asserted: an earlier hand-written version kept
+              // naming a crop as the extreme after the ranking had moved on.
               const shown = data.crops.slice(0, CROPS_SHOWN);
               const base = data.base_rate_percent || 1;
               const low = shown.reduce((a, b) => (b.percent < a.percent ? b : a));
@@ -148,12 +141,10 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
               const widest = Math.max(high.percent / base, base / Math.max(low.percent, 1));
               return (
                 <>
-                  Across the {shown.length} shown, the spread runs from {low.crop} at{" "}
-                  {low.percent}% to {high.crop} at {high.percent}%, which is{" "}
-                  {(high.percent / base).toFixed(1)} times the overall rate. Nothing reaches{" "}
-                  {widest < 2 ? "twice" : "three times"} the line in either direction, so these
-                  substances are spread across Swedish agriculture rather than concentrated in
-                  any one crop.
+                  Nothing among them reaches {widest < 2 ? "twice" : "three times"} that rate in
+                  either direction, {low.crop} being the lowest and {high.crop} the highest, so
+                  these substances are spread across Swedish agriculture rather than concentrated
+                  in any one crop.
                 </>
               );
             })()}
@@ -164,9 +155,8 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
           <h3 className="font-medium text-text-primary">How much is actually sold</h3>
           <p className="mt-2 text-sm text-text-secondary">
             {data.with_sales} of them have recorded Swedish sales. Tonnage alone is unreadable,
-            because the median plant protection active sells 0.2 tonnes a year here while the
-            largest sells 783, so each is shown with its rank among the {data.sales_ranked}{" "}
-            actives sold in {data.sales_year}.
+            because sales are skewed across three orders of magnitude, so each carries its rank
+            among every plant protection active sold here in {data.sales_year}.
           </p>
           <p className="mt-2 text-xs text-text-muted">
             Click a substance for its deadline, its full crop list and the Commission&apos;s own
