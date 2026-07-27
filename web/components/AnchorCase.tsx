@@ -31,8 +31,8 @@ export default function AnchorCase({
           The case the model misses
         </h2>
         <p className="mt-4 text-text-secondary">
-          Everything above is measured against EU withdrawals. This is measured against the
-          hazard the project was built for, and the model does not find it.
+          The model&apos;s target is EU withdrawal, a committee decision. This tests it
+          against something different: the hazard the project was built for.
         </p>
         <p className="mt-4 text-text-secondary">
           On 20 November 2025 Kemikalieinspektionen opened a reevaluation of six plant

@@ -44,13 +44,14 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
           What it says next
         </h2>
         <p className="mt-4 text-text-secondary">
-          Everything above is retrospective: the model is graded against bans that already
-          happened. This is the opposite, and it carries a different status. These are
-          substances the model ranks as concerning today, and{" "}
-          <strong className="text-text-primary">none of them has been checked against
-          anything</strong>, because the future they concern has not happened. What makes it
-          falsifiable anyway is that every EU approval carries an expiry date, and on that date
-          the Commission has to decide. Each entry comes with its own deadline.
+          The benchmark grades this model against withdrawals that already happened. This
+          list is the opposite, and carries a different status: these are substances it ranks
+          as concerning <em>now</em>, so{" "}
+          <strong className="text-text-primary">none of them has been graded yet</strong>. The
+          decisions they anticipate have not been made. What stops that being unfalsifiable is
+          that each entry carries the expiry date of its own EU approval, which is the day the
+          Commission has to rule on it. Every line here can be marked right or wrong on a date
+          already in the calendar.
         </p>
         <p className="mt-4 text-sm text-text-secondary">
           The ranking is a modelled three-year hazard among substances currently approved and not
@@ -64,8 +65,10 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
         <div className="mt-10">
           <h3 className="font-medium text-text-primary">When this gets marked</h3>
           <p className="mt-2 text-sm text-text-secondary">
-            {decidedBy2027} of them reach their approval expiry by the end of 2027, which is
-            when the Commission has to decide.
+            Every EU approval runs to a fixed expiry date. On that date the Commission has to
+            rule on the substance: renew it, restrict it, or let the approval lapse. That
+            ruling is what marks the entry right or wrong, and {decidedBy2027} of them fall due
+            by the end of 2027.
           </p>
           <div className="mt-5 space-y-2">
             {soon.map((row) => (
@@ -76,7 +79,7 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
                 <span className="h-3 shrink-0 rounded-sm" aria-hidden
                   style={{ width: `${(row.count / maxCount) * 45}%`, backgroundColor: ACCENT }} />
                 <span className="tabular-nums text-text-secondary">
-                  {row.count} decided
+                  {row.count} due
                 </span>
               </div>
             ))}

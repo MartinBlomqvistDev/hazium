@@ -48,11 +48,6 @@ export default function WatchlistPage() {
               </strong>{" "}
               that hold an EU approval today and have not been withdrawn.
             </p>
-            <p className="mt-4 text-sm text-text-muted">
-              Nothing here has been checked against anything, because the future it describes has
-              not happened. What makes it falsifiable is that every EU approval carries an expiry
-              date on which the Commission has to decide.
-            </p>
           </div>
         </section>
         <Watchlist data={watchlist} />
