@@ -93,8 +93,8 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
             Which crops they are approved for
           </h3>
           <p className="mt-2 text-sm text-text-secondary">
-            {data.on_market} of them are in plant protection products currently approved in
-            Sweden. Each bar is the share of that crop&apos;s{" "}
+            {data.on_market}{" "}
+            of them are in plant protection products currently approved in Sweden. Each bar is the share of that crop&apos;s{" "}
             <strong className="text-text-primary">approved products</strong> carrying at least
             one.
           </p>
@@ -129,22 +129,21 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
             ))}
           </div>
           <p className="mt-4 text-xs leading-relaxed text-text-muted">
-            The grey line marks the rate across every approved product that names a crop. Read
-            the bars against it rather than against each other.{" "}
             {(() => {
-              // Derived rather than asserted: an earlier hand-written version kept
-              // naming a crop as the extreme after the ranking had moved on.
+              // The numbers are the referents here. An earlier pass cut them for
+              // density and left "the rate" and "twice that rate in either
+              // direction", which name nothing and cannot be true downward.
               const shown = data.crops.slice(0, CROPS_SHOWN);
-              const base = data.base_rate_percent || 1;
               const low = shown.reduce((a, b) => (b.percent < a.percent ? b : a));
               const high = shown.reduce((a, b) => (b.percent > a.percent ? b : a));
-              const widest = Math.max(high.percent / base, base / Math.max(low.percent, 1));
               return (
                 <>
-                  Nothing among them reaches {widest < 2 ? "twice" : "three times"} that rate in
-                  either direction, {low.crop} being the lowest and {high.crop} the highest, so
-                  these substances are spread across Swedish agriculture rather than concentrated
-                  in any one crop.
+                  The grey line sits at {data.base_rate_percent}%, which is the same share
+                  measured across every approved product in Sweden that names a crop. It is the
+                  level to read each bar against. They run from {low.percent}% for {low.crop} to{" "}
+                  {high.percent}% for {high.crop}, a narrow band around that line, so these
+                  substances are spread across Swedish agriculture rather than concentrated in
+                  any one crop.
                 </>
               );
             })()}
