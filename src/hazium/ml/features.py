@@ -6,11 +6,10 @@ events, which are not graph edges). This is what makes the feature set
 temporally clean: nothing computed here can see the label event or anything
 dated on or after the cutoff.
 
-The five feature groups in ``V1_SCOPE.md`` describe the full aspiration; what
-is implemented here is what is actually computable from ingested facts today.
-Deferred (need the ``/details`` EU PPDB enrichment, not yet ingested; see
-``TODO.md``): CLP M-factor, EU pesticide category, member-state authorisation
-count, approval-extension count. Their absence is a scoping fact, not a bug:
+What is implemented here is what is computable from the facts ingested today,
+which is narrower than the full aspiration. Deferred until the ``/details`` EU
+PPDB enrichment is ingested: CLP M-factor, EU pesticide category, member-state
+authorisation count, approval-extension count. Their absence is a scoping fact, not a bug:
 adding them later only strengthens the feature set, never invalidates results
 computed without them.
 """
