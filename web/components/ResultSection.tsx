@@ -84,8 +84,8 @@ export default function ResultSection({
             because only running the baseline does.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            Both versions stay published, each correct for the question it asked, and both are
-            citable datasets:{" "}
+            Both versions stay published, each correct for the question it asked, in one
+            citable dataset:{" "}
             <a
               href="https://huggingface.co/datasets/MartinBlomqvist/hewb"
               className="text-accent underline underline-offset-2"

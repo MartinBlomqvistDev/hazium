@@ -175,8 +175,8 @@ export default function Home() {
 
           <Section title="What&rsquo;s here">
             <P>
-              A reproducible pipeline, {facts.tests} tests, and two versions of the
-              benchmark published as citable datasets: the one that was answerable by a date
+              A reproducible pipeline, {facts.tests} tests, and both versions of the
+              benchmark in one citable dataset: the one that was answerable by a date
               subtraction, and the one that replaced it.
             </P>
             <ul className="mt-5 space-y-2 text-text-secondary">
