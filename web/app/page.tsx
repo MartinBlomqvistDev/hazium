@@ -130,13 +130,21 @@ export default function Home() {
               left. Average precision moves from {age.toFixed(3)} to{" "}
               <strong className="text-text-primary">{both.toFixed(3)}</strong>.
             </P>
+            {/* The permutation belongs to the pooled figure above, not to the
+                forward split below: it refits out-of-fold over the whole panel
+                with substance histories shuffled. Writing the two as one
+                sentence attached p to the wrong result, and the forward split
+                has its own average precision on its own scale besides. */}
             <P>
-              Fitted on {split?.train_through} and scored forward against what happened
-              after, the top 50 held {split?.both_hits_at_50}{" "}
-              real withdrawals to the baseline&apos;s {split?.age_hits_at_50}. Permuting
-              whole substance histories
-              puts that at p&nbsp;=&nbsp;{p.toFixed(3)}. Folds are grouped by substance, so
-              no substance appears on both sides of a split.
+              Scores are out of fold with folds grouped by substance, so no substance
+              appears on both sides of a split. Shuffling whole substance histories and
+              refitting puts that gain at p&nbsp;=&nbsp;{p.toFixed(3)}.
+            </P>
+            <P>
+              A separate forward test refits on evidence up to {split?.train_through} and
+              scores against what actually happened after. Its top 50 holds{" "}
+              {split?.both_hits_at_50} real withdrawals to the baseline&apos;s{" "}
+              {split?.age_hits_at_50}.
             </P>
           </Section>
 
