@@ -156,11 +156,12 @@ def main() -> int:
         f"\n   found {result.kemi_found} of {result.kemi_total}; a same-sized random draw "
         f"would find {result.expected_kemi_by_chance:.1f}"
     )
+    chance_p: float | None = None
     if result.kemi_found == result.kemi_total and result.flagged_count < result.population:
-        p = comb(result.flagged_count, result.kemi_total) / comb(
+        chance_p = comb(result.flagged_count, result.kemi_total) / comb(
             result.population, result.kemi_total
         )
-        print(f"   probability of that by chance: {p:.2e}  (1 in {1 / p:,.0f})")
+        print(f"   probability of that by chance: {chance_p:.2e}  (1 in {1 / chance_p:,.0f})")
 
     # --- held-out check 2: EFSA's own degradation records -------------------
     print("\nCHECK 2: substances EFSA's degradation records already link to TFA")
@@ -226,6 +227,11 @@ def main() -> int:
         # Fluorine-bearing but not CF3, almost all difluoromethyl. Published so
         # the site states the exclusion from the run rather than from memory.
         "fluorine_without_cf3": len(result.unexplained_fluorine),
+        # Hypergeometric: the chance a shortlist this size holds every one of
+        # the cohort. Printed since the screen was built and never exported,
+        # so the strongest single figure was missing from the site.
+        "all_found_p": chance_p,
+        "all_found_one_in": round(1 / chance_p) if chance_p else None,
         "entries": [
             {
                 "rank": rank,

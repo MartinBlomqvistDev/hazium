@@ -41,8 +41,8 @@ export default function PrecursorScreen({ data }: { data: TfaScreenData }) {
             label="of the approved substances with a resolved structure, able to form TFA"
           />
           <Stat
-            value={`${data.kemi_found} of ${data.kemi_total}`}
-            label={`of the same six found here, by structure, where a random shortlist this size would hold ${data.expected_by_chance.toFixed(1)}`}
+            value={data.all_found_one_in ? `1 in ${data.all_found_one_in.toLocaleString("en-GB")}` : "n/a"}
+            label="the chance a shortlist this size would hold the whole cohort by luck"
           />
           <Stat value="0" label="models fitted, parameters estimated, or labels used" />
         </div>

@@ -308,6 +308,9 @@ export interface TfaScreenData {
   exposure_cap_tonnes: number;
   /** fluorine-bearing but not CF3, almost all difluoromethyl */
   fluorine_without_cf3: number;
+  /** hypergeometric chance of a shortlist this size holding the whole cohort */
+  all_found_p: number | null;
+  all_found_one_in: number | null;
   entries: ScreenEntry[];
 }
 

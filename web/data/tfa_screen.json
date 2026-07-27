@@ -10,6 +10,8 @@
  "efsa_total": 1,
  "exposure_cap_tonnes": 50.0,
  "fluorine_without_cf3": 6,
+ "all_found_p": 8.784712558099871e-07,
+ "all_found_one_in": 1138341,
  "entries": [
   {
    "rank": 1,

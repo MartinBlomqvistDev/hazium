@@ -28,7 +28,7 @@ export default function AnchorCase({
     <section id="anchor" className="border-b border-hairline">
       <div className="mx-auto max-w-3xl px-6 py-16">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-accent">
-          The case it still misses
+          The case the model misses
         </h2>
         <p className="mt-4 text-text-secondary">
           Everything above is measured against EU withdrawals. This is measured against the
@@ -40,6 +40,54 @@ export default function AnchorCase({
           groundwater. Fluazinam is one of them. Those six were chosen by a regulator, on a
           dated public decision, which is what makes them a test rather than an anecdote.
         </p>
+
+        {/* The same six substances, two methods, opposite outcomes. Read
+            sequentially this produced "0 of 6" and "6 of 6" a screen apart and
+            readers took them for a contradiction. Side by side the contrast is
+            the point rather than the confusion. On a phone the columns stack,
+            so each keeps its own heading. */}
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {[
+            {
+              title: "The withdrawal model",
+              question: "Will the EU withdraw it?",
+              method: "Gradient boosting over dated regulatory evidence",
+              found: `${cohort.hits_in_top_k} of ${cohort.size}`,
+              band: `of the cohort, in its published top ${cohort.top_k}`,
+              chance: `a random draw would have put ${cohort.expected_in_top_k.toFixed(1)} there`,
+              hit: false,
+            },
+            {
+              title: "The structural screen",
+              question: "Can it break down into PFAS?",
+              method: "One rule over a public molecular formula, nothing fitted",
+              found: `${screen.kemi_found} of ${screen.kemi_total}`,
+              band: `of the cohort, in its ${screen.flagged}-substance shortlist`,
+              chance: `a random shortlist that size would hold ${screen.expected_by_chance.toFixed(1)}`,
+              hit: true,
+            },
+          ].map((c) => (
+            <div
+              key={c.title}
+              className="rounded-xl border bg-surface p-5"
+              style={{
+                borderColor: c.hit ? "var(--accent)" : "var(--hairline)",
+              }}
+            >
+              <h3 className="font-medium text-text-primary">{c.title}</h3>
+              <p className="mt-1 text-sm text-text-secondary">{c.question}</p>
+              <p className="mt-3 text-xs leading-relaxed text-text-muted">{c.method}</p>
+              <div
+                className="mt-4 tabular-nums text-3xl font-semibold"
+                style={{ color: c.hit ? "var(--accent)" : "var(--status-critical)" }}
+              >
+                {c.found}
+              </div>
+              <p className="mt-1 text-sm text-text-secondary">{c.band}</p>
+              <p className="mt-2 text-xs leading-relaxed text-text-muted">{c.chance}</p>
+            </div>
+          ))}
+        </div>
 
         <div className="mt-8 rounded-xl border border-hairline bg-surface p-5 sm:p-7">
           <div className="flex items-baseline justify-between text-xs text-text-muted">
@@ -83,26 +131,7 @@ export default function AnchorCase({
           </p>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          <Stat
-            value={`${cohort.hits_in_top_k} of ${cohort.size}`}
-            label={`found by the withdrawal model, whose published list is the top ${cohort.top_k} of these ${cohort.population}`}
-          />
-          <Stat
-            value={cohort.expected_in_top_k.toFixed(1)}
-            label={`how many a random draw would have put in a list that size`}
-          />
-          <Stat
-            value={`${Math.round(cohort.median_percentile * 100)}%`}
-            label="where the cohort sits in that ranking on average, against 50% for chance"
-          />
-        </div>
-
         <p className="mt-8 text-sm leading-relaxed text-text-secondary">
-          Not one of them reaches the band, where a random draw would put{" "}
-          {cohort.expected_in_top_k.toFixed(1)}. The cohort sits slightly worse than chance.
-        </p>
-        <p className="mt-4 text-sm leading-relaxed text-text-secondary">
           TFA is a degradation product, and the hazard shows up in groundwater monitoring,
           which is not among the sources feeding Hazium. Nothing in an approval record, a
           hazard classification or a sales table says that a substance becomes something
@@ -111,13 +140,10 @@ export default function AnchorCase({
         </p>
         <p className="mt-4 text-sm leading-relaxed text-text-secondary">
           The molecule carries it instead. TFA comes from trifluoromethyl groups, and a
-          formula is public, unchanging and knowable at every cutoff. Screening the same{" "}
-          {screen.population} approved substances on structure alone narrows them to{" "}
-          <strong className="text-text-primary">
-            {screen.flagged}, and all six are among them
-          </strong>
-          . That is chemistry rather than machine learning, which is the finding: the right
-          tool followed from asking what the hazard actually was.{" "}
+          formula is public, unchanging and knowable at every cutoff, so the same population
+          can be screened on structure alone. That is chemistry rather than machine learning,
+          which is the finding: the right tool followed from asking what the hazard actually
+          was.{" "}
           <a href="#screen" className="text-accent underline underline-offset-2">
             The whole shortlist is below
           </a>
