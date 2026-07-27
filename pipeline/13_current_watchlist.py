@@ -33,14 +33,15 @@ Two corrections over the first pass, both real bugs, not polish:
    Swedish register": several genuine EU-approved pesticide active
    substances (Propoxycarbazone, Cyhalofop-butyl) were mislabelled `False`
    just because they aren't marketed in Sweden specifically. Fixed: a
-   substance is flagged a pesticide if it has ``eu_has_approval`` set: membership in the EU *Pesticides* Database's approval events is a direct,
-   correct test, not a proxy. `in_kemi_sweden_register` is kept as a
+   substance is flagged a pesticide if it has ``eu_has_approval`` set.
+   Membership in the EU *Pesticides* Database's approval events is a direct
+   and correct test, not a proxy. `in_kemi_sweden_register` is kept as a
    separate, honestly-named column for readers who specifically want
    Swedish-market presence.
 2. **Time dominance.** `eu_years_since_first_approval` swamped every other
    feature in the global ranking (5-10x the next-largest SHAP contribution),
    making the list read as "oldest first" rather than a differentiated risk
-   read: true, and not very informative on its own. Mitigated by
+   read. That is true, and not very informative on its own. Mitigated by
    **cohort-relative ranking**: bucket substances by approval-age band, then
    rank within each band. This does not discard the age signal (HEWB
    repeatedly showed it is genuinely predictive) or require retraining; it
@@ -294,7 +295,7 @@ def main() -> int:
             print(f"\n  [{label}] ({len(band)} substances in this band)")
             for local_rank, r in enumerate(band_top, start=1):
                 print(
-                    f"    {local_rank}. {r['name']}  (global rank {r['rank']}, score {r['score']:.4f})"
+                    f"    {local_rank}. {r['name']}  (global rank {r['rank']}, score {r['score']:.4f})"  # noqa: E501 - a wrapped print row is harder to read
                 )
                 cohort_rows.append({**r, "cohort": label, "rank_in_cohort": local_rank})
 

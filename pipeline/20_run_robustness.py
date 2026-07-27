@@ -178,7 +178,7 @@ def _print_sweep(aggregate, ranks) -> None:
             ratio_s = "inf" if ratio == float("inf") else f"{ratio:.1f}x"
             print(
                 f"    {r.cutoff.year:>8d} {r.population:>6d} {r.positives:>4d} "
-                f"{r.base_rate:>10.4f} {r.xgboost_ap:>8.4f} {r.best_trivial_ap:>11.4f} {ratio_s:>7s}"
+                f"{r.base_rate:>10.4f} {r.xgboost_ap:>8.4f} {r.best_trivial_ap:>11.4f} {ratio_s:>7s}"  # noqa: E501 - a wrapped print row is harder to read
             )
         print()
 

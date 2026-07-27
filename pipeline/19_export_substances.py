@@ -182,7 +182,7 @@ def main() -> int:
     kb = SITE_DATA.stat().st_size / 1024
     print(
         f"wrote {SITE_DATA} ({payload['population']} substances, "
-        f"{payload['headline_positives']}/{payload['early_warning_positives']} positives, {kb:.0f} KB)"
+        f"{payload['headline_positives']}/{payload['early_warning_positives']} positives, {kb:.0f} KB)"  # noqa: E501 - a wrapped print row is harder to read
     )
     return 0
 
