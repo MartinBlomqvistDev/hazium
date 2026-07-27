@@ -27,11 +27,12 @@ export default function OriginStory() {
         </p>
         <p className="mt-4 leading-relaxed text-text-secondary">
           The concern itself is not in doubt. A national SGU groundwater
-          investigation across 2023 to 2025 found TFA at 91 percent of 237 sites
-          (median 230 ng/l), tied to fluorinated plant-protection products
-          breaking down. Sweden&apos;s historical pesticide monitoring meanwhile
-          records fluazinam at zero of 139 groundwater analyses: the parent
-          never arrives because it becomes TFA. That monitoring is too recent to
+          investigation across 2023 to 2025 found TFA at{" "}
+          <strong className="text-text-primary">91 percent of the sites it tested</strong>,
+          tied to fluorinated plant-protection products breaking down. Sweden&apos;s
+          historical pesticide monitoring meanwhile has never once detected
+          fluazinam in groundwater: the parent does not arrive, because by then it
+          is TFA. That monitoring is too recent to
           have fed a pre-2023 ranking, so it is not a model input; it is
           independent, after-the-fact confirmation of the concern the project set
           out to anticipate. Folding groundwater and residue monitoring in as a

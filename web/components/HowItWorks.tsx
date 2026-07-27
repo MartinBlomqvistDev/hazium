@@ -133,8 +133,7 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
             Ranking on nothing but how long a substance has held EU approval reaches{" "}
             <strong className="text-text-primary">a higher mean average precision than the full
             model</strong> across the sixteen cutoffs, 0.474 against 0.470, and reproduces
-            the lead times below exactly: chlorpyrifos at 132 months, thiacloprid at 133,
-            clothianidin at 120. A date subtraction, no model at all.
+            the lead times below to the month. A date subtraction, no model at all.
           </p>
           <p className="mt-3 text-sm leading-relaxed text-text-secondary">
             The cause is the question rather than the data. &ldquo;Was this ever withdrawn&rdquo;
@@ -146,27 +145,70 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
             Asked separably, one approved substance in one year at risk, approval age becomes the
             background rate and the evidence has something left to explain. It does:{" "}
             <strong className="text-text-primary">
-              {age.toFixed(3)} for age alone against {both.toFixed(3)} for age plus evidence
+              {age.toFixed(3)} for age alone against {both.toFixed(3)} with the evidence added
             </strong>
-            , a gain of +{(both - age).toFixed(3)} against a seed spread of{" "}
-            {h1.arms["age + evidence"].seed_sd.toFixed(3)}. The signal survives lagging every
-            feature three years, decaying from +{v.lag_deltas["0"].toFixed(3)} to +
-            {v.lag_deltas["3"].toFixed(3)}{" "}
-            rather than collapsing; a block permutation over whole
-            substance histories puts it at p&nbsp;=&nbsp;{v.permutation_p.toFixed(3)}; and in a
-            forward split fit on {split?.train_through} the top 50 holds{" "}
-            {split?.both_hits_at_50} real withdrawals against approval age&apos;s{" "}
-            {split?.age_hits_at_50}.
+            .
           </p>
-          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            The limits are measured too. A linear model recovers about{" "}
-            {(v.linear_share_recovered * 100).toFixed(0)}% of it, so it lives in interactions;
-            the raw scores are overconfident and need calibrating before they can be read as
-            probabilities; 75 of 102 events fall in the 2017&ndash;2021 renewal wave, which is
-            the real constraint, since a model fitted before that wave does not transfer into it;
-            and approval age is about {(v.age_from_evidence_r2 * 100).toFixed(0)}% recoverable
-            from the evidence features, so the evidence-only arm carries some of the calendar
-            with it. Both benchmark versions are published:{" "}
+
+          {/* Four checks, one line each. As a single paragraph this carried eleven
+              figures and nobody finished it. */}
+          <dl className="mt-4 space-y-2 text-sm">
+            {[
+              {
+                k: "Seed spread",
+                v: `the gain is +${(both - age).toFixed(3)} against ±${h1.arms["age + evidence"].seed_sd.toFixed(3)} across seeds`,
+              },
+              {
+                k: "Feature lag",
+                v: `reading every feature three years old decays it to +${v.lag_deltas["3"].toFixed(3)} rather than collapsing it`,
+              },
+              {
+                k: "Permutation",
+                v: `shuffling whole substance histories puts it at p = ${v.permutation_p.toFixed(3)}`,
+              },
+              {
+                k: "Forward split",
+                v: `fitted on ${split?.train_through}, its top 50 holds ${split?.both_hits_at_50} real withdrawals against the baseline's ${split?.age_hits_at_50}`,
+              },
+            ].map((row) => (
+              <div key={row.k} className="flex flex-col gap-0.5 sm:flex-row sm:gap-3">
+                <dt className="shrink-0 font-medium text-text-primary sm:w-32">{row.k}</dt>
+                <dd className="text-text-secondary">{row.v}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <p className="mt-5 text-sm leading-relaxed text-text-secondary">
+            The limits are measured the same way.
+          </p>
+          <dl className="mt-3 space-y-2 text-sm">
+            {[
+              {
+                k: "Interactions",
+                v: `a linear model recovers about ${(v.linear_share_recovered * 100).toFixed(0)}% of the gain, so it does not live in any single feature`,
+              },
+              {
+                k: "Calibration",
+                v: "raw scores are overconfident and need calibrating before they can be read as probabilities",
+              },
+              {
+                k: "One era",
+                v: "most events fall in the 2017 to 2021 renewal wave, and a model fitted before it does not transfer into it",
+              },
+              {
+                k: "Not age-free",
+                v: `approval age is about ${(v.age_from_evidence_r2 * 100).toFixed(0)}% recoverable from the evidence, so the evidence-only arm carries some of the calendar`,
+              },
+            ].map((row) => (
+              <div key={row.k} className="flex flex-col gap-0.5 sm:flex-row sm:gap-3">
+                <dt className="shrink-0 font-medium text-text-primary sm:w-32">{row.k}</dt>
+                <dd className="text-text-secondary">{row.v}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <p className="mt-5 text-sm leading-relaxed text-text-secondary">
+            Both benchmark versions are published:{" "}
             <a
               href="https://github.com/MartinBlomqvistDev/hazium/tree/main/release/hewb-v2"
               className="text-accent underline underline-offset-2"
