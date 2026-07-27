@@ -1,21 +1,24 @@
 import Link from "next/link";
 
+/**
+ * Four destinations, which is the most that fits beside the wordmark on a
+ * 360px phone. "Method" hides below 400px, since a reader on the narrowest
+ * screens is the least likely to want the feature-group table.
+ */
 export default function Nav() {
   return (
     <header className="sticky top-0 z-50 border-b border-hairline bg-page/85 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <Link href="/#top" className="flex items-center gap-2 font-semibold tracking-tight">
+        <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
           <span className="inline-block h-2 w-2 rounded-full bg-accent" aria-hidden />
           Hazium
         </Link>
         <nav className="flex items-center gap-3 text-sm text-text-secondary sm:gap-6">
-          {/* Hidden below 400px: the four items plus the wordmark overflow a 360px
-              phone by a few pixels, which puts the whole page into sideways scroll. */}
-          <Link href="/#how" className="hidden hover:text-text-primary min-[400px]:inline">
-            How it works
+          <Link href="/method" className="hidden hover:text-text-primary min-[400px]:inline">
+            Method
           </Link>
-          <Link href="/#anchor" className="hover:text-text-primary">
-            What it misses
+          <Link href="/watchlist" className="hover:text-text-primary">
+            Watchlist
           </Link>
           <Link href="/explorer" className="hover:text-text-primary">
             Explorer

@@ -318,7 +318,7 @@ function Row({
             {isLandmark && (
               <p className="mt-2 text-xs text-text-muted">
                 {s.n} is a HEWB landmark case.{" "}
-                <Link href="/#result" className="text-accent hover:underline">
+                <Link href="/method#result" className="text-accent hover:underline">
                   See its lead-time on the timeline →
                 </Link>
               </p>

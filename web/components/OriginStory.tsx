@@ -19,10 +19,11 @@ export default function OriginStory() {
           history, EU hazard classifications, scientific literature and Swedish
           sales, do not cover groundwater or residue monitoring, so that specific
           signal sits outside the current data.{" "}
-          <a href="#anchor" className="text-accent underline underline-offset-2">
-            It is measured further down
-          </a>
-          , against the whole cohort the regulator named rather than fluazinam alone.
+          <a href="/watchlist#anchor" className="text-accent underline underline-offset-2">
+            The miss is measured
+          </a>{" "}
+          against the whole cohort the regulator named rather than fluazinam alone, and a
+          screen over molecular structure does find them.
         </p>
         <p className="mt-4 leading-relaxed text-text-secondary">
           The concern itself is not in doubt. A national SGU groundwater
