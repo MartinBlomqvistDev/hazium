@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { CapabilityData, HewbData, SubstanceDetailMap } from "@/lib/types";
 import CapabilityTimeline from "./CapabilityTimeline";
 
@@ -40,10 +41,10 @@ export default function ResultSection({
             imidacloprid, level on dimethoate, and absent on epoxiconazole. A benchmark whose
             headline metric is bounded by its own start date cannot separate foresight from
             seniority, which is why{" "}
-            <a href="#how" className="text-accent underline underline-offset-2">
-              the survival reformulation above
-            </a>{" "}
-            exists and is the result this project reports.
+            <Link href="/" className="text-accent underline underline-offset-2">
+              the question was reformulated
+            </Link>{" "}
+            and the survival result is what this project now reports.
           </p>
         </div>
         <p className="mt-6 text-sm leading-relaxed text-text-secondary">

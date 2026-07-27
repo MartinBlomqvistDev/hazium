@@ -41,10 +41,47 @@ export default function PrecursorScreen({ data }: { data: TfaScreenData }) {
             label="of the approved substances with a resolved structure, able to form TFA"
           />
           <Stat
-            value={data.all_found_one_in ? `1 in ${data.all_found_one_in.toLocaleString("en-GB")}` : "n/a"}
-            label="the chance a shortlist this size would hold the whole cohort by luck"
+            value={String(data.flagged - data.kemi_found)}
+            label="of them that no regulator is currently reviewing, which is the part worth arguing about"
           />
           <Stat value="0" label="models fitted, parameters estimated, or labels used" />
+        </div>
+
+        {/* Stated before a chemist states it. The hypergeometric figure this
+            block used to lead with (1 in 1,138,341) is arithmetically correct
+            and rhetorically dishonest: KEMI selected those six substances for
+            forming TFA, and TFA comes from CF3, so a CF3 rule was never going to
+            miss them. It measures implementation, not discovery. */}
+        <div className="mt-8 rounded-lg border border-hairline bg-page p-5">
+          <h3 className="font-medium text-text-primary">
+            What the cohort check does and does not show
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+            Kemikalieinspektionen chose its {data.kemi_total} because they form TFA, and TFA
+            comes from trifluoromethyl groups. A rule that reads those groups was never going
+            to miss them. Finding all {data.kemi_total} shows the rule is implemented
+            correctly and applied to the right population. It is not evidence of a discovery,
+            and any figure quoting the odds against it would be dressing a tautology as a
+            result.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+            The check that carries weight is the other one. EFSA&apos;s own degradation records
+            name TFA parents independently of KEMI and of this screen.{" "}
+            {data.efsa_found} of the {data.efsa_total} in the approved population{" "}
+            {data.efsa_found === 1 ? "is" : "are"} flagged here. So is the reverse test:{" "}
+            {data.fluorine_without_cf3} substances carry three or more fluorines without a
+            CF3 group matching, and they are tracked as possible holes in the rule rather
+            than quietly dropped.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+            What the screen is actually for is the{" "}
+            <strong className="text-text-primary">
+              {data.flagged - data.kemi_found} substances below that nobody has opened a file
+              on
+            </strong>
+            . Those are a prediction, made from data that has been public for decades, and
+            they are unconfirmed.
+          </p>
         </div>
 
         <div className="mt-10">

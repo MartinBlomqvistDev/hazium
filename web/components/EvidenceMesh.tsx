@@ -359,25 +359,22 @@ export default function EvidenceMesh({ data }: { data: EvidenceMeshData }) {
   const link = picked ? refHref(picked.ref) : null;
 
   return (
-    <section className="mx-auto w-full max-w-5xl px-4 py-14" aria-labelledby="mesh-heading">
-      <h2 id="mesh-heading" className="text-2xl font-semibold tracking-tight">
-        What was knowable about {item.name}, year by year
+    <section className="mx-auto w-full max-w-5xl px-4" aria-labelledby="mesh-heading">
+      <h2
+        id="mesh-heading"
+        className="text-sm font-semibold uppercase tracking-wider text-accent"
+      >
+        One substance&rsquo;s neighbourhood, filling in by publication date
       </h2>
-      <p className="mt-2 max-w-2xl text-sm text-text-secondary">
-        Every fact carries the date it became public, so this is the evidence available at
-        each cutoff rather than what is known today. Marks appear once they are connected to{" "}
-        {item.name} within two steps, most often by sharing a hazard classification. Press
-        play and the graph fills in as each fact was published.
+      <p className="mt-4 max-w-2xl leading-relaxed text-text-secondary">
+        {item.name} and everything within two steps of it: peer reviews, hazard
+        classifications, regulatory acts, and the substances it shares them with. Press
+        play. Each mark appears in the year its source document entered the public record,
+        and the counter reads the model&apos;s position for {item.name} at that cutoff.
+        {item.action_date
+          ? ` It leaves the ranking altogether when the EU withdraws it in ${item.action_date.slice(0, 4)}.`
+          : ""}
       </p>
-      {item.ranks.every((r) => r === null) && (
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary">
-          Watch the counter. Six hazard classifications, an EFSA peer review and hundreds of
-          connected substances accumulate over sixteen years, and the ranking stays{" "}
-          <span className="text-text-primary">unranked</span> throughout. Nothing here records
-          that {item.name} degrades into a persistent PFAS compound and reaches groundwater,
-          because no regulatory source says so. This is the gap the project was built around.
-        </p>
-      )}
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
         <button
@@ -401,7 +398,10 @@ export default function EvidenceMesh({ data }: { data: EvidenceMeshData }) {
         />
         <span className="tabular-nums font-mono text-sm font-semibold">{year}</span>
         <span className="tabular-nums font-mono text-sm text-text-secondary">
-          {rank == null ? (actioned ? "censored" : "unranked") : `rank #${rank}`}
+          {/* Not "censored": in survival terms a censored subject leaves
+              observation without the event, and this one left because the event
+              happened. It is out of the ranking because it is off the market. */}
+          {rank == null ? (actioned ? "withdrawn" : "unranked") : `rank #${rank}`}
         </span>
         {actioned && (
           <span
@@ -412,7 +412,8 @@ export default function EvidenceMesh({ data }: { data: EvidenceMeshData }) {
           </span>
         )}
         <span className="ml-auto tabular-nums font-mono text-xs text-text-muted">
-          {visibleNodes} facts · {visibleEdges} links
+          {visibleNodes} {visibleNodes === 1 ? "fact" : "facts"} &middot; {visibleEdges}{" "}
+          {visibleEdges === 1 ? "link" : "links"}
         </span>
       </div>
 
@@ -463,7 +464,7 @@ export default function EvidenceMesh({ data }: { data: EvidenceMeshData }) {
           pick(e.clientX, e.clientY);
         }}
         role="img"
-        aria-label={`Evidence mesh for ${item.name} at ${year}: ${visibleNodes} facts, ${visibleEdges} links`}
+        aria-label={`Evidence mesh for ${item.name} at ${year}: ${visibleNodes} ${visibleNodes === 1 ? "fact" : "facts"}, ${visibleEdges} ${visibleEdges === 1 ? "link" : "links"}`}
       />
 
       <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-text-secondary">

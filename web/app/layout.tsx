@@ -18,13 +18,14 @@ const geistMono = Geist_Mono({
 // land is how link previews and search results drift apart.
 const SITE_URL = "https://hazium.org";
 
-// "Early warning from public evidence" was the old framing and it outlived the
-// claim: the withdrawal model turned out to be measuring seniority as much as
-// foresight, and the site says so throughout. The title is what every shared
-// link renders as, so it was the last place the retired wording survived.
-const TITLE = "Hazium: public-data risk screening for EU pesticides";
+// The title is what every shared link renders as, so it is where retired framing
+// survives longest. Two have now been buried here: "early warning from public
+// evidence", and then "risk screening", which still sold the project as a
+// working instrument. It is a case study about evaluating one, which is a
+// smaller and more defensible thing to be.
+const TITLE = "Hazium: what you can score is not what you want to know";
 const DESCRIPTION =
-  "A temporally-aware knowledge graph over EU pesticide regulation, hazard classification and scientific literature. Ranks approved substances for withdrawal risk against a versioned benchmark, and screens the same population for PFAS formation by molecular structure.";
+  "Predicting which pesticides turn out to be dangerous is a labelling problem before it is a modelling problem. A temporal knowledge graph over five public EU and Swedish sources, a target a date subtraction could answer, and what the substitution costs, measured against a cohort a regulator defined.";
 
 export const metadata: Metadata = {
   // metadataBase makes every relative asset URL absolute, which is what link

@@ -1,11 +1,17 @@
+import Link from "next/link";
 import type { SurvivalData } from "@/lib/types";
 
 /**
- * Six feature groups, each described by what it reads rather than by how well
- * it scores. The measured contribution of each is in the table below them, and
- * it is generated rather than written, because an earlier version of this file
- * called EU regulatory history "the single strongest signal the model has found
- * so far" long after that had stopped being true.
+ * Six feature groups, each described by what it reads rather than by how well it
+ * scores. The measured contribution of each is generated rather than written,
+ * because an earlier version of this file called EU regulatory history "the
+ * single strongest signal the model has found so far" long after that had
+ * stopped being true.
+ *
+ * The narrative this section used to carry, the baseline that beat an earlier
+ * model and the reformulation that followed, now opens the landing page. A
+ * reference page that retells the story competes with it; this one holds the
+ * numbers behind it instead.
  */
 const SIGNALS: { key: string; title: string; body: string }[] = [
   {
@@ -42,8 +48,8 @@ const SIGNALS: { key: string; title: string; body: string }[] = [
 
 export default function HowItWorks({ survival }: { survival: SurvivalData }) {
   const h1 = survival.horizon_1;
-  const age = h1.arms["age only"].average_precision;
   const both = h1.arms["age + evidence"].average_precision;
+  const age = h1.arms["age only"].average_precision;
   const split = h1.quoted_split;
   const v = survival.verification;
 
@@ -51,12 +57,12 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
     <section id="how" className="border-b border-hairline bg-surface/40">
       <div className="mx-auto max-w-3xl px-6 py-16">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-accent">
-          How it decides
+          What the model reads
         </h2>
         <p className="mt-4 text-text-secondary">
           Every ranking traces back to real, dated, publicly-sourced facts. A
-          gradient-boosted model (XGBoost) is trained on six feature groups,
-          each grounded in a specific public source:
+          gradient-boosted model (XGBoost) is trained on six feature groups, each grounded
+          in a specific public source:
         </p>
         <div className="mt-8 space-y-5">
           {SIGNALS.map((s) => (
@@ -115,43 +121,16 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
           </p>
         </div>
 
-        <p className="mt-10 text-sm text-text-secondary">
-          The model is always compared against trivial baselines, single features ranked on
-          their own, on the identical task and split. If it doesn&apos;t beat them, the baseline
-          becomes the published result.
-        </p>
-        <div className="mt-6 rounded-lg border border-status-critical/40 bg-page p-5">
-          <h3 className="font-medium text-text-primary">
-            The baseline that beat the model, and the question it exposed
-          </h3>
+        <div className="mt-10">
+          <h3 className="font-medium text-text-primary">The checks behind the headline</h3>
           <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-            The baselines here were hazard count, sales tonnage and assessment count. All three
-            are weak, and the model beat them comfortably. Approval age sat inside the model as a
-            feature, so it had never been run on its own.
+            The reported gain is {age.toFixed(3)} for approval age alone against{" "}
+            {both.toFixed(3)} with the evidence added.{" "}
+            <Link href="/" className="text-accent underline underline-offset-2">
+              Why the question had to be reformulated to get there
+            </Link>{" "}
+            is on the landing page. These are the checks that number had to survive.
           </p>
-          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            Ranking on nothing but how long a substance has held EU approval reaches{" "}
-            <strong className="text-text-primary">a higher mean average precision than the full
-            model</strong> across the sixteen cutoffs, 0.474 against 0.470, and reproduces
-            the lead times below to the month. A date subtraction, no model at all.
-          </p>
-          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            The cause is the question rather than the data. &ldquo;Was this ever withdrawn&rdquo;
-            is asked over a population that is 96% substances never approved in the EU, which
-            could never be withdrawn at all. Answering it is mostly an eligibility test, and
-            approval age performs that test.
-          </p>
-          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-            Asked separably, one approved substance in one year at risk, approval age becomes the
-            background rate and the evidence has something left to explain. It does:{" "}
-            <strong className="text-text-primary">
-              {age.toFixed(3)} for age alone against {both.toFixed(3)} with the evidence added
-            </strong>
-            .
-          </p>
-
-          {/* Four checks, one line each. As a single paragraph this carried eleven
-              figures and nobody finished it. */}
           <dl className="mt-4 space-y-2 text-sm">
             {[
               {
@@ -177,11 +156,14 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
               </div>
             ))}
           </dl>
+        </div>
 
-          <p className="mt-5 text-sm leading-relaxed text-text-secondary">
-            The limits were measured rather than estimated, by the same kind of check.
+        <div className="mt-10">
+          <h3 className="font-medium text-text-primary">And what limits it</h3>
+          <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+            Measured by the same kind of check rather than estimated.
           </p>
-          <dl className="mt-3 space-y-2 text-sm">
+          <dl className="mt-4 space-y-2 text-sm">
             {[
               {
                 k: "Interactions",
@@ -206,17 +188,6 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
               </div>
             ))}
           </dl>
-
-          <p className="mt-5 text-sm leading-relaxed text-text-secondary">
-            Both benchmark versions are published:{" "}
-            <a
-              href="https://github.com/MartinBlomqvistDev/hazium/tree/main/release/hewb-v2"
-              className="text-accent underline underline-offset-2"
-            >
-              HEWB v{survival.version}
-            </a>{" "}
-            alongside the frozen v1.4, because reading them together is the point.
-          </p>
         </div>
       </div>
     </section>

@@ -20,7 +20,7 @@ const survival = survivalData as SurvivalData;
 
 const TITLE = "Method";
 const DESCRIPTION =
-  "The six feature groups, what each is worth, the trivial baseline that beat the model, and what the benchmark's lead times actually measure.";
+  "The six feature groups and what each is measurably worth, the checks the headline had to survive, and the post-mortem on the benchmark this one replaced.";
 
 export const metadata = {
   title: TITLE,
@@ -43,9 +43,9 @@ export default function MethodPage() {
               How the ranking is built, and what it is measured against
             </h1>
             <p className="mt-4 text-text-secondary">
-              Two things decide whether a ranking like this means anything: what the model reads,
-              and what it is compared against. This page covers both, including the baseline that
-              beat an earlier version of the model outright.
+              A reference page: the evidence the model reads and what each piece is
+              measurably worth, the checks the reported gain had to survive, and the
+              post-mortem on the benchmark version this one replaced.
             </p>
           </div>
         </section>

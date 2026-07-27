@@ -35,18 +35,19 @@ export default function WatchlistPage() {
               What it says about substances on the market today
             </h1>
             <p className="mt-4 text-text-secondary">
-              Two lists, answering two different questions about the same population. One asks
-              which approved pesticides the EU will withdraw, and is produced by a model. The
-              other asks which of them break down into PFAS, and is produced by a rule over their
-              molecular structure. Fourteen substances appear on both.
-            </p>
-
-            <p className="mt-3 text-text-secondary">
-              Everything here is drawn from the same set: the{" "}
+              Two lists over one set: the{" "}
               <strong className="text-text-primary">
                 {survival.anchor_cohort.population} substances
               </strong>{" "}
-              that hold an EU approval today and have not been withdrawn.
+              that hold an EU approval today and have not been withdrawn. One ranks them for
+              withdrawal risk, the other screens them for PFAS formation, and fourteen
+              substances appear on both.
+            </p>
+
+            <p className="mt-3 text-text-secondary">
+              The screen covers {tfaScreen.population} of the{" "}
+              {survival.anchor_cohort.population}. The remaining {tfaScreen.unresolved} have no
+              molecular formula in PubChem to read, so they are neither flagged nor cleared.
             </p>
           </div>
         </section>
