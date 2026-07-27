@@ -14,32 +14,42 @@ export default function ResultSection({
     <section id="result" className="border-b border-hairline">
       <div className="mx-auto max-w-3xl px-6 py-16">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-accent">
-          The result: HEWB
+          The first benchmark, and what its lead times measure
         </h2>
         <p className="mt-4 text-text-secondary">
           The <strong className="text-text-primary">Hazium Early Warning Benchmark</strong>{" "}
           fixes ten historical EU pesticide bans, real regulatory actions, not
           hypothetical cases. It then works through every annual cutoff from 2009,
-          using only evidence dated before each one. The question at each cutoff is
-          where Hazium would have ranked the substance among everything the graph
-          knew about that year, roughly 5,900 substances.
+          using only evidence dated before each one, and records the earliest year
+          each substance entered the riskiest twenty of roughly 5,900.
         </p>
-        <p className="mt-4 text-text-secondary">
-          Months before the ban is the easy number. The stricter comparison is
-          against the regulator&apos;s first public concern, which arrives long
-          before the final paperwork. The literature signal became a model input,
-          so it is left out of this comparison; what remains are dated regulatory
-          milestones the model never sees.
-        </p>
-        <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-          These lead times are real, and they are also{" "}
-          <strong className="text-text-primary">reproducible without a model</strong>: ranking on
-          approval age alone puts chlorpyrifos in the danger band at the same 132 months. So the
-          chart records <em>when</em> a substance entered the riskiest band, and{" "}
-          <a href="#how" className="text-accent underline underline-offset-2">
-            the section above
-          </a>{" "}
-          measures what the evidence adds beyond the calendar.
+        <div className="mt-6 rounded-lg border border-status-critical/40 bg-page p-5">
+          <h3 className="font-medium text-text-primary">Read the lead times as a window, not a warning</h3>
+          <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+            Chlorpyrifos is marked 132 months ahead of its 2020 ban. That is January 2009, the
+            first cutoff tested, so the number says it was already ranked high when the window
+            opened rather than that the model saw it coming.{" "}
+            <strong className="text-text-primary">
+              Seven of the ten were in the top twenty at or within two years of that first cutoff
+            </strong>
+            , and ranking on approval age alone reproduces the same dates.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+            The pattern across the whole chart is one thing: early on substances that were
+            already old and heavily assessed in 2009, four years <em>behind</em> the regulator on
+            imidacloprid, level on dimethoate, and absent on epoxiconazole. A benchmark whose
+            headline metric is bounded by its own start date cannot separate foresight from
+            seniority, which is why{" "}
+            <a href="#how" className="text-accent underline underline-offset-2">
+              the survival reformulation above
+            </a>{" "}
+            exists and is the result this project reports.
+          </p>
+        </div>
+        <p className="mt-6 text-sm leading-relaxed text-text-secondary">
+          What the chart still shows honestly is the comparison against the regulator&apos;s own
+          first public concern, a dated milestone the model never reads. The literature signal is
+          a model input, so it is excluded from that comparison.
         </p>
 
         <div className="mt-10 rounded-xl border border-hairline bg-surface p-5 sm:p-7">
@@ -47,17 +57,14 @@ export default function ResultSection({
         </div>
 
         <p className="mt-6 text-sm leading-relaxed text-text-secondary">
-          On the developmental-neurotoxicity and reprotoxic cases, chlorpyrifos,
-          its methyl sister, thiacloprid, and mancozeb, Hazium ranked the
-          substance among the riskiest roughly a decade before EFSA&apos;s first
-          public concern. On the neonicotinoids it was early relative to the
-          2013 EU restriction, though national bans were already emerging. On
-          dimethoate it moved level with the regulator, and on imidacloprid it
-          flagged late; both are on the chart. Epoxiconazole it never flagged at
-          all. Where a substance had a real public controversy, the chart marks
-          that too: Hazium flagged chlorpyrifos years before its 2015 US ban
-          fight, and the neonicotinoids before the 2012 bee campaign. Most
-          landmarks had no public profile at all when Hazium flagged them.
+          Case by case: on chlorpyrifos, its methyl sister, thiacloprid and mancozeb the
+          substance sat among the riskiest roughly a decade before EFSA&apos;s first public
+          concern, though all four were long-standing approvals by 2009. On the neonicotinoids it
+          was early relative to the 2013 EU restriction, with national bans already emerging. On
+          dimethoate it moved level with the regulator, on imidacloprid it flagged four years
+          late, and epoxiconazole it never flagged. Where a substance had a real public
+          controversy the chart marks that too, and most landmarks had no public profile at all
+          at the point they entered the band.
         </p>
 
         <div className="mt-8 rounded-lg border border-hairline bg-page p-5">

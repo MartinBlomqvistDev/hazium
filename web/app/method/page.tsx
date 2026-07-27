@@ -2,15 +2,12 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import HowItWorks from "@/components/HowItWorks";
 import ResultSection from "@/components/ResultSection";
-import EvidenceMesh from "@/components/EvidenceMesh";
 import hewbData from "@/data/hewb.json";
 import capabilityData from "@/data/capability.json";
 import substanceDetail from "@/data/substance_detail.json";
-import evidenceMeshData from "@/data/evidence_mesh.json";
 import survivalData from "@/data/survival.json";
 import type {
   CapabilityData,
-  EvidenceMeshData,
   HewbData,
   SubstanceDetailMap,
   SurvivalData,
@@ -19,7 +16,6 @@ import type {
 const data = hewbData as HewbData;
 const capability = capabilityData as CapabilityData;
 const detail = substanceDetail as SubstanceDetailMap;
-const evidenceMesh = evidenceMeshData as EvidenceMeshData;
 const survival = survivalData as SurvivalData;
 
 export const metadata = {
@@ -47,7 +43,6 @@ export default function MethodPage() {
         </section>
         <HowItWorks survival={survival} />
         <ResultSection data={data} capability={capability} detail={detail} />
-        <EvidenceMesh data={evidenceMesh} />
       </main>
       <Footer />
     </div>

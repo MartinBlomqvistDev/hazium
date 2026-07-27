@@ -361,13 +361,23 @@ export default function EvidenceMesh({ data }: { data: EvidenceMeshData }) {
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-14" aria-labelledby="mesh-heading">
       <h2 id="mesh-heading" className="text-2xl font-semibold tracking-tight">
-        What was knowable, year by year
+        What was knowable about {item.name}, year by year
       </h2>
       <p className="mt-2 max-w-2xl text-sm text-text-secondary">
         Every fact carries the date it became public, so this is the evidence available at
-        each cutoff, not what is known today. Substances appear once they are connected to{" "}
-        {item.name} within two steps, most often by sharing a hazard classification.
+        each cutoff rather than what is known today. Marks appear once they are connected to{" "}
+        {item.name} within two steps, most often by sharing a hazard classification. Press
+        play and the graph fills in as each fact was published.
       </p>
+      {item.ranks.every((r) => r === null) && (
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary">
+          Watch the counter. Six hazard classifications, an EFSA peer review and hundreds of
+          connected substances accumulate over sixteen years, and the ranking stays{" "}
+          <span className="text-text-primary">unranked</span> throughout. Nothing here records
+          that {item.name} degrades into a persistent PFAS compound and reaches groundwater,
+          because no regulatory source says so. This is the gap the project was built around.
+        </p>
+      )}
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
         <button
