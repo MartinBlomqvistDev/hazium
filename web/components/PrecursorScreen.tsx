@@ -42,7 +42,7 @@ export default function PrecursorScreen({ data }: { data: TfaScreenData }) {
           />
           <Stat
             value={`${data.kemi_found} of ${data.kemi_total}`}
-            label={`substances Sweden is reevaluating, where chance would place ${data.expected_by_chance.toFixed(1)}`}
+            label={`of the same six found here, by structure, where a random shortlist this size would hold ${data.expected_by_chance.toFixed(1)}`}
           />
           <Stat value="0" label="models fitted, parameters estimated, or labels used" />
         </div>

@@ -86,15 +86,15 @@ export default function AnchorCase({
         <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
           <Stat
             value={`${cohort.hits_in_top_k} of ${cohort.size}`}
-            label={`in the published top ${cohort.top_k}`}
+            label={`found by the withdrawal model, whose published list is the top ${cohort.top_k} of these ${cohort.population}`}
           />
           <Stat
             value={cohort.expected_in_top_k.toFixed(1)}
-            label="how many chance alone would put there"
+            label={`how many a random draw would have put in a list that size`}
           />
           <Stat
             value={`${Math.round(cohort.median_percentile * 100)}%`}
-            label="cohort median position, where chance is 50%"
+            label="where the cohort sits in that ranking on average, against 50% for chance"
           />
         </div>
 
