@@ -171,16 +171,19 @@ export default function Home() {
 
           <Section title="What&rsquo;s here">
             <P>
-              A reproducible pipeline, {facts.tests} tests, and both versions of the
-              benchmark in one citable dataset: the one that was answerable by a date
-              subtraction, and the one that replaced it.
+              A reproducible pipeline with {facts.tests} tests. Both benchmark versions are
+              published together: the one a date subtraction could answer, and the one that
+              replaced it.
             </P>
-            <ul className="mt-5 space-y-2 text-text-secondary">
-              {/* First, because it is the only route to the modelling detail.
-                  Without it /method was reachable only through the nav on
-                  /watchlist, two hops from the front door, so the page carrying
-                  the feature contributions and the calibration finding was
-                  effectively orphaned. */}
+
+            {/* Split, because one undifferentiated list was making the reader sort
+                pages from downloads. The middot also had to stop doing three jobs
+                in one line: it introduced a licence, a source list and a
+                description, all with the same character. */}
+            <h3 className="mt-8 text-xs font-semibold uppercase tracking-wider text-text-muted">
+              On this site
+            </h3>
+            <ul className="mt-3 space-y-2 text-text-secondary">
               <li>
                 <Link href="/method" className="text-accent underline underline-offset-2">
                   What each evidence source is worth
@@ -191,15 +194,27 @@ export default function Home() {
                 </span>
               </li>
               <li>
+                <Link href="/watchlist" className="text-accent underline underline-offset-2">
+                  What it ranks today
+                </Link>{" "}
+                <span className="text-text-muted">
+                  &middot; every entry carries the date the Commission must decide
+                </span>
+              </li>
+            </ul>
+
+            <h3 className="mt-6 text-xs font-semibold uppercase tracking-wider text-text-muted">
+              Elsewhere
+            </h3>
+            <ul className="mt-3 space-y-2 text-text-secondary">
+              <li>
                 <a
                   href="https://github.com/MartinBlomqvistDev/hazium"
                   className="text-accent underline underline-offset-2"
                 >
                   Code on GitHub
                 </a>{" "}
-                <span className="text-text-muted">
-                  &middot; AGPL-3.0 &middot; {facts.model_sources.join(", ")}
-                </span>
+                <span className="text-text-muted">&middot; AGPL-3.0</span>
               </li>
               <li>
                 <a
@@ -210,26 +225,8 @@ export default function Home() {
                 </a>{" "}
                 <span className="text-text-muted">&middot; CC-BY-4.0</span>
               </li>
-              <li>
-                <Link href="/watchlist" className="text-accent underline underline-offset-2">
-                  What it ranks today
-                </Link>{" "}
-                <span className="text-text-muted">
-                  &middot; every entry carries the date the Commission must decide
-                </span>
-              </li>
             </ul>
           </Section>
-
-          <p className="mt-16 text-sm text-text-muted">
-            Martin Blomqvist &middot;{" "}
-            <a
-              href="https://www.linkedin.com/in/martin-blomqvist"
-              className="underline underline-offset-2 hover:text-text-secondary"
-            >
-              LinkedIn
-            </a>
-          </p>
         </article>
       </main>
       <Footer />
