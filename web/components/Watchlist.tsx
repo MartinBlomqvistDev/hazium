@@ -44,23 +44,21 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
           What it says next
         </h2>
         <p className="mt-4 text-text-secondary">
-          The benchmark grades this model against withdrawals that already happened. This
-          list is the opposite, and carries a different status: these are substances it ranks
-          as concerning <em>now</em>, so{" "}
-          <strong className="text-text-primary">none of them has been graded yet</strong>. The
-          decisions they anticipate have not been made. What stops that being unfalsifiable is
-          that each entry carries the expiry date of its own EU approval, which is the day the
-          Commission has to rule on it. Every line here can be marked right or wrong on a date
-          already in the calendar.
+          The benchmark scores the model against withdrawals that already happened. This list
+          runs the other way: substances it ranks as concerning <em>now</em>, so{" "}
+          <strong className="text-text-primary">none of them has been graded yet</strong>.
+          Every entry carries the expiry date of its own EU approval, which is the day the
+          Commission has to rule on it. That is what makes the list falsifiable: each line can
+          be marked right or wrong on a date already in the calendar.
         </p>
         <p className="mt-4 text-sm text-text-secondary">
           The ranking is a modelled three-year hazard among substances currently approved and not
           yet withdrawn, not the &ldquo;will this ever be withdrawn&rdquo; score the first benchmark
           used. That
           older target was answered largely by approval age, so it mostly returned old approvals.
-          Under this one, approval age is the baseline rate and the evidence does the
-          discriminating: the two substances that most obviously did not belong near the top, a
-          fatty-acid soap and acetic acid, fall from 5th and 62nd to 27th and 192nd.
+          Under this one, approval age is the baseline rate and the evidence does the work: the
+          two substances that most obviously did not belong near the top, a fatty-acid soap and
+          acetic acid, fall from 5th and 62nd to 27th and 192nd.
         </p>
 
         <div className="mt-10">
@@ -144,7 +142,7 @@ export default function Watchlist({ data }: { data: WatchlistData }) {
                 <>
                   The grey line sits at {data.base_rate_percent}%, which is what the figure
                   becomes when every approved Swedish product is counted at once instead of
-                  crop by crop. It is the level to read each bar against. They run from {low.percent}% for {low.crop} to{" "}
+                  crop by crop. Read each bar against that. They run from {low.percent}% for {low.crop} to{" "}
                   {high.percent}% for {high.crop}, a narrow band around that line, so these
                   substances are spread across Swedish agriculture rather than concentrated in
                   any one crop.

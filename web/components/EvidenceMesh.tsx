@@ -364,15 +364,16 @@ export default function EvidenceMesh({ data }: { data: EvidenceMeshData }) {
         id="mesh-heading"
         className="text-sm font-semibold uppercase tracking-wider text-accent"
       >
-        One substance&rsquo;s neighbourhood, filling in by publication date
+        What was knowable about {item.name}, year by year
       </h2>
       <p className="mt-4 max-w-2xl leading-relaxed text-text-secondary">
-        {item.name} and everything within two steps of it: peer reviews, hazard
-        classifications, regulatory acts, and the substances it shares them with. Press
-        play. Each mark appears in the year its source document entered the public record,
-        and the counter reads the model&apos;s position for {item.name} at that cutoff.
+        {item.name}{" "}
+        and everything within two steps of it: peer reviews, hazard classifications,
+        regulatory acts, and the substances it shares them with. Press play. Each mark
+        appears in the year its source document became public, and the counter is where the
+        model ranked {item.name} at that cutoff.
         {item.action_date
-          ? ` It leaves the ranking altogether when the EU withdraws it in ${item.action_date.slice(0, 4)}.`
+          ? ` It drops out when the EU withdraws it in ${item.action_date.slice(0, 4)}.`
           : ""}
       </p>
 

@@ -52,48 +52,47 @@ export default function Home() {
         <article className="mx-auto max-w-2xl px-6">
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Hazium</h1>
           <p className="mt-3 text-lg text-text-secondary">
-            Predicting which pesticides turn out to be dangerous is a labelling problem
-            before it is a modelling problem. What you can score is not what you want to
-            know, and the distance between them is measurable.
+            I wanted to know whether public data could flag a dangerous pesticide before
+            anyone knew to look. What I built predicts something else. This is how that
+            happened, and what it cost.
           </p>
 
-          <Section title="The labelling problem">
+          <Section title="Picking a target I could score">
             <P>
-              Harm has no ground truth. There is no register of substances that turned out
-              to be dangerous, because that is the thing under investigation. Regulatory
-              withdrawal has ground truth: dated, public, unambiguous.
+              There is no list of substances that turned out to be dangerous. That is the
+              thing you are trying to find out. There is a list of substances the EU
+              withdrew: dated, public, unambiguous.
             </P>
             <P>
-              So withdrawal is what gets predicted. Every project in this shape makes that
-              substitution, and it is usually made once, early, and never revisited. This
-              one measures what it costs.
+              So I predicted withdrawals. It is the obvious move, I made it early, and then
+              I stopped looking at it. Everything below follows from that.
             </P>
           </Section>
 
           <Section title="The graph">
             <P>
-              Five public EU and Swedish sources with no shared identifier and no shared
-              schema, resolved into one graph:{" "}
+              Five public EU and Swedish sources, no shared identifier, no shared schema. I
+              resolved them into one graph:{" "}
               <strong className="text-text-primary">
                 {(facts.graph_nodes + facts.graph_edges).toLocaleString("en-GB")} facts
               </strong>
-              , each carrying the date it entered the public record.
+              , each carrying the date it became public.
             </P>
             <P>
-              That date is the expensive constraint. A model scored at a 2015 cutoff sees
-              what was public in 2015 and nothing else, which is what stops a retrospective
-              study from quietly scoring itself on the future.
+              The dating is the part that took the time. A model scored at a 2015 cutoff
+              sees what was public in 2015 and nothing else, so it cannot quietly score
+              itself on the future.
             </P>
             {/* The page referred to "the model" three times before it ever said
                 what one was, including in the mesh caption directly below. Naming
                 it here fixes the referent and is also what a keyword screen greps
                 for: XGBoost appeared nowhere on the site. */}
             <P>
-              Over that graph, gradient-boosted trees (XGBoost) read six dated feature
-              groups: EFSA assessment history, hazard classifications under CLP, ECHA
-              classification intentions, sales trajectory, independent literature signal,
-              and graph links to substances already flagged. Scores are out-of-fold, folds
-              grouped by substance.
+              Over that graph I trained gradient-boosted trees (XGBoost) on six dated
+              feature groups: EFSA assessment history, hazard classifications under CLP,
+              ECHA classification intentions, sales trajectory, independent literature
+              signal, and graph links to substances already flagged. Scores are out of
+              fold, folds grouped by substance.
             </P>
           </Section>
         </article>
@@ -107,27 +106,26 @@ export default function Home() {
         </div>
 
         <article className="mx-auto max-w-2xl px-6">
-          <Section title="What the baseline exposed">
+          <Section title="The baseline I had not run">
             <P>
-              Approval age sat inside the model as a feature, so it had never been scored
-              alone. Ranked on its own it reached{" "}
+              Approval age sat inside the model as a feature, so I had never scored it
+              alone. On its own it reached{" "}
               <strong className="text-text-primary">0.474 against the model&apos;s 0.470</strong>{" "}
-              across sixteen annual cutoffs, and reproduced the published lead times to the
-              month.
+              across sixteen annual cutoffs, and it reproduced the published lead times to
+              the month.
             </P>
             <P>
               The model had learned an eligibility test. 96% of the population was never
-              approved in the EU and so could never be withdrawn, and one date subtraction
-              separates those. The target was answerable without the evidence, which means
-              the evidence had never been measured.
+              approved in the EU, so it could never be withdrawn, and one date subtraction
+              separates those. I had not measured the evidence at all.
             </P>
           </Section>
 
           <Section title="The reformulation">
             <P>
-              Recast as discrete-time survival, one approved substance in one year at risk,
-              approval age becomes the baseline hazard and the evidence has to earn what is
-              left. Average precision moves from {age.toFixed(3)} to{" "}
+              I recast it as discrete-time survival: one approved substance, one year at
+              risk. Approval age becomes the baseline hazard and the evidence has to earn
+              the rest. Average precision moves from {age.toFixed(3)} to{" "}
               <strong className="text-text-primary">{both.toFixed(3)}</strong>.
             </P>
             {/* The permutation belongs to the pooled figure above, not to the
@@ -148,7 +146,7 @@ export default function Home() {
             </P>
           </Section>
 
-          <Section title="What the substitution costs">
+          <Section title="What it cost">
             <P>
               Sweden opened {cohort.size} substances for reevaluation in November 2025
               because they degrade into TFA, a persistent PFAS compound that reaches
@@ -159,17 +157,15 @@ export default function Home() {
               , where chance places {cohort.expected_in_top_k.toFixed(1)}.
             </P>
             <P>
-              The reason is representational, not statistical. A degradation pathway leaves
-              no trace in an approval file, a hazard classification or a sales table, so no
-              quantity of regulatory evidence encodes it. A molecular formula does. One
+              That is not a tuning problem. A degradation pathway leaves no trace in an
+              approval file, a hazard classification or a sales table, so there is nothing
+              in the regulatory record to learn it from. A molecular formula has it. One
               structural test over PubChem returns {screen.flagged} of {screen.population}{" "}
               approved substances and contains all {screen.kemi_total}.
             </P>
             <P>
-              Withdrawal predicts a committee&apos;s attention. Harm is a property of the
-              molecule. The two separate exactly where the hazard is chemical rather than
-              procedural, and there the choice of representation decides the outcome and
-              the choice of model does not.
+              Withdrawal is a committee decision. Harm is a property of the molecule. I
+              picked the target I could score, and got a model that predicts paperwork.
             </P>
           </Section>
 
