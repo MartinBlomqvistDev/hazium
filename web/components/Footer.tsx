@@ -17,9 +17,17 @@ export default function Footer() {
     <footer className="px-6 py-12">
       <div className="mx-auto flex max-w-5xl flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
         <div className="max-w-2xl text-sm text-text-secondary">
-          Built by <span className="text-text-primary">Martin Blomqvist</span>. Python,
-          XGBoost, SHAP, and a knowledge graph over {named}, every fact carrying the date
-          it became public.
+          <p>
+            Built by <span className="text-text-primary">Martin Blomqvist</span>. Python,
+            XGBoost, SHAP, and a knowledge graph over {named}, every fact carrying the date
+            it became public.
+          </p>
+          {/* The name, LinkedIn and email were all already here, and none of
+              them said the work was for hire. */}
+          <p className="mt-2 text-text-primary">
+            Currently looking for data science work: Skåne, Copenhagen, Stockholm, Uppsala
+            county or Gävle.
+          </p>
         </div>
         <div className="flex flex-wrap items-center gap-4 text-sm text-text-secondary">
           <a
