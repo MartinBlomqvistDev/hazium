@@ -19,11 +19,12 @@ const geistMono = Geist_Mono({
 const SITE_URL = "https://hazium.org";
 
 // The title is what every shared link renders as, so it is where retired framing
-// survives longest. Two have now been buried here: "early warning from public
-// evidence", and then "risk screening", which still sold the project as a
-// working instrument. It is a case study about evaluating one, which is a
-// smaller and more defensible thing to be.
-const TITLE = "Hazium: predicting EU pesticide withdrawals from dated public evidence";
+// survives longest. Three have now been buried here: "early warning from public
+// evidence", then "risk screening", then "predicting EU pesticide withdrawals",
+// each of which still sold the project as a working instrument. It is a case
+// study about evaluating one, which is a smaller and more defensible thing to
+// be, and the baseline belongs in the title because it is the finding.
+const TITLE = "Hazium: a model of EU pesticide withdrawals, and the baseline that beat it";
 const DESCRIPTION =
   "A temporal knowledge graph over five public EU and Swedish sources, 41,917 facts each dated to when it became public. A discrete-time survival model over withdrawals, the trivial baseline that beat an earlier version of it, and a structural PFAS screen the model cannot match.";
 
