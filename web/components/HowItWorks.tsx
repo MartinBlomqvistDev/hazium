@@ -135,7 +135,7 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
             {[
               {
                 k: "Seed spread",
-                v: `the gain is +${(both - age).toFixed(3)} against ±${h1.arms["age + evidence"].seed_sd.toFixed(3)} across seeds`,
+                v: `the gain is +${(both - age).toFixed(3)} against ±${h1.arms["age + evidence"].seed_sd.toFixed(3)}, one standard deviation across seeds`,
               },
               {
                 k: "Feature lag",

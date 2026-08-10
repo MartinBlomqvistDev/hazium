@@ -162,7 +162,8 @@ is left to explain the rest. On that panel, with folds grouped by substance:
 | evidence alone | 0.180 | 6.3x | 0.753 |
 | **age + evidence** | **0.242** | **8.4x** | **0.880** |
 
-The gain is +0.140 against a seed spread of ±0.029. Three checks back it: the
+The gain is +0.140 against a seed spread of ±0.029, two standard deviations
+across seeds. Three checks back it: the
 signal survives lagging every feature by three years, decaying from +0.124 to
 +0.026 rather than collapsing, so it is not an artefact of activity immediately
 before a decision; a block permutation over whole substance histories puts it at
