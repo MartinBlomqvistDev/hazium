@@ -138,11 +138,24 @@ export default function Home() {
               appears on both sides of a split. Shuffling whole substance histories and
               refitting puts that gain at p&nbsp;=&nbsp;{p.toFixed(3)}.
             </P>
+            {/* This paragraph used to quote 2019 alone, which is the best of the
+                nine cutoffs on both average precision and absolute hits. Quoting
+                a peak is the thing the rest of this page exists to argue
+                against, so the ratio leads and the peak is named as a peak. */}
             <P>
-              A separate forward test refits on evidence up to {split?.train_through} and
-              scores against what actually happened after. Its top 50 holds{" "}
+              A separate forward test refits on evidence up to a given year and scores
+              against what actually happened after. Over {h1.total_splits} annual cutoffs
+              the evidence beats the baseline in{" "}
+              <strong className="text-text-primary">{h1.positive_splits}</strong>. The best
+              of them is {split?.train_through}, where the top 50 holds{" "}
               {split?.both_hits_at_50} real withdrawals to the baseline&apos;s{" "}
               {split?.age_hits_at_50}.
+            </P>
+            <P>
+              The two it loses are both fitted before 2016. Subsampling puts that down to
+              regulatory eras not transferring rather than to a shortage of events: the
+              gain holds down to four training events, and 75 of the 102 events sit in the
+              2017 to 2021 renewal wave.
             </P>
           </Section>
 

@@ -50,7 +50,7 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
   const h1 = survival.horizon_1;
   const both = h1.arms["age + evidence"].average_precision;
   const age = h1.arms["age only"].average_precision;
-  const split = h1.quoted_split;
+  const forward = h1.forward;
   const v = survival.verification;
 
   return (
@@ -147,7 +147,7 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
               },
               {
                 k: "Forward split",
-                v: `fitted on ${split?.train_through}, its top 50 holds ${split?.both_hits_at_50} real withdrawals against the baseline's ${split?.age_hits_at_50}`,
+                v: `refitting on evidence up to each year and scoring only what came after, the evidence beats the baseline in ${h1.positive_splits} of ${h1.total_splits} annual cutoffs`,
               },
             ].map((row) => (
               <div key={row.k} className="flex flex-col gap-0.5 sm:flex-row sm:gap-3">
@@ -156,6 +156,50 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
               </div>
             ))}
           </dl>
+
+          {/* Every forward cutoff, not the one that reads best. The site quoted
+              2019 alone in two places, and 2019 is the strongest of the nine on
+              both average precision and absolute hits. A ratio is easy to assert
+              and hard to check, so the rows are here to be checked. */}
+          {forward && forward.length > 0 && (
+            <div className="mt-6">
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-text-muted">
+                Every forward cutoff
+              </h4>
+              <p className="mt-2 text-xs text-text-muted">
+                Real withdrawals in the top 50, scoring only years after the fit.
+              </p>
+              <table className="mt-3 w-full max-w-md text-sm tabular-nums">
+                <thead>
+                  <tr className="border-b border-hairline text-left text-xs text-text-muted">
+                    <th className="py-1.5 font-medium">Fitted through</th>
+                    <th className="py-1.5 text-right font-medium">Approval age</th>
+                    <th className="py-1.5 text-right font-medium">With evidence</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {forward.map((row) => {
+                    const won = row.both_hits_at_50 > row.age_hits_at_50;
+                    return (
+                      <tr key={row.train_through} className="border-b border-hairline/40">
+                        <td className="py-1.5 text-text-secondary">{row.train_through}</td>
+                        <td className="py-1.5 text-right font-mono text-xs text-text-secondary">
+                          {row.age_hits_at_50}
+                        </td>
+                        <td
+                          className={`py-1.5 text-right font-mono text-xs ${
+                            won ? "text-accent" : "text-status-critical"
+                          }`}
+                        >
+                          {row.both_hits_at_50}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
 
         <div className="mt-10">
