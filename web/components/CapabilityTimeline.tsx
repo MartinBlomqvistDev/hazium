@@ -180,8 +180,12 @@ function TimelineRow({
           }
         }}
       >
-        <div className="w-[38%] shrink-0 pr-3">
-          <div className="flex items-baseline gap-2">
+        {/* 38% is 105px on a 375px phone, and the name plus its lead-time badge
+            wants around 144. Nothing clipped it, so the name ran out over the
+            track it is supposed to label. More width below sm, and the badge
+            wraps rather than spilling. */}
+        <div className="w-[46%] shrink-0 pr-3 sm:w-[38%]">
+          <div className="flex flex-wrap items-baseline gap-x-2">
             <span className="text-sm font-medium text-text-primary">{lm.name}</span>
             {lead && (
               <span

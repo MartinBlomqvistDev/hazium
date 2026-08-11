@@ -63,6 +63,32 @@ export default function Home() {
             happened, and what it cost.
           </p>
 
+          {/* Everything below is a five-minute read, and a good share of the
+              people who open this page give it well under a minute. Before this
+              strip the first number arrived in the third section and the stack
+              in the fourth, so a reader who left early left with nothing. None
+              of these facts are new; they were just further down than the
+              attention lasts. */}
+          <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-hairline py-5 sm:grid-cols-4">
+            {[
+              {
+                k: "dated facts",
+                v: (facts.graph_nodes + facts.graph_edges).toLocaleString("en-GB"),
+              },
+              { k: "public sources", v: facts.model_sources.length.toString() },
+              { k: "tests", v: facts.tests.toString() },
+              { k: "licence", v: "AGPL-3.0" },
+            ].map((s) => (
+              <div key={s.k} className="flex flex-col-reverse">
+                <dt className="mt-1 text-xs uppercase tracking-wider text-text-muted">{s.k}</dt>
+                <dd className="font-mono text-lg tabular-nums text-text-primary">{s.v}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-4 text-sm text-text-muted">
+            Python 3.12, XGBoost, scikit-learn, SHAP, Pydantic. Site in Next.js.
+          </p>
+
           <Section title="Picking a target I could score">
             <P>
               There is no list of substances that turned out to be dangerous. That is the

@@ -42,12 +42,19 @@ export default function AnchorCase({
             <span>most concerning</span>
             <span>rank of {cohort.population} approved substances</span>
           </div>
-          <div className="mt-4 space-y-2">
+          {/* Mefentrifluconazole is 19 characters and the mobile label box was
+              112px wide, so the one row a reader is most likely to look up read
+              as a clipped word. Below sm the name gets its own line. */}
+          <div className="mt-4 space-y-3 sm:space-y-2">
             {ranked.map(([sid, rank]) => (
-              <div key={sid} className="flex items-center gap-2 text-sm sm:gap-3">
-                <span className="w-28 shrink-0 truncate text-text-secondary sm:w-40">
+              <div
+                key={sid}
+                className="flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:gap-3"
+              >
+                <span className="text-text-secondary sm:w-40 sm:shrink-0 sm:truncate">
                   {cohort.names[sid] ?? sid}
                 </span>
+                <span className="flex items-center gap-2 sm:contents">
                 <span className="relative h-3 flex-1 rounded-sm bg-hairline/40">
                   {/* The published band, drawn so the gap to it is the message. */}
                   <span
@@ -70,6 +77,7 @@ export default function AnchorCase({
                 </span>
                 <span className="w-10 shrink-0 text-right font-mono text-xs tabular-nums text-text-secondary">
                   {rank}
+                </span>
                 </span>
               </div>
             ))}

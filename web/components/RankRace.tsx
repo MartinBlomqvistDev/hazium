@@ -100,7 +100,7 @@ export default function RankRace({
           className="h-1 flex-1 cursor-pointer accent-[var(--accent)]"
         />
         <span
-          className="w-12 text-right text-2xl font-semibold tabular-nums"
+          className="w-16 text-right text-2xl font-semibold tabular-nums"
           style={{ color: "var(--accent)" }}
         >
           {year}
@@ -159,8 +159,14 @@ export default function RankRace({
               </span>
               {/* Fixed-width track, bar sized within it. Bounding the track
                   rather than clipping the bar keeps the length encoding linear
-                  while leaving room for the label on a narrow screen. */}
-              <div className="w-[52%] shrink-0 sm:w-[58%]">
+                  while leaving room for the label on a narrow screen.
+
+                  52% was not enough room: on a 375px phone the rank, track and
+                  "banned YYYY" badge left about 32px for the name, so every row
+                  read as two letters and an ellipsis, and worst on exactly the
+                  banned rows the chart is about. A shorter bar still encodes
+                  length linearly. An invisible label encodes nothing. */}
+              <div className="w-[30%] shrink-0 sm:w-[58%]">
               <div
                 className="h-4 rounded-sm transition-all duration-700 ease-out"
                 style={{

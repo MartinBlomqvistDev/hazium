@@ -81,31 +81,41 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
             dropping a feature after seeing its sign is how a benchmark stops measuring
             anything.
           </p>
-          <div className="mt-4 space-y-1.5">
+          {/* The label sat in the same row as the bar at every width, which on a
+              phone left it 96px and truncated all six titles. A chart whose
+              rows read "Scientific ass…" and "Independent lite…" measures
+              nothing for the reader, so below sm the label takes its own line
+              and the bar keeps the full width underneath it. */}
+          <div className="mt-4 space-y-3 sm:space-y-1.5">
             {SIGNALS.map((s) => {
               const delta = h1.groups[s.key] ?? 0;
               const width = Math.min(100, (Math.abs(delta) / 0.09) * 100);
               const negative = delta < 0;
               return (
-                <div key={s.key} className="flex items-center gap-2 text-sm sm:gap-3">
-                  <span className="w-24 shrink-0 truncate text-text-secondary sm:w-40">
+                <div
+                  key={s.key}
+                  className="flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:gap-3"
+                >
+                  <span className="text-text-secondary sm:w-40 sm:shrink-0 sm:truncate">
                     {s.title}
                   </span>
-                  <span className="relative h-3 flex-1 rounded-sm bg-hairline/40">
-                    <span
-                      className="absolute inset-y-0 left-0 rounded-sm"
-                      aria-hidden
-                      style={{
-                        width: `${Math.max(width, negative ? 2 : 0)}%`,
-                        backgroundColor: negative
-                          ? "var(--status-critical)"
-                          : "var(--accent)",
-                      }}
-                    />
-                  </span>
-                  <span className="w-16 shrink-0 text-right font-mono text-xs tabular-nums text-text-secondary">
-                    {delta >= 0 ? "+" : "−"}
-                    {Math.abs(delta).toFixed(3)}
+                  <span className="flex items-center gap-2 sm:contents">
+                    <span className="relative h-3 flex-1 rounded-sm bg-hairline/40">
+                      <span
+                        className="absolute inset-y-0 left-0 rounded-sm"
+                        aria-hidden
+                        style={{
+                          width: `${Math.max(width, negative ? 2 : 0)}%`,
+                          backgroundColor: negative
+                            ? "var(--status-critical)"
+                            : "var(--accent)",
+                        }}
+                      />
+                    </span>
+                    <span className="w-16 shrink-0 text-right font-mono text-xs tabular-nums text-text-secondary">
+                      {delta >= 0 ? "+" : "−"}
+                      {Math.abs(delta).toFixed(3)}
+                    </span>
                   </span>
                 </div>
               );
