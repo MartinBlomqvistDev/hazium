@@ -37,6 +37,12 @@ export default function Home() {
   const h1 = survival.horizon_1;
   const age = h1.arms["age only"].average_precision;
   const both = h1.arms["age + evidence"].average_precision;
+  // Lift was exported from the start and rendered nowhere, so the only figure
+  // on the page was a bare 0.242. On a panel this sparse that reads as "24%
+  // right" to anyone who does not already know what average precision is, which
+  // is most of the people this page is written for.
+  const ageLift = h1.arms["age only"].lift;
+  const bothLift = h1.arms["age + evidence"].lift;
   const split = h1.quoted_split;
   const cohort = survival.anchor_cohort;
   const p = survival.verification.permutation_p;
@@ -125,8 +131,10 @@ export default function Home() {
             <P>
               I recast it as discrete-time survival: one approved substance, one year at
               risk. Approval age becomes the baseline hazard and the evidence has to earn
-              the rest. Average precision moves from {age.toFixed(3)} to{" "}
-              <strong className="text-text-primary">{both.toFixed(3)}</strong>.
+              the rest. Ranking on age alone lands {ageLift.toFixed(1)} times better than
+              chance. With the evidence,{" "}
+              <strong className="text-text-primary">{bothLift.toFixed(1)}</strong>. In
+              average precision that is {age.toFixed(3)} to {both.toFixed(3)}.
             </P>
             {/* The permutation belongs to the pooled figure above, not to the
                 forward split below: it refits out-of-fold over the whole panel

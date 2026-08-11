@@ -125,7 +125,9 @@ export default function HowItWorks({ survival }: { survival: SurvivalData }) {
           <h3 className="font-medium text-text-primary">The checks behind the headline</h3>
           <p className="mt-2 text-sm leading-relaxed text-text-secondary">
             The reported gain is {age.toFixed(3)} for approval age alone against{" "}
-            {both.toFixed(3)} with the evidence added.{" "}
+            {both.toFixed(3)} with the evidence added, which is{" "}
+            {h1.arms["age only"].lift.toFixed(1)} and{" "}
+            {h1.arms["age + evidence"].lift.toFixed(1)} times chance respectively.{" "}
             <Link href="/" className="text-accent underline underline-offset-2">
               Why the question had to be reformulated to get there
             </Link>{" "}
