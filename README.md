@@ -315,7 +315,7 @@ fails every month is worse than none.
 
 ## License
 
-Code is [AGPL-3.0](LICENSE). It is copyleft on purpose: anyone may study, run and build on it, but a modified version offered to others over a network has to publish its source. That keeps the work open without leaving it open to being taken proprietary.
+Code is [AGPL-3.0](LICENSE), with copyright and commercial licensing in [COPYRIGHT](COPYRIGHT). It is copyleft on purpose: anyone may study, run and build on it, but a modified version offered to others over a network has to publish its source. That keeps the work open without leaving it open to being taken proprietary.
 
 The benchmark release in [`release/hewb-v1.4/`](release/hewb-v1.4/) is CC-BY-4.0, licensed separately because it is data rather than software; see its own [LICENSE](release/hewb-v1.4/LICENSE). An open, citable benchmark is worth more than a restricted one.
 
