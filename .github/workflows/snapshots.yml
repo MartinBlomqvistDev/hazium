@@ -32,6 +32,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
+    # Needed only by the recording step below, which pushes one row to
+    # SNAPSHOT_LOG.md. Everything else here reads the network and writes to an
+    # external store.
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -100,6 +106,39 @@ jobs:
           hf upload MartinBlomqvist/hazium-snapshots data/snapshots . \
             --repo-type dataset \
             --commit-message "Snapshot capture $(date -u +%Y-%m-%d)"
+
+      - name: Record the capture in the repo
+        # The archive is a private dataset, so the public repository carried no
+        # evidence that the monthly capture runs at all. This row is that
+        # evidence, and it is also what keeps the schedule alive: GitHub
+        # disables a scheduled workflow after 60 days without repository
+        # activity, and on 2026-11-02 it did, the last push having been on
+        # 14 August. A commit a month sits well inside the limit.
+        #
+        # The identity is set explicitly because the default attributes the
+        # commit to github-actions[bot], and every commit in this repository is
+        # authored by one person.
+        #
+        # Runs on failure too. A dated record of a capture that failed is still
+        # the record, and a gap would make a broken month look like a month
+        # nobody scheduled.
+        if: always()
+        run: |
+          captured=$(grep -oE 'captured [0-9]+/[0-9]+ sources' capture.log 2>/dev/null | tail -1 | awk '{print $2}')
+          broken=$(grep -oE 'BROKEN \(failed >= 3 runs in a row\): .*' capture.log 2>/dev/null | sed 's/.*: /broken: /')
+          url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "| $(date -u +%Y-%m-%d) | ${captured:-none} | ${{ job.status }} | ${broken:-} | [log]($url) |" >> SNAPSHOT_LOG.md
+
+          git config user.name "MartinBlomqvistDev"
+          git config user.email "cm.blomqvist@gmail.com"
+          git add SNAPSHOT_LOG.md
+          git commit -m "chore: record the $(date -u +%Y-%m) snapshot capture"
+
+          # The schedule fires monthly against a branch that moves rarely, so
+          # the rebase is insurance rather than routine.
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
 
       - name: Summary
         if: always()
